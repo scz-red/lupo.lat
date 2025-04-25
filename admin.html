@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Tasas</title>
+  <script>
+    function verifyCode() {
+      const input = document.getElementById('accessCode').value;
+      if (input === 'GROMO') {
+        document.getElementById('login').style.display = 'none';
+        document.getElementById('panel').style.display = 'block';
+        document.getElementById('rateBolivia').value = localStorage.getItem('rateBolivia') || '';
+        document.getElementById('rateColombia').value = localStorage.getItem('rateColombia') || '';
+      } else {
+        alert('Clave incorrecta');
+      }
+    }
+    function saveRates() {
+      localStorage.setItem('rateBolivia', document.getElementById('rateBolivia').value);
+      localStorage.setItem('rateColombia', document.getElementById('rateColombia').value);
+      alert('Tasas guardadas');
+    }
+  </script>
+</head>
+<body>
+  <div id="login">
+    <h2>Panel de Admin</h2>
+    <input type="password" id="accessCode" placeholder="Clave de acceso" />
+    <button onclick="verifyCode()">Entrar</button>
+  </div>
+  <div id="panel" style="display:none;">
+    <h3>Editar tasas</h3>
+    <label>Bolivia (EUR → BOB):</label><br/>
+    <input type="number" id="rateBolivia" step="0.0001"><br/>
+    <label>Colombia (EUR → COP):</label><br/>
+    <input type="number" id="rateColombia" step="0.0001"><br/><br/>
+    <button onclick="saveRates()">Guardar</button>
+  </div>
+</body>
+</html>
