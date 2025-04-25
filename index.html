@@ -364,7 +364,7 @@
       const currency = destinationSelect.value === 'bolivia' ? 'BOB' : 'COP';
 
       exchangeRateDiv.textContent = `1 EUR = ${rate} ${currency}`;
-      feesDiv.textContent = '0.00 EUR';
+      feesDiv.textContent = '0.0 EUR';
       totalDiv.textContent = `${eur.toFixed(2)} EUR`;
 
       const message = `¡Hola! Quiero enviar ${eur.toFixed(2)} EUR a ${destinationSelect.value.toUpperCase()}.
