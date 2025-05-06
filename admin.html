@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Panel Admin – Lupo</title>
+  <!-- Estilos CSS -->
+  <link rel="stylesheet" href="css/admin.css">
+  <!-- Script de lógica -->
+  <script src="js/admin.js" defer></script>
+</head>
+<body>
+  <div class="admin-wrapper">
+    <!-- LOGIN -->
+    <div class="admin-card" id="loginContainer">
+      <div class="admin-header">
+        <h1>Acceso Administrador</h1>
+      </div>
+      <div class="admin-body">
+        <div class="form-group">
+          <label for="password">Contraseña</label>
+          <input type="password" id="password" placeholder="Ingresa tu contraseña">
+        </div>
+        <button class="btn" id="loginBtn">Ingresar</button>
+        <p id="errorText" class="text-error"></p>
+      </div>
+    </div>
+
+    <!-- PANEL DE CONTROL -->
+    <div class="admin-card hidden" id="adminPanel">
+      <div class="admin-header">
+        <div class="header-flex" style="display:flex; justify-content:space-between; align-items:center;">
+          <h1>Panel de Control Lupo</h1>
+          <button class="btn logout" id="logoutBtn" style="background:#e74c3c; padding:0.5rem 1rem;">Cerrar sesión</button>
+        </div>
+      </div>
+      <div class="admin-body">
+        <!-- Pestañas -->
+        <div class="tabs">
+          <div class="tab active" data-tab="rates">Tasas</div>
+          <div class="tab" data-tab="stats">Estadísticas</div>
+          <div class="tab" data-tab="transactions">Transacciones</div>
+        </div>
+        <!-- Contenido Tasas -->
+        <div id="ratesTab" class="tab-content active">
+          <div class="form-group">
+            <label for="lupoRate">Tasa Lupo (EUR → BOB)</label>
+            <input type="number" id="lupoRate" step="0.01">
+          </div>
+          <h3>Tasas de la competencia</h3>
+          <div class="form-group">
+            <label for="wuRate">Western Union</label>
+            <input type="number" id="wuRate" step="0.01">
+          </div>
+          <div class="form-group">
+            <label for="riaRate">Ria</label>
+            <input type="number" id="riaRate" step="0.01">
+          </div>
+          <div class="form-group">
+            <label for="mgRate">MoneyGram</label>
+            <input type="number" id="mgRate" step="0.01">
+          </div>
+          <button class="btn btn-block" id="saveBtn">Guardar Tasas</button>
+        </div>
+        <!-- Contenido Estadísticas -->
+        <div id="statsTab" class="tab-content">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <h4>Tasa Actual</h4>
+              <p id="currentRate">0.00</p>
+            </div>
+            <div class="stat-card">
+              <h4>Ventaja</h4>
+              <p id="rateAdvantage">+0.00</p>
+            </div>
+            <div class="stat-card">
+              <h4>Actualizado</h4>
+              <p id="lastUpdated">-</p>
+            </div>
+          </div>
+        </div>
+        <!-- Contenido Transacciones -->
+        <div id="transactionsTab" class="tab-content">
+          <h3>Historial de transacciones</h3>
+          <div id="transactionsList"></div>
+          <p>Total completadas hoy: <strong id="todayTransactions">0</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
