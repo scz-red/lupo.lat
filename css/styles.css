@@ -316,3 +316,10 @@ header {
 .btn:hover {
   background: var(--primary-light);
 }
+.floating-btn {
+  z-index: 1001;
+}
+footer {
+  position: relative;
+  z-index: 0;
+}
