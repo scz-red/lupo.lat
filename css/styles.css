@@ -1,0 +1,318 @@
+/* ====================
+   Variables y Reset Global
+   ==================== */
+:root {
+  --primary: #1A3E5C;
+  --primary-light: #4A90E2;
+  --accent: #FFC107;
+  --background: #F5F7FA;
+  --text: #333333;
+  --text-light: #7F8C8D;
+  --border: #E0E0E0;
+  --shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--background);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ====================
+   Header Sticky
+   ==================== */
+header {
+  background: #fff;
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+.header-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+}
+.logo img {
+  height: 60px;
+  width: auto;
+}
+.menu-toggle {
+  display: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text);
+}
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+.nav-links a {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 500;
+}
+.nav-links a:hover {
+  color: var(--primary-light);
+}
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background: #fff;
+    flex-direction: column;
+    width: 200px;
+    box-shadow: var(--shadow);
+  }
+  .nav-links.active {
+    display: flex;
+  }
+  .logo img {
+    height: 50px;
+  }
+}
+
+/* ====================
+   Hero & Layout Principal
+   ==================== */
+.main-content {
+  display: flex;
+  max-width: 1200px;
+  margin: 40px auto;
+  gap: 40px;
+  align-items: center;
+}
+.hero {
+  flex: 1;
+  background: var(--primary);
+  color: #fff;
+  height: calc(100vh - 60px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px;
+  border-radius: 0 0 12px 12px;
+}
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+.hero p {
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+@media (max-width: 768px) {
+  .main-content {
+    flex-direction: column;
+    margin: 20px auto;
+    gap: 20px;
+  }
+  .main-content .hero {
+    order: 1;
+  }
+  .main-content .calculator-section {
+    order: 2;
+    width: 100%;
+  }
+}
+
+/* ====================
+   Calculadora
+   ==================== */
+.calculator-section {
+  flex: 1;
+}
+.calculator-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+.calculator-body {
+  padding: 40px;
+  position: relative;
+}
+.badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: var(--accent);
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.inline-group {
+  margin-bottom: 20px;
+}
+.inline-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--text-light);
+  font-weight: 500;
+}
+.inline-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+}
+.provider-icon {
+  width: 24px;
+  margin: 0 8px;
+}
+.inline-wrapper input, .inline-wrapper select {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 16px;
+  font-size: 1.1rem;
+  background: transparent;
+}
+
+.inline-wrapper select {
+  min-width: 80px;
+  text-align: right;
+}
+.action-btn {
+  display: block;
+  width: 100%;
+  background: var(--primary);
+  color: #fff;
+  text-align: center;
+  padding: 18px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-top: 25px;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+.action-btn:hover {
+  background: var(--primary-light);
+}
+.comparison-section {
+  background: var(--background);
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 30px;
+  font-size: 0.9rem;
+}
+.comparison-section h4 {
+  color: var(--text-light);
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+.comparison-section .result-value {
+  color: var(--text-light);
+  font-weight: 500;
+}
+.comparison-section .result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+/* ====================
+   Carousel de Logos
+   ==================== */
+.partners-section {
+  width: 100%;
+  padding: 40px 0;
+  background: #fff;
+  display: flex;
+  justify-content: flex-end;
+}
+@media (max-width: 768px) {
+  .partners-section {
+    justify-content: center;
+  }
+}
+.partners-carousel {
+  display: flex;
+  overflow: hidden;
+  gap: 40px;
+  align-items: center;
+}
+.partners-carousel img {
+  max-height: 50px;
+  flex-shrink: 0;
+  transition: transform 0.3s;
+}
+
+/* Título sección depósito bancario */
+.partners-title {
+  margin-top: 20px;
+  text-align: right;
+  font-weight: 500;
+  color: var(--text);
+  font-size: 1rem;
+}
+@media (hover:hover) {
+  .partners-carousel img:hover {
+    transform: scale(1.1);
+  }
+}
+
+/* ====================
+   Admin Panel Styles
+   ==================== */
+.login, .admin-panel {
+  background: #FFFFFF;
+  padding: 20px 30px;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  max-width: 320px;
+  margin: 40px auto;
+}
+.hidden {
+  display: none;
+}
+.field {
+  margin-bottom: 15px;
+}
+.field label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333333;
+}
+.field input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #CCC;
+  border-radius: 4px;
+}
+.btn {
+  width: 100%;
+  padding: 10px;
+  background: var(--primary);
+  color: #FFF;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+.btn:hover {
+  background: var(--primary-light);
+}

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Lupo Rates</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/admin.js" defer></script>
+</head>
+<body>
+  <div class="login" id="loginBox">
+    <h2>Acceso Administrador</h2>
+    <div class="field">
+      <label for="password">Contraseña</label>
+      <input type="password" id="password" placeholder="Clave de acceso">
+    </div>
+    <button class="btn" id="loginBtn">Entrar</button>
+  </div>
+
+  <div class="admin-panel hidden" id="adminPanel">
+    <h2>Configurar Tipos de Cambio</h2>
+    <!-- Tasas oficiales -->
+    <div class="field">
+      <label for="rateBolivia">Tasa 1 EUR → BOB</label>
+      <input type="number" step="0.01" id="rateBolivia">
+    </div>
+    <div class="field">
+      <label for="rateColombia">Tasa 1 EUR → COP</label>
+      <input type="number" step="0.01" id="rateColombia">
+    </div>
+    <h2>Competencia</h2>
+    <!-- Competencia Bolivia -->
+    <div class="field">
+      <label for="mgBolivia">MoneyGram (BOB)</label>
+      <input type="number" step="0.01" id="mgBolivia">
+    </div>
+    <div class="field">
+      <label for="wuBolivia">WesternUnion (BOB)</label>
+      <input type="number" step="0.01" id="wuBolivia">
+    </div>
+    <div class="field">
+      <label for="riaBolivia">Ria (BOB)</label>
+      <input type="number" step="0.01" id="riaBolivia">
+    </div>
+    <!-- Competencia Colombia -->
+    <div class="field">
+      <label for="mgColombia">MoneyGram (COP)</label>
+      <input type="number" step="0.01" id="mgColombia">
+    </div>
+    <div class="field">
+      <label for="wuColombia">WesternUnion (COP)</label>
+      <input type="number" step="0.01" id="wuColombia">
+    </div>
+    <div class="field">
+      <label for="riaColombia">Ria (COP)</label>
+      <input type="number" step="0.01" id="riaColombia">
+    </div>
+    <button class="btn" id="saveBtn">Guardar Cambios</button>
+  </div>
+</body>
+</html>
