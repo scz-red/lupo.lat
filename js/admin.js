@@ -1,5 +1,5 @@
 // js/admin.js
-const ADMIN_PASSWORD = 'lupoAdmin2025';
+const ADMIN_PASSWORD = 'GROMO';
 const loginBox = document.getElementById('loginBox');
 const adminPanel = document.getElementById('adminPanel');
 
