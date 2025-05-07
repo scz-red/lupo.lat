@@ -1,0 +1,192 @@
+<div class="lupo-comparator">
+  <h2>Compara y elige la MEJOR opción</h2>
+  <p class="rate-disclaimer">💱 <strong>Tasa Lupo hoy:</strong> 1 EUR = <span id="current-rate">13.90</span> BOB <small>(Sin comisiones)</small></p>
+  
+  <div class="input-group">
+    <label>Envías (EUR):</label>
+    <input type="number" id="send-amount" placeholder="Ej: 200" min="10">
+  </div>
+  
+  <div class="comparison-table">
+    <!-- Fila de encabezados -->
+    <div class="row header">
+      <div class="service">Servicio</div>
+      <div class="rate">Tasa</div>
+      <div class="fee">Comisión</div>
+      <div class="total">Recibes (BOB)</div>
+    </div>
+    
+    <!-- Fila Lupo -->
+    <div class="row lupo">
+      <div class="service">🌎 <strong>Lupo.lat</strong></div>
+      <div class="rate">7.50</div>
+      <div class="fee">0€</div>
+      <div class="total" id="lupo-total">0.00</div>
+    </div>
+    
+    <!-- Fila Ria -->
+    <div class="row competitor">
+      <div class="service">Ria</div>
+      <div class="rate">7.30</div>
+      <div class="fee">5€</div>
+      <div class="total" id="ria-total">0.00</div>
+    </div>
+    
+    <!-- Fila Western Union -->
+    <div class="row competitor">
+      <div class="service">Western Union</div>
+      <div class="rate">7.20</div>
+      <div class="fee">6€</div>
+      <div class="total" id="wu-total">0.00</div>
+    </div>
+    
+    <!-- Fila MoneyGram -->
+    <div class="row competitor">
+      <div class="service">MoneyGram</div>
+      <div class="rate">7.25</div>
+      <div class="fee">4€</div>
+      <div class="total" id="mg-total">0.00</div>
+    </div>
+  </div>
+  
+  <div class="savings-box">
+    <p>💡 <strong>Con Lupo ahorras:</strong> <span id="savings-amount">0.00 BOB</span> vs el competidor más barato</p>
+  </div>
+  
+  <button id="whatsapp-button" class="whatsapp-btn">
+    💬 ¡Quiero este ahorro! Chatea ahora
+  </button>
+</div>
+
+<style>
+.lupo-comparator {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 25px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+}
+
+.rate-disclaimer {
+  color: #2c3e50;
+  font-size: 1.1em;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.input-group {
+  margin: 20px 0;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #3498db;
+  border-radius: 5px;
+  font-size: 18px;
+}
+
+.comparison-table {
+  margin: 30px 0;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.row {
+  display: flex;
+  padding: 12px 15px;
+  align-items: center;
+}
+
+.row.header {
+  background: #34495e;
+  color: white;
+  font-weight: bold;
+}
+
+.row.lupo {
+  background: #e8f8f5;
+  border-left: 4px solid #2ecc71;
+}
+
+.row.competitor {
+  border-bottom: 1px solid #eee;
+}
+
+.service { width: 35%; }
+.rate, .fee { width: 15%; text-align: center; }
+.total { width: 35%; text-align: right; font-weight: bold; }
+
+.row.lupo .total {
+  color: #27ae60;
+}
+
+.savings-box {
+  background: #fff9e6;
+  padding: 15px;
+  border-radius: 5px;
+  text-align: center;
+  margin: 20px 0;
+  border: 1px dashed #f1c40f;
+}
+
+.savings-box p {
+  margin: 0;
+  font-size: 1.1em;
+}
+
+.whatsapp-btn {
+  width: 100%;
+  padding: 15px;
+  background: #25D366;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.whatsapp-btn:hover {
+  background: #128C7E;
+}
+</style>
+
+<script>
+document.getElementById('send-amount').addEventListener('input', function() {
+  const amount = parseFloat(this.value) || 0;
+  
+  // Tasas y comisiones (actualizables manualmente)
+  const rates = {
+    lupo: { rate: 13.90, fee: 0 },
+    ria: { rate: 12.80, fee: 5 },
+    wu: { rate: 12.50, fee: 6 },
+    mg: { rate: 12.90, fee: 4 }
+  };
+  
+  // Calcular totales
+  const lupoTotal = (amount * rates.lupo.rate).toFixed(2);
+  const riaTotal = ((amount - rates.ria.fee) * rates.ria.rate).toFixed(2);
+  const wuTotal = ((amount - rates.wu.fee) * rates.wu.rate).toFixed(2);
+  const mgTotal = ((amount - rates.mg.fee) * rates.mg.rate).toFixed(2);
+  
+  // Actualizar UI
+  document.getElementById('lupo-total').textContent = lupoTotal;
+  document.getElementById('ria-total').textContent = riaTotal;
+  document.getElementById('wu-total').textContent = wuTotal;
+  document.getElementById('mg-total').textContent = mgTotal;
+  
+  // Calcular ahorro vs el competidor más barato
+  const competitors = [riaTotal, wuTotal, mgTotal];
+  const minCompetitor = Math.min(...competitors);
+  const savings = (lupoTotal - minCompetitor).toFixed(2);
+  document.getElementById('savings-amount').textContent = savings + ' BOB';
+  
+  // Generar link de WhatsApp
+  const whatsappMsg = `¡Quiero enviar ${amount}€ a Bolivia con Lupo! (Recibo ${lupoTotal} BOB vs ${minCompetitor} BOB de la competencia).`;
+  const whatsappLink = `https://wa.me/393341950037?text=${encodeURIComponent(whatsappMsg)}`;
+  document.getElementById('whatsapp-button').onclick = () => window.open(whatsappLink);
+});
+</script>
