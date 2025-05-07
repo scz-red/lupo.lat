@@ -1,37 +1,30 @@
-// js/main.js
-// Este archivo conecta las tasas del admin (almacenadas en localStorage bajo "lupo_rates")
-// con la calculadora de tu página pública y usa el número italiano en WhatsApp
-
 document.addEventListener('DOMContentLoaded', () => {
-  // --- 1) Lectura de tasas del admin o valores por defecto ---
-  const saved = JSON.parse(localStorage.getItem('lupo_rates')) || {};
-  const rates = {
-    lupo:         saved.lupo         != null ? saved.lupo         : 13.50,
-    westernUnion: saved.westernUnion != null ? saved.westernUnion : 13.20,
-    ria:          saved.ria          != null ? saved.ria          : 13.10,
-    moneyGram:    saved.moneyGram    != null ? saved.moneyGram    : 13.30
-  };
+  const eurInput     = document.getElementById('eurInput');
+  const localOutput  = document.getElementById('localInput');
+  const mgOutput     = document.getElementById('mgReceived');
+  const wuOutput     = document.getElementById('wuReceived');
+  const riaOutput    = document.getElementById('riaReceived');
+  const destSelect   = document.getElementById('destination');
+  const flagImg      = document.getElementById('destFlag');
+  const whatsappLink = document.getElementById('whatsappBtn');
+  const waNumber     = '393341950037'; // WhatsApp LUPO
 
-  // --- 2) Referencias al DOM ---
-  const eurInput        = document.getElementById('eurInput');
-  const localOutput     = document.getElementById('localInput');
-  const mgOutput        = document.getElementById('mgReceived');
-  const wuOutput        = document.getElementById('wuReceived');
-  const riaOutput       = document.getElementById('riaReceived');
-  const destSelect      = document.getElementById('destination');
-  const flagImg         = document.getElementById('destFlag');
-  const whatsappLink    = document.getElementById('whatsappBtn');
-
-  if (!eurInput || !localOutput || !mgOutput || !wuOutput || !riaOutput || !destSelect || !flagImg || !whatsappLink) {
-    console.error('Faltan elementos HTML en main.js – revisa los IDs.');
+  if (!eurInput || !localOutput || !mgOutput || !wuOutput || !riaOutput ||
+      !destSelect || !flagImg || !whatsappLink) {
+    console.error('main.js: Faltan elementos HTML – revisa los IDs.'); 
     return;
   }
 
-  // --- 3) Función de cálculo ---
+  let rates = {
+    lupo: 13.9,
+    westernUnion: 12.6,
+    ria: 12.9,
+    moneyGram: 12.8
+  };
+
   function calculate() {
     const amount = parseFloat(eurInput.value) || 0;
-    const dest   = destSelect.value; // 'bolivia' o 'colombia'
-
+    const dest   = destSelect.value;
     let local, mg, wu, ria, msg;
 
     if (dest === 'bolivia') {
@@ -45,27 +38,50 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       const copRate = parseFloat(localStorage.getItem('rateColombia')) || 4150;
       local = amount * copRate;
-      mg    = wu = ria = 0.0;
+      mg = wu = ria = 0.0;
       flagImg.src = 'https://flagcdn.com/w40/co.png';
       flagImg.alt = 'Bandera de Colombia';
       msg = `¡Hola Lupo! Envío ${amount.toFixed(2)} EUR a Colombia. Recibirá ${local.toFixed(2)} COP.`;
     }
 
-    // Actualizar la UI
     localOutput.value     = local.toFixed(2);
-    mgOutput.textContent  = mg.toFixed(1);
-    wuOutput.textContent  = wu.toFixed(1);
-    riaOutput.textContent = ria.toFixed(1);
-
-    // Enlace de WhatsApp con número italiano
-    whatsappLink.href =
-      `https://wa.me/393341950037?text=` + encodeURIComponent(msg);
+    mgOutput.textContent  = `${mg.toFixed(1)} Bs.`;
+    wuOutput.textContent  = `${wu.toFixed(1)} Bs.`;
+    riaOutput.textContent = `${ria.toFixed(1)} Bs.`;
+    whatsappLink.href     = `https://wa.me/${waNumber}?text=` + encodeURIComponent(msg);
   }
 
-  // --- 4) Listeners para recalcular ---
+  fetch('php/leer_tasas.php')
+    .then(response => response.json())
+    .then(data => {
+      rates = {
+        lupo: parseFloat(data.lupo),
+        westernUnion: parseFloat(data.westernUnion),
+        ria: parseFloat(data.ria),
+        moneyGram: parseFloat(data.moneyGram)
+      };
+      calculate();
+    })
+    .catch(error => {
+      console.error('No se pudo cargar tasas. Usando valores por defecto.', error);
+      calculate();
+    });
+
   eurInput.addEventListener('input', calculate);
   destSelect.addEventListener('change', calculate);
 
-  // --- 5) Inicializar cálculo al cargar ---
-  calculate();
+  const carousel = document.getElementById('partnersCarousel');
+  if (carousel) {
+    const speed = 0.5;
+    let pos = 0;
+
+    function scrollLoop() {
+      pos += speed;
+      if (pos >= carousel.scrollWidth - carousel.clientWidth) pos = 0;
+      carousel.scrollLeft = pos;
+      requestAnimationFrame(scrollLoop);
+    }
+
+    requestAnimationFrame(scrollLoop);
+  }
 });
