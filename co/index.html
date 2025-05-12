@@ -601,9 +601,9 @@
                     </div>
                     <p class="testimonial-text">"Envío dinero para poder pagar a mi proveedores. y todo fue muy facil y rapido."</p>
                     <div class="testimonial-author">
-                        <a href="https://www.facebook.com/"><img src="https://scontent.fsrz1-1.fna.fbcdn.net/v/t39.30808-6/464316860_8915309868501251_456139633372320508_n.jpg?_nc_cat=111&amp;ccb=1-7&amp;_nc_sid=6ee11a&amp;_nc_ohc=yxq2ezEGn0YQ7kNvwFp_nfy&amp;_nc_oc=AdmySyylYfrYY5JFVHu8mmCfS0fG4GDnyS_yd3EpvslHiN9VCUXfhRaa7MY4kbExfR0&amp;_nc_zt=23&amp;_nc_ht=scontent.fsrz1-1.fna&amp;_nc_gid=qhGc56kMShTFPtkAHAZPLg&amp;oh=00_AfJT0UIv0lyfdirc6KU9wwLVWiKt5dbZRsjXM1coMJeY7Q&amp;oe=6825FC5A" alt="Yiya Muñoz"></a>
-<div class="author-info">
-            <h4>Yiya Muñoz</h4>
+                        <img src="https://scontent.fsrz1-1.fna.fbcdn.net/v/t39.30808-6/464316860_8915309868501251_456139633372320508_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=yxq2ezEGn0YQ7kNvwFp_nfy&_nc_oc=AdmySyylYfrYY5JFVHu8mmCfS0fG4GDnyS_yd3EpvslHiN9VCUXfhRaa7MY4kbExfR0&_nc_zt=23&_nc_ht=scontent.fsrz1-1.fna&_nc_gid=qhGc56kMShTFPtkAHAZPLg&oh=00_AfJT0UIv0lyfdirc6KU9wwLVWiKt5dbZRsjXM1coMJeY7Q&oe=6825FC5A" alt="Yiya Muñoz">
+                        <div class="author-info">
+                            <h4>Yiya Muñoz</h4>
                             <p>Santa Cruz, Bolivia</p>
                         </div>
                     </div>
@@ -622,8 +622,8 @@
 <div class="author-info">
             <h4>Khatia Valentina Morales</h4>
                             <p>Cochabamba, Bolivia</p>
-                        </div>
-                    </div>
+                      </div>
+                  </div>
                 </div>
                 
                 <div class="testimonial-card">
@@ -638,10 +638,10 @@
                     <div class="testimonial-author">
                         <a href="https://www.facebook.com/oscaruriel.bustosgarcia"><img src="https://scontent.fsrz1-2.fna.fbcdn.net/v/t39.30808-6/492039144_9544533498925904_4744477444843953357_n.jpg?_nc_cat=101&amp;ccb=1-7&amp;_nc_sid=6ee11a&amp;_nc_ohc=HNJdEM8C0jIQ7kNvwEDBQi_&amp;_nc_oc=AdnT_5gCkaboJePfOfquIPHe5-lhL1-xFEH73v-V8sKCXI2Bj-izn5c40lvUh9V_LYk&amp;_nc_zt=23&amp;_nc_ht=scontent.fsrz1-2.fna&amp;_nc_gid=mtZJ__xKjGQRhme5dFlj7A&amp;oh=00_AfIpso-1Cn-56vgdhu-xvuwXKjus3huQXxlvz1ICTJPHZw&amp;oe=6825F09F" alt="Oscar Uriel Bustos Garcia"></a>
 <div class="author-info">
-            <h4><strong>Oscar Uriel Bustos Garcia</strong></h4>
+            <h4>Oscar Uriel Bustos Garcia</h4>
                             <p>Cali, Colombia</p>
                       </div>
-                    </div>
+                  </div>
                 </div>
             </div>
         </div>
@@ -692,62 +692,71 @@
         </div>
     </footer>
     
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const rate = 253;
-    const btn = document.getElementById('calculate-btn');
-    const bob = document.getElementById('amount');
-    const cop = document.getElementById('received-amount');
-    const resultCard = document.getElementById('result-card');
-    const display = document.getElementById('display-result');
-
-    function calculate() {
-        const b = parseFloat(bob.value);
-        if (!isNaN(b) && b > 0) {
-            const copValue = Math.round(b * rate);
-            cop.value = copValue.toLocaleString('es-CO');
-            return copValue;
-        }
-        return null;
-    }
-
-    function updateButtonState() {
-        const valid = calculate() !== null;
-        btn.disabled = !valid;
-        if (valid) {
-            btn.style.backgroundColor = 'green';
-            btn.style.color = 'white';
-        } else {
-            btn.style.backgroundColor = '';
-            btn.style.color = '';
-        }
-    }
-
-    bob.addEventListener('input', () => {
-        const result = calculate();
-        if (result !== null) {
-            display.textContent = result.toLocaleString('es-CO');
-            resultCard.style.display = 'block';
-        } else {
-            resultCard.style.display = 'none';
-        }
-        updateButtonState();
-    });
-
-    // Inicializar estado del botón
-    updateButtonState();
-
-    btn.addEventListener('click', e => {
-        e.preventDefault();
-        const result = calculate();
-        if (result === null) return;
-        const text = encodeURIComponent(
-            `Hola, quiero enviar : | ${bob.value} Bs | que son | ${display.textContent} COP |. ¿Me ayudan con el envío?`
-        );
-        window.location.href = `https://api.whatsapp.com/send?phone=59175656922&text=${text}`;
-    });
-});
-</script>
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const amountInput = document.getElementById('amount');
+            const receivedInput = document.getElementById('received-amount');
+            const resultCard = document.getElementById('result-card');
+            const calculateBtn = document.getElementById('calculate-btn');
+            
+            // Configuración
+            const EXCHANGE_RATE = 253; // 1 BOB = 253 COP
+            const WHATSAPP_NUMBER = '59175656922';
+            
+            // Calcular automáticamente al escribir
+            amountInput.addEventListener('input', function() {
+                calculateTransfer();
+            });
+            
+            // Función principal
+            function calculateTransfer() {
+                const amount = parseFloat(amountInput.value);
+                
+                if (!isNaN(amount) && amount > 0) {
+                    const receivedAmount = Math.round(amount * EXCHANGE_RATE);
+                    receivedInput.value = receivedAmount.toLocaleString('es-CO');
+                    document.getElementById('result-amount').textContent = receivedAmount.toLocaleString('es-CO');
+                    resultCard.style.display = 'block';
+                } else {
+                    receivedInput.value = '';
+                    resultCard.style.display = 'none';
+                }
+            }
+            
+            // Manejar el clic en el botón de enviar
+            calculateBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const amount = parseFloat(amountInput.value);
+                
+                if (!isNaN(amount) && amount > 0) {
+                    const receivedAmount = Math.round(amount * EXCHANGE_RATE);
+                    const message = `Hola, quiero enviar ${amount} BOB (${receivedAmount.toLocaleString('es-CO')} COP) a Colombia. ¿Me ayudan con el envío?`;
+                    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+                    
+                    // Cambiar el botón a verde para indicar éxito
+                    calculateBtn.style.backgroundColor = '#28a745';
+                    calculateBtn.innerHTML = '<i class="fas fa-check"></i> Redirigiendo a WhatsApp...';
+                    
+                    // Redirigir después de 1 segundo
+                    setTimeout(() => {
+                        window.open(whatsappUrl, '_blank');
+                        
+                        // Restaurar el botón después de 3 segundos
+                        setTimeout(() => {
+                            calculateBtn.style.backgroundColor = '';
+                            calculateBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Dinero';
+                        }, 3000);
+                    }, 1000);
+                } else {
+                    alert('Por favor ingresa un monto válido en Bolivianos (BOB)');
+                }
+            });
+            
+            // Calcular al cargar si hay un valor
+            if (amountInput.value) {
+                calculateTransfer();
+            }
+        });
+    </script>
 </body>
 </html>
