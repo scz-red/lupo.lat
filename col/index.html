@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bolivianos a Pesos | Envío Rápido a Colombia | ColTransfer</title>
+    <style>
+        :root {
+            --yellow: #FCD116;
+            --blue: #003893;
+            --red: #CE1126;
+            --dark: #2E2E2E;
+            --light: #F8F9FA;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .colombia-flag {
+            height: 10px;
+            background: linear-gradient(to right, var(--yellow) 50%, var(--blue) 50%, var(--blue) 75%, var(--red) 75%);
+            margin-bottom: 5px;
+        }
+        
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--blue);
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-flag {
+            display: inline-flex;
+            margin-left: 10px;
+        }
+        
+        .flag-stripe {
+            width: 6px;
+            height: 24px;
+        }
+        
+        .yellow { background-color: var(--yellow); }
+        .blue { background-color: var(--blue); }
+        .red { background-color: var(--red); }
+        
+        .login-btn {
+            background-color: var(--blue);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .login-btn:hover {
+            background-color: #002b7a;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--blue), #002b7a);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 10px;
+            background: linear-gradient(to right, var(--yellow) 50%, transparent 50%);
+        }
+        
+        .hero::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 10px;
+            background: linear-gradient(to right, transparent 75%, var(--red) 75%);
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h1 span {
+            color: var(--yellow);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 20px;
+        }
+        
+        .calculator-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 500px;
+            margin: -4rem auto 2rem;
+            position: relative;
+            z-index: 10;
+            border-top: 5px solid var(--yellow);
+            border-bottom: 5px solid var(--red);
+        }
+        
+        .calculator-card h2 {
+            color: var(--blue);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--blue);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 56, 147, 0.2);
+        }
+        
+        .btn-primary {
+            background-color: var(--blue);
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 600;
+            transition: background 0.3s;
+            margin-top: 1rem;
+        }
+        
+        .btn-primary:hover {
+            background-color: #002b7a;
+        }
+        
+        .result-card {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f5f8ff;
+            border-radius: 12px;
+            border-left: 4px solid var(--blue);
+            display: none;
+        }
+        
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .result-title {
+            color: var(--blue);
+            font-weight: 700;
+        }
+        
+        .result-amount {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin: 0.5rem 0;
+            text-align: center;
+        }
+        
+        .result-amount span {
+            color: var(--red);
+        }
+        
+        .result-details {
+            color: #666;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        
+        /* Nuevos estilos para la calculadora mejorada */
+        .currency-input-container {
+            position: relative;
+        }
+        
+        .currency-flag {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        .currency-input {
+            padding-left: 45px !important;
+        }
+        
+        .exchange-info {
+            text-align: center;
+            margin: 10px 0;
+            color: var(--blue);
+            font-weight: 500;
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: #f5f8ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: var(--blue);
+            font-size: 1.5rem;
+        }
+        
+        /* Resto de tus estilos se mantienen igual */
+        .features-section {
+            margin: 4rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+        
+        .section-title p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            border-top: 3px solid var(--yellow);
+        }
+        
+        .testimonials {
+            background-color: #f5f8ff;
+            padding: 4rem 0;
+            margin: 4rem 0;
+        }
+        
+        .testimonial-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            max-width: 300px;
+            margin: 0 auto;
+            border-left: 4px solid var(--red);
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .testimonial-author img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 1rem;
+        }
+        
+        .author-info h4 {
+            color: var(--blue);
+            margin-bottom: 0.2rem;
+        }
+        
+        .author-info p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .rating {
+            color: var(--yellow);
+            margin: 0.5rem 0;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0 1.5rem;
+            position: relative;
+        }
+        
+        footer::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, var(--yellow) 33%, var(--blue) 33%, var(--blue) 66%, var(--red) 66%);
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-column h3 {
+            color: white;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-column h3::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--yellow);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--yellow);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: var(--yellow);
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #444;
+            color: #999;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .calculator-card {
+                margin: -2rem auto 2rem;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="colombia-flag"></div>
+    
+    <header>
+        <div class="nav-container">
+            <img src="https://lupo.lat/img/lupo01.png" height="60">&nbsp;
+            <div class="logo-flag">
+				<img src="https://flagcdn.com/w40/bo.png" width="40" height="35" alt=""/>
+                
+                <img src="https://flagcdn.com/w40/co.png" width="40" height="35" alt=""/>  
+
+               
+            </div>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <h1>Envía <span>Bolivianos</span> a <span>pesos Colombianos</span></h1>
+        <p>La forma más rápida y segura de enviar dinero de Bolivia a Colombia con las mejores tasas del mercado</p>
+    </section>
+    
+    <div class="container">
+        <div class="calculator-card">
+            <h2><i class="fas fa-calculator"></i> Calculadora de envío</h2>
+            
+            <div class="form-group">
+                <label for="amount">Monto a enviar (BOB)</label>
+                <div class="currency-input-container">
+                    <div class="currency-flag" style="background-image: url('https://flagcdn.com/w40/bo.png')"></div>
+                    <input type="number" id="amount" class="form-control currency-input" placeholder="Ej. 500" min="1">
+                </div>
+            </div>
+            
+     
+            
+
+            
+            <div class="form-group">
+                <label for="received-amount">Recibirás en COP</label>
+                <div class="currency-input-container">
+                    <div class="currency-flag" style="background-image: url('https://flagcdn.com/w40/co.png')"></div>
+                    <input type="text" id="received-amount" class="form-control currency-input" placeholder="0" readonly>
+                </div>
+            </div>
+            
+            <button class="btn-primary" id="calculate-btn">
+                <i class="fas fa-paper-plane"></i> Enviar Dinero
+            </button>
+            
+            <div class="result-card" id="result-card">
+                <div class="result-header">
+                    <div class="result-title">Detalles del envío</div>
+                    <i class="fas fa-check-circle" style="color: var(--yellow);"></i>
+                </div>
+                <div class="result-amount">
+                    $<span id="result-amount">0</span> <small>COP</small>
+                </div>
+                <div class="result-details">
+                    <p><i class="fas fa-coins" style="color: var(--blue);"></i> <strong>Sin comisiones</strong> - 0% de tarifa</p>
+                    <p id="delivery-time"><i class="fas fa-clock" style="color: var(--red);"></i> Tiempo de entrega: 10-20 minutos</p>
+                </div>
+            </div>
+      </div>
+        
+        <!-- Resto de tu landing page se mantiene exactamente igual -->
+        <div class="features-section">
+            <div class="section-title">
+                <h2>¿Por qué enviar con LUPO?</h2>
+                <p>Ofrecemos el servicio más confiable para enviar dinero a Colombia desde Bolivia</p>
+          </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <h3>Mejor tasa de cambio</h3>
+                    <p>Ofrecemos tasas competitivas sin comisiones ocultas.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Envíos rápidos</h3>
+                    <p>El dinero llega en minutos a cuentas bancarias.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Seguridad garantizada</h3>
+                    <p>Tus transferencias están 100% protegidas.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-percentage"></i>
+                    </div>
+                    <h3>Tarifas Cero</h3>
+                    <p>Las comisiones más económicas del mercado.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="testimonials">
+            <div class="section-title">
+                <h2>Lo que dicen nuestros clientes</h2>
+                <p>Miles de personas confían en nosotros para enviar dinero a Colombia</p>
+            </div>
+            
+            <div class="testimonial-card">
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text">"Envío dinero para poder pagar a mi proveedores. y todo fue muy facil y rapido."</p>
+                <div class="testimonial-author">
+                    <img src="https://scontent.fsrz1-1.fna.fbcdn.net/v/t39.30808-6/464316860_8915309868501251_456139633372320508_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=yxq2ezEGn0YQ7kNvwFp_nfy&_nc_oc=AdmySyylYfrYY5JFVHu8mmCfS0fG4GDnyS_yd3EpvslHiN9VCUXfhRaa7MY4kbExfR0&_nc_zt=23&_nc_ht=scontent.fsrz1-1.fna&_nc_gid=qhGc56kMShTFPtkAHAZPLg&oh=00_AfJT0UIv0lyfdirc6KU9wwLVWiKt5dbZRsjXM1coMJeY7Q&oe=6825FC5A" alt="Yiya Muñoz">
+                    <div class="author-info">
+                        <h4>Yiya Muñoz</h4>
+                        <p>Santa Cruz, Bolivia</p>
+                    </div>
+                </div>
+            </div><br>
+
+            
+            <div class="testimonial-card">
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text">"Ningun problema, ya e realizado 2 envios y me fue muy bien. son muy rapidos y profecionales."</p>
+                <div class="testimonial-author">
+                    <a href="https://www.facebook.com/khatia.valentina.morales"><img src="https://scontent.fsrz1-1.fna.fbcdn.net/v/t39.30808-6/316101731_104401555841769_8644976544916156947_n.jpg?_nc_cat=100&amp;ccb=1-7&amp;_nc_sid=6ee11a&amp;_nc_ohc=J8JEVTyRN7kQ7kNvwF2kFor&amp;_nc_oc=AdkEynZpuDo9Jn10QIGggL-Oy8N4CdgmwtUC3IxaxtWTwaSomh5cBTPI6-7LMWylhX0&amp;_nc_zt=23&amp;_nc_ht=scontent.fsrz1-1.fna&amp;_nc_gid=3mExRs2ZX1wcNUjLveNP_Q&amp;oh=00_AfJA_iDyucsAEQ_icBeW4AiKncnKw5UCS_tUqw0GH7DwCg&amp;oe=68260E63" alt="Khatia Valentina Morales"></a>
+<div class="author-info">
+          <h4>Khatia Valentina Morales</h4>
+                        <p>Cochabamba, Bolivia</p>
+                    </div>
+              </div>
+            </div><br>
+
+            
+            <div class="testimonial-card">
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text">"Envío dinero cada mes a mi familia en cali y siempre llega en minutos. La mejor tasa que he encontrado y el proceso es super sencillo."</p>
+                <div class="testimonial-author">
+                    <a href="https://www.facebook.com/oscaruriel.bustosgarcia"><img src="https://scontent.fsrz1-2.fna.fbcdn.net/v/t39.30808-6/492039144_9544533498925904_4744477444843953357_n.jpg?_nc_cat=101&amp;ccb=1-7&amp;_nc_sid=6ee11a&amp;_nc_ohc=HNJdEM8C0jIQ7kNvwEDBQi_&amp;_nc_oc=AdnT_5gCkaboJePfOfquIPHe5-lhL1-xFEH73v-V8sKCXI2Bj-izn5c40lvUh9V_LYk&amp;_nc_zt=23&amp;_nc_ht=scontent.fsrz1-2.fna&amp;_nc_gid=mtZJ__xKjGQRhme5dFlj7A&amp;oh=00_AfIpso-1Cn-56vgdhu-xvuwXKjus3huQXxlvz1ICTJPHZw&amp;oe=6825F09F" alt="Oscar Uriel Bustos Garcia"></a>
+<div class="author-info">
+          <h4>Oscar Uriel Bustos Garcia</h4>
+                        <p>Cali, Colombia</p>
+                  </div>
+              </div>
+          </div>
+        </div>
+</div>
+    
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>LUPO ENVIA</h3>
+                <p>El puente financiero entre Bolivia y Colombia.</p>
+                <div class="social-links">
+                  <a href="https://www.facebook.com/Lupo.envia"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                  <a href="https://wa.me/59175589308"><i class="fab fa-whatsapp"></i></a>
+                </div>
+          </div>
+            <div class="footer-column">
+                <h3>Servicios</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Envío de dinero</a></li>
+                    <li><a href="#">Tasas de cambio</a></li>
+                    <li><a href="https://maps.app.goo.gl/xwgt9poeDwe6ffWG">Puntos de pago</a></li>
+                    <li><a href="#">Empresas</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Ayuda</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Preguntas frecuentes</a></li>
+                    <li><a href="#">Guías de usuario</a></li>
+                    <li><a href="#">Términos y condiciones</a></li>
+                    <li><a href="#">Política de privacidad</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contacto</h3>
+                <ul class="footer-links">
+                    <li><a href="https://wa.me/59175589308"><i class="fas fa-phone"></i> +591 75656922</a></li>
+                    <li><a href="#"><i class="fas fa-envelope"></i> hola@lupo.lat</a></li>
+                    <li><em></em><a href="https://maps.app.goo.gl/xwgt9poeDwe6ffWG9"> Centro Comercial Cañoto #k2</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>© 2024 ColTransfer. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const amountInput = document.getElementById('amount');
+            const receivedInput = document.getElementById('received-amount');
+            const resultCard = document.getElementById('result-card');
+            const deliveryMethod = document.getElementById('delivery-method');
+            
+            // Configuración
+            const EXCHANGE_RATE = 253; // 1 BOB = 253 COP
+            
+            // Calcular automáticamente al escribir
+            amountInput.addEventListener('input', function() {
+                calculateTransfer();
+            });
+            
+            // Actualizar tiempo de entrega al cambiar método
+            deliveryMethod.addEventListener('change', function() {
+                updateDeliveryTime();
+                if (amountInput.value) calculateTransfer();
+            });
+            
+            // Función principal
+            function calculateTransfer() {
+                const amount = parseFloat(amountInput.value);
+                
+                if (!isNaN(amount) && amount > 0) {
+                    const receivedAmount = Math.round(amount * EXCHANGE_RATE);
+                    receivedInput.value = receivedAmount.toLocaleString('es-CO');
+                    document.getElementById('result-amount').textContent = receivedAmount.toLocaleString('es-CO');
+                    resultCard.style.display = 'block';
+                    updateDeliveryTime();
+                } else {
+                    receivedInput.value = '';
+                    resultCard.style.display = 'none';
+                }
+            }
+            
+            function updateDeliveryTime() {
+                const times = {
+                    'bank': '10-20 minutos',
+                    'cash': '2-4 horas',
+                    'mobile': '5-15 minutos'
+                };
+                document.getElementById('delivery-time').innerHTML = 
+                    `<i class="fas fa-clock" style="color: var(--red);"></i> Tiempo de entrega: ${times[deliveryMethod.value]}`;
+            }
+            
+            // Calcular al cargar si hay un valor
+            if (amountInput.value) {
+                calculateTransfer();
+            }
+        });
+    </script><br>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const btn = document.getElementById('calculate-btn');
+  const bobInput = document.getElementById('amount');
+  const copInput = document.getElementById('received-amount');
+  const EXCHANGE_RATE = 253; // 1 BOB = 253 COP
+
+  btn.addEventListener('click', function(e) {
+    e.preventDefault();
+    let message;
+    const bobValue = parseFloat(bobInput.value);
+    const copValue = parseFloat(copInput.value.replace(/\D/g, ''));
+
+    if (!isNaN(bobValue) && bobValue > 0) {
+      // BOB -> COP
+      const cpf = Math.round(bobValue * EXCHANGE_RATE);
+      copInput.value = cpf.toLocaleString('es-CO');
+      message = "Hola, quiero enviar " + cpf.toLocaleString('es-CO') + " COP.";
+    } else if (!isNaN(copValue) && copValue > 0) {
+      // COP -> BOB
+      const bob = (copValue / EXCHANGE_RATE).toFixed(2);
+      bobInput.value = bob;
+      message = "Hola, quiero enviar " + bob + " BOB.";
+    } else {
+      alert('Por favor ingresa un monto válido en cualquiera de los campos');
+      return;
+    }
+
+    // Cambiar botón a verde
+    btn.style.backgroundColor = 'green';
+
+    // Redirigir a WhatsApp
+    const text = encodeURIComponent(message + ' ¿Me ayudan con el envío?');
+    window.open('https://wa.me/59175656922?text=' + text, '_blank');
+  });
+});
+</script>
+</body>
+</html>
