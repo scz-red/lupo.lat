@@ -2,11 +2,11 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Envíos de remesas de Colombia a Bolivia sin comisiones al mejor tipo de cambio. Calcula y envía de forma rápida y segura.">
-  <meta name="keywords" content="envío dinero, remesas, Bolivia, tipo de cambio, sin comisiones, Lupo Transfer">
-  <link rel="icon" href="https://lupo.lat/img/favicon.ico" type="image/x-icon">
-  <title>Bolivianos a Pesos | Envío Rápido a Colombia | LUPO Envíos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Envíos de remesas de Colombia a Bolivia sin comisiones al mejor tipo de cambio. Calcula y envía de forma rápida y segura.">
+    <meta name="keywords" content="envío dinero, remesas, Bolivia, tipo de cambio, sin comisiones, Lupo Transfer">
+    <link rel="icon" href="https://lupo.lat/img/favicon.ico" type="image/x-icon">
+    <title>Pesos  a Bolivianos | Envío Rápido a Colombia | LUPO Envíos</title>
     <style>
         :root {
             --yellow: #FCD116;
@@ -92,7 +92,7 @@
         .hero {
             background: linear-gradient(135deg, var(--blue), #002b7a);
             color: white;
-            padding: 3rem 0;
+            padding: 1.5rem 0;
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -119,8 +119,8 @@
         }
         
         .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
             position: relative;
             z-index: 1;
         }
@@ -130,12 +130,13 @@
         }
         
         .hero p {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             max-width: 700px;
-            margin: 0 auto 2rem;
+            margin: 0 auto 1rem;
             opacity: 0.9;
             position: relative;
             z-index: 1;
+            line-height: 1.4;
         }
         
         .container {
@@ -150,7 +151,7 @@
             padding: 2rem;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             max-width: 500px;
-            margin: -4rem auto 2rem;
+            margin: -2.5rem auto 2rem;
             position: relative;
             z-index: 10;
             border-top: 5px solid var(--yellow);
@@ -378,6 +379,26 @@
             margin: 0.5rem 0;
         }
         
+        .map-section {
+            background-color: #f5f8ff;
+            padding: 3rem 0;
+        }
+        
+        .map-container {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+        }
+        
+        .map-link {
+            color: var(--blue);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-block;
+            margin-top: 1rem;
+        }
+        
         footer {
             background-color: var(--dark);
             color: white;
@@ -473,17 +494,21 @@
         }
         
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2rem;
+            .hero {
+                padding: 1rem 0;
             }
-            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
             .calculator-card {
-                margin: -2rem auto 2rem;
+                margin: -1.8rem auto 2rem;
                 padding: 1.5rem;
             }
-            
             .testimonial-card {
                 max-width: 100%;
+            }
+            .map-section {
+                padding: 2rem 0;
             }
         }
     </style>
@@ -537,14 +562,22 @@
             <div class="result-card" id="result-card">
                 <div class="result-header">
                     <div class="result-title">Detalles del envío</div>
-                    <i class="fas fa-check-circle" style="color: var(--yellow);"></i>
+                    <div id="current-date-time" style="font-size: 0.75rem; color: #999; font-weight: 400;">
+                        <i class="fas fa-check-circle" style="color: var(--yellow); margin-left: 5px;"></i>
+                    </div>
                 </div>
                 <div class="result-amount">
                     Bs <span id="result-amount">0</span> <small>BOB</small>
                 </div>
                 <div class="result-details">
                     <p><i class="fas fa-coins" style="color: var(--blue);"></i> <strong>Sin comisiones</strong> - 0% de tarifa</p>
-                    <p id="delivery-time"><i class="fas fa-clock" style="color: var(--red);"></i> Tiempo de entrega: 10-20 minutos</p>
+                    <p id="delivery-time"><i class="fas fa-clock" style="color: var(--red);"></i> Tiempo de entrega: 10-15 minutos</p>
+										                    <p id="delivery-time" style="font-family: 'Arial Black', Gadget, sans-serif; font-weight: bold;">
+  <i style="color: var(--red);"></i>
+  <strong style="background-color: rgba(255, 255, 0, 0.3); padding: 2px 4px; border-radius: 3px;">
+    www.Lupo.lat/col
+  </strong>
+</p>
                 </div>
             </div>
         </div>
@@ -600,16 +633,16 @@
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
+                        
                     </div>
                     <p class="testimonial-text">"Envío dinero regularmente a mi familia en Santa Cruz y siempre llega en minutos. Excelente servicio y atención."</p>
                     <div class="testimonial-author">
                         <a href="https://www.facebook.com/sandrapaola.nemebejarano"><img src="https://scontent.fsrz1-1.fna.fbcdn.net/v/t39.30808-1/486666251_10231977481277472_2342601570557000389_n.jpg?stp=dst-jpg_s100x100_tt6&_nc_cat=102&ccb=1-7&_nc_sid=e99d92&_nc_ohc=VX13QE7Z1WUQ7kNvwF-IykT&_nc_oc=AdkR1I4DDB6Y6WZ3swD0zz7rJ_roL3VbmD_C-bX1m6mSlLJ7iKksuclduFncrtMEJB0&_nc_zt=24&_nc_ht=scontent.fsrz1-1.fna&_nc_gid=iySO3KYA_6frKY-4kSfB9g&oh=00_AfK3WvYv_Ws1AS1LWdMTa0YmEEwGkmjW-XWtA4jslNiYHA&oe=682AC805" alt="María Rodríguez"></a>
-<div class="author-info">
-            <h4>Sandra Neme </h4>
-                            <p>Caqueta, Colombia</p>
-                      </div>
-                  </div>
+                        <div class="author-info">
+                            <h4>Sandra Neme</h4>
+                            <p>Caquetá, Colombia</p>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="testimonial-card">
@@ -619,11 +652,11 @@
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                     </div>
-                    <p class="testimonial-text">"Necesitaba enviar dinero urgente a mi socio comercial en La Paz y LUPO resolvió todo en menos de 15 minutos."</p>
+                    <p class="testimonial-text">"Necesitaba enviar dinero urgente a mi socio comercial en La Paz y ellos resolvieron todo en menos de 15 minutos."</p>
                     <div class="testimonial-author">
                         <a href="https://www.facebook.com/oscaruriel.bustosgarcia"><img src="https://scontent.fsrz1-2.fna.fbcdn.net/v/t39.30808-6/492039144_9544533498925904_4744477444843953357_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=pVP7qlsSR8gQ7kNvwFOk15G&_nc_oc=AdlicjEncgXlUiJ2FsPoXS17FOzss4vw16cSE8pJBBjRbGj06kYp3EKTEEKzT08N6Oc&_nc_zt=23&_nc_ht=scontent.fsrz1-2.fna&_nc_gid=VfyLmiz_TZI8MEI414wqRQ&oh=00_AfLwLXYoornBbUubMF2g6VmPnPJJ3iNcZevbJxfa_UZB2g&oe=682AC61F" alt="Carlos Andrés"></a>
-<div class="author-info">
-            <h4>Oscar Uriel Bustos Garcia</h4>
+                        <div class="author-info">
+                            <h4>Oscar Uriel Bustos Garcia</h4>
                             <p>Cali, Colombia</p>
                         </div>
                     </div>
@@ -640,12 +673,38 @@
                     <p class="testimonial-text">"La mejor tasa de cambio que he encontrado para recibir dinero de Colombia. El proceso es súper sencillo y el soporte excelente."</p>
                     <div class="testimonial-author">
                         <a href="https://www.facebook.com/khatia.valentina.morales"><img src="https://scontent.fsrz1-1.fna.fbcdn.net/v/t39.30808-6/316101731_104401555841769_8644976544916156947_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=zkMq2_pcXhIQ7kNvwH7_8kJ&_nc_oc=Adm1XK5Apdug7b9XArmb9m9cCmWpLjhz9aa1q-qxfOp7u84vNiRLRId1_OvFc8AgsD4&_nc_zt=23&_nc_ht=scontent.fsrz1-1.fna&_nc_gid=gH2KToa6A6qKG7qaHd2nyg&oh=00_AfLm0yamqavcFbodfGLA-2eRcJQWxPNTkr0lVZXn25_kbw&oe=682AE3E3" alt="Laura Gómez"></a>
-<div class="author-info">
-            <h4>Khatia Valentina Morales</h4>
-                            <p>Santa Cruz,Bolivia</p>
+                        <div class="author-info">
+                            <h4>Khatia Valentina Morales</h4>
+                            <p>Santa Cruz, Bolivia</p>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección del Mapa -->
+    <div class="map-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nuestra ubicación</h2>
+              <p>Visítanos en nuestro punto de atención en Santa Cruz de la Sierra</p>
+                <p>Centro Comercial Cañoro #k2&nbsp;&nbsp;</p>
+            </div>
+            <div class="map-container">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3799.235717362279!2d-63.189774699999994!3d-17.780615600000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x93f1e808c5e5a803%3A0x3e8bdd290d73f9ea!2sComercial%20Ca%C3%B1oto!5e0!3m2!1ses-419!2sbo!4v1747264199250!5m2!1ses-419!2sbo" 
+                    width="100%" 
+                    height="400" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy">
+                </iframe>
+            </div>
+            <div style="text-align: center;">
+                <a href="https://maps.app.goo.gl/8rhtvAL3ZHxzMxcL9" target="_blank" class="map-link">
+                    <i class="fas fa-map-marker-alt"></i> Ver en Google Maps
+                </a>
             </div>
         </div>
     </div>
@@ -703,8 +762,28 @@
             const calculateBtn = document.getElementById('calculate-btn');
             
             // Configuración
-            const EXCHANGE_RATE = 0.00277; // 1 COP = 0.00415 BOB (aproximadamente 1 BOB = 241 COP)
+            const EXCHANGE_RATE = 0.00277; // 1 COP = 0.00277 BOB
             const WHATSAPP_NUMBER = '59171077231';
+            
+            // Mostrar fecha y hora actual
+            function updateDateTime() {
+                const now = new Date();
+                const options = { 
+                    day: '2-digit', 
+                    month: '2-digit', 
+                    year: 'numeric',
+                    hour: '2-digit', 
+                    minute: '2-digit'
+                };
+                const dateStr = now.toLocaleDateString('es-ES', options);
+                document.getElementById('current-date-time').innerHTML = `
+                    ${dateStr} <i class="fas fa-check-circle" style="color: var(--yellow); margin-left: 5px;"></i>
+                `;
+            }
+            
+            // Actualizar cada minuto
+            updateDateTime();
+            setInterval(updateDateTime, 60000);
             
             // Calcular automáticamente al escribir
             amountInput.addEventListener('input', function() {
