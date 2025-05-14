@@ -2,8 +2,11 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bolivianos a Pesos | Envío Rápido a Colombia | ColTransfer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Envíos de remesas de Colombia a Bolivia sin comisiones al mejor tipo de cambio. Calcula y envía de forma rápida y segura.">
+  <meta name="keywords" content="envío dinero, remesas, Bolivia, tipo de cambio, sin comisiones, Lupo Transfer">
+  <link rel="icon" href="https://lupo.lat/img/favicon.ico" type="image/x-icon">
+  <title>Bolivianos a Pesos | Envío Rápido a Colombia | LUPO Envíos</title>
     <style>
         :root {
             --yellow: #FCD116;
@@ -48,26 +51,28 @@
         }
         
         .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--blue);
             display: flex;
             align-items: center;
+            gap: 10px;
+        }
+        
+        .logo img {
+            height: 60px;
         }
         
         .logo-flag {
-            display: inline-flex;
-            margin-left: 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
         
-        .flag-stripe {
-            width: 6px;
-            height: 24px;
+        .logo-flag img {
+            width: 35px;
+            height: 35px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 1px solid #eee;
         }
-        
-        .yellow { background-color: var(--yellow); }
-        .blue { background-color: var(--blue); }
-        .red { background-color: var(--red); }
         
         .login-btn {
             background-color: var(--blue);
@@ -87,7 +92,7 @@
         .hero {
             background: linear-gradient(135deg, var(--blue), #002b7a);
             color: white;
-            padding: 4rem 0;
+            padding: 2rem 0;
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -197,6 +202,10 @@
             font-weight: 600;
             transition: background 0.3s;
             margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
         
         .btn-primary:hover {
@@ -242,7 +251,6 @@
             text-align: center;
         }
         
-        /* Nuevos estilos para la calculadora mejorada */
         .currency-input-container {
             position: relative;
         }
@@ -284,7 +292,6 @@
             font-size: 1.5rem;
         }
         
-        /* Resto de tus estilos se mantienen igual */
         .features-section {
             margin: 4rem 0;
         }
@@ -332,8 +339,8 @@
             padding: 2rem;
             border-radius: 12px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            max-width: 300px;
-            margin: 0 auto;
+            max-width: 400px;
+            margin: 0 auto 2rem;
             border-left: 4px solid var(--red);
         }
         
@@ -458,14 +465,25 @@
             font-size: 0.9rem;
         }
         
+        .testimonials-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+        }
+        
         @media (max-width: 768px) {
             .hero h1 {
-                font-size: 2rem;
+                font-size: 1.5rem;
             }
             
             .calculator-card {
-                margin: -2rem auto 2rem;
+                margin: -1.5rem auto 2rem;
                 padding: 1.5rem;
+            }
+            
+            .testimonial-card {
+                max-width: 100%;
             }
         }
     </style>
@@ -477,20 +495,19 @@
     
     <header>
         <div class="nav-container">
-            <img src="https://lupo.lat/img/lupo01.png" height="60">&nbsp;
-            <div class="logo-flag">
-				<img src="https://flagcdn.com/w40/bo.png" width="40" height="35" alt=""/>
-                
-                <img src="https://flagcdn.com/w40/co.png" width="40" height="35" alt=""/>  
-
-               
+            <div class="logo">
+                <img src="https://lupo.lat/img/lupo01.png" alt="LUPO Envía">
+                <div class="logo-flag">
+                    <img src="https://flagcdn.com/w40/co.png" alt="Colombia">
+                    <img src="https://flagcdn.com/w40/bo.png" alt="Bolivia">
+                </div>
             </div>
         </div>
     </header>
     
     <section class="hero">
-        <h1>Envía <span>Bolivianos</span> a <span>pesos Colombianos</span></h1>
-        <p>La forma más rápida y segura de enviar dinero de Bolivia a Colombia con las mejores tasas del mercado</p>
+        <h1>Envía <span>Pesos Colombianos</span> a <span>Bolivianos </span></h1>
+        <p>La forma más rápida y segura de enviar dinero de Colombia a Bolivia con las mejores tasas del mercado</p>
     </section>
     
     <div class="container">
@@ -498,21 +515,17 @@
             <h2><i class="fas fa-calculator"></i> Calculadora de envío</h2>
             
             <div class="form-group">
-                <label for="amount">Monto a enviar (BOB)</label>
+                <label for="amount">Monto a enviar (COP)</label>
                 <div class="currency-input-container">
-                    <div class="currency-flag" style="background-image: url('https://flagcdn.com/w40/bo.png')"></div>
-                    <input type="number" id="amount" class="form-control currency-input" placeholder="Ej. 500" min="1">
+                    <div class="currency-flag" style="background-image: url('https://flagcdn.com/w40/co.png')"></div>
+                    <input type="number" id="amount" class="form-control currency-input" placeholder="Ej. 500000" min="1">
                 </div>
             </div>
             
-     
-            
-
-            
             <div class="form-group">
-                <label for="received-amount">Recibirás en COP</label>
+                <label for="received-amount">Recibirás en BOB</label>
                 <div class="currency-input-container">
-                    <div class="currency-flag" style="background-image: url('https://flagcdn.com/w40/co.png')"></div>
+                    <div class="currency-flag" style="background-image: url('https://flagcdn.com/w40/bo.png')"></div>
                     <input type="text" id="received-amount" class="form-control currency-input" placeholder="0" readonly>
                 </div>
             </div>
@@ -527,21 +540,20 @@
                     <i class="fas fa-check-circle" style="color: var(--yellow);"></i>
                 </div>
                 <div class="result-amount">
-                    $<span id="result-amount">0</span> <small>COP</small>
+                    Bs <span id="result-amount">0</span> <small>BOB</small>
                 </div>
                 <div class="result-details">
                     <p><i class="fas fa-coins" style="color: var(--blue);"></i> <strong>Sin comisiones</strong> - 0% de tarifa</p>
                     <p id="delivery-time"><i class="fas fa-clock" style="color: var(--red);"></i> Tiempo de entrega: 10-20 minutos</p>
                 </div>
             </div>
-      </div>
+        </div>
         
-        <!-- Resto de tu landing page se mantiene exactamente igual -->
         <div class="features-section">
             <div class="section-title">
                 <h2>¿Por qué enviar con LUPO?</h2>
-                <p>Ofrecemos el servicio más confiable para enviar dinero a Colombia desde Bolivia</p>
-          </div>
+                <p>Ofrecemos el servicio más confiable para enviar dinero a Bolivia desde Colombia</p>
+            </div>
             
             <div class="features-grid">
                 <div class="feature-card">
@@ -578,84 +590,84 @@
         <div class="testimonials">
             <div class="section-title">
                 <h2>Lo que dicen nuestros clientes</h2>
-                <p>Miles de personas confían en nosotros para enviar dinero a Colombia</p>
+                <p>Miles de personas confían en nosotros para enviar dinero a Bolivia</p>
             </div>
             
-            <div class="testimonial-card">
-                <div class="rating">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <p class="testimonial-text">"Envío dinero para poder pagar a mi proveedores. y todo fue muy facil y rapido."</p>
-                <div class="testimonial-author">
-                    <img src="https://scontent.fsrz1-1.fna.fbcdn.net/v/t39.30808-6/464316860_8915309868501251_456139633372320508_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=yxq2ezEGn0YQ7kNvwFp_nfy&_nc_oc=AdmySyylYfrYY5JFVHu8mmCfS0fG4GDnyS_yd3EpvslHiN9VCUXfhRaa7MY4kbExfR0&_nc_zt=23&_nc_ht=scontent.fsrz1-1.fna&_nc_gid=qhGc56kMShTFPtkAHAZPLg&oh=00_AfJT0UIv0lyfdirc6KU9wwLVWiKt5dbZRsjXM1coMJeY7Q&oe=6825FC5A" alt="Yiya Muñoz">
-                    <div class="author-info">
-                        <h4>Yiya Muñoz</h4>
-                        <p>Santa Cruz, Bolivia</p>
+            <div class="testimonials-container">
+                <div class="testimonial-card">
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
                     </div>
-                </div>
-            </div><br>
-
-            
-            <div class="testimonial-card">
-                <div class="rating">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <p class="testimonial-text">"Ningun problema, ya e realizado 2 envios y me fue muy bien. son muy rapidos y profecionales."</p>
-                <div class="testimonial-author">
-                    <a href="https://www.facebook.com/khatia.valentina.morales"><img src="https://scontent.fsrz1-1.fna.fbcdn.net/v/t39.30808-6/316101731_104401555841769_8644976544916156947_n.jpg?_nc_cat=100&amp;ccb=1-7&amp;_nc_sid=6ee11a&amp;_nc_ohc=J8JEVTyRN7kQ7kNvwF2kFor&amp;_nc_oc=AdkEynZpuDo9Jn10QIGggL-Oy8N4CdgmwtUC3IxaxtWTwaSomh5cBTPI6-7LMWylhX0&amp;_nc_zt=23&amp;_nc_ht=scontent.fsrz1-1.fna&amp;_nc_gid=3mExRs2ZX1wcNUjLveNP_Q&amp;oh=00_AfJA_iDyucsAEQ_icBeW4AiKncnKw5UCS_tUqw0GH7DwCg&amp;oe=68260E63" alt="Khatia Valentina Morales"></a>
+                    <p class="testimonial-text">"Envío dinero regularmente a mi familia en Santa Cruz y siempre llega en minutos. Excelente servicio y atención."</p>
+                    <div class="testimonial-author">
+                        <a href="https://www.facebook.com/sandrapaola.nemebejarano"><img src="https://scontent.fsrz1-1.fna.fbcdn.net/v/t39.30808-1/486666251_10231977481277472_2342601570557000389_n.jpg?stp=dst-jpg_s100x100_tt6&_nc_cat=102&ccb=1-7&_nc_sid=e99d92&_nc_ohc=VX13QE7Z1WUQ7kNvwF-IykT&_nc_oc=AdkR1I4DDB6Y6WZ3swD0zz7rJ_roL3VbmD_C-bX1m6mSlLJ7iKksuclduFncrtMEJB0&_nc_zt=24&_nc_ht=scontent.fsrz1-1.fna&_nc_gid=iySO3KYA_6frKY-4kSfB9g&oh=00_AfK3WvYv_Ws1AS1LWdMTa0YmEEwGkmjW-XWtA4jslNiYHA&oe=682AC805" alt="María Rodríguez"></a>
 <div class="author-info">
-          <h4>Khatia Valentina Morales</h4>
-                        <p>Cochabamba, Bolivia</p>
-                    </div>
-              </div>
-            </div><br>
-
-            
-            <div class="testimonial-card">
-                <div class="rating">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <p class="testimonial-text">"Envío dinero cada mes a mi familia en cali y siempre llega en minutos. La mejor tasa que he encontrado y el proceso es super sencillo."</p>
-                <div class="testimonial-author">
-                    <a href="https://www.facebook.com/oscaruriel.bustosgarcia"><img src="https://scontent.fsrz1-2.fna.fbcdn.net/v/t39.30808-6/492039144_9544533498925904_4744477444843953357_n.jpg?_nc_cat=101&amp;ccb=1-7&amp;_nc_sid=6ee11a&amp;_nc_ohc=HNJdEM8C0jIQ7kNvwEDBQi_&amp;_nc_oc=AdnT_5gCkaboJePfOfquIPHe5-lhL1-xFEH73v-V8sKCXI2Bj-izn5c40lvUh9V_LYk&amp;_nc_zt=23&amp;_nc_ht=scontent.fsrz1-2.fna&amp;_nc_gid=mtZJ__xKjGQRhme5dFlj7A&amp;oh=00_AfIpso-1Cn-56vgdhu-xvuwXKjus3huQXxlvz1ICTJPHZw&amp;oe=6825F09F" alt="Oscar Uriel Bustos Garcia"></a>
-<div class="author-info">
-          <h4>Oscar Uriel Bustos Garcia</h4>
-                        <p>Cali, Colombia</p>
+            <h4>Sandra Neme </h4>
+                            <p>Caqueta, Colombia</p>
+                      </div>
                   </div>
-              </div>
-          </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"Necesitaba enviar dinero urgente a mi socio comercial en La Paz y LUPO resolvió todo en menos de 15 minutos."</p>
+                    <div class="testimonial-author">
+                        <a href="https://www.facebook.com/oscaruriel.bustosgarcia"><img src="https://scontent.fsrz1-2.fna.fbcdn.net/v/t39.30808-6/492039144_9544533498925904_4744477444843953357_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=pVP7qlsSR8gQ7kNvwFOk15G&_nc_oc=AdlicjEncgXlUiJ2FsPoXS17FOzss4vw16cSE8pJBBjRbGj06kYp3EKTEEKzT08N6Oc&_nc_zt=23&_nc_ht=scontent.fsrz1-2.fna&_nc_gid=VfyLmiz_TZI8MEI414wqRQ&oh=00_AfLwLXYoornBbUubMF2g6VmPnPJJ3iNcZevbJxfa_UZB2g&oe=682AC61F" alt="Carlos Andrés"></a>
+<div class="author-info">
+            <h4>Oscar Uriel Bustos Garcia</h4>
+                            <p>Cali, Colombia</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"La mejor tasa de cambio que he encontrado para recibir dinero de Colombia. El proceso es súper sencillo y el soporte excelente."</p>
+                    <div class="testimonial-author">
+                        <a href="https://www.facebook.com/khatia.valentina.morales"><img src="https://scontent.fsrz1-1.fna.fbcdn.net/v/t39.30808-6/316101731_104401555841769_8644976544916156947_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=zkMq2_pcXhIQ7kNvwH7_8kJ&_nc_oc=Adm1XK5Apdug7b9XArmb9m9cCmWpLjhz9aa1q-qxfOp7u84vNiRLRId1_OvFc8AgsD4&_nc_zt=23&_nc_ht=scontent.fsrz1-1.fna&_nc_gid=gH2KToa6A6qKG7qaHd2nyg&oh=00_AfLm0yamqavcFbodfGLA-2eRcJQWxPNTkr0lVZXn25_kbw&oe=682AE3E3" alt="Laura Gómez"></a>
+<div class="author-info">
+            <h4>Khatia Valentina Morales</h4>
+                            <p>Santa Cruz,Bolivia</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-</div>
+    </div>
     
     <footer>
         <div class="footer-container">
             <div class="footer-column">
-                <h3>LUPO ENVIA</h3>
-                <p>El puente financiero entre Bolivia y Colombia.</p>
+                <h3>LUPO ENVÍA</h3>
+                <p>El puente financiero entre Colombia y Bolivia.</p>
                 <div class="social-links">
-                  <a href="https://www.facebook.com/Lupo.envia"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.facebook.com/Lupo.envia" target="_blank"><i class="fab fa-facebook-f"></i></a>
                     <a href="#"><i class="fab fa-twitter"></i></a>
                     <a href="#"><i class="fab fa-instagram"></i></a>
-                  <a href="https://wa.me/59175589308"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://wa.me/59175589308" target="_blank"><i class="fab fa-whatsapp"></i></a>
                 </div>
-          </div>
+            </div>
             <div class="footer-column">
                 <h3>Servicios</h3>
                 <ul class="footer-links">
                     <li><a href="#">Envío de dinero</a></li>
                     <li><a href="#">Tasas de cambio</a></li>
-                    <li><a href="https://maps.app.goo.gl/xwgt9poeDwe6ffWG">Puntos de pago</a></li>
+                    <li><a href="https://maps.app.goo.gl/xwgt9poeDwe6ffWG9" target="_blank">Puntos de pago</a></li>
                     <li><a href="#">Empresas</a></li>
                 </ul>
             </div>
@@ -671,15 +683,15 @@
             <div class="footer-column">
                 <h3>Contacto</h3>
                 <ul class="footer-links">
-                    <li><a href="https://wa.me/59175589308"><i class="fas fa-phone"></i> +591 75656922</a></li>
-                    <li><a href="#"><i class="fas fa-envelope"></i> hola@lupo.lat</a></li>
-                    <li><em></em><a href="https://maps.app.goo.gl/xwgt9poeDwe6ffWG9"> Centro Comercial Cañoto #k2</a></li>
+                    <li><a href="https://wa.me/59171077231" target="_blank"><i class="fas fa-phone"></i> +591 71077231</a></li>
+                    <li><a href="mailto:hola@lupo.lat"><i class="fas fa-envelope"></i> hola@lupo.lat</a></li>
+                    <li><a href="https://maps.app.goo.gl/xwgt9poeDwe6ffWG9" target="_blank"><i class="fas fa-map-marker-alt"></i> Centro Comercial Cañoto #k2</a></li>
                 </ul>
             </div>
         </div>
         
         <div class="copyright">
-            <p>© 2024 ColTransfer. Todos los derechos reservados.</p>
+            <p>© 2024 LUPO Envía. Todos los derechos reservados.</p>
         </div>
     </footer>
     
@@ -688,20 +700,15 @@
             const amountInput = document.getElementById('amount');
             const receivedInput = document.getElementById('received-amount');
             const resultCard = document.getElementById('result-card');
-            const deliveryMethod = document.getElementById('delivery-method');
+            const calculateBtn = document.getElementById('calculate-btn');
             
             // Configuración
-            const EXCHANGE_RATE = 241; // 1 BOB = 241 COP
+            const EXCHANGE_RATE = 0.00277; // 1 COP = 0.00415 BOB (aproximadamente 1 BOB = 241 COP)
+            const WHATSAPP_NUMBER = '59171077231';
             
             // Calcular automáticamente al escribir
             amountInput.addEventListener('input', function() {
                 calculateTransfer();
-            });
-            
-            // Actualizar tiempo de entrega al cambiar método
-            deliveryMethod.addEventListener('change', function() {
-                updateDeliveryTime();
-                if (amountInput.value) calculateTransfer();
             });
             
             // Función principal
@@ -709,69 +716,50 @@
                 const amount = parseFloat(amountInput.value);
                 
                 if (!isNaN(amount) && amount > 0) {
-                    const receivedAmount = Math.round(amount * EXCHANGE_RATE);
-                    receivedInput.value = receivedAmount.toLocaleString('es-CO');
-                    document.getElementById('result-amount').textContent = receivedAmount.toLocaleString('es-CO');
+                    const receivedAmount = (amount * EXCHANGE_RATE).toFixed(2);
+                    receivedInput.value = receivedAmount;
+                    document.getElementById('result-amount').textContent = receivedAmount;
                     resultCard.style.display = 'block';
-                    updateDeliveryTime();
                 } else {
                     receivedInput.value = '';
                     resultCard.style.display = 'none';
                 }
             }
             
-            function updateDeliveryTime() {
-                const times = {
-                    'bank': '10-20 minutos',
-                    'cash': '2-4 horas',
-                    'mobile': '5-15 minutos'
-                };
-                document.getElementById('delivery-time').innerHTML = 
-                    `<i class="fas fa-clock" style="color: var(--red);"></i> Tiempo de entrega: ${times[deliveryMethod.value]}`;
-            }
+            // Manejar el clic en el botón de enviar
+            calculateBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const amount = parseFloat(amountInput.value);
+                
+                if (!isNaN(amount) && amount > 0) {
+                    const receivedAmount = (amount * EXCHANGE_RATE).toFixed(2);
+                    const message = `Hola, quiero enviar ${amount.toLocaleString('es-CO')} COP (${receivedAmount} BOB) a Bolivia. ¿Me ayudan con el envío?`;
+                    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+                    
+                    // Cambiar el botón a verde para indicar éxito
+                    calculateBtn.style.backgroundColor = '#28a745';
+                    calculateBtn.innerHTML = '<i class="fas fa-check"></i> Redirigiendo a WhatsApp...';
+                    
+                    // Redirigir después de 1 segundo
+                    setTimeout(() => {
+                        window.open(whatsappUrl, '_blank');
+                        
+                        // Restaurar el botón después de 3 segundos
+                        setTimeout(() => {
+                            calculateBtn.style.backgroundColor = '';
+                            calculateBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Dinero';
+                        }, 3000);
+                    }, 1000);
+                } else {
+                    alert('Por favor ingresa un monto válido en Pesos Colombianos (COP)');
+                }
+            });
             
             // Calcular al cargar si hay un valor
             if (amountInput.value) {
                 calculateTransfer();
             }
         });
-    </script><br>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const btn = document.getElementById('calculate-btn');
-  const bobInput = document.getElementById('amount');
-  const copInput = document.getElementById('received-amount');
-  const EXCHANGE_RATE = 241; // 1 BOB = 241 COP
-
-  btn.addEventListener('click', function(e) {
-    e.preventDefault();
-    let message;
-    const bobValue = parseFloat(bobInput.value);
-    const copValue = parseFloat(copInput.value.replace(/\D/g, ''));
-
-    if (!isNaN(bobValue) && bobValue > 0) {
-      // BOB -> COP
-      const cpf = Math.round(bobValue * EXCHANGE_RATE);
-      copInput.value = cpf.toLocaleString('es-CO');
-      message = "Hola, quiero enviar " + cpf.toLocaleString('es-CO') + " COP.";
-    } else if (!isNaN(copValue) && copValue > 0) {
-      // COP -> BOB
-      const bob = (copValue / EXCHANGE_RATE).toFixed(2);
-      bobInput.value = bob;
-      message = "Hola, quiero enviar " + bob + " BOB.";
-    } else {
-      alert('Por favor ingresa un monto válido en cualquiera de los campos');
-      return;
-    }
-
-    // Cambiar botón a verde
-    btn.style.backgroundColor = 'green';
-
-    // Redirigir a WhatsApp
-    const text = encodeURIComponent(message + ' ¿Me ayudan con el envío?');
-    window.open('https://wa.me/59175656922?text=' + text, '_blank');
-  });
-});
-</script>
+    </script>
 </body>
 </html>
