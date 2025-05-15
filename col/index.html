@@ -8,11 +8,267 @@
     <link rel="icon" href="https://lupo.lat/img/favicon.ico" type="image/x-icon">
     <title>Bolivianos a Pesos | Envío Rápido a Colombia | LUPO Envíos</title>
     <style>
-        /* Todos los estilos CSS anteriores se mantienen igual */
-        /* ... (pegar aquí todo el CSS del código original) ... */
+        :root {
+            --blue: #2962ff;
+            --red: #d32f2f;
+            --yellow: #ffd600;
+            --green: #00c853;
+            --dark: #212121;
+            --light: #f5f5f5;
+            --gray: #757575;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: var(--dark);
+            line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        .colombia-flag {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 150px;
+            height: 150px;
+            background-image: url('https://flagcdn.com/w160/co.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.1;
+            z-index: 0;
+        }
+        
+        header {
+            padding: 20px 0;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo img {
+            height: 40px;
+        }
+        
+        .logo-flag {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .logo-flag img {
+            height: 20px;
+            border-radius: 2px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h1 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .hero h1 span {
+            color: var(--blue);
+        }
+        
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 40px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .calculator-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            padding: 30px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .calculator-card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .currency-input-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        
+        .currency-flag {
+            width: 30px;
+            height: 30px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 50%;
+            position: absolute;
+            left: 12px;
+            z-index: 2;
+        }
+        
+        .currency-input {
+            width: 100%;
+            padding: 12px 15px 12px 50px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .currency-input:focus {
+            border-color: var(--blue);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(41, 98, 255, 0.2);
+        }
+        
+        .btn-primary {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--green);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .btn-primary:hover {
+            background-color: #00b34a;
+            transform: translateY(-2px);
+        }
+        
+        .btn-primary:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .result-card {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 25px;
+            display: none;
+            border-left: 4px solid var(--green);
+        }
+        
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .result-title {
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .result-amount {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+        
+        .result-amount small {
+            font-size: 1rem;
+            color: var(--gray);
+        }
+        
+        .result-details p {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .calculator-card {
+                padding: 20px;
+            }
+            
+            .colombia-flag {
+                width: 100px;
+                height: 100px;
+            }
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Meta tags para mejor soporte en iOS -->
+    <meta property="al:ios:app_store_id" content="310633997" />
+    <meta property="al:ios:app_name" content="WhatsApp" />
 </head>
 <body>
     <div class="colombia-flag"></div>
@@ -30,7 +286,7 @@
     </header>
     
     <section class="hero">
-        <h1>Envía <span>Pesos Colombianos</span> a <span>Bolivianos </span></h1>
+        <h1>Envía <span>Pesos Colombianos</span> a <span>Bolivianos</span></h1>
         <p>La forma más rápida y segura de enviar dinero de Colombia a Bolivia con las mejores tasas del mercado</p>
     </section>
     
@@ -69,19 +325,11 @@
                 <div class="result-details">
                     <p><i class="fas fa-coins" style="color: var(--blue);"></i> <strong>Sin comisiones</strong> - 0% de tarifa</p>
                     <p id="delivery-time"><i class="fas fa-clock" style="color: var(--red);"></i> Tiempo de entrega: 10-20 minutos</p>
+                    <p id="exchange-rate"><i class="fas fa-exchange-alt" style="color: var(--green);"></i> Tipo de cambio: 1 COP = <span id="rate-value">0.00277</span> BOB</p>
                 </div>
             </div>
         </div>
-        
-        <!-- Sección de características y testimonios (mantener igual) -->
-        <!-- ... (pegar aquí el resto del HTML original) ... -->
-        
     </div>
-    
-    <footer>
-        <!-- Footer original -->
-        <!-- ... (pegar aquí el footer del código original) ... -->
-    </footer>
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -89,16 +337,29 @@
             const receivedInput = document.getElementById('received-amount');
             const resultCard = document.getElementById('result-card');
             const calculateBtn = document.getElementById('calculate-btn');
+            const rateValue = document.getElementById('rate-value');
             
             // Configuración
             const EXCHANGE_RATE = 0.00277;
             const WHATSAPP_NUMBER = '59171077231';
+            const MIN_AMOUNT = 50000; // 50.000 COP mínimo
+            
+            // Mostrar tipo de cambio inicial
+            rateValue.textContent = EXCHANGE_RATE.toFixed(6);
             
             // Función para formatear números
             function formatNumber(number, isCOP = true) {
                 return isCOP 
-                    ? new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(number)
-                    : new Intl.NumberFormat('es-BO', { style: 'currency', currency: 'BOB', minimumFractionDigits: 2 }).format(number);
+                    ? new Intl.NumberFormat('es-CO', { 
+                        style: 'currency', 
+                        currency: 'COP', 
+                        maximumFractionDigits: 0 
+                      }).format(number).replace(/^[^\d]+/, '')
+                    : new Intl.NumberFormat('es-BO', { 
+                        style: 'currency', 
+                        currency: 'BOB', 
+                        minimumFractionDigits: 2 
+                      }).format(number).replace(/^[^\d]+/, '');
             }
 
             // Sanitizar input
@@ -110,6 +371,12 @@
             function calculateTransfer() {
                 const rawValue = sanitizeInput(amountInput.value);
                 const amount = parseInt(rawValue) || 0;
+                
+                if (amount > 0 && amount < MIN_AMOUNT) {
+                    receivedInput.value = '';
+                    resultCard.style.display = 'none';
+                    return;
+                }
                 
                 if (amount > 0) {
                     const receivedAmount = amount * EXCHANGE_RATE;
@@ -130,26 +397,61 @@
                 calculateTransfer();
             });
 
-            // Manejar clic en el botón
+            // Manejar clic en el botón - VERSIÓN MEJORADA
             calculateBtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 const rawValue = sanitizeInput(amountInput.value);
                 const amount = parseInt(rawValue);
                 
+                if (amount > 0 && amount < MIN_AMOUNT) {
+                    alert(`El monto mínimo de envío es ${formatNumber(MIN_AMOUNT)} COP`);
+                    return;
+                }
+                
                 if (amount > 0) {
                     const receivedAmount = amount * EXCHANGE_RATE;
                     const message = `Hola, quiero enviar ${formatNumber(amount)} COP (${formatNumber(receivedAmount, false)} BOB) a Bolivia. ¿Me ayudan con el envío?`;
-                    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
                     
+                    // Detectar dispositivo
+                    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                    const whatsappUrl = isMobile 
+                        ? `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(message)}`
+                        : `https://web.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(message)}`;
+                    
+                    // Crear enlace temporal para redirección confiable
+                    const link = document.createElement('a');
+                    link.href = whatsappUrl;
+                    link.target = '_blank';
+                    link.rel = 'noopener noreferrer';
+                    
+                    // Feedback visual
                     calculateBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Redirigiendo...';
+                    calculateBtn.disabled = true;
+                    
+                    // Agregar y hacer clic en el enlace
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                    // Fallback en caso de que no se redirija
                     setTimeout(() => {
-                        window.open(whatsappUrl, '_blank');
+                        if (!document.hidden) {
+                            window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+                        }
+                    }, 2000);
+                    
+                    // Restaurar botón después de 3 segundos
+                    setTimeout(() => {
                         calculateBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Dinero';
-                    }, 1000);
+                        calculateBtn.disabled = false;
+                    }, 3000);
                 } else {
                     alert('Por favor ingresa un monto válido en Pesos Colombianos (COP)');
                 }
             });
+            
+            // Inicializar cálculo
+            calculateTransfer();
         });
     </script>
 </body>
