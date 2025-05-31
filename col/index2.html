@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recepción Xiaomi - Servicio Técnico</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Roboto',sans-serif;background:#f5f5f5;display:flex;justify-content:center;padding:20px}
+    .container{width:100%;max-width:580px;background:#fff;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.1);overflow:hidden}
+    header{background:#212121;padding:16px;text-align:center}
+    header h1{color:#FF9800;font-size:20px;margin:0}
+    main{padding:16px}
+    fieldset{border:1px solid #E0E0E0;border-radius:6px;padding:12px;margin-bottom:16px;background:#FAFAFA}
+    legend{padding:0 6px;font-weight:600;color:#212121}
+    label{display:block;margin-top:10px;color:#424242;font-size:14px}
+    input,select,textarea,button{width:100%;font-size:14px}
+    input,select,textarea{padding:8px;margin-top:4px;border:1px solid #BDBDBD;border-radius:4px}
+    button{padding:12px;background:#FF9800;color:#fff;border:none;border-radius:4px;cursor:pointer;margin-top:16px}
+    button:hover{background:#FB8C00}
+    .date-container{margin-bottom:12px;text-align:right;color:#757575;font-size:13px}
+    #pattern-container{position:relative;width:100%;height:240px;border:1px solid #BDBDBD;border-radius:6px;background:#fff;margin-top:8px}
+    #pattern-container canvas{position:absolute;top:0;left:0;width:100%;height:100%}
+    #pattern-sequence{margin-top:8px;text-align:center;color:#424242;font-size:14px}
+    #imagePreview{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+    .preview-image{width:80px;height:80px;object-fit:cover;border-radius:4px;border:1px solid #E0E0E0}
+    #photoCounter{font-size:12px;color:#757575;margin-top:4px}
+    #confirmation{display:none;background:#4CAF50;color:white;padding:12px;border-radius:4px;margin-top:16px;text-align:center}
+    .costos-container{display:flex;gap:16px;margin-top:16px}
+    .costo-box{flex:1;border:1px solid #E0E0E0;border-radius:6px;padding:12px;background:#fff}
+    .costo-box label{font-weight:600;color:#212121}
+    .costo-box input{text-align:right;font-weight:600;border:none;background:transparent}
+    .servicios-container{margin-top:16px}
+    .servicio-item{display:flex;gap:8px;margin-bottom:8px;align-items:center}
+    .servicio-item input{flex:3}
+    .servicio-item input[type="number"]{flex:1}
+    .servicio-item button{flex:0 0 40px;margin-top:0;padding:8px}
+    #addServicio{background:#2196F3;width:auto;margin-top:8px}
+    #addServicio:hover{background:#1976D2}
+    input:focus,select:focus,textarea:focus{border-color:#FF9800;outline:none;box-shadow:0 0 0 2px rgba(255,152,0,0.2)}
+    .required-field::after{content:" *";color:#F44336}
+    #loading{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:1000;justify-content:center;align-items:center}
+    #loading div{background:white;padding:20px;border-radius:8px;text-align:center}
+    .spinner{border:4px solid #f3f3f3;border-top:4px solid #FF9800;border-radius:50%;width:30px;height:30px;animation:spin 1s linear infinite;margin:0 auto 10px}
+    @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+    @media(max-width:480px){body{padding:10px}.costos-container{flex-direction:column}header h1{font-size:18px}label{font-size:13px}.servicio-item{flex-direction:column}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header><h1>RECIBO SERVICIO TÉCNICO</h1></header>
+    <main>
+      <form id="formRecibo">
+        <!-- Campos del formulario se mantienen igual -->
+        <!-- ... -->
+        
+        <input type="hidden" id="patternValue">
+        <div id="confirmation">Recibo generado con éxito!</div>
+        <button type="submit" id="generateBtn">
+          <span class="button-icon">📄</span>
+          Generar Recibo PDF
+        </button>
+      </form>
+    </main>
+  </div>
+  
+  <div id="loading">
+    <div>
+      <div class="spinner"></div>
+      <p>Generando recibo...</p>
+    </div>
+  </div>
+
+  <script>
+    // Contador de recibos (empieza en 1340)
+    let contadorRecibos = 1340;
+    const config = {
+      nombreTienda: "XIAOMI SCZ",
+      direccion: "Centro Comercial Cañoto #k1, Santa Cruz",
+      telefono: "75522004",
+      horario: "Lunes a Viernes 9:00 - 18:00"
+    };
+    
+    document.addEventListener('DOMContentLoaded',()=>{
+      // Generar número de recibo único
+      function generarNumeroRecibo() {
+        const numero = contadorRecibos++;
+        return `REC-${numero}`;
+      }
+
+      // Mostrar fecha y número de recibo
+      document.getElementById('dateTimeDisplay').textContent = new Date().toLocaleString();
+      document.getElementById('numeroReciboDisplay').textContent = `Recibo #${contadorRecibos}`;
+      
+      // Toggle seguridad
+      const tipo = document.getElementById('tipoSeguridad'), 
+            pinCont = document.getElementById('pinContainer'), 
+            fieldP = document.getElementById('field-patron');
+      tipo.addEventListener('change',()=>{ 
+        pinCont.style.display = tipo.value==='pin'? 'block':'none'; 
+        fieldP.style.display = tipo.value==='patron'? 'block':'none'; 
+      });
+      fieldP.style.display = 'block';
+      
+      // Vista previa de imágenes
+      const fotosInput = document.getElementById('fotos');
+      const imagePreview = document.getElementById('imagePreview');
+      const photoCounter = document.getElementById('photoCounter');
+      
+      fotosInput.addEventListener('change', function() {
+        imagePreview.innerHTML = '';
+        const files = this.files;
+        photoCounter.textContent = `${files.length}/4 fotos seleccionadas`;
+        
+        if (files.length > 4) {
+          alert('Solo puedes seleccionar hasta 4 fotos');
+          this.value = '';
+          photoCounter.textContent = '0/4 fotos seleccionadas';
+          return;
+        }
+        
+        for (let i = 0; i < files.length; i++) {
+          const file = files[i];
+          if (!file.type.match('image.*')) continue;
+          
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            img.classList.add('preview-image');
+            imagePreview.appendChild(img);
+          }
+          reader.readAsDataURL(file);
+        }
+      });
+
+      // Gestión de servicios
+      const serviciosList = document.getElementById('serviciosList');
+      const addServicioBtn = document.getElementById('addServicio');
+      const costoTotal = document.getElementById('costoTotal');
+      
+      // Función para calcular el total
+      function calcularTotal() {
+        let total = 0;
+        document.querySelectorAll('.servicio-costo').forEach(input => {
+          total += parseFloat(input.value) || 0;
+        });
+        costoTotal.value = total.toFixed(2);
+      }
+      
+      // Función para añadir servicio
+      function addServicio() {
+        const servicioItem = document.createElement('div');
+        servicioItem.className = 'servicio-item';
+        servicioItem.innerHTML = `
+          <input type="text" class="servicio-desc" placeholder="Descripción del servicio">
+          <input type="number" class="servicio-costo" placeholder="Bs. 0.00" step="0.01" min="0">
+          <button type="button" class="removeServicio">×</button>
+        `;
+        serviciosList.appendChild(servicioItem);
+        
+        // Evento para eliminar servicio
+        servicioItem.querySelector('.removeServicio').addEventListener('click', function() {
+          serviciosList.removeChild(servicioItem);
+          calcularTotal();
+          updateRemoveButtons();
+        });
+        
+        // Evento para calcular total cuando cambia el costo
+        servicioItem.querySelector('.servicio-costo').addEventListener('input', calcularTotal);
+      }
+      
+      // Mostrar botón de eliminar en el primer servicio si hay más de uno
+      function updateRemoveButtons() {
+        const items = serviciosList.querySelectorAll('.servicio-item');
+        items.forEach((item, index) => {
+          const removeBtn = item.querySelector('.removeServicio');
+          removeBtn.style.display = items.length > 1 ? 'block' : 'none';
+        });
+      }
+      
+      // Evento para añadir servicio
+      addServicioBtn.addEventListener('click', function() {
+        addServicio();
+        updateRemoveButtons();
+      });
+      
+      // Evento para el primer servicio
+      serviciosList.querySelector('.servicio-costo').addEventListener('input', calcularTotal);
+      serviciosList.querySelector('.removeServicio').addEventListener('click', function() {
+        if(serviciosList.querySelectorAll('.servicio-item').length > 1) {
+          serviciosList.removeChild(this.parentNode);
+          calcularTotal();
+          updateRemoveButtons();
+        }
+      });
+      
+      // Validación de teléfono (solo números)
+      document.getElementById('telefono').addEventListener('input', function(e) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+      });
+      
+      // PatternLock
+      class PatternLock {
+        constructor(){
+          this.bg = document.getElementById('bgCanvas');
+          this.ln = document.getElementById('lineCanvas');
+          this.bgc = this.bg.getContext('2d');
+          this.lnc = this.ln.getContext('2d');
+          this.r = 20; this.w = this.bg.width; this.h = this.bg.height;
+          this.pts = []; this.path = []; this.d = false;
+          this.seqEl = document.getElementById('pattern-sequence');
+          this.valEl = document.getElementById('patternValue');
+          this.init();
+        }
+        init(){
+          const cols=3, rows=3, margin=20;
+          const sepX=(this.w-2*margin)/(cols-1), sepY=(this.h-2*margin)/(rows-1);
+          let id=1;
+          for(let y=0;y<rows;y++){
+            for(let x=0;x<cols;x++){
+              this.pts.push({id:id++,x:margin+sepX*x,y:margin+sepY*y,sel:false});
+            }
+          }
+          this.draw(); this.attach();
+        }
+        draw(){
+          this.bgc.clearRect(0,0,this.w,this.h);
+          this.bgc.strokeStyle='#BDBDBD'; this.bgc.lineWidth=2;
+          this.pts.forEach(p=>{this.bgc.beginPath();this.bgc.arc(p.x,p.y,this.r,0,2*Math.PI);this.bgc.stroke();});
+        }
+        attach(){
+          ['mousedown','touchstart'].forEach(e=>this.ln.addEventListener(e,ev=>this.start(ev)));
+          ['mousemove','touchmove'].forEach(e=>this.ln.addEventListener(e,ev=>this.move(ev)));
+          ['mouseup','mouseleave','touchend'].forEach(e=>this.ln.addEventListener(e,()=>this.end()));
+        }
+        pos(e){const rect=this.ln.getBoundingClientRect(),t=e.touches?e.touches[0]:e;return{x:t.clientX-rect.left,y:t.clientY-rect.top};}
+        hit(pt){return this.pts.find(p=>!p.sel&&Math.hypot(p.x-pt.x,p.y-pt.y)<this.r+5);}
+        start(e){e.preventDefault();this.d=true;this.path=[];this.pts.forEach(p=>p.sel=false);this.lnc.clearRect(0,0,this.w,this.h);this.seqEl.textContent='Secuencia: –';}
+        move(e){if(!this.d)return;e.preventDefault();const p=this.pos(e),h=this.hit(p);if(h){h.sel=true;this.path.push(h);}this.render(p);}
+        end(){if(!this.d)return;this.d=false;const seq=this.path.map(p=>p.id);this.seqEl.textContent='Secuencia: '+seq.join(' → ');this.valEl.value=seq.join(',');}
+        render(c){this.lnc.clearRect(0,0,this.w,this.h);if(!this.path.length)return;this.lnc.strokeStyle='#FF9800';this.lnc.lineWidth=4;this.lnc.lineCap='round';this.lnc.beginPath();this.lnc.moveTo(this.path[0].x,this.path[0].y);this.path.forEach(p=>this.lnc.lineTo(p.x,p.y));if(this.d)this.lnc.lineTo(c.x,c.y);this.lnc.stroke();this.path.forEach(p=>{this.lnc.beginPath();this.lnc.arc(p.x,p.y,this.r/2,0,2*Math.PI);this.lnc.fillStyle='#FF9800';this.lnc.fill();});}
+      }
+      const lock=new PatternLock();
+      
+      // Generar PDF profesional MEJORADO
+      document.getElementById('formRecibo').addEventListener('submit', async e=>{
+        e.preventDefault();
+        
+        // Validar formulario
+        if(!document.getElementById('formRecibo').checkValidity()) {
+          alert('Por favor complete todos los campos requeridos');
+          return;
+        }
+        
+        const loading = document.getElementById('loading');
+        loading.style.display = 'flex';
+        
+        try {
+          const { jsPDF } = window.jspdf;
+          const pdf = new jsPDF({
+            orientation: 'portrait',
+            unit: 'mm',
+            format: 'a4',
+            compress: true
+          });
+          
+          // Configuración de márgenes y estilos
+          const margin = 15;
+          const pageWidth = pdf.internal.pageSize.getWidth();
+          const pageHeight = pdf.internal.pageSize.getHeight();
+          
+          // Número de recibo único
+          const numeroRecibo = generarNumeroRecibo();
+          const fecha = new Date().toLocaleDateString('es-ES', {
+            day: '2-digit',
+            month: 'long',
+            year: 'numeric'
+          });
+          const hora = new Date().toLocaleTimeString('es-ES', {
+            hour: '2-digit',
+            minute: '2-digit'
+          });
+          
+          // --- ENCABEZADO PROFESIONAL ---
+          // Logo y datos de la empresa (simulado)
+          pdf.setFont('helvetica', 'bold');
+          pdf.setFontSize(16);
+          pdf.setTextColor(255, 152, 0); // Naranja Xiaomi
+          pdf.text(config.nombreTienda, pageWidth / 2, margin + 10, { align: 'center' });
+          
+          pdf.setFontSize(10);
+          pdf.setTextColor(100, 100, 100);
+          pdf.text(config.direccion, pageWidth / 2, margin + 15, { align: 'center' });
+          pdf.text(`Tel: ${config.telefono} | ${config.horario}`, pageWidth / 2, margin + 20, { align: 'center' });
+          
+          // Línea decorativa
+          pdf.setDrawColor(255, 152, 0);
+          pdf.setLineWidth(0.5);
+          pdf.line(margin, margin + 25, pageWidth - margin, margin + 25);
+          
+          // Título del documento
+          pdf.setFontSize(14);
+          pdf.setTextColor(0, 0, 0);
+          pdf.text('RECIBO DE SERVICIO TÉCNICO', pageWidth / 2, margin + 35, { align: 'center' });
+          
+          // --- INFORMACIÓN DEL RECIBO ---
+          let yPosition = margin + 45;
+          
+          // Encabezado de sección
+          pdf.setFont('helvetica', 'bold');
+          pdf.setFontSize(12);
+          pdf.text('INFORMACIÓN DEL RECIBO', margin, yPosition);
+          
+          // Datos del recibo
+          pdf.setFont('helvetica', 'normal');
+          pdf.setFontSize(10);
+          pdf.text(`N° Recibo: ${numeroRecibo}`, margin, yPosition + 5);
+          pdf.text(`Fecha: ${fecha} - ${hora}`, margin + 60, yPosition + 5);
+          
+          // --- DATOS DEL CLIENTE ---
+          yPosition += 15;
+          pdf.setFont('helvetica', 'bold');
+          pdf.text('DATOS DEL CLIENTE', margin, yPosition);
+          
+          pdf.setFont('helvetica', 'normal');
+          pdf.text(`Nombre: ${document.getElementById('nombre').value}`, margin, yPosition + 5);
+          pdf.text(`Teléfono: ${document.getElementById('telefono').value}`, margin + 90, yPosition + 5);
+          
+          // --- DATOS DEL DISPOSITIVO ---
+          yPosition += 15;
+          pdf.setFont('helvetica', 'bold');
+          pdf.text('DATOS DEL DISPOSITIVO', margin, yPosition);
+          
+          pdf.setFont('helvetica', 'normal');
+          pdf.text(`Marca: ${document.getElementById('marca').value}`, margin, yPosition + 5);
+          pdf.text(`Modelo: ${document.getElementById('modelo').value}`, margin + 50, yPosition + 5);
+          pdf.text(`Enciende: ${document.getElementById('enciende').value}`, margin + 90, yPosition + 5);
+          
+          if(document.getElementById('imei').value) {
+            pdf.text(`IMEI/Serial: ${document.getElementById('imei').value}`, margin, yPosition + 10);
+          }
+          
+          // --- ESTADO Y FALLA ---
+          yPosition += 15;
+          pdf.setFont('helvetica', 'bold');
+          pdf.text('ESTADO Y FALLA REPORTADA', margin, yPosition);
+          
+          pdf.setFont('helvetica', 'normal');
+          // Función para dividir texto en múltiples líneas
+          const splitText = (text, maxWidth) => {
+            const words = text.split(' ');
+            let lines = [];
+            let currentLine = words[0];
+            
+            for(let i = 1; i < words.length; i++) {
+              const word = words[i];
+              const width = pdf.getStringUnitWidth(currentLine + ' ' + word) * pdf.internal.getFontSize() / pdf.internal.scaleFactor;
+              
+              if(width < maxWidth) {
+                currentLine += ' ' + word;
+              } else {
+                lines.push(currentLine);
+                currentLine = word;
+              }
+            }
+            lines.push(currentLine);
+            return lines;
+          };
+          
+          // Estado del equipo (con manejo de texto multilínea)
+          const estadoLines = splitText(`Estado: ${document.getElementById('estado').value || '-'}`, pageWidth - 2 * margin);
+          estadoLines.forEach((line, i) => {
+            pdf.text(line, margin, yPosition + 5 + (i * 5));
+          });
+          
+          // Falla reportada (con manejo de texto multilínea)
+          const fallaLines = splitText(`Falla: ${document.getElementById('falla').value || '-'}`, pageWidth - 2 * margin);
+          fallaLines.forEach((line, i) => {
+            pdf.text(line, margin, yPosition + 10 + (estadoLines.length * 5) + (i * 5));
+          });
+          
+          yPosition += 10 + (estadoLines.length * 5) + (fallaLines.length * 5);
+          
+          // --- SERVICIOS Y COSTOS ---
+          pdf.setFont('helvetica', 'bold');
+          pdf.text('DETALLE DE SERVICIOS', margin, yPosition);
+          
+          // Preparar datos para la tabla
+          const serviciosData = [];
+          document.querySelectorAll('.servicio-item').forEach(item => {
+            const desc = item.querySelector('.servicio-desc').value || '-';
+            const costo = parseFloat(item.querySelector('.servicio-costo').value) || 0;
+            serviciosData.push([desc, `Bs. ${costo.toFixed(2)}`]);
+          });
+          
+          // Tabla de servicios mejorada
+          pdf.autoTable({
+            startY: yPosition + 5,
+            margin: { left: margin, right: margin },
+            head: [['Descripción', 'Costo (Bs.)']],
+            body: serviciosData,
+            theme: 'grid',
+            headStyles: {
+              fillColor: [33, 33, 33], // Gris oscuro
+              textColor: [255, 255, 255],
+              fontSize: 10,
+              cellPadding: 3
+            },
+            bodyStyles: {
+              fontSize: 9,
+              cellPadding: 3
+            },
+            columnStyles: {
+              0: { cellWidth: 'auto', fontStyle: 'normal' },
+              1: { cellWidth: 30, halign: 'right' }
+            },
+            styles: {
+              lineWidth: 0.1,
+              lineColor: [200, 200, 200]
+            }
+          });
+          
+          // --- TOTAL MEJORADO ---
+          const total = parseFloat(document.getElementById('costoTotal').value) || 0;
+          yPosition = pdf.autoTable.previous.finalY + 10;
+          
+          pdf.setFont('helvetica', 'bold');
+          pdf.setFontSize(12);
+          pdf.setTextColor(0, 0, 0);
+          
+          // Fondo destacado para el total
+          pdf.setFillColor(255, 243, 224); // Fondo naranja claro
+          pdf.rect(margin, yPosition, pageWidth - 2*margin, 12, 'F');
+          
+          // Borde superior e inferior
+          pdf.setDrawColor(255, 152, 0); // Naranja Xiaomi
+          pdf.setLineWidth(0.5);
+          pdf.line(margin, yPosition, pageWidth - margin, yPosition);
+          pdf.line(margin, yPosition + 12, pageWidth - margin, yPosition + 12);
+          
+          // Texto del total
+          pdf.text('TOTAL A PAGAR:', margin + 10, yPosition + 8);
+          pdf.text(`Bs. ${total.toFixed(2)}`, pageWidth - margin - 10, yPosition + 8, { align: 'right' });
+          
+          // --- IMÁGENES DEL EQUIPO ---
+          const files = document.getElementById('fotos').files;
+          if(files.length > 0) {
+            yPosition += 20;
+            pdf.setFont('helvetica', 'bold');
+            pdf.setTextColor(0, 0, 0);
+            pdf.text('IMÁGENES DEL EQUIPO', margin, yPosition);
+            
+            yPosition += 5;
+            let xPosition = margin;
+            let imagesInRow = 0;
+            
+            // Procesar imágenes (máx. 4)
+            for(let i = 0; i < Math.min(files.length, 4); i++) {
+              const file = files[i];
+              
+              // Leer la imagen como base64
+              const imageData = await new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = (e) => resolve(e.target.result);
+                reader.readAsDataURL(file);
+              });
+              
+              // Añadir imagen al PDF (2 imágenes por fila)
+              if(imagesInRow === 2) {
+                yPosition += 45;
+                xPosition = margin;
+                imagesInRow = 0;
+              }
+              
+              // Marco para la imagen
+              pdf.setDrawColor(200, 200, 200);
+              pdf.setLineWidth(0.2);
+              pdf.roundedRect(xPosition, yPosition, 85, 45, 2, 2, 'S');
+              
+              // Imagen centrada en el marco
+              pdf.addImage(imageData, 'JPEG', xPosition + 2.5, yPosition + 2.5, 80, 40);
+              
+              // Número de imagen
+              pdf.setFontSize(8);
+              pdf.setTextColor(100, 100, 100);
+              pdf.text(`Imagen ${i+1}`, xPosition + 42.5, yPosition + 48, { align: 'center' });
+              
+              xPosition += 90;
+              imagesInRow++;
+              
+              // Si no hay espacio, añadir nueva página
+              if(yPosition > pageHeight - 60) {
+                pdf.addPage();
+                yPosition = margin;
+                xPosition = margin;
+                imagesInRow = 0;
+              }
+            }
+            
+            yPosition += 50;
+          } else {
+            yPosition += 5;
+          }
+          
+          // --- INFORMACIÓN DE SEGURIDAD ---
+          pdf.setFont('helvetica', 'bold');
+          pdf.setFontSize(12);
+          pdf.setTextColor(0, 0, 0);
+          pdf.text('INFORMACIÓN DE SEGURIDAD', margin, yPosition);
+          
+          pdf.setFont('helvetica', 'normal');
+          pdf.setFontSize(10);
+          pdf.text(`Tipo: ${document.getElementById('tipoSeguridad').value.toUpperCase()}`, margin, yPosition + 5);
+          
+          if(document.getElementById('tipoSeguridad').value === 'patron') {
+            // Representación mejorada del patrón
+            const patternValue = document.getElementById('patternValue').value;
+            const patternNumbers = patternValue.split(',');
+            
+            // Dibujar representación gráfica del patrón
+            const patternSize = 30;
+            const patternX = margin + 20;
+            const patternY = yPosition + 10;
+            const dotRadius = 3;
+            const dotSpacing = patternSize / 3;
+            
+            // Dibujar puntos del patrón (3x3 grid)
+            pdf.setDrawColor(100, 100, 100);
+            for(let row = 0; row < 3; row++) {
+              for(let col = 0; col < 3; col++) {
+                const x = patternX + col * dotSpacing;
+                const y = patternY + row * dotSpacing;
+                
+                // Dibujar punto
+                pdf.circle(x, y, dotRadius, 'S');
+                
+                // Número del punto
+                pdf.setFontSize(6);
+                pdf.text(`${row * 3 + col + 1}`, x, y + 1, { align: 'center' });
+              }
+            }
+            
+            // Dibujar líneas del patrón
+            pdf.setDrawColor(255, 152, 0);
+            pdf.setLineWidth(1.5);
+            
+            for(let i = 0; i < patternNumbers.length - 1; i++) {
+              const from = parseInt(patternNumbers[i]) - 1;
+              const to = parseInt(patternNumbers[i+1]) - 1;
+              
+              const fromX = patternX + (from % 3) * dotSpacing;
+              const fromY = patternY + Math.floor(from / 3) * dotSpacing;
+              const toX = patternX + (to % 3) * dotSpacing;
+              const toY = patternY + Math.floor(to / 3) * dotSpacing;
+              
+              pdf.line(fromX, fromY, toX, toY);
+            }
+            
+            // Resaltar puntos seleccionados
+            pdf.setFillColor(255, 152, 0);
+            patternNumbers.forEach(num => {
+              const n = parseInt(num) - 1;
+              const x = patternX + (n % 3) * dotSpacing;
+              const y = patternY + Math.floor(n / 3) * dotSpacing;
+              pdf.circle(x, y, dotRadius, 'F');
+            });
+            
+            // Texto con la secuencia
+            pdf.setFontSize(10);
+            pdf.text(`Secuencia: ${patternNumbers.join(' → ')}`, patternX + 50, yPosition + 20);
+            
+            yPosition += 40;
+          } else if(document.getElementById('tipoSeguridad').value === 'pin') {
+            pdf.text(`PIN: ${'•'.repeat(document.getElementById('pinInput').value.length)}`, margin, yPosition + 10);
+            yPosition += 15;
+          }
+          
+          // --- TÉRMINOS Y CONDICIONES MEJORADOS ---
+          yPosition += 10;
+          
+          // Encabezado
+          pdf.setFont('helvetica', 'bold');
+          pdf.setFontSize(11);
+          pdf.setTextColor(255, 152, 0); // Naranja Xiaomi
+          pdf.text('TÉRMINOS Y CONDICIONES DEL SERVICIO', pageWidth / 2, yPosition, { align: 'center' });
+          
+          // Cuadro de términos
+          pdf.setDrawColor(200, 200, 200);
+          pdf.setLineWidth(0.3);
+          pdf.rect(margin, yPosition + 5, pageWidth - 2*margin, 60, 'S');
+          
+          // Lista de términos corregidos
+          const terminosCorregidos = [
+            "1. Conserve este recibo, será necesario para retirar su equipo.",
+            "2. El tiempo de reparación puede variar según disponibilidad de repuestos.",
+            "3. Reparaciones deben retirarse dentro de los 15 días luego de finalizadas.",
+            "4. Equipos no reclamados en 60 días serán considerados abandonados.",
+            "5. No nos hacemos responsables por pérdida de datos durante la reparación.",
+            "6. Garantía de 30 días en repuestos y 90 días en mano de obra."
+          ];
+          
+          pdf.setFont('helvetica', 'normal');
+          pdf.setFontSize(9);
+          pdf.setTextColor(80, 80, 80);
+          
+          terminosCorregidos.forEach((termino, index) => {
+            // Viñetas naranjas
+            pdf.setFillColor(255, 152, 0);
+            pdf.circle(margin + 5, yPosition + 12 + (index * 10), 1.5, 'F');
+            
+            // Texto del término
+            pdf.text(termino, margin + 12, yPosition + 12 + (index * 10));
+          });
+          
+          // Nota adicional
+          pdf.setFontSize(8);
+          pdf.setTextColor(150, 150, 150);
+          pdf.text('* El cliente acepta estos términos al firmar el recibo.', margin + 5, yPosition + 72);
+          
+          // --- FIRMAS ---
+          yPosition = pageHeight - margin - 30;
+          pdf.setDrawColor(200, 200, 200);
+          pdf.line(margin, yPosition, pageWidth - margin, yPosition);
+          
+          pdf.setFontSize(10);
+          pdf.setTextColor(100, 100, 100);
+          pdf.text('Firma del Cliente', margin + 30, yPosition + 10);
+          pdf.text('Firma del Técnico', pageWidth - margin - 30, yPosition + 10, { align: 'right' });
+          
+          // --- PIE DE PÁGINA ---
+          pdf.setFontSize(8);
+          pdf.setTextColor(150, 150, 150);
+          pdf.text(`© ${new Date().getFullYear()} ${config.nombreTienda} - Todos los derechos reservados`, pageWidth / 2, pageHeight - 10, { align: 'center' });
+          
+          // Guardar PDF con nombre descriptivo
+          const nombreCliente = document.getElementById('nombre').value.split(' ')[0];
+          pdf.save(`Recibo_${numeroRecibo}_${nombreCliente}.pdf`);
+          
+          // Mostrar confirmación
+          const confirmation = document.getElementById('confirmation');
+          confirmation.textContent = `Recibo ${numeroRecibo} generado con éxito!`;
+          confirmation.style.display = 'block';
+          
+          setTimeout(() => {
+            confirmation.style.display = 'none';
+          }, 5000);
+        } catch (error) {
+          alert('Error al generar el recibo: ' + error.message);
+        } finally {
+          loading.style.display = 'none';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
