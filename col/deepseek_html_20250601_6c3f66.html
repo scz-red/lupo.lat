@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recepción Xiaomi - Servicio Técnico</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Roboto',sans-serif;background:#f5f5f5;display:flex;justify-content:center;padding:20px}
+    .container{width:100%;max-width:580px;background:#fff;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.1);overflow:hidden}
+    header{background:linear-gradient(135deg,#212121 0%,#424242 100%);padding:16px;text-align:center}
+    header h1{color:#FF9800;font-size:20px;margin:0;text-shadow:1px 1px 2px rgba(0,0,0,0.3)}
+    main{padding:16px}
+    fieldset{border:1px solid #E0E0E0;border-radius:6px;padding:12px;margin-bottom:16px;background:#FAFAFA;transition:all 0.3s ease}
+    fieldset:focus-within{border-color:#FF9800;box-shadow:0 0 0 2px rgba(255,152,0,0.1)}
+    legend{padding:0 6px;font-weight:600;color:#212121}
+    label{display:block;margin-top:10px;color:#424242;font-size:14px}
+    input,select,textarea,button{width:100%;font-size:14px;transition:all 0.3s ease}
+    input,select,textarea{padding:8px;margin-top:4px;border:1px solid #BDBDBD;border-radius:4px}
+    button{padding:12px;background:#FF9800;color:#fff;border:none;border-radius:4px;cursor:pointer;margin-top:16px;transition:all 0.3s ease}
+    button:hover{background:#FB8C00;transform:translateY(-1px)}
+    button:active{transform:translateY(0)}
+    .date-container{margin-bottom:12px;text-align:right;color:#757575;font-size:13px}
+    #pattern-container{position:relative;width:100%;height:240px;border:1px solid #BDBDBD;border-radius:6px;background:#fff;margin-top:8px}
+    #pattern-container canvas{position:absolute;top:0;left:0;width:100%;height:100%}
+    #pattern-sequence{margin-top:8px;text-align:center;color:#424242;font-size:14px}
+    #imagePreview{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+    .preview-image{width:80px;height:80px;object-fit:cover;border-radius:4px;border:1px solid #E0E0E0;transition:all 0.3s ease;position:relative}
+    .preview-image:hover{transform:scale(1.05);box-shadow:0 2px 8px rgba(0,0,0,0.2);z-index:1}
+    .remove-image{position:absolute;top:-8px;right:-8px;background:#F44336;color:white;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:12px;cursor:pointer;border:none}
+    #photoCounter{font-size:12px;color:#757575;margin-top:4px}
+    #confirmation{display:none;background:#4CAF50;color:white;padding:12px;border-radius:4px;margin-top:16px;text-align:center;animation:fadeIn 0.5s}
+    .costos-container{display:flex;gap:16px;margin-top:16px}
+    .costo-box{flex:1;border:1px solid #E0E0E0;border-radius:6px;padding:12px;background:#fff}
+    .costo-box label{font-weight:600;color:#212121}
+    .costo-box input{text-align:right;font-weight:600;border:none;background:transparent}
+    .servicios-container{margin-top:16px}
+    .servicio-item{display:flex;gap:8px;margin-bottom:8px;align-items:center}
+    .servicio-item input{flex:3}
+    .servicio-item input[type="number"]{flex:1}
+    .servicio-item button{flex:0 0 40px;margin-top:0;padding:8px;background:#F44336}
+    .servicio-item button:hover{background:#D32F2F}
+    #addServicio{background:#2196F3;width:auto;margin-top:8px}
+    #addServicio:hover{background:#1976D2}
+    input:focus,select:focus,textarea:focus{border-color:#FF9800;outline:none;box-shadow:0 0 0 2px rgba(255,152,0,0.2)}
+    .required-field::after{content:" *";color:#F44336}
+    .error-message{display:none;color:#F44336;font-size:12px;margin-top:4px}
+    .valid-icon{display:none;color:#4CAF50;margin-left:5px}
+    #loading{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:1000;justify-content:center;align-items:center}
+    #loading div{background:white;padding:20px;border-radius:8px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.15)}
+    .spinner{border:4px solid #f3f3f3;border-top:4px solid #FF9800;border-radius:50%;width:30px;height:30px;animation:spin 1s linear infinite;margin:0 auto 10px}
+    .progress-bar{width:200px;height:6px;background:#E0E0E0;border-radius:3px;margin-top:10px;overflow:hidden}
+    .progress{height:100%;background:#4CAF50;width:0%;transition:width 0.3s ease}
+    .imei-link{display:block;margin-top:8px;color:#2196F3;text-decoration:none;font-size:13px}
+    .imei-link:hover{text-decoration:underline}
+    .imei-loading{display:inline-block;width:12px;height:12px;border:2px solid #FF9800;border-top-color:transparent;border-radius:50%;animation:spin 0.8s linear infinite;margin-left:5px;vertical-align:middle}
+    .device-info{background-color:#f5f5f5;padding:8px;border-radius:4px;margin-top:8px;border-left:3px solid #FF9800}
+    .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:2000;justify-content:center;align-items:center}
+    .modal-content{background:white;padding:20px;border-radius:8px;width:90%;max-width:400px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,0.2)}
+    .whatsapp-btn{background:#25D366;color:white;border:none;padding:12px 20px;border-radius:4px;margin:10px 5px;cursor:pointer;display:inline-flex;align-items:center;font-size:16px}
+    .whatsapp-btn i{margin-right:8px;font-size:20px}
+    .close-modal{background:#f44336;color:white;border:none;padding:10px 15px;border-radius:4px;margin-top:15px;cursor:pointer}
+    @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+    @media(max-width:480px){body{padding:10px}.costos-container{flex-direction:column}header h1{font-size:18px}label{font-size:13px}.servicio-item{flex-direction:column}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header><h1>RECIBO SERVICIO TÉCNICO</h1></header>
+    <main>
+      <form id="formRecibo">
+        <fieldset>
+          <legend>Datos del Cliente</legend>
+          <div class="date-container">
+            <span id="dateTimeDisplay"></span>
+            <span id="numeroReciboDisplay" style="margin-left:10px;"></span>
+          </div>
+          <label class="required-field">Nombre</label>
+          <input type="text" id="nombre" required placeholder="Ej: Juan Pérez">
+          <span class="error-message" id="nombre-error"></span>
+          <label class="required-field">Teléfono</label>
+          <input type="tel" id="telefono" required placeholder="Ej: 75522004" pattern="[0-9]{7,8}">
+          <span class="error-message" id="telefono-error"></span>
+        </fieldset>
+        <fieldset>
+          <legend>Dispositivo</legend>
+          <label class="required-field">Marca</label>
+          <select id="marca" required>
+            <option value="">Seleccionar</option>
+            <option>Xiaomi</option>
+            <option>Redmi</option>
+            <option>POCO</option>
+            <option>Otro</option>
+          </select>
+          <span class="error-message" id="marca-error"></span>
+          <label class="required-field">Modelo</label>
+          <input type="text" id="modelo" required placeholder="Ej: Redmi Note 10">
+          <span class="error-message" id="modelo-error"></span>
+          <label>Color (opcional)</label>
+          <input type="text" id="color" placeholder="Ej: Negro, Azul, etc.">
+          <label>IMEI/Serial (opcional)</label>
+          <input type="text" id="imei" placeholder="15 dígitos" maxlength="15">
+          <span class="error-message" id="imei-error"></span>
+          <div id="imei-info-container" style="display:none;">
+            <div class="device-info">
+              <div>Marca detectada: <span id="imei-brand"></span></div>
+              <div>Modelo detectado: <span id="imei-model"></span></div>
+              <a href="#" id="imei-link" target="_blank" class="imei-link">Más información del dispositivo</a>
+            </div>
+          </div>
+          <label class="required-field">¿Enciende?</label>
+          <select id="enciende" required>
+            <option value="">Seleccionar</option>
+            <option>Sí</option>
+            <option>No</option>
+            <option>A veces</option>
+          </select>
+          <span class="error-message" id="enciende-error"></span>
+        </fieldset>
+        <fieldset>
+          <legend>Estado y Falla</legend>
+          <label>Estado del equipo</label>
+          <textarea id="estado" rows="2" placeholder="Describa el estado físico del equipo"></textarea>
+          <label>Falla reportada</label>
+          <textarea id="falla" rows="2" placeholder="Describa la falla que presenta el equipo"></textarea>
+        </fieldset>
+        <fieldset>
+          <legend>Seguridad</legend>
+          <label>Tipo</label>
+          <select id="tipoSeguridad">
+            <option value="patron">Patrón</option>
+            <option value="pin">PIN</option>
+            <option value="ninguno">Ninguno</option>
+          </select>
+          <div id="pinContainer" style="display:none;margin-top:8px">
+            <label>PIN</label>
+            <input type="password" id="pinInput" maxlength="6" placeholder="6 dígitos" pattern="[0-9]{6}">
+            <span class="error-message" id="pin-error"></span>
+          </div>
+        </fieldset>
+        <fieldset id="field-patron">
+          <legend>Patrón</legend>
+          <div id="pattern-container">
+            <canvas id="bgCanvas" width="300" height="240"></canvas>
+            <canvas id="lineCanvas" width="300" height="240"></canvas>
+          </div>
+          <div id="pattern-sequence">Secuencia: –</div>
+        </fieldset>
+        <fieldset>
+          <legend>Fotos (máx.4)</legend>
+          <input type="file" id="fotos" accept="image/*" multiple>
+          <div id="photoCounter">0/4 fotos seleccionadas</div>
+          <div id="imagePreview"></div>
+        </fieldset>
+        
+        <fieldset>
+          <legend>Servicios y Costos (Bs.)</legend>
+          <div class="servicios-container" id="serviciosList">
+            <div class="servicio-item">
+              <input type="text" class="servicio-desc" placeholder="Descripción del servicio">
+              <input type="number" class="servicio-costo" placeholder="Bs. 0.00" step="0.01" min="0">
+              <button type="button" class="removeServicio" style="display:none">×</button>
+            </div>
+          </div>
+          <button type="button" id="addServicio">+ Añadir otro servicio</button>
+          
+          <div class="costos-container">
+            <div class="costo-box">
+              <label>Costo total</label>
+              <input type="number" id="costoTotal" placeholder="Bs. 0.00" readonly>
+            </div>
+          </div>
+        </fieldset>
+        
+        <input type="hidden" id="patternValue">
+        <div id="confirmation">Recibo generado con éxito!</div>
+        <button type="submit" id="generateBtn">
+          <span class="button-icon">📄</span>
+          Generar Recibo PDF
+        </button>
+      </form>
+    </main>
+  </div>
+  
+  <div id="loading">
+    <div>
+      <div class="spinner"></div>
+      <p>Generando recibo...</p>
+      <div class="progress-bar">
+        <div class="progress" id="pdf-progress"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para después de generar PDF -->
+  <div id="pdfModal" class="modal">
+    <div class="modal-content">
+      <h3>Recibo generado con éxito</h3>
+      <p>¿Deseas compartir este recibo con el cliente?</p>
+      <button id="whatsappBtn" class="whatsapp-btn">
+        <i class="fab fa-whatsapp"></i> Enviar por WhatsApp
+      </button>
+      <button id="closeModal" class="close-modal">Cerrar</button>
+    </div>
+  </div>
+
+  <script>
+    // Contador de recibos (empieza en 1340)
+    let contadorRecibos = 1340;
+    const config = {
+      nombreTienda: "XIAOMI SCZ",
+      direccion: "Centro Comercial Cañoto #k1, Santa Cruz",
+      telefono: "75522004",
+      horario: "Lunes a Viernes 9:00 - 18:00"
+    };
+    
+    // Modelos sugeridos por marca
+    const modelosPorMarca = {
+      "Xiaomi": ["Mi 11", "Mi 10T", "Mi 9", "Mi Mix", "Mi Note"],
+      "Redmi": ["Redmi Note 10", "Redmi Note 9", "Redmi 9", "Redmi 8", "Redmi 7"],
+      "POCO": ["POCO X3", "POCO F3", "POCO M3", "POCO X2", "POCO F1"],
+      "Otro": []
+    };
+    
+    document.addEventListener('DOMContentLoaded',()=>{
+      // Generar número de recibo único
+      function generarNumeroRecibo() {
+        const numero = contadorRecibos++;
+        return `REC-${numero}`;
+      }
+
+      // Mostrar fecha y número de recibo
+      document.getElementById('dateTimeDisplay').textContent = new Date().toLocaleString();
+      document.getElementById('numeroReciboDisplay').textContent = `Recibo #${contadorRecibos}`;
+      
+      // Validación en tiempo real
+      function setupValidation(inputId, errorId, validationFn, errorMessage) {
+        const input = document.getElementById(inputId);
+        const error = document.getElementById(errorId);
+        
+        input.addEventListener('blur', function() {
+          if(!validationFn(this.value)) {
+            error.textContent = errorMessage;
+            error.style.display = 'block';
+            this.style.borderColor = '#F44336';
+          } else {
+            error.style.display = 'none';
+            this.style.borderColor = '#4CAF50';
+          }
+        });
+        
+        input.addEventListener('input', function() {
+          if(validationFn(this.value)) {
+            error.style.display = 'none';
+            this.style.borderColor = '#4CAF50';
+          }
+        });
+      }
+      
+      // Validaciones
+      setupValidation('nombre', 'nombre-error', val => val.trim().length >= 3, 'Nombre debe tener al menos 3 caracteres');
+      setupValidation('telefono', 'telefono-error', val => /^[0-9]{7,8}$/.test(val), 'Teléfono debe tener 7 u 8 dígitos');
+      setupValidation('marca', 'marca-error', val => val !== '', 'Seleccione una marca');
+      setupValidation('modelo', 'modelo-error', val => val.trim().length >= 2, 'Modelo debe tener al menos 2 caracteres');
+      setupValidation('enciende', 'enciende-error', val => val !== '', 'Seleccione una opción');
+      setupValidation('pinInput', 'pin-error', val => val === '' || /^[0-9]{6}$/.test(val), 'PIN debe tener 6 dígitos');
+      setupValidation('imei', 'imei-error', val => val === '' || /^[0-9]{15}$/.test(val), 'IMEI debe tener 15 dígitos');
+      
+      // Autocompletado de modelos
+      document.getElementById('marca').addEventListener('change', function() {
+        const modeloInput = document.getElementById('modelo');
+        const marca = this.value;
+        
+        if(modelosPorMarca[marca] && modelosPorMarca[marca].length > 0) {
+          modeloInput.setAttribute('list', 'modelos-list');
+          
+          let datalist = document.getElementById('modelos-datalist');
+          if(!datalist) {
+            datalist = document.createElement('datalist');
+            datalist.id = 'modelos-datalist';
+            document.body.appendChild(datalist);
+          }
+          
+          datalist.innerHTML = '';
+          modelosPorMarca[marca].forEach(modelo => {
+            const option = document.createElement('option');
+            option.value = modelo;
+            datalist.appendChild(option);
+          });
+          
+          modeloInput.setAttribute('list', 'modelos-datalist');
+        } else {
+          modeloInput.removeAttribute('list');
+        }
+      });
+      
+      // Toggle seguridad
+      const tipo = document.getElementById('tipoSeguridad'), 
+            pinCont = document.getElementById('pinContainer'), 
+            fieldP = document.getElementById('field-patron');
+      tipo.addEventListener('change',()=>{ 
+        pinCont.style.display = tipo.value==='pin'? 'block':'none'; 
+        fieldP.style.display = tipo.value==='patron'? 'block':'none'; 
+      });
+      fieldP.style.display = 'block';
+      
+      // Función para consultar datos por IMEI
+      async function fetchDeviceByIMEI(imei) {
+        try {
+          // Mostrar spinner
+          const imeiError = document.getElementById('imei-error');
+          imeiError.innerHTML = 'Consultando datos... <span class="imei-loading"></span>';
+          
+          // API de ejemplo (en producción usar una API real con token válido)
+          // Esta es una simulación ya que no hay API gratuita completamente funcional
+          await new Promise(resolve => setTimeout(resolve, 1000)); // Simular delay de API
+          
+          // Datos simulados basados en patrones conocidos de IMEI
+          const firstDigits = imei.substring(0, 8);
+          let brand = '', model = '';
+          
+          // Simulación de detección de marca/modelo por IMEI
+          if(firstDigits.startsWith('86')) {
+            brand = 'Xiaomi';
+            model = 'Redmi Note 10';
+          } else if(firstDigits.startsWith('35')) {
+            brand = 'Samsung';
+            model = 'Galaxy S21';
+          } else {
+            brand = 'Desconocido';
+            model = 'No identificado';
+          }
+          
+          // Mostrar información del dispositivo
+          document.getElementById('imei-brand').textContent = brand;
+          document.getElementById('imei-model').textContent = model;
+          
+          // Autocompletar campos del formulario
+          document.getElementById('marca').value = brand;
+          document.getElementById('modelo').value = model;
+          
+          // Generar link de más información
+          const infoLink = document.getElementById('imei-link');
+          infoLink.href = `https://www.imei.info/?imei=${imei}`;
+          
+          // Mostrar contenedor de información
+          document.getElementById('imei-info-container').style.display = 'block';
+          
+          imeiError.textContent = '';
+        } catch (error) {
+          document.getElementById('imei-error').textContent = 'Error al consultar IMEI';
+          console.error('Error fetching IMEI data:', error);
+        }
+      }
+      
+      // Evento para consultar IMEI cuando se pierde el foco
+      document.getElementById('imei').addEventListener('blur', function() {
+        const imei = this.value.trim();
+        if(imei.length === 15 && /^\d+$/.test(imei)) {
+          fetchDeviceByIMEI(imei);
+        } else if(imei.length > 0) {
+          document.getElementById('imei-error').textContent = 'IMEI debe tener 15 dígitos';
+        }
+      });
+      
+      // Vista previa de imágenes con opción de eliminar
+      const fotosInput = document.getElementById('fotos');
+      const imagePreview = document.getElementById('imagePreview');
+      const photoCounter = document.getElementById('photoCounter');
+      
+      fotosInput.addEventListener('change', function() {
+        imagePreview.innerHTML = '';
+        const files = this.files;
+        photoCounter.textContent = `${files.length}/4 fotos seleccionadas`;
+        
+        if (files.length > 4) {
+          alert('Solo puedes seleccionar hasta 4 fotos');
+          this.value = '';
+          photoCounter.textContent = '0/4 fotos seleccionadas';
+          return;
+        }
+        
+        for (let i = 0; i < files.length; i++) {
+          const file = files[i];
+          if (!file.type.match('image.*')) continue;
+          
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            const imgContainer = document.createElement('div');
+            imgContainer.style.position = 'relative';
+            
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            img.classList.add('preview-image');
+            
+            const removeBtn = document.createElement('button');
+            removeBtn.classList.add('remove-image');
+            removeBtn.textContent = '×';
+            removeBtn.addEventListener('click', function() {
+              // Crear nueva lista de archivos sin el eliminado
+              const newFiles = Array.from(fotosInput.files).filter((_, index) => index !== i);
+              
+              // Crear nuevo DataTransfer y asignar los archivos
+              const dataTransfer = new DataTransfer();
+              newFiles.forEach(file => dataTransfer.items.add(file));
+              
+              // Asignar los nuevos archivos al input
+              fotosInput.files = dataTransfer.files;
+              
+              // Disparar evento change manualmente
+              const event = new Event('change');
+              fotosInput.dispatchEvent(event);
+            });
+            
+            imgContainer.appendChild(img);
+            imgContainer.appendChild(removeBtn);
+            imagePreview.appendChild(imgContainer);
+          }
+          reader.readAsDataURL(file);
+        }
+      });
+
+      // Gestión de servicios
+      const serviciosList = document.getElementById('serviciosList');
+      const addServicioBtn = document.getElementById('addServicio');
+      const costoTotal = document.getElementById('costoTotal');
+      
+      // Función para calcular el total
+      function calcularTotal() {
+        let total = 0;
+        document.querySelectorAll('.servicio-costo').forEach(input => {
+          total += parseFloat(input.value) || 0;
+        });
+        costoTotal.value = total.toFixed(2);
+      }
+      
+      // Función para añadir servicio
+      function addServicio() {
+        const servicioItem = document.createElement('div');
+        servicioItem.className = 'servicio-item';
+        servicioItem.innerHTML = `
+          <input type="text" class="servicio-desc" placeholder="Descripción del servicio">
+          <input type="number" class="servicio-costo" placeholder="Bs. 0.00" step="0.01" min="0">
+          <button type="button" class="removeServicio">×</button>
+        `;
+        serviciosList.appendChild(servicioItem);
+        
+        // Evento para eliminar servicio
+        servicioItem.querySelector('.removeServicio').addEventListener('click', function() {
+          serviciosList.removeChild(servicioItem);
+          calcularTotal();
+          updateRemoveButtons();
+        });
+        
+        // Evento para calcular total cuando cambia el costo
+        servicioItem.querySelector('.servicio-costo').addEventListener('input', calcularTotal);
+      }
+      
+      // Mostrar botón de eliminar en el primer servicio si hay más de uno
+      function updateRemoveButtons() {
+        const items = serviciosList.querySelectorAll('.servicio-item');
+        items.forEach((item, index) => {
+          const removeBtn = item.querySelector('.removeServicio');
+          removeBtn.style.display = items.length > 1 ? 'block' : 'none';
+        });
+      }
+      
+      // Evento para añadir servicio
+      addServicioBtn.addEventListener('click', function() {
+        addServicio();
+        updateRemoveButtons();
+      });
+      
+      // Evento para el primer servicio
+      serviciosList.querySelector('.servicio-costo').addEventListener('input', calcularTotal);
+      serviciosList.querySelector('.removeServicio').addEventListener('click', function() {
+        if(serviciosList.querySelectorAll('.servicio-item').length > 1) {
+          serviciosList.removeChild(this.parentNode);
+          calcularTotal();
+          updateRemoveButtons();
+        }
+      });
+      
+      // Validación de teléfono (solo números)
+      document.getElementById('telefono').addEventListener('input', function(e) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+      });
+      
+      // Validación de IMEI (solo números)
+      document.getElementById('imei').addEventListener('input', function(e) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+      });
+      
+      // PatternLock
+      class PatternLock {
+        constructor(){
+          this.bg = document.getElementById('bgCanvas');
+          this.ln = document.getElementById('lineCanvas');
+          this.bgc = this.bg.getContext('2d');
+          this.lnc = this.ln.getContext('2d');
+          this.r = 20; this.w = this.bg.width; this.h = this.bg.height;
+          this.pts = []; this.path = []; this.d = false;
+          this.seqEl = document.getElementById('pattern-sequence');
+          this.valEl = document.getElementById('patternValue');
+          this.init();
+        }
+        init(){
+          const cols=3, rows=3, margin=20;
+          const sepX=(this.w-2*margin)/(cols-1), sepY=(this.h-2*margin)/(rows-1);
+          let id=1;
+          for(let y=0;y<rows;y++){
+            for(let x=0;x<cols;x++){
+              this.pts.push({id:id++,x:margin+sepX*x,y:margin+sepY*y,sel:false});
+            }
+          }
+          this.draw(); this.attach();
+        }
+        draw(){
+          this.bgc.clearRect(0,0,this.w,this.h);
+          this.bgc.strokeStyle='#BDBDBD'; this.bgc.lineWidth=2;
+          this.pts.forEach(p=>{this.bgc.beginPath();this.bgc.arc(p.x,p.y,this.r,0,2*Math.PI);this.bgc.stroke();});
+        }
+        attach(){
+          ['mousedown','touchstart'].forEach(e=>this.ln.addEventListener(e,ev=>this.start(ev)));
+          ['mousemove','touchmove'].forEach(e=>this.ln.addEventListener(e,ev=>this.move(ev)));
+          ['mouseup','mouseleave','touchend'].forEach(e=>this.ln.addEventListener(e,()=>this.end()));
+        }
+        pos(e){const rect=this.ln.getBoundingClientRect(),t=e.touches?e.touches[0]:e;return{x:t.clientX-rect.left,y:t.clientY-rect.top};}
+        hit(pt){return this.pts.find(p=>!p.sel&&Math.hypot(p.x-pt.x,p.y-pt.y)<this.r+5);}
+        start(e){e.preventDefault();this.d=true;this.path=[];this.pts.forEach(p=>p.sel=false);this.lnc.clearRect(0,0,this.w,this.h);this.seqEl.textContent='Secuencia: –';}
+        move(e){if(!this.d)return;e.preventDefault();const p=this.pos(e),h=this.hit(p);if(h){h.sel=true;this.path.push(h);}this.render(p);}
+        end(){if(!this.d)return;this.d=false;const seq=this.path.map(p=>p.id);this.seqEl.textContent='Secuencia: '+seq.join(' → ');this.valEl.value=seq.join(',');}
+        render(c){this.lnc.clearRect(0,0,this.w,this.h);if(!this.path.length)return;this.lnc.strokeStyle='#FF9800';this.lnc.lineWidth=4;this.lnc.lineCap='round';this.lnc.beginPath();this.lnc.moveTo(this.path[0].x,this.path[0].y);this.path.forEach(p=>this.lnc.lineTo(p.x,p.y));if(this.d)this.lnc.lineTo(c.x,c.y);this.lnc.stroke();this.path.forEach(p=>{this.lnc.beginPath();this.lnc.arc(p.x,p.y,this.r/2,0,2*Math.PI);this.lnc.fillStyle='#FF9800';this.lnc.fill();});}
+      }
+      const lock=new PatternLock();
+      
+      // Generar PDF profesional con barra de progreso
+      document.getElementById('formRecibo').addEventListener('submit', async e=>{
+        e.preventDefault();
+        
+        // Validar formulario
+        if(!document.getElementById('formRecibo').checkValidity()) {
+          alert('Por favor complete todos los campos requeridos');
+          return;
+        }
+        
+        const loading = document.getElementById('loading');
+        const progressBar = document.getElementById('pdf-progress');
+        loading.style.display = 'flex';
+        progressBar.style.width = '0%';
+        
+        try {
+          const { jsPDF } = window.jspdf;
+          const pdf = new jsPDF({
+            orientation: 'portrait',
+            unit: 'mm',
+            format: 'a4',
+            compress: true
+          });
+          
+          // Simular progreso
+          progressBar.style.width = '10%';
+          
+          // Número de recibo único
+          const numeroRecibo = generarNumeroRecibo();
+          const fecha = new Date().toLocaleDateString('es-ES', {
+            day: '2-digit',
+            month: 'long',
+            year: 'numeric'
+          });
+          const hora = new Date().toLocaleTimeString('es-ES', {
+            hour: '2-digit',
+            minute: '2-digit'
+          });
+          
+          progressBar.style.width = '20%';
+          
+          // Encabezado profesional
+          pdf.setFont('helvetica', 'bold');
+          pdf.setFontSize(18);
+          pdf.setTextColor(255, 152, 0);
+          pdf.text(config.nombreTienda, 105, 20, { align: 'center' });
+          
+          pdf.setFontSize(10);
+          pdf.setTextColor(100, 100, 100);
+          pdf.text(config.direccion, 105, 25, { align: 'center' });
+          pdf.text(`Tel: ${config.telefono} | ${config.horario}`, 105, 30, { align: 'center' });
+          
+          // Línea decorativa
+          pdf.setDrawColor(255, 152, 0);
+          pdf.setLineWidth(0.5);
+          pdf.line(20, 35, 190, 35);
+          
+          progressBar.style.width = '30%';
+          
+          // Título del documento
+          pdf.setFontSize(16);
+          pdf.setTextColor(0, 0, 0);
+          pdf.text('RECIBO DE SERVICIO TÉCNICO', 105, 45, { align: 'center' });
+          
+          // Información del recibo
+          pdf.setFontSize(10);
+          pdf.setTextColor(100, 100, 100);
+          pdf.text(`N° Recibo: ${numeroRecibo}`, 20, 55);
+          pdf.text(`Fecha: ${fecha} - ${hora}`, 20, 60);
+          
+          progressBar.style.width = '40%';
+          
+          // Datos del cliente
+          pdf.setFontSize(12);
+          pdf.setTextColor(0, 0, 0);
+          pdf.text('DATOS DEL CLIENTE', 20, 70);
+          
+          pdf.setFont('helvetica', 'normal');
+          pdf.setFontSize(10);
+          pdf.text(`Nombre: ${document.getElementById('nombre').value}`, 20, 75);
+          pdf.text(`Teléfono: ${document.getElementById('telefono').value}`, 20, 80);
+          
+          progressBar.style.width = '50%';
+          
+          // Datos del dispositivo
+          pdf.setFont('helvetica', 'bold');
+          pdf.setFontSize(12);
+          pdf.text('DATOS DEL DISPOSITIVO', 20, 90);
+          
+          pdf.setFont('helvetica', 'normal');
+          pdf.text(`Marca: ${document.getElementById('marca').value}`, 20, 95);
+          pdf.text(`Modelo: ${document.getElementById('modelo').value}`, 20, 100);
+          pdf.text(`Enciende: ${document.getElementById('enciende').value}`, 20, 105);
+          if(document.getElementById('imei').value) {
+            pdf.text(`IMEI/Serial: ${document.getElementById('imei').value}`, 20, 110);
+            // Añadir link de información del IMEI al PDF
+            pdf.setTextColor(0, 0, 255);
+            pdf.textWithLink('Más info del dispositivo', 70, 110, {url: `https://www.imei.info/?imei=${document.getElementById('imei').value}`});
+            pdf.setTextColor(0, 0, 0);
+          }
+          if(document.getElementById('color').value) {
+            pdf.text(`Color: ${document.getElementById('color').value}`, 20, 115);
+          }
+          
+          progressBar.style.width = '60%';
+          
+          // Estado y falla
+          pdf.setFont('helvetica', 'bold');
+          pdf.text('ESTADO Y FALLA REPORTADA', 20, 120);
+          
+          pdf.setFont('helvetica', 'normal');
+          pdf.text(`Estado: ${document.getElementById('estado').value || '-'}`, 20, 125);
+          pdf.text(`Falla: ${document.getElementById('falla').value || '-'}`, 20, 130);
+          
+          progressBar.style.width = '70%';
+          
+          // Servicios y costos
+          pdf.setFont('helvetica', 'bold');
+          pdf.text('DETALLE DE SERVICIOS (Bs.)', 20, 140);
+          
+          // Preparar datos para la tabla
+          const serviciosData = [];
+          document.querySelectorAll('.servicio-item').forEach(item => {
+            const desc = item.querySelector('.servicio-desc').value || '-';
+            const costo = parseFloat(item.querySelector('.servicio-costo').value) || 0;
+            serviciosData.push([desc, `Bs. ${costo.toFixed(2)}`]);
+          });
+          
+          // Tabla de servicios
+          pdf.autoTable({
+            startY: 145,
+            head: [['Descripción', 'Costo (Bs.)']],
+            body: serviciosData,
+            theme: 'grid',
+            headStyles: {
+              fillColor: [33, 33, 33],
+              textColor: [255, 255, 255]
+            },
+            styles: {
+              cellPadding: 3,
+              fontSize: 10
+            },
+            columnStyles: {
+              0: { cellWidth: 'auto' },
+              1: { cellWidth: 30 }
+            }
+          });
+          
+          progressBar.style.width = '80%';
+          
+          // Total
+          const total = parseFloat(document.getElementById('costoTotal').value) || 0;
+          pdf.setFont('helvetica', 'bold');
+          pdf.text(`TOTAL: Bs. ${total.toFixed(2)}`, 160, pdf.autoTable.previous.finalY + 15);
+          
+          // === SECCIÓN MEJORADA PARA FOTOS ===
+          const files = document.getElementById('fotos').files;
+          if(files.length > 0) {
+            pdf.setFont('helvetica', 'bold');
+            pdf.text('IMÁGENES DEL EQUIPO', 20, pdf.autoTable.previous.finalY + 25);
+            
+            let yPosition = pdf.autoTable.previous.finalY + 30;
+            let xPosition = 20;
+            const imgWidth = 40; // Hacer las imágenes más pequeñas
+            const imgHeight = 30;
+            const imgMargin = 5;
+            
+            for(let i = 0; i < Math.min(files.length, 4); i++) {
+              const file = files[i];
+              const imageData = await new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = (e) => resolve(e.target.result);
+                reader.readAsDataURL(file);
+              });
+              
+              // Organizar 2 imágenes por fila
+              if(i % 2 === 0 && i !== 0) {
+                yPosition += imgHeight + imgMargin;
+                xPosition = 20;
+              }
+              
+              pdf.addImage(imageData, 'JPEG', xPosition, yPosition, imgWidth, imgHeight);
+              xPosition += imgWidth + imgMargin;
+              
+              if(yPosition > 250) {
+                pdf.addPage();
+                yPosition = 20;
+                xPosition = 20;
+              }
+            }
+          }
+
+          // === SECCIÓN MEJORADA PARA EL PATRÓN ===
+          if(document.getElementById('tipoSeguridad').value === 'patron') {
+            pdf.setFontSize(10);
+            pdf.text(`Método de seguridad: ${document.getElementById('tipoSeguridad').value}`, 
+                     140, pdf.autoTable.previous.finalY + 30);
+            
+            // Añadir imagen del patrón más pequeña y a la derecha
+            const bg = document.getElementById('bgCanvas');
+            const ln = document.getElementById('lineCanvas');
+            const tmpCanvas = document.createElement('canvas');
+            tmpCanvas.width = bg.width;
+            tmpCanvas.height = bg.height;
+            const tmpCtx = tmpCanvas.getContext('2d');
+            tmpCtx.drawImage(bg, 0, 0);
+            tmpCtx.drawImage(ln, 0, 0);
+            
+            // Posicionar el patrón a la derecha
+            pdf.addImage(tmpCanvas.toDataURL(), 'PNG', 140, pdf.autoTable.previous.finalY + 35, 30, 24);
+            pdf.text(`Secuencia: ${document.getElementById('patternValue').value.split(',').join(' → ')}`, 
+                     140, pdf.autoTable.previous.finalY + 60);
+          }
+
+          // Términos y condiciones
+          pdf.setFontSize(8);
+          pdf.setTextColor(100, 100, 100);
+          pdf.text('TÉRMINOS Y CONDICIONES:', 20, pdf.autoTable.previous.finalY + 80);
+          
+          const terminos = [
+            "1. Conserve esta Nota, pues únicamente contra su entrega podrá retirar su equipo.",
+            "2. La fecha de entrega puede variar según disponibilidad de repuestos.",
+            "3. Reparaciones deben retirarse dentro de los 30 días luego del comunicado.",
+            "4. Equipos no reclamados pasados 60 días serán considerados abandonados.",
+            "5. No nos hacemos responsables por pérdida de datos durante la reparación.",
+            "6. Garantía de 30 días para repuestos y 90 días para mano de obra."
+          ];
+          
+          terminos.forEach((termino, index) => {
+            pdf.text(termino, 25, pdf.autoTable.previous.finalY + 85 + (index * 4));
+          });
+          
+          // Pie de página profesional
+          pdf.setFontSize(8);
+          pdf.setTextColor(100, 100, 100);
+          pdf.text(`© ${new Date().getFullYear()} ${config.nombreTienda} - Todos los derechos reservados`, 105, 287, { align: 'center' });
+          
+          progressBar.style.width = '100%';
+          
+          // Guardar PDF con nombre descriptivo
+          const nombreCliente = document.getElementById('nombre').value.split(' ')[0];
+          pdf.save(`Recibo_${numeroRecibo}_${nombreCliente}.pdf`);
+          
+          // Mostrar modal con opción de WhatsApp
+          showWhatsAppModal(numeroRecibo);
+
+        } catch (error) {
+          alert('Error al generar el recibo: ' + error.message);
+        } finally {
+          loading.style.display = 'none';
+        }
+      });
+
+      // Función para mostrar el modal con opción de WhatsApp
+      function showWhatsAppModal(numeroRecibo) {
+        const modal = document.getElementById('pdfModal');
+        const whatsappBtn = document.getElementById('whatsappBtn');
+        const closeBtn = document.getElementById('closeModal');
+        
+        // Configurar el botón de WhatsApp
+        const telefonoCliente = document.getElementById('telefono').value;
+        const nombreCliente = document.getElementById('nombre').value;
+        const modeloDispositivo = document.getElementById('modelo').value;
+        
+        let whatsappMessage = `Hola ${nombreCliente}, aquí está tu recibo técnico #${numeroRecibo}.\n`;
+        whatsappMessage += `Dispositivo: ${modeloDispositivo}\n`;
+        whatsappMessage += `Por favor conserva este número de recibo para cualquier consulta.`;
+        
+        whatsappBtn.onclick = function() {
+          const whatsappUrl = `https://wa.me/${591}${telefonoCliente}?text=${encodeURIComponent(whatsappMessage)}`;
+          window.open(whatsappUrl, '_blank');
+        };
+        
+        closeBtn.onclick = function() {
+          modal.style.display = 'none';
+        };
+        
+        modal.style.display = 'flex';
+        
+        // Cerrar modal al hacer click fuera del contenido
+        modal.onclick = function(e) {
+          if(e.target === modal) {
+            modal.style.display = 'none';
+          }
+        };
+      }
+    });
+  </script>
+</body>
+</html>
