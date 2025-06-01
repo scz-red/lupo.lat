@@ -16,10 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   let rates = {
-    lupo: 16.10,
-    westernUnion: 12.40,
-    ria: 13.2,
-    moneyGram: 12.8
+    lupo: 16.05,
+    westernUnion: 12.30,
+    ria: 13.5,
+    moneyGram: 12.9
   };
 
   function calculate() {
