@@ -34,14 +34,14 @@ document.addEventListener('DOMContentLoaded', () => {
       ria   = amount * rates.ria;
       flagImg.src = 'https://flagcdn.com/w40/bo.png';
       flagImg.alt = 'Bandera de Bolivia';
-      msg = `¡Hola Lupo! Envío ${amount.toFixed(2)} EUR a Bolivia. Recibirá ${local.toFixed(2)} BOB.`;
+      msg = `¡Hola Lupo! Quisiera Envíar ${amount.toFixed(2)} EUR a Bolivia. Para entregar  ${local.toFixed(2)} BOB.`;
     } else {
       const copRate = parseFloat(localStorage.getItem('rateColombia')) || 4150;
       local = amount * copRate;
       mg = wu = ria = 0.0;
       flagImg.src = 'https://flagcdn.com/w40/co.png';
       flagImg.alt = 'Bandera de Colombia';
-      msg = `¡Hola Lupo! Envío ${amount.toFixed(2)} EUR a Colombia. Recibirá ${local.toFixed(2)} COP.`;
+      msg = `¡Hola Lupo! Quiero Envíar ${amount.toFixed(2)} EUR a Colombia. Recibirá ${local.toFixed(2)} COP.`;
     }
 
     localOutput.value     = local.toFixed(2);
