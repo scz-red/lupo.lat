@@ -1,153 +1,155 @@
 body {
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #f3f4f6;
+  font-family: sans-serif;
   margin: 0;
-  padding: 0;
-  color: #111;
+  background: #f8f9fb;
+  color: #222;
 }
 
 .container {
-  max-width: 460px;
-  margin: auto;
+  max-width: 480px;
+  margin: 0 auto;
   padding: 16px;
-  background-color: #fff;
 }
 
-header img {
-  max-width: 100%;
-  height: auto;
-  margin: 16px 0;
-}
-
-.hero {
-  text-align: center;
-  margin-bottom: 20px;
+.logo {
+  max-width: 120px;
+  display: block;
+  margin: 0 auto 12px;
 }
 
 .hero h1 {
+  text-align: center;
   font-size: 1.5rem;
-  font-weight: 700;
   margin: 8px 0;
 }
 
 .hero p {
+  text-align: center;
   font-size: 0.95rem;
-  color: #6b7280;
-  margin: 4px 0 12px;
+  color: #666;
 }
 
 .badge {
-  display: inline-block;
-  background-color: #ef4444;
-  color: white;
-  font-weight: bold;
+  background-color: #e53935;
+  color: #fff;
   padding: 6px 12px;
   border-radius: 8px;
+  width: fit-content;
+  margin: 10px auto;
+  font-weight: bold;
 }
 
 .form-box {
-  background-color: #fff;
+  background: #fff;
   padding: 16px;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
   margin-top: 20px;
 }
 
-.rate-box {
-  background: #ecfdf5;
-  color: #064e3b;
-  font-weight: 600;
-  padding: 8px 12px;
-  border-radius: 9999px;
-  display: inline-block;
-  margin-bottom: 8px;
+.rate-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.rate-bubble {
+  background: #eaf7ef;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+  color: #256029;
 }
 
 .timestamp {
+  display: flex;
+  align-items: center;
   font-size: 0.85rem;
-  text-align: right;
-  color: #4b5563;
-  margin-bottom: 12px;
+  color: #555;
+}
+
+.timestamp img {
+  width: 16px;
+  margin-right: 4px;
 }
 
 .field {
   margin-bottom: 16px;
 }
 
-.field-label {
-  font-weight: 600;
-  font-size: 0.95rem;
+.field label {
+  font-weight: bold;
+  display: block;
   margin-bottom: 6px;
 }
 
-.input-wrap {
+.input-group {
   display: flex;
-  border: 2px solid #111;
-  border-radius: 12px;
-  padding: 6px 8px;
   align-items: center;
-  background-color: #fff;
+  border: 2px solid #000;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
-.input-wrap input {
-  border: none;
-  font-size: 1.1rem;
+.input-group input {
   flex: 1;
+  padding: 10px;
+  border: none;
+  font-size: 1rem;
   outline: none;
-  background: transparent;
 }
 
-.currency-select {
+.currency {
   display: flex;
   align-items: center;
   gap: 6px;
-  margin-left: 8px;
+  background: #f0f0f0;
+  padding: 0 10px;
 }
 
-.currency-select select {
-  border: none;
-  background: transparent;
-  font-weight: bold;
-}
-
-.currency-select img {
+.currency img {
+  width: 20px;
   height: 20px;
-  width: 28px;
-  object-fit: cover;
+  border-radius: 50%;
 }
 
-.action-btn {
-  display: block;
-  text-align: center;
-  background: linear-gradient(to right, #dc2626, #facc15, #16a34a);
-  padding: 12px;
-  color: white;
+.currency span {
   font-weight: bold;
-  border-radius: 12px;
-  margin: 12px 0;
-  text-decoration: none;
+  color: #333;
 }
 
-.action-btn:disabled {
-  background: #d1d5db;
+#submitBtn {
+  width: 100%;
+  padding: 14px;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  background: linear-gradient(to right, #e53935, #fbc02d, #43a047);
+  cursor: pointer;
+  margin-top: 12px;
+  transition: 0.3s;
+}
+
+#submitBtn:disabled {
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
 .comparacion {
-  margin-top: 20px;
+  margin-top: 24px;
+  background: #f1f3f4;
   padding: 16px;
-  background-color: #f9fafb;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 0.85rem;
-  color: #6b7280;
+  border-radius: 12px;
+  font-size: 0.95rem;
 }
 
 .comparacion h4 {
-  margin-bottom: 10px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: #4b5563;
+  margin-bottom: 12px;
+  font-weight: bold;
+  color: #444;
 }
 
 .comparacion .item {
@@ -155,18 +157,31 @@ header img {
   justify-content: space-between;
   align-items: center;
   padding: 6px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.comparacion .item:last-child {
+  border-bottom: none;
 }
 
 .comparacion img {
-  height: 18px;
-  vertical-align: middle;
+  width: 20px;
   margin-right: 6px;
 }
 
 .floating-btn {
   position: fixed;
-  bottom: 24px;
-  right: 24px;
-  font-size: 24px;
+  bottom: 20px;
+  right: 20px;
+  background: #25d366;
+  color: white;
+  font-size: 22px;
+  border-radius: 50%;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-decoration: none;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
 }
