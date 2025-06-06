@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', () => {
   const eurInput     = document.getElementById('eurInput');
   const localOutput  = document.getElementById('localInput');
@@ -7,7 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const destSelect   = document.getElementById('destination');
   const flagImg      = document.getElementById('destFlag');
   const whatsappLink = document.getElementById('whatsappBtn');
-  const waNumber     = '393341950037'; // WhatsApp LUPO
+  const dateLabel    = document.getElementById('dateLabel');
+  const waNumber     = '393341950037';
 
   if (!eurInput || !localOutput || !mgOutput || !wuOutput || !riaOutput ||
       !destSelect || !flagImg || !whatsappLink) {
@@ -22,10 +24,17 @@ document.addEventListener('DOMContentLoaded', () => {
     moneyGram: 13.7
   };
 
+  function updateDate() {
+    const now = new Date();
+    dateLabel.textContent = now.toLocaleString();
+  }
+
   function calculate() {
     const amount = parseFloat(eurInput.value) || 0;
     const dest   = destSelect.value;
     let local, mg, wu, ria, msg;
+
+    updateDate();
 
     if (dest === 'bolivia') {
       local = amount * rates.lupo;
@@ -34,20 +43,20 @@ document.addEventListener('DOMContentLoaded', () => {
       ria   = amount * rates.ria;
       flagImg.src = 'https://flagcdn.com/w40/bo.png';
       flagImg.alt = 'Bandera de Bolivia';
-      msg = `¡Hola Lupo! Quisiera Envíar ${amount.toFixed(2)} EUR a Bolivia. Para entregar  ${local.toFixed(2)} BOB.`;
+      msg = `🇧🇴 ¡Hola Lupo! Quisiera Enviar ${amount.toFixed(2)} EUR a Bolivia. El destinatario recibirá ${local.toFixed(2)} BOB.`;
     } else {
       const copRate = parseFloat(localStorage.getItem('rateColombia')) || 4150;
       local = amount * copRate;
       mg = wu = ria = 0.0;
       flagImg.src = 'https://flagcdn.com/w40/co.png';
       flagImg.alt = 'Bandera de Colombia';
-      msg = `¡Hola Lupo! Quiero Envíar ${amount.toFixed(2)} EUR a Colombia. Recibirá ${local.toFixed(2)} COP.`;
+      msg = `🇨🇴 ¡Hola Lupo! Quiero Enviar ${amount.toFixed(2)} EUR a Colombia. Recibirá ${local.toFixed(2)} COP.`;
     }
 
     localOutput.value     = local.toFixed(2);
-    mgOutput.textContent  = `${mg.toFixed(1)} Bs.`;
-    wuOutput.textContent  = `${wu.toFixed(1)} Bs.`;
-    riaOutput.textContent = `${ria.toFixed(1)} Bs.`;
+    mgOutput.textContent  = `😟 ${mg.toFixed(1)} Bs.`;
+    wuOutput.textContent  = `😟 ${wu.toFixed(1)} Bs.`;
+    riaOutput.textContent = `😟 ${ria.toFixed(1)} Bs.`;
     whatsappLink.href     = `https://wa.me/${waNumber}?text=` + encodeURIComponent(msg);
   }
 
@@ -74,14 +83,14 @@ document.addEventListener('DOMContentLoaded', () => {
   if (carousel) {
     const speed = 0.5;
     let pos = 0;
-
     function scrollLoop() {
       pos += speed;
       if (pos >= carousel.scrollWidth - carousel.clientWidth) pos = 0;
       carousel.scrollLeft = pos;
       requestAnimationFrame(scrollLoop);
     }
-
     requestAnimationFrame(scrollLoop);
   }
+
+  updateDate();
 });
