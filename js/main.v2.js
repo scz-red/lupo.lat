@@ -1,79 +1,30 @@
 
 document.addEventListener('DOMContentLoaded', () => {
-  const eurInput     = document.getElementById('eurInput');
-  const localOutput  = document.getElementById('localInput');
-  const mgOutput     = document.getElementById('mgReceived');
-  const wuOutput     = document.getElementById('wuReceived');
-  const riaOutput    = document.getElementById('riaReceived');
-  const destSelect   = document.getElementById('destination');
-  const flagImg      = document.getElementById('destFlag');
+  const eurInput = document.getElementById('eurInput');
+  const localOutput = document.getElementById('localInput');
+  const mgOutput = document.getElementById('mgReceived');
+  const wuOutput = document.getElementById('wuReceived');
+  const riaOutput = document.getElementById('riaReceived');
+  const destSelect = document.getElementById('destination');
+  const flagImg = document.getElementById('destFlag');
   const whatsappLink = document.getElementById('whatsappBtn');
-  const exchangeRateSpan = document.getElementById('exchangeRate');
-  const waNumber     = '393341950037';
+  const waNumber = '393341950037';
 
-  if (!eurInput || !localOutput || !mgOutput || !wuOutput || !riaOutput ||
-      !destSelect || !flagImg || !whatsappLink) {
-    console.error('main.js: Faltan elementos HTML – revisa los IDs.'); 
-    return;
-  }
+  let rates = { lupo: 16.22, moneyGram: 13.7, westernUnion: 12.8, ria: 14.1 };
 
-  let rates = {
-    lupo: 16.19,
-    westernUnion: 12.8,
-    ria: 14.1,
-    moneyGram: 13.7
-  };
-
-  function calculate() {
+  function update() {
     const amount = parseFloat(eurInput.value) || 0;
-    const dest   = destSelect.value;
-    let local, mg, wu, ria, msg;
-
-    if (dest === 'bolivia') {
-      local = amount * rates.lupo;
-      mg    = amount * rates.moneyGram;
-      wu    = amount * rates.westernUnion;
-      ria   = amount * rates.ria;
-      flagImg.src = 'https://flagcdn.com/w40/bo.png';
-      flagImg.alt = 'Bandera de Bolivia';
-      msg = `🇧🇴 ¡Hola Lupo! Quisiera Enviar ${amount.toFixed(2)} EUR a Bolivia. El destinatario recibirá ${local.toFixed(2)} BOB.`;
-    } else {
-      const copRate = 4150;
-      local = amount * copRate;
-      mg = wu = ria = 0.0;
-      flagImg.src = 'https://flagcdn.com/w40/co.png';
-      flagImg.alt = 'Bandera de Colombia';
-      msg = `🇨🇴 ¡Hola Lupo! Quiero Enviar ${amount.toFixed(2)} EUR a Colombia. Recibirá ${local.toFixed(2)} COP.`;
-    }
-
-    localOutput.value     = local.toFixed(2);
-    mgOutput.textContent  = `😟 ${mg.toFixed(1)} Bs.`;
-    wuOutput.textContent  = `😟 ${wu.toFixed(1)} Bs.`;
-    riaOutput.textContent = `😟 ${ria.toFixed(1)} Bs.`;
-    whatsappLink.href     = `https://wa.me/${waNumber}?text=` + encodeURIComponent(msg);
-
-    if (exchangeRateSpan) {
-      exchangeRateSpan.textContent = rates.lupo.toFixed(2);
-    }
+    const dest = destSelect.value;
+    let local = amount * rates.lupo;
+    localOutput.value = local.toFixed(2);
+    mgOutput.textContent = `😟 ${(amount * rates.moneyGram).toFixed(1)} Bs.`;
+    wuOutput.textContent = `😟 ${(amount * rates.westernUnion).toFixed(1)} Bs.`;
+    riaOutput.textContent = `😟 ${(amount * rates.ria).toFixed(1)} Bs.`;
+    const msg = `🇧🇴 ¡Hola Lupo! Quiero enviar ${amount.toFixed(2)} EUR a Bolivia. El destinatario recibirá ${local.toFixed(2)} BOB.`;
+    whatsappLink.href = `https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`;
   }
 
-  fetch('tasas.json')
-    .then(response => response.json())
-    .then(data => {
-      rates = {
-        lupo: parseFloat(data.lupo),
-        westernUnion: parseFloat(data.westernUnion),
-        ria: parseFloat(data.ria),
-        moneyGram: parseFloat(data.moneyGram)
-      };
-      calculate();
-    })
-    .catch(error => {
-      console.error('No se pudo cargar tasas. Usando valores por defecto.', error);
-      calculate();
-    });
-
-  eurInput.addEventListener('input', calculate);
-  destSelect.addEventListener('change', calculate);
-  calculate();
+  eurInput.addEventListener('input', update);
+  destSelect.addEventListener('change', update);
+  update();
 });
