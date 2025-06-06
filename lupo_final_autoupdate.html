@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Envía más dinero a Bolivia sin comisiones y con el mejor tipo de cambio. Compará con otros servicios." />
+  <meta name="theme-color" content="#ffffff" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" type="image/png" href="iconos/icono-192.png" />
+  <link rel="stylesheet" href="css/styles.css?v=1.0.0" />
+  <title>Lupo - Envía más, paga menos</title>
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <div class="logo"><img src="img/lupo01.png" alt="Lupo logo" /></div>
+      <i id="menuToggle" class="fas fa-bars menu-toggle"></i>
+      <nav class="nav-links" id="navLinks">
+        <a href="#">Inicio</a>
+        <a href="#">Cómo funciona</a>
+        <a href="#">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <section class="hero">
+      <h1>Enviá más, pagá menos</h1>
+      <p>Sin comisiones. Tipo de cambio justo. Compará cuánto más reciben con Lupo.</p>
+      <div id="clock" class="clock-display"></div>
+    </section>
+
+    <section class="calculator-section">
+      <div class="calculator-card">
+        <div class="calculator-body">
+          <span class="badge">0% Comisión</span>
+
+          <div class="inline-group">
+            <label class="inline-label">Enviás exactamente</label>
+            <div class="inline-wrapper">
+              <input type="number" id="eurInput" placeholder="0.00" />
+              <select id="sendCurrency">
+                <option value="EUR">EUR</option>
+              </select>
+              <img src="https://flagcdn.com/w40/eu.png" alt="EUR" class="provider-icon" />
+            </div>
+          </div>
+
+          <div class="inline-group">
+            <label class="inline-label">El destinatario recibe</label>
+            <div class="inline-wrapper">
+              <input type="number" id="localInput" placeholder="0.00" readonly />
+              <select id="destination">
+                <option value="bolivia">BOB</option>
+                <option value="colombia">COP</option>
+              </select>
+              <img id="destFlag" src="https://flagcdn.com/w40/bo.png" alt="BOB" class="provider-icon" />
+            </div>
+          </div>
+
+          <a id="whatsappBtn" class="action-btn" target="_blank">Enviar dinero</a>
+
+          <div class="comparison-section">
+            <h4>Comparación 😟:</h4>
+            <div class="result-item">
+              <span><img src="img/money.png" class="provider-icon" alt="MoneyGram" />MoneyGram</span>
+              <span id="mgReceived" class="result-value">0.00</span>
+            </div>
+            <div class="result-item">
+              <span><img src="img/217427.png" class="provider-icon" alt="Western Union" />Western Union</span>
+              <span id="wuReceived" class="result-value">0.00</span>
+            </div>
+            <div class="result-item">
+              <span><img src="img/ria.png" class="provider-icon" alt="Ria Envia" />Ria Envia</span>
+              <span id="riaReceived" class="result-value">0.00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Lupo Transfer. Todos los derechos reservados.</p>
+  </footer>
+
+  <a href="https://wa.me/393341950037" class="floating-btn"><i class="fab fa-whatsapp"></i></a>
+  <script src="js/main.js?v=1.0.0" defer></script>
+</body>
+</html>
