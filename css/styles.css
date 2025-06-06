@@ -172,3 +172,65 @@ body {
   text-decoration: none;
   box-shadow: 0 2px 5px rgba(0,0,0,0.3);
 }
+
+
+.rate-row-slim {
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: #666;
+  margin-bottom: 12px;
+}
+
+
+.rate-row-icons {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 12px;
+  padding: 0 4px;
+}
+.rate-row-icons .left,
+.rate-row-icons .right {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+
+.comparacion {
+  margin-top: 24px;
+  background: #f4f4f4;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+}
+
+.comparacion .item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.comparacion .item:last-child {
+  border-bottom: none;
+}
+
+.comparacion img {
+  width: 24px;
+  height: 24px;
+}
+
+.comparacion .name {
+  flex: 1;
+  font-weight: 500;
+  color: #333;
+}
+
+.comparacion .amount {
+  font-weight: bold;
+  color: #000;
+}
