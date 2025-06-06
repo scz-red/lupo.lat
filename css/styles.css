@@ -234,3 +234,69 @@ body {
   font-weight: bold;
   color: #000;
 }
+
+
+.rate-row-icons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 12px;
+  padding: 0 6px;
+  word-break: break-word;
+}
+
+
+.form-box {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  margin-top: 24px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.field {
+  margin-bottom: 20px;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid #d1d5db;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #fafafa;
+}
+
+.input-group input {
+  flex: 1;
+  padding: 16px;
+  border: none;
+  font-size: 1.1rem;
+  outline: none;
+  background: transparent;
+  font-weight: 500;
+}
+
+.currency {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f0f0f0;
+  padding: 0 14px;
+}
+
+.currency img {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
+
+.currency span {
+  font-weight: 600;
+  color: #111827;
+  font-size: 1rem;
+}
