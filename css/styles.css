@@ -1,16 +1,26 @@
+/* ====================
+   Estilos Globales
+   ==================== */
 body {
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #f0f2f5;
-  color: #1f2937;
   margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f0f2f5; /* Fondo gris claro */
+  color: #1f2937;
 }
 
+/* ====================
+   Contenedor Principal
+   ==================== */
 .container {
   max-width: 480px;
   margin: 0 auto;
   padding: 16px;
 }
 
+/* ====================
+   Encabezado
+   ==================== */
 header {
   background: white;
   padding: 12px 16px;
@@ -18,26 +28,25 @@ header {
   align-items: center;
   border-bottom: 1px solid #e5e7eb;
 }
-
 header img {
   height: 36px;
 }
 
+/* ====================
+   Hero
+   ==================== */
 .hero {
   text-align: center;
   margin-top: 24px;
 }
-
 .hero h1 {
-  font-size: 1.5em;
+  font-size: 1.6em;
   margin-bottom: 0.4em;
 }
-
 .hero p {
   font-size: 0.95em;
   color: #4b5563;
 }
-
 .badge {
   background-color: #d32f2f;
   color: white;
@@ -49,61 +58,60 @@ header img {
   display: inline-block;
 }
 
+/* ====================
+   Caja de la Calculadora
+   ==================== */
 .form-box {
   background: white;
   border-radius: 14px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
   padding: 20px;
   margin-top: 20px;
 }
 
+/* ====================
+   Campos
+   ==================== */
 .field-label {
   font-weight: 600;
   margin-bottom: 6px;
 }
-
 .input-wrap {
   position: relative;
   margin-bottom: 20px;
 }
-
 .input-wrap input {
   width: 100%;
   font-size: 1.4em;
-  padding: 16px 110px 16px 16px;
+  padding: 16px 100px 16px 20px;
   border-radius: 12px;
   border: 1.5px solid #d1d5db;
   background: #fff;
-  height: 60px;
-  box-sizing: border-box;
 }
-
 .currency-select {
   position: absolute;
-  right: 12px;
+  right: 16px;
   top: 50%;
   transform: translateY(-50%);
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
-
-.currency-select select {
-  border: none;
-  background: transparent;
-  font-size: 1em;
-  font-weight: 600;
-  appearance: none;
-  padding: 4px;
-  cursor: pointer;
-}
-
 .currency-select img {
-  width: 28px;
   height: 20px;
+  width: 28px;
   border-radius: 4px;
 }
+.currency-select select {
+  font-weight: bold;
+  background: transparent;
+  border: none;
+  font-size: 1em;
+}
 
+/* ====================
+   Botón de acción
+   ==================== */
 .action-btn {
   width: 100%;
   background: linear-gradient(90deg, #d32f2f, #f9a825, #388e3c);
@@ -115,35 +123,37 @@ header img {
   margin-top: 10px;
   display: inline-block;
   text-align: center;
+  transition: transform 0.2s ease;
+}
+.action-btn:hover {
+  transform: scale(1.02);
 }
 
+/* ====================
+   Comparación
+   ==================== */
 .comparacion {
   margin-top: 28px;
 }
-
+.comparacion h4 {
+  font-size: 1em;
+  margin-bottom: 12px;
+}
 .comparacion .item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 12px;
-  background: #f0f4f8;
-  border-radius: 10px;
-  margin-bottom: 10px;
+  margin: 6px 0;
 }
-
 .comparacion .item img {
   height: 18px;
   margin-right: 6px;
   vertical-align: middle;
 }
 
-footer {
-  text-align: center;
-  font-size: 0.75em;
-  color: #6b7280;
-  padding: 2em 0;
-}
-
+/* ====================
+   Botón Flotante WhatsApp
+   ==================== */
 .floating-btn {
   position: fixed;
   bottom: 20px;
@@ -158,4 +168,15 @@ footer {
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  z-index: 1000;
+}
+
+/* ====================
+   Pie de Página
+   ==================== */
+footer {
+  text-align: center;
+  font-size: 0.75em;
+  color: #6b7280;
+  padding: 2em 0;
 }
