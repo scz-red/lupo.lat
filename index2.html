@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#ffffff" />
+  <title>LUPO - Envíos a Bolivia</title>
+
+  <link rel="manifest" href="icons/manifest.json" />
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png" />
+
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/register-sw.js" defer></script>
+
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f9f9f9;
+      color: #222;
+    }
+    header {
+      background: white;
+      padding: 10px 16px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo img { height: 36px; }
+
+    .hero {
+      text-align: center;
+      padding: 1.5em 1em 1em;
+    }
+    .hero h1 {
+      font-size: 1.5em;
+      color: #111;
+    }
+    .hero p {
+      font-size: 1.05em;
+      color: #333;
+    }
+    .calculator-section {
+      padding: 1em;
+      background: white;
+      margin: 1em;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .floating-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 999;
+      width: 60px;
+      height: 60px;
+      background: #25d366;
+      border-radius: 50%;
+      color: white;
+      font-size: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      text-decoration: none;
+    }
+
+    .footer-links {
+      text-align: center;
+      font-size: 0.9em;
+      padding: 1em;
+    }
+    footer {
+      padding: 1em 0;
+      font-size: 0.8em;
+      color: #666;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo"><img src="img/lupo01.png" alt="Lupo logo" /></div>
+    <i id="menuToggle" class="fas fa-bars"></i>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>¡ENVÍA MÁS, PAGA MENOS!</h1>
+      <p>Sin comisiones. Tipo de cambio correcto.<br>Tan simple como enviar un mensaje.<br><strong>Con Lupo, tu dinero va completo.</strong></p>
+    </section>
+
+    <section class="calculator-section">
+      <p><strong>Calculadora simulada</strong><br />Aquí va el formulario de envío</p>
+    </section>
+  </main>
+
+  <a href="https://wa.me/393341950037" class="floating-btn" title="Habla con nosotros por WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <footer>
+    <div class="footer-links">
+      <a href="#">Términos</a> | 
+      <a href="#">Contacto</a> | 
+      <a href="#">Ayuda</a>
+    </div>
+    <p>© 2025 Lupo Transfer. Todos los derechos reservados.</p>
+  </footer>
+</body>
+</html>
