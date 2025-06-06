@@ -1,78 +1,72 @@
-
-* {
-  box-sizing: border-box;
-}
-
 body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f3f4f6;
   margin: 0;
   padding: 0;
-  background-color: #f4f6f8;
   color: #111;
 }
 
 .container {
-  max-width: 480px;
-  margin: 0 auto;
+  max-width: 460px;
+  margin: auto;
   padding: 16px;
+  background-color: #fff;
 }
 
 header img {
-  width: 160px;
-  display: block;
-  margin: 0 auto 12px;
+  max-width: 100%;
+  height: auto;
+  margin: 16px 0;
 }
 
 .hero {
   text-align: center;
-  margin-bottom: 12px;
+  margin-bottom: 20px;
 }
 
 .hero h1 {
-  font-size: 1.5em;
-  margin: 0;
+  font-size: 1.5rem;
   font-weight: 700;
-}
-
-.hero p {
-  font-size: 0.95em;
-  color: #6b7280;
   margin: 8px 0;
 }
 
+.hero p {
+  font-size: 0.95rem;
+  color: #6b7280;
+  margin: 4px 0 12px;
+}
+
 .badge {
-  background-color: #dc2626;
-  color: white;
-  padding: 6px 14px;
-  border-radius: 8px;
   display: inline-block;
-  margin-top: 8px;
-  font-weight: 500;
-  font-size: 0.9em;
+  background-color: #ef4444;
+  color: white;
+  font-weight: bold;
+  padding: 6px 12px;
+  border-radius: 8px;
 }
 
 .form-box {
-  background-color: #ffffff;
+  background-color: #fff;
+  padding: 16px;
   border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  margin-top: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  margin-top: 20px;
 }
 
-.exchange-rate {
-  background-color: #e2e8f0;
+.rate-box {
+  background: #ecfdf5;
+  color: #064e3b;
+  font-weight: 600;
   padding: 8px 12px;
-  border-radius: 12px;
-  font-weight: bold;
-  font-size: 0.95em;
+  border-radius: 9999px;
   display: inline-block;
   margin-bottom: 8px;
 }
 
 .timestamp {
+  font-size: 0.85rem;
   text-align: right;
-  font-size: 0.8em;
-  color: #555;
+  color: #4b5563;
   margin-bottom: 12px;
 }
 
@@ -82,117 +76,97 @@ header img {
 
 .field-label {
   font-weight: 600;
-  font-size: 0.95em;
-  margin-bottom: 4px;
-  color: #111827;
+  font-size: 0.95rem;
+  margin-bottom: 6px;
 }
 
 .input-wrap {
   display: flex;
-  align-items: center;
   border: 2px solid #111;
-  border-radius: 10px;
-  overflow: hidden;
-  height: 56px;
+  border-radius: 12px;
+  padding: 6px 8px;
+  align-items: center;
+  background-color: #fff;
 }
 
 .input-wrap input {
-  flex: 1;
-  font-size: 1.1em;
-  padding: 8px 12px;
   border: none;
+  font-size: 1.1rem;
+  flex: 1;
   outline: none;
+  background: transparent;
 }
 
 .currency-select {
   display: flex;
   align-items: center;
-  padding: 0 12px;
   gap: 6px;
+  margin-left: 8px;
 }
 
 .currency-select select {
-  font-size: 0.9em;
   border: none;
-  background: none;
-  font-weight: 600;
-  color: #1e3a8a;
+  background: transparent;
+  font-weight: bold;
 }
 
 .currency-select img {
-  width: 24px;
-  height: auto;
+  height: 20px;
+  width: 28px;
+  object-fit: cover;
 }
 
 .action-btn {
   display: block;
   text-align: center;
-  background: linear-gradient(to right, #dc2626, #f59e0b, #16a34a);
+  background: linear-gradient(to right, #dc2626, #facc15, #16a34a);
+  padding: 12px;
   color: white;
-  padding: 14px;
+  font-weight: bold;
   border-radius: 12px;
-  font-size: 1.1em;
-  font-weight: 600;
+  margin: 12px 0;
   text-decoration: none;
-  margin-top: 8px;
-  transition: opacity 0.3s ease;
 }
 
-.action-btn.disabled {
-  background: #e5e7eb;
-  color: #9ca3af;
-  pointer-events: none;
+.action-btn:disabled {
+  background: #d1d5db;
+  cursor: not-allowed;
 }
 
 .comparacion {
-  margin-top: 24px;
-  background-color: #f1f5f9;
-  border-radius: 12px;
+  margin-top: 20px;
   padding: 16px;
-  font-size: 0.9em;
-  color: #374151;
+  background-color: #f9fafb;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: #6b7280;
 }
 
 .comparacion h4 {
   margin-bottom: 10px;
-  font-weight: 600;
-  font-size: 0.95em;
-  color: #111;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #4b5563;
 }
 
 .comparacion .item {
   display: flex;
   justify-content: space-between;
-  padding: 6px 0;
   align-items: center;
-  font-size: 0.9em;
+  padding: 6px 0;
 }
 
 .comparacion img {
-  width: 20px;
-  height: auto;
+  height: 18px;
   vertical-align: middle;
   margin-right: 6px;
 }
 
 .floating-btn {
   position: fixed;
-  bottom: 16px;
-  right: 16px;
-  background-color: #10b981;
-  color: white;
-  border-radius: 50%;
-  width: 48px;
-  height: 48px;
-  text-align: center;
-  line-height: 48px;
+  bottom: 24px;
+  right: 24px;
   font-size: 24px;
   text-decoration: none;
-}
-
-footer {
-  text-align: center;
-  font-size: 0.8em;
-  margin-top: 32px;
-  color: #6b7280;
 }
