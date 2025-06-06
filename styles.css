@@ -1,0 +1,174 @@
+body {
+  font-family: sans-serif;
+  margin: 0;
+  background: #f8f9fb;
+  color: #222;
+}
+
+.container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.logo {
+  max-width: 120px;
+  display: block;
+  margin: 0 auto 12px;
+}
+
+.hero h1 {
+  text-align: center;
+  font-size: 1.5rem;
+  margin: 8px 0;
+}
+
+.hero p {
+  text-align: center;
+  font-size: 0.95rem;
+  color: #666;
+}
+
+.badge {
+  background-color: #e53935;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 8px;
+  width: fit-content;
+  margin: 10px auto;
+  font-weight: bold;
+}
+
+.form-box {
+  background: #fff;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  margin-top: 20px;
+}
+
+.rate-section {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.rate-bubble-centered {
+  background: #eaf7ef;
+  padding: 10px 16px;
+  border-radius: 20px;
+  font-weight: bold;
+  color: #256029;
+  display: inline-block;
+}
+
+.field {
+  margin-bottom: 16px;
+}
+
+.field label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  border: 2px solid #000;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.input-group input {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  font-size: 1rem;
+  outline: none;
+}
+
+.currency {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #f0f0f0;
+  padding: 0 10px;
+}
+
+.currency img {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+.currency span {
+  font-weight: bold;
+  color: #333;
+}
+
+#submitBtn {
+  width: 100%;
+  padding: 14px;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  background: linear-gradient(to right, #e53935, #fbc02d, #43a047);
+  cursor: pointer;
+  margin-top: 12px;
+  transition: 0.3s;
+}
+
+#submitBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.comparacion {
+  margin-top: 24px;
+  background: #fffdd0;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+}
+
+.comparacion h4 {
+  margin-bottom: 12px;
+  font-weight: bold;
+  color: #444;
+}
+
+.comparacion .item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.comparacion .item:last-child {
+  border-bottom: none;
+}
+
+.comparacion img {
+  width: 20px;
+  margin-right: 6px;
+}
+
+.floating-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #007bff;
+  color: white;
+  font-size: 22px;
+  border-radius: 50%;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
