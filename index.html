@@ -1,100 +1,56 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#ffffff" />
-  <title>LUPO - Envíos de Dinero</title>
+  <title>LUPO - ENVÍA</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div class="container">
     <header>
-      <img src="img/lupo01.png" alt="Lupo logo" class="logo" />
+      <img src="img/lupo01.png" alt="Lupo logo" />
     </header>
-
     <section class="hero">
       <h1>Envía más, paga menos</h1>
       <p>Sin comisiones. Tipo de cambio justo. Compará cuánto más reciben con Lupo.</p>
       <div class="badge">0% Comisión 😄</div>
     </section>
-
     <section class="form-box">
-      <div class="rate-row">
-        <div class="rate-bubble">1 EUR = <strong id="rateValue">16.22</strong> BOB</div>
-        <div class="timestamp"><img src="img/calendar.svg" alt="calendar" /> <span id="liveTimestamp"></span></div>
-      </div>
-
+      <div class="rate-box"><span class="pill">1 EUR = <strong id="rate">16.22</strong> BOB</span> <span class="timestamp"><img src="icons/calendar.svg" class="icon" /> <span id="liveTimestamp"></span></span></div>
       <div class="field">
-        <label>Enviás exactamente</label>
-        <div class="input-group">
-          <input id="eurInput" type="number" placeholder="0.00" />
-          <div class="currency">
-            <img src="https://flagcdn.com/w40/eu.png" alt="EUR" />
-            <span>EUR</span>
+        <div class="field-label">Envías exactamente</div>
+        <div class="input-wrap">
+          <input id="eurInput" type="number" placeholder="0.00" min="0" />
+          <div class="currency-select">
+            <span class="currency-label">EUR</span>
+            <img src="https://flagcdn.com/w40/eu.png" alt="EUR" class="flag" />
           </div>
         </div>
       </div>
-
       <div class="field">
-        <label>El destinatario recibe</label>
-        <div class="input-group">
+        <div class="field-label">El destinatario recibe</div>
+        <div class="input-wrap">
           <input id="bobInput" type="number" placeholder="0.00" readonly />
-          <div class="currency">
-            <img src="https://flagcdn.com/w40/bo.png" alt="BOB" />
-            <span>BOB</span>
+          <div class="currency-select">
+            <span class="currency-label">BOB</span>
+            <img src="https://flagcdn.com/w40/bo.png" alt="BOB" class="flag" />
           </div>
         </div>
       </div>
-
-      <button id="submitBtn" disabled>Calcular</button>
+      <button id="sendButton" disabled>Calcular</button>
     </section>
-
     <section class="comparacion">
       <h4>Comparación: 😲</h4>
-      <div class="item"><img src="img/money.png" alt="MoneyGram" /> MoneyGram <span id="mg">0.0 Bs.</span></div>
-      <div class="item"><img src="img/217427.png" alt="WU" /> Western Union <span id="wu">0.0 Bs.</span></div>
-      <div class="item"><img src="img/ria.png" alt="Ria" /> Ria Envia <span id="ria">0.0 Bs.</span></div>
+      <div class="item"><img src="img/money.png" /><span>MoneyGram</span><span id="mg">0.0 Bs.</span></div>
+      <div class="item"><img src="img/wu.png" /><span>Western Union</span><span id="wu">0.0 Bs.</span></div>
+      <div class="item"><img src="img/ria.png" /><span>Ria Envia</span><span id="ria">0.0 Bs.</span></div>
     </section>
   </div>
-
   <a class="floating-btn" href="https://wa.me/393341950037" target="_blank">💬</a>
-
   <footer>© 2025 Lupo Transfer. Todos los derechos reservados.</footer>
-
-  <script>
-    const rate = 16.22;
-
-    function actualizarFechaHora() {
-      const ahora = new Date();
-      document.getElementById('liveTimestamp').textContent = ahora.toLocaleString('es-BO', {
-        dateStyle: 'short',
-        timeStyle: 'short'
-      });
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      const eurInput = document.getElementById("eurInput");
-      const bobInput = document.getElementById("bobInput");
-      const btn = document.getElementById("submitBtn");
-
-      actualizarFechaHora();
-      setInterval(actualizarFechaHora, 1000);
-
-      eurInput.addEventListener("input", () => {
-        const eur = parseFloat(eurInput.value);
-        if (!isNaN(eur) && eur > 0) {
-          const bob = (eur * rate).toFixed(2);
-          bobInput.value = bob;
-          btn.disabled = false;
-          btn.innerHTML = "Enviar dinero 🇧🇴";
-        } else {
-          bobInput.value = "";
-          btn.disabled = true;
-          btn.innerHTML = "Calcular";
-        }
-      });
-    });
-  </script>
+  <script src="main.v2.js"></script>
 </body>
 </html>
