@@ -1,165 +1,128 @@
+
 body {
-  font-family: sans-serif;
+  font-family: 'Segoe UI', sans-serif;
   margin: 0;
   background: #f8f9fb;
-  color: #222;
+  color: #1e1e1e;
 }
 
 .container {
-  max-width: 480px;
+  max-width: 500px;
   margin: 0 auto;
-  padding: 16px;
+  padding: 1rem;
 }
 
-.logo {
-  max-width: 120px;
+header img {
+  width: 160px;
   display: block;
-  margin: 0 auto 12px;
+  margin: 1rem auto;
 }
 
 .hero h1 {
+  font-size: 1.6rem;
   text-align: center;
-  font-size: 1.5rem;
-  margin: 8px 0;
 }
 
 .hero p {
   text-align: center;
-  font-size: 0.95rem;
   color: #666;
 }
 
 .badge {
-  background-color: #e53935;
-  color: #fff;
-  padding: 6px 12px;
-  border-radius: 8px;
-  width: fit-content;
-  margin: 10px auto;
+  background: #dc3545;
+  padding: 5px 15px;
+  color: white;
+  border-radius: 12px;
   font-weight: bold;
+  display: inline-block;
+  margin: 0 auto 1rem;
+  text-align: center;
 }
 
 .form-box {
-  background: #fff;
-  padding: 16px;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-  margin-top: 20px;
+  background: white;
+  padding: 1rem;
+  border-radius: 14px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
 }
 
-.rate-row {
+.rate-box {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 1rem;
 }
 
-.rate-bubble {
-  background: #eaf7ef;
-  padding: 6px 12px;
-  border-radius: 20px;
+.pill {
+  background: #e0f8eb;
+  padding: 4px 12px;
+  border-radius: 999px;
   font-weight: bold;
-  color: #256029;
+}
+
+.icon {
+  width: 16px;
+  vertical-align: middle;
 }
 
 .timestamp {
   font-size: 0.85rem;
-  color: #555;
+  color: #333;
 }
 
-.field {
-  margin-bottom: 16px;
-}
-
-.field label {
+.field-label {
   font-weight: bold;
-  display: block;
-  margin-bottom: 6px;
+  margin-bottom: 5px;
 }
 
-.input-group {
+.input-wrap {
   display: flex;
   align-items: center;
   border: 2px solid #000;
   border-radius: 8px;
-  overflow: hidden;
+  padding: 4px 8px;
+  margin-bottom: 1rem;
 }
 
-.input-group input {
+.input-wrap input {
   flex: 1;
-  padding: 10px;
+  font-size: 1.2rem;
+  padding: 8px;
   border: none;
-  font-size: 1rem;
+  background: none;
   outline: none;
 }
 
-.currency {
+.currency-select {
   display: flex;
   align-items: center;
-  gap: 6px;
-  background: #f0f0f0;
-  padding: 0 10px;
+  gap: 5px;
 }
 
-.currency img {
-  width: 20px;
-  height: 20px;
+.currency-label {
+  color: #000;
+  font-weight: bold;
+}
+
+.flag {
   border-radius: 50%;
+  width: 24px;
 }
 
-.currency span {
-  font-weight: bold;
-  color: #333;
-}
-
-#submitBtn {
-  width: 100%;
-  padding: 14px;
-  font-size: 1rem;
-  font-weight: bold;
+#sendButton {
+  background: linear-gradient(to right, red, orange, green);
   border: none;
-  border-radius: 8px;
   color: white;
-  background: linear-gradient(to right, #e53935, #fbc02d, #43a047);
+  font-size: 1rem;
+  padding: 12px;
+  width: 100%;
+  border-radius: 10px;
   cursor: pointer;
-  margin-top: 12px;
-  transition: 0.3s;
+  font-weight: bold;
 }
 
-#submitBtn:disabled {
+#sendButton:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-}
-
-.comparacion {
-  margin-top: 24px;
-  background: #fffdd0;
-  padding: 16px;
-  border-radius: 12px;
-  font-size: 0.95rem;
-}
-
-.comparacion h4 {
-  margin-bottom: 12px;
-  font-weight: bold;
-  color: #444;
-}
-
-.comparacion .item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 6px 0;
-  border-bottom: 1px solid #ddd;
-}
-
-.comparacion .item:last-child {
-  border-bottom: none;
-}
-
-.comparacion img {
-  width: 20px;
-  margin-right: 6px;
 }
 
 .floating-btn {
@@ -168,13 +131,37 @@ body {
   right: 20px;
   background: #25d366;
   color: white;
-  font-size: 22px;
   border-radius: 50%;
-  width: 52px;
-  height: 52px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 48px;
+  height: 48px;
+  font-size: 24px;
+  text-align: center;
+  line-height: 48px;
   text-decoration: none;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.comparacion {
+  background: #eef7f1;
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: 10px;
+  font-size: 0.9rem;
+}
+
+.comparacion .item {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.3rem 0;
+}
+
+.comparacion img {
+  height: 20px;
+  margin-right: 8px;
+}
+
+footer {
+  text-align: center;
+  font-size: 0.75rem;
+  color: #999;
+  margin-top: 2rem;
 }
