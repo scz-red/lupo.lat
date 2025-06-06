@@ -63,15 +63,8 @@ body {
 }
 
 .timestamp {
-  display: flex;
-  align-items: center;
   font-size: 0.85rem;
   color: #555;
-}
-
-.timestamp img {
-  width: 16px;
-  margin-right: 4px;
 }
 
 .field {
@@ -140,7 +133,7 @@ body {
 
 .comparacion {
   margin-top: 24px;
-  background: #f1f3f4;
+  background: #fffdd0;
   padding: 16px;
   border-radius: 12px;
   font-size: 0.95rem;
