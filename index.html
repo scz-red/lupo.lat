@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#ffffff" />
   <title>LUPO - Envíos de Dinero</title>
-  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div class="container">
@@ -20,8 +20,18 @@
     </section>
 
     <section class="form-box">
-      <div class="rate-section">
-        <div class="rate-bubble-centered">
+      
+
+<div class="rate-row-icons">
+  <div class="left">
+    💱 <strong>1 EUR = <span id="rateValue">16.22</span> BOB</strong>
+  </div>
+  <div class="right">
+    🕒 <span id="liveTimestamp"></span>
+  </div>
+</div>
+
+
           <span><strong>1 EUR = <span id="rateValue">16.22</span> BOB</strong></span><br />
           <small id="liveTimestamp"></small>
         </div>
@@ -52,12 +62,26 @@
       <button id="submitBtn" disabled>Calcular</button>
     </section>
 
-    <section class="comparacion">
-      <h4>Comparación: 😲</h4>
-      <div class="item"><img src="img/money.png" alt="MoneyGram" /> MoneyGram <span id="mg">0.0 Bs.</span></div>
-      <div class="item"><img src="img/217427.png" alt="WU" /> Western Union <span id="wu">0.0 Bs.</span></div>
-      <div class="item"><img src="img/ria.png" alt="Ria" /> Ria Envia <span id="ria">0.0 Bs.</span></div>
-    </section>
+    
+<section class="comparacion">
+  <h4>Comparación: 😲</h4>
+  <div class="item">
+    <img src="img/money.png" alt="MoneyGram" />
+    <div class="name">MoneyGram</div>
+    <div class="amount" id="mg">0.0 Bs.</div>
+  </div>
+  <div class="item">
+    <img src="img/217427.png" alt="WU" />
+    <div class="name">Western Union</div>
+    <div class="amount" id="wu">0.0 Bs.</div>
+  </div>
+  <div class="item">
+    <img src="img/ria.png" alt="Ria" />
+    <div class="name">Ria Envia</div>
+    <div class="amount" id="ria">0.0 Bs.</div>
+  </div>
+</section>
+
   </div>
 
   <a class="floating-btn" href="#"><img src="img/support.png" alt="Soporte" width="26" /></a>
