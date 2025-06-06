@@ -1,92 +1,118 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Panel Admin – Lupo</title>
-  <!-- Estilos CSS -->
-  <link rel="stylesheet" href="css/admin.css">
-  <!-- Script de lógica -->
-  <script src="js/admin.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Envíos de remesas de Europa a Bolivia sin comisiones al mejor tipo de cambio. Calcula y envía de forma rápida y segura.">
+  <meta name="keywords" content="envío dinero, remesas, Bolivia, tipo de cambio, sin comisiones, Lupo Transfer">
+  <title>LUPO - Envíos a Bolivia</title>
+
+  <!-- Íconos para pantalla de inicio y navegador -->
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="manifest" href="icons/manifest.json">
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+
+  <!-- Estilos y scripts -->
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/register-sw.js" defer></script> <!-- 🚀 Script para registrar el service worker -->
 </head>
 <body>
-  <div class="admin-wrapper">
-    <!-- LOGIN -->
-    <div class="admin-card" id="loginContainer">
-      <div class="admin-header">
-        <h1>Acceso Administrador</h1>
-      </div>
-      <div class="admin-body">
-        <div class="form-group">
-          <label for="password">Contraseña</label>
-          <input type="password" id="password" placeholder="Ingresa tu contraseña">
-        </div>
-        <button class="btn" id="loginBtn">Ingresar</button>
-        <p id="errorText" class="text-error"></p>
-      </div>
+  <header>
+    <div class="header-container">
+      <div class="logo"><img src="img/lupo01.png" alt="Lupo logo"></div>
+      <i id="menuToggle" class="fas fa-bars menu-toggle"></i>
+      <nav class="nav-links" id="navLinks">
+        <a href="#">Inicio</a>
+        <a href="#">&nbsp;Cómo funciona</a>
+        <a href="#">&nbsp;Contacto</a>
+      </nav>
     </div>
+  </header>
 
-    <!-- PANEL DE CONTROL -->
-    <div class="admin-card hidden" id="adminPanel">
-      <div class="admin-header">
-        <div class="header-flex" style="display:flex; justify-content:space-between; align-items:center;">
-          <h1>Panel de Control Lupo</h1>
-          <button class="btn logout" id="logoutBtn" style="background:#e74c3c; padding:0.5rem 1rem;">Cerrar sesión</button>
+  <div class="main-content">
+    <section class="hero">
+      <h1>ENVIA MAS, PAGA MENOS!&nbsp;</h1>
+      <p>Desde tu celular, sin perder el tiempo.
+      Sin comisiones, tipo de cambio correcto.
+      Tan simple como enviar un mensaje, directo. <br>
+      <strong>Con</strong> <strong>Lupo, tu dinero va completo</strong>.</p>
+    </section>
+
+    <section class="calculator-section">
+      <div class="calculator-card">
+        <div class="calculator-body">
+          <span class="badge">0% Comisión</span>
+
+          <div class="inline-group">
+            <label class="inline-label">Envías exactamente</label>
+            <div class="inline-wrapper">
+              <input type="number" id="eurInput" placeholder="0.00">
+              <select id="sendCurrency">
+                <option value="EUR">EUR</option>
+              </select>
+              <img src="https://flagcdn.com/w40/eu.png" alt="EUR" class="provider-icon">
+            </div>
+          </div>
+
+          <div class="inline-group">
+            <label class="inline-label">El destinatario recibe</label>
+            <div class="inline-wrapper">
+              <input type="number" id="localInput" placeholder="0.00" readonly>
+              <select id="destination">
+                <option value="bolivia">BOB</option>
+                <option value="colombia">COP</option>
+              </select>
+              <img id="destFlag" src="https://flagcdn.com/w40/bo.png" alt="BOB" class="provider-icon">
+            </div>
+          </div>
+
+          <a id="whatsappBtn" class="action-btn" target="_blank">Enviar Dinero</a>
+
+          <div class="comparison-section">
+            <h4>Lo que otros te ofrecen:</h4>
+            <div class="result-item">
+              <span><img src="img/money.png" class="provider-icon" alt="MoneyGram">MoneyGram</span>
+              <span id="mgReceived" class="result-value">0.00</span>
+            </div>
+            <div class="result-item">
+              <span><img src="img/217427.png" class="provider-icon" alt="Western Union">Western Union</span>
+              <span id="wuReceived" class="result-value">0.00</span>
+            </div>
+            <div class="result-item">
+              <span><img src="img/ria.png" class="provider-icon" alt="Ria Envia">Ria Envia</span>
+              <span id="riaReceived" class="result-value">0.00</span>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="admin-body">
-        <!-- Pestañas -->
-        <div class="tabs">
-          <div class="tab active" data-tab="rates">Tasas</div>
-          <div class="tab" data-tab="stats">Estadísticas</div>
-          <div class="tab" data-tab="transactions">Transacciones</div>
-        </div>
-        <!-- Contenido Tasas -->
-        <div id="ratesTab" class="tab-content active">
-          <div class="form-group">
-            <label for="lupoRate">Tasa Lupo (EUR → BOB)</label>
-            <input type="number" id="lupoRate" step="0.01">
-          </div>
-          <h3>Tasas de la competencia</h3>
-          <div class="form-group">
-            <label for="wuRate">Western Union</label>
-            <input type="number" id="wuRate" step="0.01">
-          </div>
-          <div class="form-group">
-            <label for="riaRate">Ria</label>
-            <input type="number" id="riaRate" step="0.01">
-          </div>
-          <div class="form-group">
-            <label for="mgRate">MoneyGram</label>
-            <input type="number" id="mgRate" step="0.01">
-          </div>
-          <button class="btn btn-block" id="saveBtn">Guardar Tasas</button>
-        </div>
-        <!-- Contenido Estadísticas -->
-        <div id="statsTab" class="tab-content">
-          <div class="stats-grid">
-            <div class="stat-card">
-              <h4>Tasa Actual</h4>
-              <p id="currentRate">0.00</p>
-            </div>
-            <div class="stat-card">
-              <h4>Ventaja</h4>
-              <p id="rateAdvantage">+0.00</p>
-            </div>
-            <div class="stat-card">
-              <h4>Actualizado</h4>
-              <p id="lastUpdated">-</p>
-            </div>
-          </div>
-        </div>
-        <!-- Contenido Transacciones -->
-        <div id="transactionsTab" class="tab-content">
-          <h3>Historial de transacciones</h3>
-          <div id="transactionsList"></div>
-          <p>Total completadas hoy: <strong id="todayTransactions">0</strong></p>
-        </div>
-      </div>
-    </div>
+    </section>
   </div>
+
+  <!-- Depósito bancario -->
+  <h3 class="partners-title">Depósito bancario:</h3>
+  <section class="partners-section">
+    <div class="partners-carousel" id="partnersCarousel">
+      <img src="img/banco union.png" alt="BBVA" width="100" height="30"> &nbsp;
+      <img src="img/banco sol.png" alt="BancoSol"> &nbsp;
+      <img src="img/ganadero.png" alt="Banco Ganadero">&nbsp;<br>
+      <img src="img/banco bisa.png" alt="Banco BISA">&nbsp;<br>
+      <img src="img/nacional de bolivia.png" alt="Banco Nacional de Bolivia">&nbsp;<br>
+      <img src="img/yape.png" alt="Yape">&nbsp;<br>
+    </div>
+  </section>
+
+  <a href="https://wa.me/393341950037" class="floating-btn"><i class="fab fa-whatsapp"></i></a>
+
+  <footer>
+    <div class="footer-links">
+      <a href="#"> Términos </a>
+      <a href="#"> Contacto </a>
+      <a href="#"> Ayuda </a>
+    </div>
+    <p>© 2025 Lupo Transfer. Todos los derechos reservados.</p>
+  </footer>
 </body>
 </html>
