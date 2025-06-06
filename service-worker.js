@@ -1,10 +1,11 @@
-const CACHE_NAME = 'lupo-cache-v1';
+
+const CACHE_NAME = 'lupo-cache-v2';
 const EXCLUDE_FROM_CACHE = ['main.js', 'manifest.json'];
 const PRECACHE_ASSETS = [
   '/',
   '/índice.html',
   '/css/styles.css',
-  '/js/main.js',
+  '/js/main.js?v=1.0.3',
   '/iconos/icono-192.png',
   '/iconos/icono-512.png'
 ];
