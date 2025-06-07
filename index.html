@@ -726,7 +726,7 @@
           <div class="header">
             <h1>Calculadora Lupo</h1>
             <div class="rate">
-              1 EUR = <strong id="rate">13.90</strong> <span style="margin-left:4px;">
+              1 EUR = <strong id="rate">16.22</strong> <span style="margin-left:4px;">
                       <img src="https://flagcdn.com/w40/bo.png" alt="Bandera UE" width="24" style="margin-right:4px;">
               </span>
             </div>
@@ -737,28 +737,32 @@
             <input type="number" id="amount" aria-describedby="rate" placeholder="Cantidad en EUR" min="1">
           </div>
           <ul class="list">
-            <li class="item highlight">
-              <div class="service"><img src="https://lupo.lat/img/favicon.ico" alt="LUPO" width="40">LUPO</div>
-              <div class="values" id="total-lupo">
+            <li class="item highlight" style="border-width: 3px; background: #e6f5e6; padding: 16px;">
+              <div class="service"><img src="https://lupo.lat/img/favicon.ico" alt="LUPO" width="24" style="border-radius: 50%; background: white;">
+  <span style="color: #000000; font-weight: 600; font-size: 1rem; margin-left: 6px;">LUPO</span></div>
+              <div class="values" id="total-lupo" style="font-size: 1.2rem; font-weight: bold;">
                 <p>0.00 Bs</p>
               </div>
             </li>
-            <li class="item">
-              <div class="service"><img src="https://lupo.lat/img/ria.png" alt="LUPO" width="20"> Ria</div>
+            <li class="item" style="opacity: 0.6; background-color: #fafafa; border-color: #dddddd;">
+              <div class="service"><img src="https://lupo.lat/img/ria.png" alt="RIA" width="20" style="border-radius: 50%; background: white;">
+  <span style="color: #aaaaaa; font-weight: 300; font-size: 0.95rem; margin-left: 6px;">RIA</span></div>
               <div class="values" id="total-ria">0.00 Bs</div>
             </li>
-            <li class="item">
-              <div class="service"><img src="https://lupo.lat/img/217427.png" alt="LUPO" width="20"> Western</div>
+            <li class="item" style="opacity: 0.6; background-color: #fafafa; border-color: #dddddd;">
+              <div class="service"><img src="https://lupo.lat/img/217427.png" alt="Western" width="20" style="border-radius: 50%; background: white;">
+  <span style="color: #aaaaaa; font-weight: 300; font-size: 0.95rem; margin-left: 6px;">WESTERN</span></div>
               <div class="values" id="total-wu">0.00 Bs</div>
             </li>
-            <li class="item">
-              <div class="service"><img src="https://lupo.lat/img/money.png" alt="LUPO" width="20"> MoneyGram</div>
+            <li class="item" style="opacity: 0.6; background-color: #fafafa; border-color: #dddddd;">
+              <div class="service"><img src="https://lupo.lat/img/money.png" alt="MoneyGram" width="20" style="border-radius: 50%; background: white;">
+  <span style="color: #aaaaaa; font-weight: 300; font-size: 0.95rem; margin-left: 6px;">MONEYGRAM</span></div>
               <div class="values" id="total-mg">0.00 Bs</div>
             </li>
           </ul>
           <div class="footer">
             <div class="savings">Ahorras: <span id="save">0.00 Bs</span></div>
-            <button id="whatsapp" class="btn-calc" aria-live="polite">Enviar 0.00</button>
+            <button id="whatsapp" class="btn-calc" aria-live="polite" style="display: none; padding: 10px 16px; font-size: 18px; color: #ffffff; background: linear-gradient(to right, #d32f2f, #fdd835, #388e3c); border: none; border-radius: 6px; cursor: pointer; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); transition: background 0.2s, transform 0.1s; width: 100%;">Enviar 0.00</button>
           </div>
         </div>
       </div>
@@ -1045,7 +1049,7 @@
 
   <!-- Your original calculator script -->
   <script>
-    const rates = { lupo:16.22, ria:{r:14.10,f:5}, wu:{r:12.80,f:6}, mg:{r:13.70,f:4} };
+    const rates = { lupo:16.22, ria:14.12, wu:12.80, mg:13.70 };
     const amountInput = document.getElementById('amount');
     const totalLupo = document.getElementById('total-lupo');
     const totalRia = document.getElementById('total-ria');
@@ -1057,16 +1061,16 @@
     amountInput.addEventListener('input', () => {
       const v = parseFloat(amountInput.value) || 0;
       const l = v * rates.lupo;
-      const r = (v - rates.ria.f) * rates.ria.r;
-      const w = (v - rates.wu.f) * rates.wu.r;
-      const m = (v - rates.mg.f) * rates.mg.r;
+      const r = v * rates.ria;
+      const w = v * rates.wu;
+      const m = v * rates.mg;
 
       totalLupo.textContent = `${l.toFixed(2)} Bs`;
       totalRia.textContent = `${r.toFixed(2)} Bs`;
       totalWu.textContent = `${w.toFixed(2)} Bs`;
       totalMg.textContent = `${m.toFixed(2)} Bs`;
 
-      const minComp = Math.min(r, w, m);
+      const minComp = Math.max(r, w, m);
       const savings = l - minComp;
       saveEl.textContent = `${savings.toFixed(2)} Bs`;
 
@@ -1083,53 +1087,6 @@
       }
     });
 
-    // FAQ functionality
-    document.querySelectorAll('.faq-question').forEach(question => {
-      question.addEventListener('click', () => {
-        const item = question.parentElement;
-        item.classList.toggle('active');
-        
-        const icon = question.querySelector('i');
-        if (item.classList.contains('active')) {
-          icon.classList.remove('fa-chevron-down');
-          icon.classList.add('fa-chevron-up');
-        } else {
-          icon.classList.remove('fa-chevron-up');
-          icon.classList.add('fa-chevron-down');
-        }
-      });
-    });
-
-    // Mobile menu functionality
-    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-    const nav = document.querySelector('nav ul');
-    
-    mobileMenuBtn.addEventListener('click', () => {
-      nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
-    });
-
-    // Smooth scrolling for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        const targetId = this.getAttribute('href');
-        if (targetId === '#') return;
-        
-        const targetElement = document.querySelector(targetId);
-        if (targetElement) {
-          window.scrollTo({
-            top: targetElement.offsetTop - 80,
-            behavior: 'smooth'
-          });
-          
-          // Close mobile menu if open
-          if (window.innerWidth <= 768) {
-            nav.style.display = 'none';
-          }
-        }
-      });
-    });
-  </script>
+</script>
 </body>
 </html>
