@@ -1,74 +1,103 @@
+function getUserLang() {
+  const lang = navigator.language || navigator.userLanguage;
+  if (lang.startsWith('it')) return 'it';
+  return 'es';
+}
 
-document.addEventListener('DOMContentLoaded', () => {
-  const eurInput     = document.getElementById('eurInput');
-  const localOutput  = document.getElementById('localInput');
-  const mgOutput     = document.getElementById('mgReceived');
-  const wuOutput     = document.getElementById('wuReceived');
-  const riaOutput    = document.getElementById('riaReceived');
-  const destSelect   = document.getElementById('destination');
-  const flagImg      = document.getElementById('destFlag');
-  const whatsappLink = document.getElementById('whatsappBtn');
-  const waNumber     = '393341950037';
-
-  if (!eurInput || !localOutput || !mgOutput || !wuOutput || !riaOutput ||
-      !destSelect || !flagImg || !whatsappLink) {
-    console.error('main.js: Faltan elementos HTML – revisa los IDs.'); 
-    return;
-  }
-
-  let rates = {
-    lupo: 16.19,
-    westernUnion: 12.8,
-    ria: 14.1,
-    moneyGram: 13.7
-  };
-
-  function calculate() {
-    const amount = parseFloat(eurInput.value) || 0;
-    const dest   = destSelect.value;
-    let local, mg, wu, ria, msg;
-
-    if (dest === 'bolivia') {
-      local = amount * rates.lupo;
-      mg    = amount * rates.moneyGram;
-      wu    = amount * rates.westernUnion;
-      ria   = amount * rates.ria;
-      flagImg.src = 'https://flagcdn.com/w40/bo.png';
-      flagImg.alt = 'Bandera de Bolivia';
-      msg = `🇧🇴 ¡Hola Lupo! Quisiera Enviar ${amount.toFixed(2)} EUR a Bolivia. El destinatario recibirá ${local.toFixed(2)} BOB.`;
+function translatePage(lang) {
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (el.closest('.faq-answer')) {
+      el.innerHTML = translations[lang][key] || '';
     } else {
-      const copRate = 4150;
-      local = amount * copRate;
-      mg = wu = ria = 0.0;
-      flagImg.src = 'https://flagcdn.com/w40/co.png';
-      flagImg.alt = 'Bandera de Colombia';
-      msg = `🇨🇴 ¡Hola Lupo! Quiero Enviar ${amount.toFixed(2)} EUR a Colombia. Recibirá ${local.toFixed(2)} COP.`;
+      el.textContent = translations[lang][key] || '';
     }
+  });
+}
 
-    localOutput.value     = local.toFixed(2);
-    mgOutput.textContent  = `😟 ${mg.toFixed(1)} Bs.`;
-    wuOutput.textContent  = `😟 ${wu.toFixed(1)} Bs.`;
-    riaOutput.textContent = `😟 ${ria.toFixed(1)} Bs.`;
-    whatsappLink.href     = `https://wa.me/${waNumber}?text=` + encodeURIComponent(msg);
+function randomKey(keysArray) {
+  return keysArray[Math.floor(Math.random() * keysArray.length)];
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  const lang = getUserLang();
+  translatePage(lang);
+
+  // Hero: mensaje aleatorio
+  const heroTitle = document.querySelector('[data-i18n^="hero-title"]');
+  if (heroTitle && typeof heroPhraseKeys !== 'undefined') {
+    const key = randomKey(heroPhraseKeys);
+    heroTitle.textContent = translations[lang][key];
   }
 
-  fetch('tasas.json')
-    .then(response => response.json())
-    .then(data => {
-      rates = {
-        lupo: parseFloat(data.lupo),
-        westernUnion: parseFloat(data.westernUnion),
-        ria: parseFloat(data.ria),
-        moneyGram: parseFloat(data.moneyGram)
-      };
-      calculate();
-    })
-    .catch(error => {
-      console.error('No se pudo cargar tasas. Usando valores por defecto.', error);
-      calculate();
-    });
+  // Calculadora: título aleatorio
+  const calcTitle = document.querySelector('[data-i18n^="calc-title"]');
+  if (calcTitle && typeof calcPhraseKeys !== 'undefined') {
+    const key = randomKey(calcPhraseKeys);
+    calcTitle.textContent = translations[lang][key];
+  }
 
-  eurInput.addEventListener('input', calculate);
-  destSelect.addEventListener('change', calculate);
-  calculate();
+  // Placeholder calculadora
+  const inputAmount = document.getElementById('amount');
+  if (inputAmount) inputAmount.placeholder = translations[lang]["calc-placeholder"];
+
+  // Lógica de la calculadora
+  const rates = { lupo:16.22, ria:14.12, wu:12.80, mg:13.70 };
+  const totalLupo = document.getElementById('total-lupo');
+  const totalRia = document.getElementById('total-ria');
+  const totalWu = document.getElementById('total-wu');
+  const totalMg = document.getElementById('total-mg');
+  const saveEl = document.getElementById('save');
+  const btn = document.getElementById('whatsapp');
+  if (inputAmount) {
+    inputAmount.addEventListener('input', () => {
+      const v = parseFloat(inputAmount.value) || 0;
+      const l = v * rates.lupo;
+      const r = v * rates.ria;
+      const w = v * rates.wu;
+      const m = v * rates.mg;
+
+      if (totalLupo) totalLupo.textContent = `${l.toFixed(2)} Bs`;
+      if (totalRia) totalRia.textContent = `${r.toFixed(2)} Bs`;
+      if (totalWu) totalWu.textContent = `${w.toFixed(2)} Bs`;
+      if (totalMg) totalMg.textContent = `${m.toFixed(2)} Bs`;
+
+      const minComp = Math.max(r, w, m);
+      const savings = l - minComp;
+
+      // Mensaje de ahorro aleatorio (cifra resaltada)
+      if (typeof savePhraseKeys !== 'undefined') {
+        const saveKey = randomKey(savePhraseKeys);
+        const msg = translations[lang][saveKey].replace(
+          "{{save}}",
+          `<span style="font-weight:bold;text-decoration:underline;">${savings.toFixed(2)} Bs</span>`
+        );
+        if (saveEl) saveEl.innerHTML = msg;
+      }
+
+      if (l > 0 && btn) {
+        btn.textContent = (translations[lang]["calc-btn"] || "Enviar") + ` ${l.toFixed(2)}`;
+        btn.style.display = 'block';
+        btn.onclick = () => {
+          window.location.href = `https://wa.me/393341950037?text=${encodeURIComponent(
+            `Envío ${v}€ con Lupo recibe ${l.toFixed(2)} Bs`
+          )}`;
+        };
+      } else if (btn) {
+        btn.style.display = 'none';
+      }
+    });
+  }
+
+  // FAQ acordeón
+  document.querySelectorAll('.faq-question').forEach(function (el) {
+    el.addEventListener('click', function () {
+      document.querySelectorAll('.faq-item').forEach(function (item) {
+        if (item !== el.parentElement) {
+          item.classList.remove('active');
+        }
+      });
+      el.parentElement.classList.toggle('active');
+    });
+  });
 });
