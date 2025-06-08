@@ -1,904 +1,219 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lupo.lat - Envíos de dinero a Bolivia con las mejores tasas</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <style>
-    :root {
-      --primary: #000000;
-      --secondary: #555555;
-      --light-gray: #f5f5f5;
-      --medium-gray: #e0e0e0;
-      --dark-gray: #333333;
-      --white: #ffffff;
-      --accent: #0066ff;
-      --border-radius: 8px;
-      --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      --transition: all 0.3s ease;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      color: var(--dark-gray);
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-
-    /* Header */
-    header {
-      background-color: var(--white);
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-      position: fixed;
-      width: 100%;
-      z-index: 1000;
-    }
-
-    .header-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 0;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .logo img {
-      height: 30px;
-    }
-
-    .logo-text {
-      font-weight: 700;
-      font-size: 1.5rem;
-      color: var(--primary);
-    }
-
-    nav ul {
-      display: flex;
-      list-style: none;
-      gap: 30px;
-    }
-
-    nav a {
-      text-decoration: none;
-      color: var(--dark-gray);
-      font-weight: 500;
-      transition: var(--transition);
-    }
-
-    nav a:hover {
-      color: var(--primary);
-    }
-
-    .nav-buttons {
-      display: flex;
-      gap: 15px;
-    }
-
-    .btn {
-      padding: 10px 20px;
-      border-radius: var(--border-radius);
-      font-weight: 500;
-      cursor: pointer;
-      transition: var(--transition);
-      text-decoration: none;
-      display: inline-block;
-    }
-
-    .btn-outline {
-      border: 1px solid var(--primary);
-      color: var(--primary);
-      background: transparent;
-    }
-
-    .btn-outline:hover {
-      background: var(--primary);
-      color: var(--white);
-    }
-
-    .btn-primary {
-      background: var(--primary);
-      color: var(--white);
-      border: 1px solid var(--primary);
-    }
-
-    .btn-primary:hover {
-      background: var(--white);
-      color: var(--primary);
-    }
-
-    .mobile-menu-btn {
-      display: none;
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-    }
-
-    /* Hero Section */
-    .hero {
-      padding: 160px 0 80px;
-      background: linear-gradient(to bottom, var(--white) 0%, var(--light-gray) 100%);
-    }
-
-    .hero-container {
-      display: flex;
-      align-items: center;
-      gap: 50px;
-    }
-
-    .hero-content {
-      flex: 1;
-    }
-
-    .hero-title {
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin-bottom: 20px;
-      color: var(--primary);
-      line-height: 1.2;
-    }
-
-    .hero-subtitle {
-      font-size: 1.2rem;
-      color: var(--secondary);
-      margin-bottom: 30px;
-      max-width: 500px;
-    }
-
-    .hero-calculator {
-      flex: 1;
-      background: var(--white);
-      border-radius: var(--border-radius);
-      box-shadow: var(--box-shadow);
-      padding: 30px;
-    }
-
-    /* Features Section */
-    .features {
-      padding: 80px 0;
-      background: var(--white);
-    }
-
-    .section-title {
-      text-align: center;
-      font-size: 2rem;
-      font-weight: 700;
-      margin-bottom: 50px;
-      color: var(--primary);
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
-    }
-
-    .feature-card {
-      background: var(--white);
-      border-radius: var(--border-radius);
-      padding: 30px;
-      box-shadow: var(--box-shadow);
-      transition: var(--transition);
-    }
-
-    .feature-card:hover {
-      transform: translateY(-5px);
-    }
-
-    .feature-icon {
-      font-size: 2.5rem;
-      color: var(--primary);
-      margin-bottom: 20px;
-    }
-
-    .feature-title {
-      font-size: 1.3rem;
-      font-weight: 600;
-      margin-bottom: 15px;
-      color: var(--primary);
-    }
-
-    /* How It Works */
-    .how-it-works {
-      padding: 80px 0;
-      background: var(--light-gray);
-    }
-
-    .steps {
-      display: flex;
-      flex-direction: column;
-      gap: 30px;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .step {
-      display: flex;
-      gap: 20px;
-      align-items: flex-start;
-    }
-
-    .step-number {
-      background: var(--primary);
-      color: var(--white);
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      flex-shrink: 0;
-    }
-
-    .step-content {
-      flex: 1;
-    }
-
-    .step-title {
-      font-size: 1.2rem;
-      font-weight: 600;
-      margin-bottom: 10px;
-      color: var(--primary);
-    }
-
-    /* Testimonials */
-    .testimonials {
-      padding: 80px 0;
-      background: var(--white);
-    }
-
-    .testimonials-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
-    }
-
-    .testimonial-card {
-      background: var(--white);
-      border-radius: var(--border-radius);
-      padding: 30px;
-      box-shadow: var(--box-shadow);
-      border: 1px solid var(--medium-gray);
-    }
-
-    .testimonial-text {
-      font-style: italic;
-      margin-bottom: 20px;
-    }
-
-    .testimonial-author {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-
-    .author-avatar {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-
-    .author-info h4 {
-      font-weight: 600;
-      margin-bottom: 5px;
-    }
-
-    .author-info p {
-      color: var(--secondary);
-      font-size: 0.9rem;
-    }
-
-    /* Map Section */
-    .map-section {
-      padding: 80px 0;
-      background: var(--light-gray);
-    }
-
-    .map-container {
-      height: 500px;
-      border-radius: var(--border-radius);
-      overflow: hidden;
-      box-shadow: var(--box-shadow);
-    }
-
-    .map-container iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-
-    /* Calculator Styles (copied exactly from your original) */
-    .calc {
-      width: 100%;
-      max-width: 4000px;
-      background: var(--white);
-      border: 1px solid var(--medium-gray);
-      border-radius: 6px;
-      padding: 12px;
-      display: grid;
-      gap: 12px;
-    }
-
-    .header {
-      text-align: center;
-    }
-
-    .header h1 {
-      font-size: 1.5rem;
-      margin-bottom: 4px;
-    }
-
-    .rate {
-      font-size: 0.9rem;
-      color: #555555;
-    }
-
-    .input {
-      position: relative;
-    }
-
-    label[for="amount"] {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-    }
-
-    input#amount {
-      width: 100%;
-      padding: 10px 10px 10px 44px;
-      font-size: 18px;
-      border: 2px solid #cccccc;
-      border-radius: 6px;
-      background: var(--white);
-      color: #000000;
-      transition: border 0.2s;
-    }
-
-    input#amount:focus {
-      outline: none;
-      border-color: #000000;
-    }
-
-    .icon {
-      position: absolute;
-      top: 50%;
-      left: 12px;
-      transform: translateY(-50%);
-      width: 24px;
-      height: 16px;
-    }
-
-    .list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: grid;
-      gap: 8px;
-    }
-
-    .item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 8px;
-      border: 2px solid #cccccc;
-      border-radius: 6px;
-      transition: background 0.2s;
-    }
-
-    .item:hover {
-      background: #f0f0f0;
-    }
-
-    .item.highlight {
-      border-color: #555555;
-      background: #f0f0f0;
-    }
-
-    .service {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-weight: 500;
-    }
-
-    .values {
-      text-align: right;
-      font-size: 0.9rem;
-    }
-
-    .footer {
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .savings {
-      font-size: 0.9rem;
-    }
-
-    .btn-calc {
-      display: none;
-      padding: 10px 16px;
-      font-size: 18px;
-      color: #ffffff;
-      background: #000000;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-      transition: background 0.2s, transform 0.1s;
-      width: 100%;
-    }
-
-    .btn-calc:hover {
-      background: #222222;
-    }
-
-    .btn-calc:active {
-      transform: scale(0.98);
-    }
-
-    /* FAQ Section */
-    .faq {
-      padding: 80px 0;
-      background: var(--white);
-    }
-
-    .faq-container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .faq-item {
-      margin-bottom: 15px;
-      border: 1px solid var(--medium-gray);
-      border-radius: var(--border-radius);
-      overflow: hidden;
-    }
-
-    .faq-question {
-      padding: 20px;
-      background: var(--light-gray);
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .faq-answer {
-      padding: 0 20px;
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease, padding 0.3s ease;
-    }
-
-    .faq-item.active .faq-answer {
-      padding: 20px;
-      max-height: 500px;
-    }
-
-    /* CTA Section */
-    .cta {
-      padding: 80px 0;
-      background: var(--primary);
-      color: var(--white);
-      text-align: center;
-    }
-
-    .cta-title {
-      font-size: 2rem;
-      font-weight: 700;
-      margin-bottom: 20px;
-    }
-
-    .cta-subtitle {
-      font-size: 1.2rem;
-      margin-bottom: 30px;
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .btn-white {
-      background: var(--white);
-      color: var(--primary);
-      border: 1px solid var(--white);
-    }
-
-    .btn-white:hover {
-      background: transparent;
-      color: var(--white);
-    }
-
-    /* Footer */
-    footer {
-      background: var(--dark-gray);
-      color: var(--white);
-      padding: 60px 0 30px;
-    }
-
-    .footer-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 40px;
-      margin-bottom: 40px;
-    }
-
-    .footer-logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-
-    .footer-logo img {
-      height: 30px;
-    }
-
-    .footer-logo-text {
-      font-weight: 700;
-      font-size: 1.5rem;
-    }
-
-    .footer-about {
-      max-width: 300px;
-    }
-
-    .footer-title {
-      font-weight: 600;
-      margin-bottom: 20px;
-      font-size: 1.1rem;
-    }
-
-    .footer-links {
-      list-style: none;
-    }
-
-    .footer-links li {
-      margin-bottom: 10px;
-    }
-
-    .footer-links a {
-      color: var(--medium-gray);
-      text-decoration: none;
-      transition: var(--transition);
-    }
-
-    .footer-links a:hover {
-      color: var(--white);
-    }
-
-    .social-links {
-      display: flex;
-      gap: 15px;
-    }
-
-    .social-links a {
-      color: var(--white);
-      font-size: 1.2rem;
-      transition: var(--transition);
-    }
-
-    .social-links a:hover {
-      opacity: 0.8;
-    }
-
-    .footer-bottom {
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      padding-top: 30px;
-      text-align: center;
-      font-size: 0.9rem;
-      color: var(--medium-gray);
-    }
-
-    /* Responsive */
-    @media (max-width: 992px) {
-      .hero-container {
-        flex-direction: column;
-      }
-
-      .hero-content {
-        text-align: center;
-        margin-bottom: 40px;
-      }
-
-      .hero-title, .hero-subtitle {
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      .hero-calculator {
-        width: 100%;
-        max-width: 400px;
-      }
-    }
-
-    @media (max-width: 768px) {
-      nav ul {
-        display: none;
-      }
-
-      .mobile-menu-btn {
-        display: block;
-      }
-
-      .nav-buttons {
-        display: none;
-      }
-
-      .hero-title {
-        font-size: 2rem;
-      }
-
-      .hero-subtitle {
-        font-size: 1rem;
-      }
-
-      .section-title {
-        font-size: 1.8rem;
-      }
-    }
-
-    @media (max-width: 576px) {
-      .hero {
-        padding: 120px 0 60px;
-      }
-
-      .hero-title {
-        font-size: 1.8rem;
-      }
-
-      .features-grid, .testimonials-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lupo.lat - Envíos de dinero a Bolivia sin comisiones y con el mejor cambio</title>
+  <!-- Favicons e íconos PWA -->
+  <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
+  <link rel="manifest" href="/icons/manifest.json">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <!-- Fuentes e íconos -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
   <!-- Header -->
   <header>
     <div class="container header-container">
       <div class="logo">
-        <img src="https://lupo.lat/img/favicon.ico" alt="Lupo">
-        <span class="logo-text">Lupo</span>
+        <img src="http://lupo.lat/img/lupologo.png" alt="Lupo" width="100" style="height:40px;">
+        
       </div>
-      
       <nav>
         <ul>
-          <li><a href="#features">Beneficios</a></li>
-          <li><a href="#how-it-works">Cómo funciona</a></li>
-          <li><a href="#testimonials">Testimonios</a></li>
-          <li><a href="#faq">Preguntas</a></li>
-          <li><a href="#contact">Contacto</a></li>
+          <li><a href="#features" data-i18n="features-title"></a></li>
+          <li><a href="#how-it-works" data-i18n="how-title"></a></li>
+          <li><a href="#testimonials" data-i18n="testimonials-title"></a></li>
+          <li><a href="#faq" data-i18n="faq-title"></a></li>
+          <li><a href="#contact" data-i18n="footer-contact"></a></li>
         </ul>
       </nav>
-      
-
-      
       <button class="mobile-menu-btn">
         <i class="fas fa-bars"></i>
       </button>
     </div>
   </header>
 
-  <!-- Hero Section -->
+  <!-- Hero + Calculadora -->
   <section class="hero">
     <div class="container hero-container">
       <div class="hero-content">
-        <h1 class="hero-title">Envía dinero a Bolivia con las mejores tasas del mercado</h1>
-        <p class="hero-subtitle">Compara y descubre cuánto más recibes con Lupo frente a otros servicios de envío de dinero.</p>
+        <h1 class="hero-title" data-i18n="hero-title-1"></h1>
+        <p class="hero-subtitle" data-i18n="hero-subtitle"></p>
         <div class="hero-buttons">
-          <a href="#" class="btn btn-primary">Comenzar ahora</a>
-          <a href="#" class="btn btn-outline">Más información</a>
+          <a href="#" class="btn btn-primary" data-i18n="btn-send"></a>
+          <a href="#how-it-works" class="btn btn-outline" data-i18n="btn-how"></a>
         </div>
       </div>
-      
       <div class="hero-calculator">
-        <!-- Your original calculator exactly as is -->
         <div class="calc">
           <div class="header">
-            <h1>Calculadora Lupo</h1>
+            <h1 data-i18n="calc-title-1"></h1>
             <div class="rate">
-              1 EUR = <strong id="rate">16.22</strong> <span style="margin-left:4px;">
-                      <img src="https://flagcdn.com/w40/bo.png" alt="Bandera UE" width="24" style="margin-right:4px;">
+              1 EUR = <strong id="rate">16.22</strong>
+              <span style="margin-left:4px;">
+                <img src="https://flagcdn.com/w40/bo.png" alt="Bandera Bolivia" width="24" style="margin-right:4px;">
               </span>
             </div>
           </div>
           <div class="input">
-            <label for="amount">Cantidad en EUR</label>
+            <label for="amount" class="sr-only" data-i18n="calc-placeholder"></label>
             <img class="icon" src="https://flagcdn.com/w40/eu.png" alt="UE">
-            <input type="number" id="amount" aria-describedby="rate" placeholder="Cantidad en EUR" min="1">
+            <input type="number" id="amount" aria-describedby="rate" min="1">
           </div>
           <ul class="list">
             <li class="item highlight" style="border-width: 3px; background: #e6f5e6; padding: 16px;">
-              <div class="service"><img src="https://lupo.lat/img/favicon.ico" alt="LUPO" width="24" style="border-radius: 50%; background: white;">
-  <span style="color: #000000; font-weight: 600; font-size: 1rem; margin-left: 6px;">LUPO</span></div>
+              <div class="service">
+                <img src="http://lupo.lat/img/lupologo.png" alt="LUPO" width="60" style="border-radius: 50%; background: white;">
+                
+              </div>
               <div class="values" id="total-lupo" style="font-size: 1.2rem; font-weight: bold;">
                 <p>0.00 Bs</p>
               </div>
             </li>
             <li class="item" style="opacity: 0.6; background-color: #fafafa; border-color: #dddddd;">
-              <div class="service"><img src="https://lupo.lat/img/ria.png" alt="RIA" width="20" style="border-radius: 50%; background: white;">
-  <span style="color: #aaaaaa; font-weight: 300; font-size: 0.95rem; margin-left: 6px;">RIA</span></div>
+              <div class="service">
+                <img src="https://lupo.lat/img/ria.png" alt="RIA" width="20" style="border-radius: 50%; background: white;">
+                <span style="color: #aaaaaa; font-weight: 300; font-size: 0.95rem; margin-left: 6px;">RIA</span>
+              </div>
               <div class="values" id="total-ria">0.00 Bs</div>
             </li>
             <li class="item" style="opacity: 0.6; background-color: #fafafa; border-color: #dddddd;">
-              <div class="service"><img src="https://lupo.lat/img/217427.png" alt="Western" width="20" style="border-radius: 50%; background: white;">
-  <span style="color: #aaaaaa; font-weight: 300; font-size: 0.95rem; margin-left: 6px;">WESTERN</span></div>
+              <div class="service">
+                <img src="https://lupo.lat/img/217427.png" alt="Western" width="20" style="border-radius: 50%; background: white;">
+                <span style="color: #aaaaaa; font-weight: 300; font-size: 0.95rem; margin-left: 6px;">WESTERN</span>
+              </div>
               <div class="values" id="total-wu">0.00 Bs</div>
             </li>
             <li class="item" style="opacity: 0.6; background-color: #fafafa; border-color: #dddddd;">
-              <div class="service"><img src="https://lupo.lat/img/money.png" alt="MoneyGram" width="20" style="border-radius: 50%; background: white;">
-  <span style="color: #aaaaaa; font-weight: 300; font-size: 0.95rem; margin-left: 6px;">MONEYGRAM</span></div>
+              <div class="service">
+                <img src="https://lupo.lat/img/money.png" alt="MoneyGram" width="20" style="border-radius: 50%; background: white;">
+                <span style="color: #aaaaaa; font-weight: 300; font-size: 0.95rem; margin-left: 6px;">MONEYGRAM</span>
+              </div>
               <div class="values" id="total-mg">0.00 Bs</div>
             </li>
           </ul>
           <div class="footer">
-            <div class="savings">Ahorras: <span id="save">0.00 Bs</span></div>
-            <button id="whatsapp" class="btn-calc" aria-live="polite" style="display: none; padding: 10px 16px; font-size: 18px; color: #ffffff; background: linear-gradient(to right, #d32f2f, #fdd835, #388e3c); border: none; border-radius: 6px; cursor: pointer; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); transition: background 0.2s, transform 0.1s; width: 100%;">Enviar 0.00</button>
+            <div class="savings" style="background: #ffffcc; padding: 8px; border-radius: 6px; font-weight: 500; color: #333; display: inline-block;">
+              💰 <span id="save">0.00 Bs</span>
+            </div>
+            <button id="whatsapp" class="btn-calc" aria-live="polite" style="display: none;" data-i18n="calc-btn">Enviar</button>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Features Section -->
+  <!-- Beneficios -->
   <section class="features" id="features">
     <div class="container">
-      <h2 class="section-title">¿Por qué elegir Lupo?</h2>
+      <h2 class="section-title" data-i18n="features-title"></h2>
       <div class="features-grid">
         <div class="feature-card">
-          <div class="feature-icon">
-            <i class="fas fa-percentage"></i>
-          </div>
-          <h3 class="feature-title">Mejores tasas</h3>
-          <p>Ofrecemos las mejores tasas de cambio  del mercado, lo que significa que recibes más dinero por cada euro que envías.</p>
+          <div class="feature-icon"><i class="fas fa-percentage"></i></div>
+          <h3 class="feature-title" data-i18n="feature-1-title"></h3>
+          <p data-i18n="feature-1-text"></p>
         </div>
-        
         <div class="feature-card">
-          <div class="feature-icon">
-            <i class="fas fa-euro-sign"></i>
-          </div>
-          <h3 class="feature-title">Cero  comisiones</h3>
-          <p>Comisiones 0 en comparación con los servicios tradicionales de transferencia de dinero.</p>
+          <div class="feature-icon"><i class="fas fa-euro-sign"></i></div>
+          <h3 class="feature-title" data-i18n="feature-2-title"></h3>
+          <p data-i18n="feature-2-text"></p>
         </div>
-        
         <div class="feature-card">
-          <div class="feature-icon">
-            <i class="fas fa-bolt"></i>
-          </div>
-          <h3 class="feature-title">Transacciones rápidas</h3>
-          <p>El dinero llega a tus seres queridos en cuestión de minutos, no horas.</p>
+          <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+          <h3 class="feature-title" data-i18n="feature-3-title"></h3>
+          <p data-i18n="feature-3-text"></p>
         </div>
-        
         <div class="feature-card">
-          <div class="feature-icon">
-            <i class="fas fa-shield-alt"></i>
-          </div>
-          <h3 class="feature-title">Seguridad garantizada</h3>
-          <p>Tus transacciones están protegidas con los más altos estándares de seguridad.</p>
+          <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+          <h3 class="feature-title" data-i18n="feature-4-title"></h3>
+          <p data-i18n="feature-4-text"></p>
         </div>
-        
         <div class="feature-card">
-          <div class="feature-icon">
-            <i class="fas fa-headset"></i>
-          </div>
-          <h3 class="feature-title">Soporte 24/7</h3>
-          <p>Nuestro equipo de soporte está disponible para ayudarte en cualquier momento.</p>
+          <div class="feature-icon"><i class="fas fa-headset"></i></div>
+          <h3 class="feature-title" data-i18n="feature-5-title"></h3>
+          <p data-i18n="feature-5-text"></p>
         </div>
-        
         <div class="feature-card">
-          <div class="feature-icon">
-            <i class="fas fa-mobile-alt"></i>
-          </div>
-          <h3 class="feature-title">Fácil de usar</h3>
-          <p>Plataforma intuitiva que puedes usar desde tu computadora o dispositivo móvil.</p>
+          <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
+          <h3 class="feature-title" data-i18n="feature-6-title"></h3>
+          <p data-i18n="feature-6-text"></p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- How It Works Section -->
+  <!-- Cómo funciona -->
   <section class="how-it-works" id="how-it-works">
     <div class="container">
-      <h2 class="section-title">Cómo funciona</h2>
+      <h2 class="section-title" data-i18n="how-title"></h2>
       <div class="steps">
         <div class="step">
           <div class="step-number">1</div>
           <div class="step-content">
-            <h3 class="step-title">Regístrate en minutos</h3>
-            <p>Crea una cuenta en Lupo con tu correo electrónico y completa la verificación de identidad.</p>
+            <h3 class="step-title" data-i18n="step-1-title"></h3>
+            <p data-i18n="step-1-text"></p>
           </div>
         </div>
-        
         <div class="step">
           <div class="step-number">2</div>
           <div class="step-content">
-            <h3 class="step-title">Ingresa los detalles del envío</h3>
-            <p>Indica la cantidad que deseas enviar y los datos del destinatario en Bolivia.</p>
+            <h3 class="step-title" data-i18n="step-2-title"></h3>
+            <p data-i18n="step-2-text"></p>
           </div>
         </div>
-        
         <div class="step">
           <div class="step-number">3</div>
           <div class="step-content">
-            <h3 class="step-title">Realiza el pago</h3>
-            <p>Transfiere el dinero desde tu cuenta bancaria o con tarjeta de crédito/débito.</p>
-          </div>
-        </div>
-        
-        <div class="step">
-          <div class="step-number">4</div>
-          <div class="step-content">
-            <h3 class="step-title">El dinero llega a Bolivia</h3>
-            <p>Tu destinatario recibe el dinero en su cuenta bancaria o puede retirarlo en efectivo en nuestras ubicaciones asociadas.</p>
+            <h3 class="step-title" data-i18n="step-3-title"></h3>
+            <p data-i18n="step-3-text"></p>
           </div>
         </div>
       </div>
+      <p style="margin-top: 24px; text-align:center;" data-i18n="how-final"></p>
     </div>
   </section>
 
-  <!-- Testimonials Section -->
+  <!-- Testimonios -->
   <section class="testimonials" id="testimonials">
     <div class="container">
-      <h2 class="section-title">Lo que dicen nuestros clientes</h2>
+      <h2 class="section-title" data-i18n="testimonials-title"></h2>
       <div class="testimonials-grid">
         <div class="testimonial-card">
-          <p class="testimonial-text">"Con Lupo recibo casi un 10% más que con otros servicios. Es increíble la diferencia que hace para mi familia en Bolivia."</p>
+          <p class="testimonial-text">“Antes, con otras empresas, mi familia recibía menos. Con Lupo todo llega completo y sé que aprovecho mejor mi esfuerzo. Eso da mucha tranquilidad.”</p>
           <div class="testimonial-author">
-            <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="María G." class="author-avatar">
+            <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Juan C." class="author-avatar">
             <div class="author-info">
-              <h4>María G.</h4>
-              <p>Enviando desde España</p>
+              <h4>Juan C.</h4>
+              <p>Desde Roma</p>
             </div>
           </div>
         </div>
-        
         <div class="testimonial-card">
-          <p class="testimonial-text">"El proceso es tan sencillo y el dinero llega el mismo día. No volveré a usar otros servicios de transferencia."</p>
+          <p class="testimonial-text">“Me sorprendió la atención personalizada y la seguridad del proceso. Me avisaron en cada paso y mi familia recibió el dinero sin demora.”</p>
           <div class="testimonial-author">
-            <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Carlos R." class="author-avatar">
+            <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Carla P." class="author-avatar">
             <div class="author-info">
-              <h4>Carlos R.</h4>
-              <p>Enviando desde Italia</p>
+              <h4>Carla P.</h4>
+              <p>Desde Milano</p>
             </div>
           </div>
         </div>
-        
         <div class="testimonial-card">
-          <p class="testimonial-text">"El soporte al cliente resolvió mi duda en minutos a las 10pm. ¡Eso es servicio de verdad!"</p>
+          <p class="testimonial-text">“Con Lupo no hay descuentos ni comisiones. Ahora sé que lo que envío realmente llega a Bolivia, rápido y sin sorpresas.”</p>
           <div class="testimonial-author">
-            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Ana L." class="author-avatar">
+            <img src="https://randomuser.me/api/portraits/men/68.jpg" alt="Rubén D." class="author-avatar">
             <div class="author-info">
-              <h4>Ana L.</h4>
-              <p>Enviando desde Alemania</p>
+              <h4>Rubén D.</h4>
+              <p>Desde Torino</p>
             </div>
           </div>
         </div>
@@ -906,69 +221,52 @@
     </div>
   </section>
 
-  <!-- Map Section -->
+  <!-- Mapa/contacto -->
   <section class="map-section" id="contact">
     <div class="container">
-      <h2 class="section-title">Encuéntranos en Santa Cruz - Bolivia</h2>
-      <div class="map-container">
-        <iframe src="https://maps.app.goo.gl/gWGb4RZkAaLDP6VF6?g_st=com.google.maps.preview.copy" allowfullscreen="" loading="lazy"></iframe>
+      <h5 class="section-title" data-i18n="footer-contact">Centro Comercial Cañoto #k2<br>
+      </h5>
+<div class="map-container">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m12!1m8!1m3!1d949.8067671825202!2d-63.18945788406143!3d-17.781022306645404!3m2!1i1024!2i768!4f13.1!2m1!1smap%20google%20comercial%20ca%C3%B1oto!5e0!3m2!1ses-419!2sbo!4v1749372329897!5m2!1ses-419!2sbo" allowfullscreen="" loading="lazy"></iframe>
       </div>
     </div>
   </section>
 
-  <!-- FAQ Section -->
+  <!-- Preguntas frecuentes -->
   <section class="faq" id="faq">
     <div class="container faq-container">
-      <h2 class="section-title">Preguntas frecuentes</h2>
-      
+      <h2 class="section-title" data-i18n="faq-title"></h2>
       <div class="faq-item">
-        <div class="faq-question">
-          <span>¿Cuánto tiempo tarda en llegar el dinero?</span>
-          <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="faq-answer">
-          <p>La mayoría de las transferencias se completan en cuestión de horas. En casos excepcionales puede tardar hasta 24 horas hábiles.</p>
-        </div>
+        <div class="faq-question"><span data-i18n="faq-q1"></span><i class="fas fa-chevron-down"></i></div>
+        <div class="faq-answer"><p data-i18n="faq-a1"></p></div>
       </div>
-      
       <div class="faq-item">
-        <div class="faq-question">
-          <span>¿Qué documentos necesito para registrarme?</span>
-          <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="faq-answer">
-          <p>Necesitarás un documento de identidad válido (pasaporte, DNI o carnet de conducir) y un comprobante de domicilio reciente.</p>
-        </div>
+        <div class="faq-question"><span data-i18n="faq-q2"></span><i class="fas fa-chevron-down"></i></div>
+        <div class="faq-answer"><p data-i18n="faq-a2"></p></div>
       </div>
-      
       <div class="faq-item">
-        <div class="faq-question">
-          <span>¿Hay límites en la cantidad que puedo enviar?</span>
-          <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="faq-answer">
-          <p>Sí, los límites dependen de tu país de origen y del tipo de verificación de cuenta que hayas completado. Los usuarios verificados pueden enviar hasta 10,000€ por transacción.</p>
-        </div>
+        <div class="faq-question"><span data-i18n="faq-q3"></span><i class="fas fa-chevron-down"></i></div>
+        <div class="faq-answer"><p data-i18n="faq-a3"></p></div>
       </div>
-      
       <div class="faq-item">
-        <div class="faq-question">
-          <span>¿Cómo recibe el dinero mi familiar en Bolivia?</span>
-          <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="faq-answer">
-          <p>Puede recibirlo directamente en su cuenta bancaria o retirarlo en efectivo en cualquiera de nuestras ubicaciones asociadas en Bolivia.</p>
-        </div>
+        <div class="faq-question"><span data-i18n="faq-q4"></span><i class="fas fa-chevron-down"></i></div>
+        <div class="faq-answer"><p data-i18n="faq-a4"></p></div>
       </div>
-      
       <div class="faq-item">
-        <div class="faq-question">
-          <span>¿Es seguro usar Lupo?</span>
-          <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="faq-answer">
-          <p>Absolutamente. Utilizamos tecnología de encriptación bancaria y cumplimos con todas las regulaciones internacionales de transferencias de dinero.</p>
-        </div>
+        <div class="faq-question"><span data-i18n="faq-q5"></span><i class="fas fa-chevron-down"></i></div>
+        <div class="faq-answer"><p data-i18n="faq-a5"></p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question"><span data-i18n="faq-q6"></span><i class="fas fa-chevron-down"></i></div>
+        <div class="faq-answer"><p data-i18n="faq-a6"></p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question"><span data-i18n="faq-q7"></span><i class="fas fa-chevron-down"></i></div>
+        <div class="faq-answer"><p data-i18n="faq-a7"></p></div>
+      </div>
+      <div style="text-align:center;margin-top:28px;font-size:1.15em;color:#555;">
+        <span style="font-size:1.25em;">🌟</span>
+        <span data-i18n="faq-final"></span>
       </div>
     </div>
   </section>
@@ -976,22 +274,22 @@
   <!-- CTA Section -->
   <section class="cta">
     <div class="container">
-      <h2 class="cta-title">Listo para enviar dinero a Bolivia?</h2>
-      <p class="cta-subtitle">Regístrate hoy y comienza a ahorrar en cada transferencia.</p>
-      <a href="#" class="btn btn-white">Crear cuenta gratis</a>
+      <h2 class="cta-title" data-i18n="cta-title"></h2>
+      <p class="cta-subtitle" data-i18n="cta-subtitle"></p>
+      <a href="#" class="btn btn-white" data-i18n="cta-btn"></a>
     </div>
   </section>
 
-  <!-- Footer -->
+  <!-- Footer traducible y completo -->
   <footer>
     <div class="container">
       <div class="footer-grid">
         <div class="footer-about">
           <div class="footer-logo">
-            <img src="https://lupo.lat/img/favicon.ico" alt="Lupo">
+            <img src="http://lupo.lat/img/lupologo.png" alt="Lupo" style="height:32px;">
             <span class="footer-logo-text">Lupo</span>
           </div>
-          <p>Lupo ofrece las mejores tasas de cambio y bajas comisiones para tus envíos de dinero a Bolivia.</p>
+          <p data-i18n="footer-about"></p>
           <div class="social-links">
             <a href="#"><i class="fab fa-facebook-f"></i></a>
             <a href="#"><i class="fab fa-twitter"></i></a>
@@ -999,94 +297,51 @@
             <a href="#"><i class="fab fa-linkedin-in"></i></a>
           </div>
         </div>
-        
         <div class="footer-links-container">
-          <h3 class="footer-title">Servicios</h3>
+          <h3 class="footer-title" data-i18n="footer-servicios"></h3>
           <ul class="footer-links">
-            <li><a href="#">Envíos a Bolivia</a></li>
-            <li><a href="#">Tasas de cambio</a></li>
-            <li><a href="#">Calculadora</a></li>
-            <li><a href="#">Ubicaciones</a></li>
+            <li><a href="#" data-i18n="footer-envios"></a></li>
+            <li><a href="#" data-i18n="footer-tasas"></a></li>
+            <li><a href="#" data-i18n="footer-calculadora"></a></li>
+            <li><a href="#" data-i18n="footer-ubicaciones"></a></li>
           </ul>
         </div>
-        
         <div class="footer-links-container">
-          <h3 class="footer-title">Empresa</h3>
+          <h3 class="footer-title" data-i18n="footer-empresa"></h3>
           <ul class="footer-links">
-            <li><a href="#">Sobre nosotros</a></li>
-            <li><a href="#">Trabaja con nosotros</a></li>
-            <li><a href="#">Prensa</a></li>
-            <li><a href="#">Blog</a></li>
+            <li><a href="#" data-i18n="footer-nosotros"></a></li>
+            <li><a href="#" data-i18n="footer-trabaja"></a></li>
+            <li><a href="#" data-i18n="footer-prensa"></a></li>
+            <li><a href="#" data-i18n="footer-blog"></a></li>
           </ul>
         </div>
-        
         <div class="footer-links-container">
-          <h3 class="footer-title">Legal</h3>
+          <h3 class="footer-title" data-i18n="footer-legal"></h3>
           <ul class="footer-links">
-            <li><a href="#">Términos y condiciones</a></li>
-            <li><a href="#">Política de privacidad</a></li>
-            <li><a href="#">Seguridad</a></li>
-            <li><a href="#">Regulaciones</a></li>
+            <li><a href="#" data-i18n="footer-terminos"></a></li>
+            <li><a href="#" data-i18n="footer-privacidad"></a></li>
+            <li><a href="#" data-i18n="footer-seguridad"></a></li>
+            <li><a href="#" data-i18n="footer-regulaciones"></a></li>
           </ul>
         </div>
-        
         <div class="footer-links-container">
-          <h3 class="footer-title">Contacto</h3>
+          <h3 class="footer-title" data-i18n="footer-contact"></h3>
           <ul class="footer-links">
-            <li><a href="mailto:hola@lupo.lat">hola@lupo.lat</a></li>
-            <li><a href="tel:+393341950037">+39 334 195 0037</a></li>
-            <li><a href="#">Soporte 24/7</a></li>
-            <li><a href="#">WhatsApp</a></li>
+            <li><a href="mailto:hola@lupo.lat" data-i18n="footer-mail"></a></li>
+            <li><a href="tel:+393341950037" data-i18n="footer-tel"></a></li>
+            <li><a href="https://wa.me/393341950037" data-i18n="footer-soporte"></a></li>
+            <li><a href="https://wa.me/393341950037" data-i18n="footer-whatsapp"></a></li>
           </ul>
         </div>
       </div>
-      
       <div class="footer-bottom">
-        <p>&copy; 2023 Lupo.lat - Todos los derechos reservados</p>
+        <p>&copy; 2025 Lupo.lat - Todos los derechos reservados</p>
       </div>
     </div>
   </footer>
 
-  <!-- Your original calculator script -->
-  <script>
-    const rates = { lupo:16.22, ria:14.12, wu:12.80, mg:13.70 };
-    const amountInput = document.getElementById('amount');
-    const totalLupo = document.getElementById('total-lupo');
-    const totalRia = document.getElementById('total-ria');
-    const totalWu = document.getElementById('total-wu');
-    const totalMg = document.getElementById('total-mg');
-    const saveEl = document.getElementById('save');
-    const btn = document.getElementById('whatsapp');
-
-    amountInput.addEventListener('input', () => {
-      const v = parseFloat(amountInput.value) || 0;
-      const l = v * rates.lupo;
-      const r = v * rates.ria;
-      const w = v * rates.wu;
-      const m = v * rates.mg;
-
-      totalLupo.textContent = `${l.toFixed(2)} Bs`;
-      totalRia.textContent = `${r.toFixed(2)} Bs`;
-      totalWu.textContent = `${w.toFixed(2)} Bs`;
-      totalMg.textContent = `${m.toFixed(2)} Bs`;
-
-      const minComp = Math.max(r, w, m);
-      const savings = l - minComp;
-      saveEl.textContent = `${savings.toFixed(2)} Bs`;
-
-      if (l > 0) {
-        btn.textContent = `Enviar ${l.toFixed(2)}`;
-        btn.style.display = 'block';
-        btn.onclick = () => {
-          window.location.href = `https://wa.me/393341950037?text=${encodeURIComponent(
-            `Envío ${v}€ con Lupo recibe ${l.toFixed(2)} Bs`
-          )}`;
-        };
-      } else {
-        btn.style.display = 'none';
-      }
-    });
-
-</script>
+  <!-- Scripts externos -->
+  <script src="js/textos.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
