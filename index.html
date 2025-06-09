@@ -18,7 +18,7 @@
 <!-- Fuentes e íconos -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-<link href="css/main.css?v=10004" rel="stylesheet"/>
+<link href="css/main.css?v=10002" rel="stylesheet"/>
 </link></link></head>
 <body>
 <!-- Header -->
@@ -78,16 +78,31 @@
 <p>0.00 Bs</p>
 </div>
 </li>
-</ul>
-<div class="competitors-combined">
-<div class="logo-row">
-<img alt="RIA" src="img/ria.png"/>
-<img alt="WESTERN UNION" src="img/western.png"/>
-<img alt="MoneyGram" src="img/moneygram.png"/>
-</div>
-<p>Ellos te darían: <strong id="competitor-total">0.00 Bs</strong></p>
-</div>
 
+<li class="item" style="opacity: 0.6; background-color: #fafafa; border-color: #dddddd;">
+<div class="service">
+<img alt="RIA" src="https://lupo.lat/img/ria.png" style="border-radius: 50%; background: white;" width="20"/>
+<span style="color: #aaaaaa; font-weight: 300; font-size: 0.95rem; margin-left: 6px;">RIA</span>
+</div>
+<div class="values" id="total-ria">0.00 Bs</div>
+</li>
+
+<li class="item" style="opacity: 0.6; background-color: #fafafa; border-color: #dddddd;">
+<div class="service">
+<img alt="WESTERN" src="https://lupo.lat/img/217427.png" style="border-radius: 50%; background: white;" width="20"/>
+<span style="color: #aaaaaa; font-weight: 300; font-size: 0.95rem; margin-left: 6px;">WESTERN</span>
+</div>
+<div class="values" id="total-wu">0.00 Bs</div>
+</li>
+
+<li class="item" style="opacity: 0.6; background-color: #fafafa; border-color: #dddddd;">
+<div class="service">
+<img alt="MONEYGRAM" src="https://lupo.lat/img/money.png" style="border-radius: 50%; background: white;" width="20"/>
+<span style="color: #aaaaaa; font-weight: 300; font-size: 0.95rem; margin-left: 6px;">MONEYGRAM</span>
+</div>
+<div class="values" id="total-mg">0.00 Bs</div>
+</li>
+</ul>
 <div class="footer">
 <div class="savings" style="background: #ffffcc; padding: 8px; border-radius: 6px; font-weight: 500; color: #333; display: inline-block;">
               💰 <span id="save">0.00 Bs</span>
