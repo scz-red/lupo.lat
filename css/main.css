@@ -324,4 +324,11 @@ footer {
   .hero-calculator { order: 1; }
   .hero-content { order: 2; }
 }
-
+@media (max-width: 900px) {
+  nav ul {
+    display: none;
+  }
+  .mobile-menu-btn {
+    display: block;
+  }
+}
