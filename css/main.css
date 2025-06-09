@@ -324,11 +324,12 @@ footer {
   .hero-calculator { order: 1; }
   .hero-content { order: 2; }
 }
+
+/* Aquí NO debe haber una llave } suelta */
+
+/* Media query del menú hamburguesa */
 @media (max-width: 900px) {
-  nav ul {
-    display: none;
-  }
-  .mobile-menu-btn {
-    display: block;
-  }
+  nav ul { display: none; }
+  .mobile-menu-btn { display: block; }
 }
+
