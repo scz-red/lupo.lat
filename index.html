@@ -1,349 +1,326 @@
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lupo.lat - Envíos de dinero a Bolivia sin comisiones y con el mejor cambio</title>
-  <!-- Favicons e íconos PWA -->
-  <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
-  <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
-  <link rel="manifest" href="/icons/manifest.json">
-  <meta name="theme-color" content="#ffffff">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <!-- Fuentes e íconos -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-  <link rel="stylesheet" href="css/main.css?v=10003">
-</head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lupo.lat - Envíos de dinero a Bolivia sin comisiones y con el mejor cambio</title>
+<!-- Favicons e íconos PWA -->
+<link href="icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="icons/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="icons/icon-512.png" rel="icon" sizes="512x512" type="image/png"/>
+<link href="/icons/manifest.json" rel="manifest"/>
+<meta content="#ffffff" name="theme-color"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<!-- Fuentes e íconos -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<link href="css/main.css?v=10004" rel="stylesheet"/>
+</link></link></head>
 <body>
-  <!-- Header -->
-  <header>
-    <div class="container header-container">
-      <div class="logo">
-        <img src="http://lupo.lat/img/lupologo.png" alt="Lupo" width="100" style="height:40px;">
-        
-      </div>
-      <nav>
-        <ul>
-          <li><a href="#features" data-i18n="features-title"></a></li>
-          <li><a href="#how-it-works" data-i18n="how-title"></a></li>
-          <li><a href="#testimonials" data-i18n="testimonials-title"></a></li>
-          <li><a href="#faq" data-i18n="faq-title"></a></li>
-          <li><a href="#contact" data-i18n="footer-contact"></a></li>
-        </ul>
-      </nav>
-      <button class="mobile-menu-btn">
-        <i class="fas fa-bars"></i>
-      </button>
-    </div>
-  </header>
-
-  <!-- Hero + Calculadora -->
-  <section class="hero">
-    <div class="container hero-container">
-      <div class="hero-content">
-        <h1 class="hero-title" data-i18n="hero-title-1"></h1>
-        <p class="hero-subtitle" data-i18n="hero-subtitle"></p>
-        <div class="hero-buttons">
-          <a href="#" class="btn btn-primary" data-i18n="btn-send"></a>
-          <a href="#how-it-works" class="btn btn-outline" data-i18n="btn-how"></a>
-        </div>
-      </div>
-      <div class="hero-calculator">
-        <div class="calc">
-          <div class="header">
-            <h1 data-i18n="calc-title-1"></h1>
-            <div class="calc-header" style="display:flex;justify-content:space-between;align-items:center;">
-  <div class="rate" style="display:flex;align-items:center;gap:6px;">
-    1 EUR = <strong id="rate">16.22</strong>
-    <img src="https://flagcdn.com/w40/bo.png" alt="Bandera Bolivia" width="20" style="margin-left:4px;">
-  </div>
-  <span id="calc-datetime" style="font-size:13px;color:#666;"></span>
+<!-- Header -->
+<header>
+<div class="container header-container">
+<div class="logo">
+<img alt="Lupo" src="http://lupo.lat/img/lupologo.png" style="height:40px;" width="100"/>
 </div>
-          </div>
-          <div class="input">
-            <label for="amount" class="sr-only" data-i18n="calc-placeholder"></label>
-            <img class="icon" src="https://flagcdn.com/w40/eu.png" alt="UE">
-            <input type="number" id="amount" aria-describedby="rate" min="1">
-          </div>
-          <ul class="list">
-            <li class="item highlight" style="border-width: 3px; background: #e6f5e6; padding: 16px;">
-              <div class="service">
-                <img src="http://lupo.lat/img/lupologo.png" alt="LUPO" width="60" style="border-radius: 90%; background: #e6f5e6;">
-                
-              </div>
-              <div class="values" id="total-lupo" style="font-size: 1.2rem; font-weight: bold;">
-                <p>0.00 Bs</p>
-              </div>
-            </li>
-            <li class="item" style="opacity: 0.6; background-color: #fafafa; border-color: #dddddd;">
-              <div class="service">
-                <img src="https://lupo.lat/img/ria.png" alt="RIA" width="20" style="border-radius: 50%; background: white;">
-                <span style="color: #aaaaaa; font-weight: 300; font-size: 0.95rem; margin-left: 6px;">RIA</span>
-              </div>
-              <div class="values" id="total-ria">0.00 Bs</div>
-				
-            </li>
-            <li class="item" style="opacity: 0.6; background-color: #fafafa; border-color: #dddddd;">
-              <div class="service">
-                <img src="https://lupo.lat/img/217427.png" alt="Western" width="20" style="border-radius: 50%; background: white;">
-                <span style="color: #aaaaaa; font-weight: 300; font-size: 0.95rem; margin-left: 6px;">WESTERN</span>
-              </div>
-              <div class="values" id="total-wu">0.00 Bs</div>
-            </li>
-            <li class="item" style="opacity: 0.6; background-color: #fafafa; border-color: #dddddd;">
-              <div class="service">
-                <img src="https://lupo.lat/img/money.png" alt="MoneyGram" width="20" style="border-radius: 50%; background: white;">
-                <span style="color: #aaaaaa; font-weight: 300; font-size: 0.95rem; margin-left: 6px;">MONEYGRAM</span>
-              </div>
-              <div class="values" id="total-mg">0.00 Bs</div>
-            </li>
-          </ul>
-          <div class="footer">
-            <div class="savings" style="background: #ffffcc; padding: 8px; border-radius: 6px; font-weight: 500; color: #333; display: inline-block;">
+<nav>
+<ul>
+<li><a data-i18n="features-title" href="#features"></a></li>
+<li><a data-i18n="how-title" href="#how-it-works"></a></li>
+<li><a data-i18n="testimonials-title" href="#testimonials"></a></li>
+<li><a data-i18n="faq-title" href="#faq"></a></li>
+<li><a data-i18n="footer-contact" href="#contact"></a></li>
+</ul>
+</nav>
+<button class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+</div>
+</header>
+<!-- Hero + Calculadora -->
+<section class="hero">
+<div class="container hero-container">
+<div class="hero-content">
+<h1 class="hero-title" data-i18n="hero-title-1"></h1>
+<p class="hero-subtitle" data-i18n="hero-subtitle"></p>
+<div class="hero-buttons">
+<a class="btn btn-primary" data-i18n="btn-send" href="#"></a>
+<a class="btn btn-outline" data-i18n="btn-how" href="#how-it-works"></a>
+</div>
+</div>
+<div class="hero-calculator">
+<div class="calc">
+<div class="header">
+<h1 data-i18n="calc-title-1"></h1>
+<div class="calc-header" style="display:flex;justify-content:space-between;align-items:center;">
+<div class="rate" style="display:flex;align-items:center;gap:6px;">
+    1 EUR = <strong id="rate">16.22</strong>
+<img alt="Bandera Bolivia" src="https://flagcdn.com/w40/bo.png" style="margin-left:4px;" width="20"/>
+</div>
+<span id="calc-datetime" style="font-size:13px;color:#666;"></span>
+</div>
+</div>
+<div class="input">
+<label class="sr-only" data-i18n="calc-placeholder" for="amount"></label>
+<img alt="UE" class="icon" src="https://flagcdn.com/w40/eu.png"/>
+<input aria-describedby="rate" id="amount" min="1" type="number"/>
+</div>
+<ul class="list">
+<li class="item highlight" style="border-width: 3px; background: #e6f5e6; padding: 16px;">
+<div class="service">
+<img alt="LUPO" src="http://lupo.lat/img/lupologo.png" style="border-radius: 90%; background: #e6f5e6;" width="60"/>
+</div>
+<div class="values" id="total-lupo" style="font-size: 1.2rem; font-weight: bold;">
+<p>0.00 Bs</p>
+</div>
+</li>
+</ul>
+<div class="competitors-combined">
+<div class="logo-row">
+<img alt="RIA" src="img/ria.png"/>
+<img alt="WESTERN UNION" src="img/western.png"/>
+<img alt="MoneyGram" src="img/moneygram.png"/>
+</div>
+<p>Ellos te darían: <strong id="competitor-total">0.00 Bs</strong></p>
+</div>
+
+<div class="footer">
+<div class="savings" style="background: #ffffcc; padding: 8px; border-radius: 6px; font-weight: 500; color: #333; display: inline-block;">
               💰 <span id="save">0.00 Bs</span>
-            </div>
-            <button id="whatsapp" class="btn-calc" aria-live="polite" style="display: none;" data-i18n="calc-btn">Enviar</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Beneficios -->
-  <section class="features" id="features">
-    <div class="container">
-      <h2 class="section-title" data-i18n="features-title"></h2>
-      <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon"><i class="fas fa-percentage"></i></div>
-          <h3 class="feature-title" data-i18n="feature-1-title"></h3>
-          <p data-i18n="feature-1-text"></p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon"><i class="fas fa-euro-sign"></i></div>
-          <h3 class="feature-title" data-i18n="feature-2-title"></h3>
-          <p data-i18n="feature-2-text"></p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon"><i class="fas fa-bolt"></i></div>
-          <h3 class="feature-title" data-i18n="feature-3-title"></h3>
-          <p data-i18n="feature-3-text"></p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
-          <h3 class="feature-title" data-i18n="feature-4-title"></h3>
-          <p data-i18n="feature-4-text"></p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon"><i class="fas fa-headset"></i></div>
-          <h3 class="feature-title" data-i18n="feature-5-title"></h3>
-          <p data-i18n="feature-5-text"></p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
-          <h3 class="feature-title" data-i18n="feature-6-title"></h3>
-          <p data-i18n="feature-6-text"></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Cómo funciona -->
-  <section class="how-it-works" id="how-it-works">
-    <div class="container">
-      <h2 class="section-title" data-i18n="how-title"></h2>
-      <div class="steps">
-        <div class="step">
-          <div class="step-number">1</div>
-          <div class="step-content">
-            <h3 class="step-title" data-i18n="step-1-title"></h3>
-            <p data-i18n="step-1-text"></p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-number">2</div>
-          <div class="step-content">
-            <h3 class="step-title" data-i18n="step-2-title"></h3>
-            <p data-i18n="step-2-text"></p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-number">3</div>
-          <div class="step-content">
-            <h3 class="step-title" data-i18n="step-3-title"></h3>
-            <p data-i18n="step-3-text"></p>
-          </div>
-        </div>
-      </div>
-      <p style="margin-top: 24px; text-align:center;" data-i18n="how-final"></p>
-    </div>
-  </section>
-
-  <!-- Testimonios -->
-  <section class="testimonials" id="testimonials">
-    <div class="container">
-      <h2 class="section-title" data-i18n="testimonials-title"></h2>
-      <div class="testimonials-grid">
-        <div class="testimonial-card">
-          <p class="testimonial-text">“Antes, con otras empresas, mi familia recibía menos. Con Lupo todo llega completo y sé que aprovecho mejor mi esfuerzo. Eso da mucha tranquilidad.”</p>
-          <div class="testimonial-author">
-            <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Juan C." class="author-avatar">
-            <div class="author-info">
-              <h4>Juan C.</h4>
-              <p>Desde Roma</p>
-            </div>
-          </div>
-        </div>
-        <div class="testimonial-card">
-          <p class="testimonial-text">“Me sorprendió la atención personalizada y la seguridad del proceso. Me avisaron en cada paso y mi familia recibió el dinero sin demora.”</p>
-          <div class="testimonial-author">
-            <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Carla P." class="author-avatar">
-            <div class="author-info">
-              <h4>Carla P.</h4>
-              <p>Desde Milano</p>
-            </div>
-          </div>
-        </div>
-        <div class="testimonial-card">
-          <p class="testimonial-text">“Con Lupo no hay descuentos ni comisiones. Ahora sé que lo que envío realmente llega a Bolivia, rápido y sin sorpresas.”</p>
-          <div class="testimonial-author">
-            <img src="https://randomuser.me/api/portraits/men/68.jpg" alt="Rubén D." class="author-avatar">
-            <div class="author-info">
-              <h4>Rubén D.</h4>
-              <p>Desde Torino</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Mapa/contacto -->
-  <section class="map-section" id="contact">
-    <div class="container">
-      <h5 class="section-title" data-i18n="footer-contact">Centro Comercial Cañoto #k2<br>
-      </h5>
+</div>
+<button aria-live="polite" class="btn-calc" data-i18n="calc-btn" id="whatsapp" style="display: none;">Enviar</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Beneficios -->
+<section class="features" id="features">
+<div class="container">
+<h2 class="section-title" data-i18n="features-title"></h2>
+<div class="features-grid">
+<div class="feature-card">
+<div class="feature-icon"><i class="fas fa-percentage"></i></div>
+<h3 class="feature-title" data-i18n="feature-1-title"></h3>
+<p data-i18n="feature-1-text"></p>
+</div>
+<div class="feature-card">
+<div class="feature-icon"><i class="fas fa-euro-sign"></i></div>
+<h3 class="feature-title" data-i18n="feature-2-title"></h3>
+<p data-i18n="feature-2-text"></p>
+</div>
+<div class="feature-card">
+<div class="feature-icon"><i class="fas fa-bolt"></i></div>
+<h3 class="feature-title" data-i18n="feature-3-title"></h3>
+<p data-i18n="feature-3-text"></p>
+</div>
+<div class="feature-card">
+<div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+<h3 class="feature-title" data-i18n="feature-4-title"></h3>
+<p data-i18n="feature-4-text"></p>
+</div>
+<div class="feature-card">
+<div class="feature-icon"><i class="fas fa-headset"></i></div>
+<h3 class="feature-title" data-i18n="feature-5-title"></h3>
+<p data-i18n="feature-5-text"></p>
+</div>
+<div class="feature-card">
+<div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
+<h3 class="feature-title" data-i18n="feature-6-title"></h3>
+<p data-i18n="feature-6-text"></p>
+</div>
+</div>
+</div>
+</section>
+<!-- Cómo funciona -->
+<section class="how-it-works" id="how-it-works">
+<div class="container">
+<h2 class="section-title" data-i18n="how-title"></h2>
+<div class="steps">
+<div class="step">
+<div class="step-number">1</div>
+<div class="step-content">
+<h3 class="step-title" data-i18n="step-1-title"></h3>
+<p data-i18n="step-1-text"></p>
+</div>
+</div>
+<div class="step">
+<div class="step-number">2</div>
+<div class="step-content">
+<h3 class="step-title" data-i18n="step-2-title"></h3>
+<p data-i18n="step-2-text"></p>
+</div>
+</div>
+<div class="step">
+<div class="step-number">3</div>
+<div class="step-content">
+<h3 class="step-title" data-i18n="step-3-title"></h3>
+<p data-i18n="step-3-text"></p>
+</div>
+</div>
+</div>
+<p data-i18n="how-final" style="margin-top: 24px; text-align:center;"></p>
+</div>
+</section>
+<!-- Testimonios -->
+<section class="testimonials" id="testimonials">
+<div class="container">
+<h2 class="section-title" data-i18n="testimonials-title"></h2>
+<div class="testimonials-grid">
+<div class="testimonial-card">
+<p class="testimonial-text">“Antes, con otras empresas, mi familia recibía menos. Con Lupo todo llega completo y sé que aprovecho mejor mi esfuerzo. Eso da mucha tranquilidad.”</p>
+<div class="testimonial-author">
+<img alt="Juan C." class="author-avatar" src="https://randomuser.me/api/portraits/men/45.jpg"/>
+<div class="author-info">
+<h4>Juan C.</h4>
+<p>Desde Roma</p>
+</div>
+</div>
+</div>
+<div class="testimonial-card">
+<p class="testimonial-text">“Me sorprendió la atención personalizada y la seguridad del proceso. Me avisaron en cada paso y mi familia recibió el dinero sin demora.”</p>
+<div class="testimonial-author">
+<img alt="Carla P." class="author-avatar" src="https://randomuser.me/api/portraits/women/32.jpg"/>
+<div class="author-info">
+<h4>Carla P.</h4>
+<p>Desde Milano</p>
+</div>
+</div>
+</div>
+<div class="testimonial-card">
+<p class="testimonial-text">“Con Lupo no hay descuentos ni comisiones. Ahora sé que lo que envío realmente llega a Bolivia, rápido y sin sorpresas.”</p>
+<div class="testimonial-author">
+<img alt="Rubén D." class="author-avatar" src="https://randomuser.me/api/portraits/men/68.jpg"/>
+<div class="author-info">
+<h4>Rubén D.</h4>
+<p>Desde Torino</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Mapa/contacto -->
+<section class="map-section" id="contact">
+<div class="container">
+<h5 class="section-title" data-i18n="footer-contact">Centro Comercial Cañoto #k2<br/>
+</h5>
 <div class="map-container">
-      <iframe src="https://www.google.com/maps/embed?pb=!1m12!1m8!1m3!1d949.8067671825202!2d-63.18945788406143!3d-17.781022306645404!3m2!1i1024!2i768!4f13.1!2m1!1smap%20google%20comercial%20ca%C3%B1oto!5e0!3m2!1ses-419!2sbo!4v1749372329897!5m2!1ses-419!2sbo" allowfullscreen="" loading="lazy"></iframe>
-      </div>
-    </div>
-  </section>
-
-  <!-- Preguntas frecuentes -->
-  <section class="faq" id="faq">
-    <div class="container faq-container">
-      <h2 class="section-title" data-i18n="faq-title"></h2>
-      <div class="faq-item">
-        <div class="faq-question"><span data-i18n="faq-q1"></span><i class="fas fa-chevron-down"></i></div>
-        <div class="faq-answer"><p data-i18n="faq-a1"></p></div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-question"><span data-i18n="faq-q2"></span><i class="fas fa-chevron-down"></i></div>
-        <div class="faq-answer"><p data-i18n="faq-a2"></p></div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-question"><span data-i18n="faq-q3"></span><i class="fas fa-chevron-down"></i></div>
-        <div class="faq-answer"><p data-i18n="faq-a3"></p></div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-question"><span data-i18n="faq-q4"></span><i class="fas fa-chevron-down"></i></div>
-        <div class="faq-answer"><p data-i18n="faq-a4"></p></div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-question"><span data-i18n="faq-q5"></span><i class="fas fa-chevron-down"></i></div>
-        <div class="faq-answer"><p data-i18n="faq-a5"></p></div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-question"><span data-i18n="faq-q6"></span><i class="fas fa-chevron-down"></i></div>
-        <div class="faq-answer"><p data-i18n="faq-a6"></p></div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-question"><span data-i18n="faq-q7"></span><i class="fas fa-chevron-down"></i></div>
-        <div class="faq-answer"><p data-i18n="faq-a7"></p></div>
-      </div>
-      <div style="text-align:center;margin-top:28px;font-size:1.15em;color:#555;">
-        <span style="font-size:1.25em;">🌟</span>
-        <span data-i18n="faq-final"></span>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA Section -->
-  <section class="cta">
-    <div class="container">
-      <h2 class="cta-title" data-i18n="cta-title"></h2>
-      <p class="cta-subtitle" data-i18n="cta-subtitle"></p>
-      <a href="#" class="btn btn-white" data-i18n="cta-btn"></a>
-    </div>
-  </section>
-
-  <!-- Footer traducible y completo -->
-  <footer>
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-about">
-          <div class="footer-logo">
-            <img src="http://lupo.lat/img/lupologo.png" alt="Lupo" style="height:32px;">
-            <span class="footer-logo-text">Lupo</span>
-          </div>
-          <p data-i18n="footer-about"></p>
-          <div class="social-links">
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-linkedin-in"></i></a>
-          </div>
-        </div>
-        <div class="footer-links-container">
-          <h3 class="footer-title" data-i18n="footer-servicios"></h3>
-          <ul class="footer-links">
-            <li><a href="#" data-i18n="footer-envios"></a></li>
-            <li><a href="#" data-i18n="footer-tasas"></a></li>
-            <li><a href="#" data-i18n="footer-calculadora"></a></li>
-            <li><a href="#" data-i18n="footer-ubicaciones"></a></li>
-          </ul>
-        </div>
-        <div class="footer-links-container">
-          <h3 class="footer-title" data-i18n="footer-empresa"></h3>
-          <ul class="footer-links">
-            <li><a href="#" data-i18n="footer-nosotros"></a></li>
-            <li><a href="#" data-i18n="footer-trabaja"></a></li>
-            <li><a href="#" data-i18n="footer-prensa"></a></li>
-            <li><a href="#" data-i18n="footer-blog"></a></li>
-          </ul>
-        </div>
-        <div class="footer-links-container">
-          <h3 class="footer-title" data-i18n="footer-legal"></h3>
-          <ul class="footer-links">
-            <li><a href="#" data-i18n="footer-terminos"></a></li>
-            <li><a href="#" data-i18n="footer-privacidad"></a></li>
-            <li><a href="#" data-i18n="footer-seguridad"></a></li>
-            <li><a href="#" data-i18n="footer-regulaciones"></a></li>
-          </ul>
-        </div>
-        <div class="footer-links-container">
-          <h3 class="footer-title" data-i18n="footer-contact"></h3>
-          <ul class="footer-links">
-            <li><a href="mailto:hola@lupo.lat" data-i18n="footer-mail"></a></li>
-            <li><a href="tel:+393341950037" data-i18n="footer-tel"></a></li>
-            <li><a href="https://wa.me/393341950037" data-i18n="footer-soporte"></a></li>
-            <li><a href="https://wa.me/393341950037" data-i18n="footer-whatsapp"></a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>&copy; 2025 Lupo.lat - Todos los derechos reservados</p>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Scripts externos -->
-  <script src="js/textos.js"></script>
-  <script src="js/main.js?v=10002"></script>
+<iframe allowfullscreen="" loading="lazy" src="https://www.google.com/maps/embed?pb=!1m12!1m8!1m3!1d949.8067671825202!2d-63.18945788406143!3d-17.781022306645404!3m2!1i1024!2i768!4f13.1!2m1!1smap%20google%20comercial%20ca%C3%B1oto!5e0!3m2!1ses-419!2sbo!4v1749372329897!5m2!1ses-419!2sbo"></iframe>
+</div>
+</div>
+</section>
+<!-- Preguntas frecuentes -->
+<section class="faq" id="faq">
+<div class="container faq-container">
+<h2 class="section-title" data-i18n="faq-title"></h2>
+<div class="faq-item">
+<div class="faq-question"><span data-i18n="faq-q1"></span><i class="fas fa-chevron-down"></i></div>
+<div class="faq-answer"><p data-i18n="faq-a1"></p></div>
+</div>
+<div class="faq-item">
+<div class="faq-question"><span data-i18n="faq-q2"></span><i class="fas fa-chevron-down"></i></div>
+<div class="faq-answer"><p data-i18n="faq-a2"></p></div>
+</div>
+<div class="faq-item">
+<div class="faq-question"><span data-i18n="faq-q3"></span><i class="fas fa-chevron-down"></i></div>
+<div class="faq-answer"><p data-i18n="faq-a3"></p></div>
+</div>
+<div class="faq-item">
+<div class="faq-question"><span data-i18n="faq-q4"></span><i class="fas fa-chevron-down"></i></div>
+<div class="faq-answer"><p data-i18n="faq-a4"></p></div>
+</div>
+<div class="faq-item">
+<div class="faq-question"><span data-i18n="faq-q5"></span><i class="fas fa-chevron-down"></i></div>
+<div class="faq-answer"><p data-i18n="faq-a5"></p></div>
+</div>
+<div class="faq-item">
+<div class="faq-question"><span data-i18n="faq-q6"></span><i class="fas fa-chevron-down"></i></div>
+<div class="faq-answer"><p data-i18n="faq-a6"></p></div>
+</div>
+<div class="faq-item">
+<div class="faq-question"><span data-i18n="faq-q7"></span><i class="fas fa-chevron-down"></i></div>
+<div class="faq-answer"><p data-i18n="faq-a7"></p></div>
+</div>
+<div style="text-align:center;margin-top:28px;font-size:1.15em;color:#555;">
+<span style="font-size:1.25em;">🌟</span>
+<span data-i18n="faq-final"></span>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="cta">
+<div class="container">
+<h2 class="cta-title" data-i18n="cta-title"></h2>
+<p class="cta-subtitle" data-i18n="cta-subtitle"></p>
+<a class="btn btn-white" data-i18n="cta-btn" href="#"></a>
+</div>
+</section>
+<!-- Footer traducible y completo -->
+<footer>
+<div class="container">
+<div class="footer-grid">
+<div class="footer-about">
+<div class="footer-logo">
+<img alt="Lupo" src="http://lupo.lat/img/lupologo.png" style="height:32px;"/>
+<span class="footer-logo-text">Lupo</span>
+</div>
+<p data-i18n="footer-about"></p>
+<div class="social-links">
+<a href="#"><i class="fab fa-facebook-f"></i></a>
+<a href="#"><i class="fab fa-twitter"></i></a>
+<a href="#"><i class="fab fa-instagram"></i></a>
+<a href="#"><i class="fab fa-linkedin-in"></i></a>
+</div>
+</div>
+<div class="footer-links-container">
+<h3 class="footer-title" data-i18n="footer-servicios"></h3>
+<ul class="footer-links">
+<li><a data-i18n="footer-envios" href="#"></a></li>
+<li><a data-i18n="footer-tasas" href="#"></a></li>
+<li><a data-i18n="footer-calculadora" href="#"></a></li>
+<li><a data-i18n="footer-ubicaciones" href="#"></a></li>
+</ul>
+</div>
+<div class="footer-links-container">
+<h3 class="footer-title" data-i18n="footer-empresa"></h3>
+<ul class="footer-links">
+<li><a data-i18n="footer-nosotros" href="#"></a></li>
+<li><a data-i18n="footer-trabaja" href="#"></a></li>
+<li><a data-i18n="footer-prensa" href="#"></a></li>
+<li><a data-i18n="footer-blog" href="#"></a></li>
+</ul>
+</div>
+<div class="footer-links-container">
+<h3 class="footer-title" data-i18n="footer-legal"></h3>
+<ul class="footer-links">
+<li><a data-i18n="footer-terminos" href="#"></a></li>
+<li><a data-i18n="footer-privacidad" href="#"></a></li>
+<li><a data-i18n="footer-seguridad" href="#"></a></li>
+<li><a data-i18n="footer-regulaciones" href="#"></a></li>
+</ul>
+</div>
+<div class="footer-links-container">
+<h3 class="footer-title" data-i18n="footer-contact"></h3>
+<ul class="footer-links">
+<li><a data-i18n="footer-mail" href="mailto:hola@lupo.lat"></a></li>
+<li><a data-i18n="footer-tel" href="tel:+393341950037"></a></li>
+<li><a data-i18n="footer-soporte" href="https://wa.me/393341950037"></a></li>
+<li><a data-i18n="footer-whatsapp" href="https://wa.me/393341950037"></a></li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom">
+<p>© 2025 Lupo.lat - Todos los derechos reservados</p>
+</div>
+</div>
+</footer>
+<!-- Scripts externos -->
+<script src="js/textos.js"></script>
+<script src="js/main.js?v=10002"></script>
 </body>
 </html>
