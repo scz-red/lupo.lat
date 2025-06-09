@@ -309,22 +309,19 @@ footer {
   font-weight: bold;
   text-decoration: underline;
 }
-@media (max-width: 992px) {
-  .hero-container { flex-direction: column; }
-  .hero-content { text-align: center; margin-bottom: 40px;}
-  .hero-title, .hero-subtitle { margin-left: auto; margin-right: auto;}
-  .hero-calculator { width: 100%; max-width: 400px;}
-}
-@media (max-width: 768px) {
-  nav ul { display: none; }
-  .mobile-menu-btn { display: block; }
-  .nav-buttons { display: none; }
-  .hero-title { font-size: 2rem; }
-  .hero-subtitle { font-size: 1rem; }
-  .section-title { font-size: 1.8rem; }
-}
 @media (max-width: 576px) {
-  .hero { padding: 120px 0 60px; }
-  .hero-title { font-size: 1.8rem; }
+  .hero { padding: 40px 0 16px !important; }
+  .hero-title { font-size: 1.25rem; }
+  .hero-subtitle { font-size: 1rem; }
   .features-grid, .testimonials-grid { grid-template-columns: 1fr; }
+  .hero-content { margin-bottom: 10px !important; }
+  .hero-calculator { margin-top: 0 !important; }
+  .calc { margin-top: 0 !important; }
+  .hero-container {
+    display: flex;
+    flex-direction: column;
+  }
+  .hero-calculator { order: 1; }
+  .hero-content { order: 2; }
 }
+
