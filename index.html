@@ -57,12 +57,13 @@
         <div class="calc">
           <div class="header">
             <h1 data-i18n="calc-title-1"></h1>
-            <div class="rate">
-              1 EUR = <strong id="rate">16.22</strong>
-              <span style="margin-left:4px;">
-                <img src="https://flagcdn.com/w40/bo.png" alt="Bandera Bolivia" width="24" style="margin-right:4px;">
-              </span>
-            </div>
+            <div class="calc-header" style="display:flex;justify-content:space-between;align-items:center;">
+  <div class="rate" style="display:flex;align-items:center;gap:6px;">
+    1 EUR = <strong id="rate">16.22</strong>
+    <img src="https://flagcdn.com/w40/bo.png" alt="Bandera Bolivia" width="20" style="margin-left:4px;">
+  </div>
+  <span id="calc-datetime" style="font-size:13px;color:#666;"></span>
+</div>
           </div>
           <div class="input">
             <label for="amount" class="sr-only" data-i18n="calc-placeholder"></label>
@@ -85,6 +86,7 @@
                 <span style="color: #aaaaaa; font-weight: 300; font-size: 0.95rem; margin-left: 6px;">RIA</span>
               </div>
               <div class="values" id="total-ria">0.00 Bs</div>
+				
             </li>
             <li class="item" style="opacity: 0.6; background-color: #fafafa; border-color: #dddddd;">
               <div class="service">
@@ -341,7 +343,7 @@
   </footer>
 
   <!-- Scripts externos -->
-  <script src="https://lupo.lat/js/textos.js"></script>
-  <script src="https://lupo.lat/js/main.js"></script>
+  <script src="js/textos.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
