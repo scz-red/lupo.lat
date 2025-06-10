@@ -5,21 +5,29 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Lupo.lat - Envíos de dinero a Bolivia sin comisiones y con el mejor cambio</title>
+<!-- Favicons -->
+<link href="/icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/icons/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="/icons/icon-512.png" rel="icon" sizes="512x512" type="image/png"/>
+<link href="/icons/manifest.json" rel="manifest"/>
+<meta content="#ffffff" name="theme-color"/>
 <!-- Favicons e íconos PWA -->
-<link href="icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
-<link href="icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
-<link href="icons/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
-<link href="icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
-<link href="icons/icon-512.png" rel="icon" sizes="512x512" type="image/png"/>
-<link href="icons/manifest.json" rel="manifest"/>
+
+
+
+
+
+
 <meta content="#ffffff" name="theme-color"/>
 <meta content="yes" name="apple-mobile-web-app-capable"/>
 <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
 <!-- Fuentes e íconos -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-<link href="css/main.css?v=10006" rel="stylesheet"/>
-</link></link></head>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<link href="css/main.css?v=10002" rel="stylesheet"/>
+</head>
 <body>
 <!-- Header -->
 <header>
@@ -45,21 +53,7 @@
 <section class="hero">
 <div class="container hero-container">
 <div class="hero-content">
-<h1 class="hero-title" data-i18n="hero-title-1" style="
-        font-family: 'Inter', 'Segoe UI', sans-serif;
-        font-weight: 800;
-        font-size: 1.3rem;
-        letter-spacing: 0.5px;
-        text-transform: uppercase;
-        background: linear-gradient(90deg, #f8f9fa, #e0e0e0);
-        padding: 10px 14px;
-        border-radius: 12px;
-        line-height: 1.4;
-        text-align: center;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-        max-width: 100%;
-        display: inline-block;
-    "></h1>
+<h1 class="hero-title" data-i18n="hero-title-1" style="font-family: 'Inter', 'Segoe UI', sans-serif; font-weight: 700; font-size: 2.3rem; line-height: 1.3; letter-spacing: -0.3px;"></h1>
 <p class="hero-subtitle" data-i18n="hero-subtitle"></p>
 <div class="hero-buttons">
 <a class="btn btn-primary" data-i18n="btn-send" href="#"></a>
@@ -69,7 +63,22 @@
 <div class="hero-calculator">
 <div class="calc">
 <div class="header">
-<h1 data-i18n="calc-title-1"></h1>
+<h1 data-i18n="calc-title-1" style="
+        text-transform: uppercase;
+        font-family: 'Inter', 'Segoe UI', sans-serif;
+        font-weight: 800;
+        font-size: 1.05rem;
+        text-align: center;
+        background: linear-gradient(90deg, #f9f9f9, #e0e0e0);
+        padding: 10px 14px;
+        border-radius: 12px;
+        letter-spacing: 0.5px;
+        margin-bottom: 10px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        max-width: 100%;
+        line-height: 1.3;
+        word-break: break-word;
+    ">ENVIÁ DINERO SIN RECORTES NI COMISIONES</h1>
 <div class="calc-header" style="display:flex;justify-content:space-between;align-items:center;">
 <div class="rate" style="display:flex;align-items:center;gap:6px;">
     1 EUR = <strong id="rate">16.22</strong>
@@ -78,44 +87,49 @@
 <span id="calc-datetime" style="font-size:13px;color:#666;"></span>
 </div>
 </div>
-<div class="input">
+<div class="input" style="margin-bottom: 6px;">
 <label class="sr-only" data-i18n="calc-placeholder" for="amount"></label>
-<img alt="UE" class="icon" src="https://flagcdn.com/w40/eu.png"/>
-<input aria-describedby="rate" id="amount" min="1" type="number"/>
+<img alt="UE" class="icon" src="https://flagcdn.com/w40/eu.png" width="50"/>
+<input aria-describedby="rate" id="amount" min="1" style="padding: 16px 16px 16px 48px; font-size: 1.2rem; border-radius: 10px; border: 2px solid #ccc;" type="number"/>
 </div>
 <ul class="list">
-<li class="item highlight" style="border-width: 3px; background: #e6f5e6; padding: 16px;">
+<li class="item highlight" style="border-width: 3px; background: #e6f5e6; padding: 16px; padding: 6px 8px;">
 <div class="service">
-<img alt="LUPO" src="http://lupo.lat/img/lupologo.png" style="border-radius: 90%; background: #e6f5e6;" width="60"/>
+<img alt="LUPO" src="http://lupo.lat/img/lupologo.png" style="border-radius: 30%; background: #e6f5e6;" width="90"/>
 </div>
 <div class="values" id="total-lupo" style="font-size: 1.2rem; font-weight: bold;">
 <p>0.00 Bs</p>
 </div>
 </li>
-<li class="item" style="opacity: 0.6; background-color: #fafafa; border-color: #dddddd;">
-<div class="service">
-<img alt="RIA" src="https://lupo.lat/img/ria.png" style="border-radius: 50%; background: white;" width="20"/>
-<span style="color: #aaaaaa; font-weight: 300; font-size: 0.95rem; margin-left: 6px;">RIA</span>
+</ul>
+<div style="border: 1.5px solid #dddddd; border-radius: 12px; background: #fafafa; padding: 10px 14px; margin-top: -2px;">
+  <div data-i18n="calc-competencia-label" style="font-weight: 600; font-size: 0.86rem; color: #333; background: #f4f4f4; padding: 3px 10px 2px; border-bottom: 1px solid #ddd; margin-bottom: -4px; line-height: 1.2;">
+    Ellos te darían:
+  </div>
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+<div style="display: flex; align-items: center; gap: 8px;">
+<img alt="RIA" src="https://lupo.lat/img/ria.png" style="border-radius: 50%;" width="22"/>
+<span style="font-size: 0.9rem; color: #888;">RIA</span>
 </div>
 <div class="values" id="total-ria">0.00 Bs</div>
-</li>
-<li class="item" style="opacity: 0.6; background-color: #fafafa; border-color: #dddddd;">
-<div class="service">
-<img alt="Western" src="https://lupo.lat/img/217427.png" style="border-radius: 50%; background: white;" width="20"/>
-<span style="color: #aaaaaa; font-weight: 300; font-size: 0.95rem; margin-left: 6px;">WESTERN</span>
+</div>
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+<div style="display: flex; align-items: center; gap: 8px;">
+<img alt="WESTERN" src="https://lupo.lat/img/217427.png" style="border-radius: 50%;" width="22"/>
+<span style="font-size: 0.9rem; color: #888;">WESTERN</span>
 </div>
 <div class="values" id="total-wu">0.00 Bs</div>
-</li>
-<li class="item" style="opacity: 0.6; background-color: #fafafa; border-color: #dddddd;">
-<div class="service">
-<img alt="MoneyGram" src="https://lupo.lat/img/money.png" style="border-radius: 50%; background: white;" width="20"/>
-<span style="color: #aaaaaa; font-weight: 300; font-size: 0.95rem; margin-left: 6px;">MONEYGRAM</span>
+</div>
+<div style="display: flex; justify-content: space-between; align-items: center;">
+<div style="display: flex; align-items: center; gap: 8px;">
+<img alt="MONEYGRAM" src="https://lupo.lat/img/money.png" style="border-radius: 50%;" width="22"/>
+<span style="font-size: 0.9rem; color: #888;">MONEYGRAM</span>
 </div>
 <div class="values" id="total-mg">0.00 Bs</div>
-</li>
-</ul>
+</div>
+</div>
 <div class="footer">
-<div class="savings" style="background: #ffffcc; padding: 8px; border-radius: 6px; font-weight: 500; color: #333; display: inline-block;">
+<div class="savings" style="background: #ffffcc; padding: 8px; border-radius: 6px; font-weight: 500; color: #333; display: inline-block;  margin-top: -2px;">
               💰 <span id="save">0.00 Bs</span>
 </div>
 <button aria-live="polite" class="btn-calc" data-i18n="calc-btn" id="whatsapp" style="display: none;">Enviar</button>
@@ -348,5 +362,18 @@
 <!-- Scripts externos -->
 <script src="js/textos.js"></script>
 <script src="js/main.js?v=10002"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const amountInput = document.getElementById("amount");
+  amountInput.addEventListener("input", function() {
+    if (amountInput.value.length > 0) {
+      document.querySelector('.calc').scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  });
+});
+</script>
+<a href="https://wa.me/59177777777" style="position: fixed; bottom: 20px; right: 20px; background-color: #25D366; color: white; padding: 12px 16px; border-radius: 50px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); font-size: 16px; display: flex; align-items: center; gap: 8px; z-index: 9999; text-decoration: none;" target="_blank">
+<img alt="WhatsApp" height="24" src="https://cdn-icons-png.flaticon.com/512/733/733585.png" style="filter: brightness(100);" width="24"/> Soporte
+</a>
 </body>
 </html>
