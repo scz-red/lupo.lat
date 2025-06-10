@@ -80,7 +80,7 @@ window.addEventListener('DOMContentLoaded', () => {
         btn.style.display = 'block';
         btn.onclick = () => {
           window.location.href = `https://wa.me/393341950037?text=${encodeURIComponent(
-            `Hola LUPO, quisiera Envíar ${v}€ a Bolivia. Que son ${l.toFixed(2)} Bs`
+            `Envío ${v}€ con Lupo recibe ${l.toFixed(2)} Bs`
           )}`;
         };
       } else if (btn) {
@@ -88,6 +88,19 @@ window.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+  // Inicializa la fecha y hora en la calculadora
+  const fechaEl = document.getElementById('calc-datetime');
+  function setFecha() {
+    const now = new Date();
+    let h = now.getHours().toString().padStart(2, '0');
+    let m = now.getMinutes().toString().padStart(2, '0');
+    let d = now.getDate();
+    let mo = now.getMonth() + 1;
+    let y = now.getFullYear();
+    if (fechaEl) fechaEl.textContent = `${h}:${m} ${d}/${mo}/${y}`;
+  }
+  setFecha();
+  setInterval(setFecha, 60000);
 
   // FAQ acordeón
   document.querySelectorAll('.faq-question').forEach(function (el) {
