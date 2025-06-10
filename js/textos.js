@@ -1,126 +1,376 @@
-const translations = {
-  es: {
-    "calc-competencia-label": "Ellos te darían:",
-    // HERO - Frases aleatorias
-    "hero-title-1": "Envía dinero a Bolivia sin comisiones y con el mejor tipo de cambio",
-    "hero-title-2": "Envía dinero como si mandaras un mensaje de texto, ¡así de fácil! ??",
-    "hero-title-3": "Con LUPO tu familia recibe más y más rápido. ¡Ahorra tiempo y gana tranquilidad! ??",
-    "hero-title-4": "Todo desde tu teléfono, estés donde estés. Simple, seguro y humano.",
-    "hero-title-5": "¿Prefieres atención personalizada? Aquí siempre puedes pedirla. ??",
-    "hero-title-6": "En LUPO somos más humanos, por eso te damos el mejor tipo de cambio. ??",
-    "hero-title-7": "Cada envío es una experiencia agradable y sin complicaciones.",
-    "hero-title-8": "Porque cada envío cuenta: aquí tienes atención real en cada paso. ??",
-    "hero-title-9": "Más que un envío, es apoyo real para los tuyos. ¡Hazlo fácil, hazlo LUPO!",
-    "hero-subtitle": "Con Lupo, tu familia recibe hasta un 20% más en Bolivia comparado con otros servicios. Apoya a los tuyos, sin perder en comisiones.",
-    "btn-send": "Enviar ahora",
-    "btn-how": "Cómo funciona",
+<!DOCTYPE html>
 
-    // CALCULADORA - Frases aleatorias
-    "calc-title-1": "¿Cuánto más puede recibir tu familia hoy?",
-    "calc-title-2": "Con Lupo, tu dinero vale hasta un 20% más en Bolivia.",
-    "calc-title-3": "Envía dinero sin comisiones y apoya más a tu tierra.",
-    "calc-title-4": "Haz que tu esfuerzo llegue completo, sin recortes ni descuentos.",
-    "calc-title-5": "Apoya a tu familia enviando más, sin pagar comisiones.",
-    "calc-title-6": "Elige Lupo y tu familia recibe más, rápido y seguro.",
-    "calc-placeholder": "Cantidad en EUR",
-    "calc-btn": "Enviar",
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lupo.lat - Envíos de dinero a Bolivia sin comisiones y con el mejor cambio</title>
+<!-- Favicons -->
+<link href="icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="icons/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="icons/icon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="icons/icon-512.png" rel="icon" sizes="512x512" type="image/png"/>
+<link href="icons/manifest.json" rel="manifest"/>
+<meta content="#ffffff" name="theme-color"/>
+<!-- Favicons e íconos PWA -->
 
-    // FRASES DE AHORRO - Frases aleatorias
-    "save-1": "Tu envío con LUPO hoy te dan hasta {{save}} más para tu familia en Bolivia. !",
-    "save-2": "¿Sabías que aquí recibes {{save}} más que usando Western, Ria o MoneyGram? ??",
-    "save-3": "Más ganancias, {{save}} más de tranquilidad. Eso solo te lo da LUPO. ??",
-    "save-4": "Elige LUPO: aquí tu apoyo suma {{save}} extra para los tuyos.",
-    "save-5": "Aquí, lo que quieres enviar son {{save}} más que con la competencia. ",
-    "save-6": "Envía con LUPO y gana {{save}} extra en esta transferencia.",
-    "save-7": "Manda dinero sin perder: tu familia recibe {{save}} más solo aquí.",
-    "save-8": "Con LUPO, en este envio el esfuerzo de tu trabajo significa {{save}} más en casa. ",
 
-    // BENEFICIOS - Features
-    "features-title": "¿Por qué elegir Lupo?",
-    "feature-1-title": "Más para tu familia",
-    "feature-1-text": "Con Lupo, cada euro que envías rinde hasta un 20% más en Bolivia, comparado con servicios tradicionales.",
-    "feature-2-title": "Sin comisiones",
-    "feature-2-text": "No cobramos ninguna comisión. Todo lo que mandas, llega completo a los tuyos.",
-    "feature-3-title": "Entrega inmediata",
-    "feature-3-text": "El dinero llega en minutos a Bolivia, siempre en bolivianos exactos y sin sorpresas.",
-    "feature-4-title": "Total seguridad",
-    "feature-4-text": "Tus envíos están protegidos, con tecnología avanzada y seguimiento en tiempo real.",
-    "feature-5-title": "Atención personalizada",
-    "feature-5-text": "Estamos para ayudarte. Personal en Italia y Bolivia, presencial o en línea.",
-    "feature-6-title": "Fácil y sin complicaciones",
-    "feature-6-text": "Envía desde donde estés, sin papeleos ni trámites difíciles.",
 
-    // COMO FUNCIONA
-    "how-title": "¿Cómo funciona LUPO?",
-    "step-1-title": "Depositas en Italia",
-    "step-1-text": "Puedes depositar en cuenta bancaria o en persona con nuestro equipo, como prefieras.",
-    "step-2-title": "Entregamos en Bolivia",
-    "step-2-text": "El dinero se entrega en cuenta bancaria o en efectivo, según le convenga a tu familia.",
-    "step-3-title": "Seguimiento y comprobantes",
-    "step-3-text": "Te avisamos cuando el dinero está listo, con comprobantes y acompañamiento en todo momento.",
-    "how-final": "En minutos, tu ayuda llega completa y sin comisiones. Así de fácil.",
 
-    // FAQ
-    "faq-title": "Preguntas frecuentes",
-    "faq-q1": "¿Por qué elegir Lupo para enviar dinero?",
-    "faq-a1": "Usamos tecnología avanzada para ofrecerte siempre el mejor tipo de cambio ?? y que tu familia reciba más bolivianos. Además, nunca cobramos comisiones: el monto que envías es el monto que reciben.",
-    "faq-q2": "¿El dinero llega en bolivianos?",
-    "faq-a2": "Sí. El dinero llega a Bolivia al instante y en bolivianos exactos, sin descuentos ni sorpresas ??.",
-    "faq-q3": "¿Cómo recibe mi familia el dinero?",
-    "faq-a3": "Tú eliges: pueden recibirlo en su cuenta bancaria ?? o recogerlo en efectivo ??, según les convenga más.",
-    "faq-q4": "¿Qué tan rápido llega el dinero?",
-    "faq-a4": "La entrega es inmediata ?. En minutos tu familia tiene el dinero disponible y te enviamos el comprobante ?.",
-    "faq-q5": "¿Hay algún costo o comisión?",
-    "faq-a5": "No. En Lupo.lat no cobramos ninguna comisión ? ni cargos ocultos. Todo lo que envías lo reciben en Bolivia.",
-    "faq-q6": "¿Es seguro enviar dinero con Lupo?",
-    "faq-a6": "Sí. Somos un equipo real, con presencia en Italia y Bolivia ??????????. Acompañamos cada paso de tu envío y te damos transparencia y soporte en todo momento.",
-    "faq-q7": "¿Cómo puedo realizar mi primer envío con presencia de un agente de Lupo.lat?",
-    "faq-a7": "Es muy sencillo. Solo solicítalo haciendo clic en este <a href='#'><b>enlace ??</b></a> y un agente de nuestro equipo se pondrá en contacto contigo para coordinar el envío de forma personalizada y presencial.",
-    "faq-final": "Envío seguro, rápido y sin comisiones. Así de fácil es ayudar a los tuyos con Lupo.lat",
 
-    // CTA y FOOTER
-    "cta-title": "¿Listo para enviar más a tu tierra?",
-    "cta-subtitle": "No pierdas en comisiones ni tipo de cambio. Con Lupo, tu esfuerzo llega completo y seguro a quienes más quieres.",
-    "cta-btn": "Enviar ahora",
-    "footer-about": "En Lupo te ayudamos a enviar más dinero a tu familia en Bolivia. Sin comisiones, con el mejor tipo de cambio y atención cercana, siempre.",
 
-    // FOOTER EXTENDIDO
-    "footer-servicios": "Servicios",
-    "footer-envios": "Envíos a Bolivia",
-    "footer-tasas": "Tasas de cambio",
-    "footer-calculadora": "Calculadora",
-    "footer-ubicaciones": "Ubicaciones",
-    "footer-empresa": "Empresa",
-    "footer-nosotros": "Sobre nosotros",
-    "footer-trabaja": "Trabaja con nosotros",
-    "footer-prensa": "Prensa",
-    "footer-blog": "Blog",
-    "footer-legal": "Legal",
-    "footer-terminos": "Términos y condiciones",
-    "footer-privacidad": "Política de privacidad",
-    "footer-seguridad": "Seguridad",
-    "footer-regulaciones": "Regulaciones",
-    "footer-contact": "Contacto",
-    "footer-mail": "hola@lupo.lat",
-    "footer-tel": "+39 334 195 0037",
-    "footer-soporte": "Soporte 24/7",
-    "footer-whatsapp": "WhatsApp",
-
-    // TESTIMONIOS
-    "testimonials-title": "Lo que dicen quienes ya confían en Lupo"
-  },
-  it: {
-    "calc-competencia-label": "Loro ti darebbero:",
-    // ... Traducciones IT, igual estructura ...
-  }
-};
-
-const heroPhraseKeys = [
-  "hero-title-1","hero-title-2","hero-title-3","hero-title-4","hero-title-5","hero-title-6","hero-title-7","hero-title-8","hero-title-9"
-];
-const calcPhraseKeys = [
-  "calc-title-1","calc-title-2","calc-title-3","calc-title-4","calc-title-5","calc-title-6"
-];
-const savePhraseKeys = [
-  "save-1","save-2","save-3","save-4","save-5","save-6","save-7","save-8"
-];
+<meta content="#ffffff" name="theme-color"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<!-- Fuentes e íconos -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<link href="css/main.css?v=10002" rel="stylesheet"/>
+</head>
+<body>
+<!-- Header -->
+<header>
+<div class="container header-container">
+<div class="logo">
+<img alt="Lupo" src="http://lupo.lat/img/lupologo.png" style="height:40px;" width="100"/>
+</div>
+<nav>
+<ul>
+<li><a data-i18n="features-title" href="#features"></a></li>
+<li><a data-i18n="how-title" href="#how-it-works"></a></li>
+<li><a data-i18n="testimonials-title" href="#testimonials"></a></li>
+<li><a data-i18n="faq-title" href="#faq"></a></li>
+<li><a data-i18n="footer-contact" href="#contact"></a></li>
+</ul>
+</nav>
+<button class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+</div>
+</header>
+<!-- Hero + Calculadora -->
+<section class="hero">
+<div class="container hero-container">
+<div class="hero-content">
+<h1 class="hero-title" data-i18n="hero-title-1" style="font-family: 'Inter', 'Segoe UI', sans-serif; font-weight: 700; font-size: 2.3rem; line-height: 1.3; letter-spacing: -0.3px;"></h1>
+<p class="hero-subtitle" data-i18n="hero-subtitle"></p>
+<div class="hero-buttons">
+<a class="btn btn-primary" data-i18n="btn-send" href="#"></a>
+<a class="btn btn-outline" data-i18n="btn-how" href="#how-it-works"></a>
+</div>
+</div>
+<div class="hero-calculator">
+<div class="calc">
+<div class="header">
+<h1 data-i18n="calc-title-1" style="
+        text-transform: uppercase;
+        font-family: 'Inter', 'Segoe UI', sans-serif;
+        font-weight: 800;
+        font-size: 1.05rem;
+        text-align: center;
+        background: linear-gradient(90deg, #f9f9f9, #e0e0e0);
+        padding: 10px 14px;
+        border-radius: 12px;
+        letter-spacing: 0.5px;
+        margin-bottom: 10px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        max-width: 100%;
+        line-height: 1.3;
+        word-break: break-word;
+    ">ENVIÁ DINERO SIN RECORTES NI COMISIONES</h1>
+<div class="calc-header" style="display:flex;justify-content:space-between;align-items:center;">
+<div class="rate" style="display:flex;align-items:center;gap:6px;">
+    1 EUR = <strong id="rate">16.22</strong>
+<img alt="Bandera Bolivia" src="https://flagcdn.com/w40/bo.png" style="margin-left:4px;" width="20"/>
+</div>
+<span id="calc-datetime" style="font-size:13px;color:#666;"></span>
+</div>
+</div>
+<div class="input" style="margin-bottom: 6px;">
+<label class="sr-only" data-i18n="calc-placeholder" for="amount"></label>
+<img alt="UE" class="icon" src="https://flagcdn.com/w40/eu.png" width="50"/>
+<input aria-describedby="rate" id="amount" min="1" style="padding: 16px 16px 16px 48px; font-size: 1.2rem; border-radius: 10px; border: 2px solid #ccc;" type="number"/>
+</div>
+<ul class="list">
+<li class="item highlight" style="border-width: 3px; background: #e6f5e6; padding: 16px; padding: 6px 8px;">
+<div class="service">
+<img alt="LUPO" src="http://lupo.lat/img/lupologo.png" style="border-radius: 30%; background: #e6f5e6;" width="90"/>
+</div>
+<div class="values" id="total-lupo" style="font-size: 1.2rem; font-weight: bold;">
+<p>0.00 Bs</p>
+</div>
+</li>
+</ul>
+<div style="border: 1.5px solid #dddddd; border-radius: 12px; background: #fafafa; padding: 10px 14px;  margin-top: -2px;"><div style="font-weight: 600; font-size: 0.86rem; color: #333; background: #f4f4f4; padding: 3px 10px 2px; border-bottom: 1px solid #ddd; margin-bottom: -4px; line-height: 1.2;">Ellos te darían:</div>
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+<div style="display: flex; align-items: center; gap: 8px;">
+<img alt="RIA" src="https://lupo.lat/img/ria.png" style="border-radius: 50%;" width="22"/>
+<span style="font-size: 0.9rem; color: #888;">RIA</span>
+</div>
+<div class="values" id="total-ria">0.00 Bs</div>
+</div>
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+<div style="display: flex; align-items: center; gap: 8px;">
+<img alt="WESTERN" src="https://lupo.lat/img/217427.png" style="border-radius: 50%;" width="22"/>
+<span style="font-size: 0.9rem; color: #888;">WESTERN</span>
+</div>
+<div class="values" id="total-wu">0.00 Bs</div>
+</div>
+<div style="display: flex; justify-content: space-between; align-items: center;">
+<div style="display: flex; align-items: center; gap: 8px;">
+<img alt="MONEYGRAM" src="https://lupo.lat/img/money.png" style="border-radius: 50%;" width="22"/>
+<span style="font-size: 0.9rem; color: #888;">MONEYGRAM</span>
+</div>
+<div class="values" id="total-mg">0.00 Bs</div>
+</div>
+</div>
+<div class="footer">
+<div class="savings" style="background: #ffffcc; padding: 8px; border-radius: 6px; font-weight: 500; color: #333; display: inline-block;  margin-top: -2px;">
+              💰 <span id="save">0.00 Bs</span>
+</div>
+<button aria-live="polite" class="btn-calc" data-i18n="calc-btn" id="whatsapp" style="display: none;">Enviar</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Beneficios -->
+<section class="features" id="features">
+<div class="container">
+<h2 class="section-title" data-i18n="features-title"></h2>
+<div class="features-grid">
+<div class="feature-card">
+<div class="feature-icon"><i class="fas fa-percentage"></i></div>
+<h3 class="feature-title" data-i18n="feature-1-title"></h3>
+<p data-i18n="feature-1-text"></p>
+</div>
+<div class="feature-card">
+<div class="feature-icon"><i class="fas fa-euro-sign"></i></div>
+<h3 class="feature-title" data-i18n="feature-2-title"></h3>
+<p data-i18n="feature-2-text"></p>
+</div>
+<div class="feature-card">
+<div class="feature-icon"><i class="fas fa-bolt"></i></div>
+<h3 class="feature-title" data-i18n="feature-3-title"></h3>
+<p data-i18n="feature-3-text"></p>
+</div>
+<div class="feature-card">
+<div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+<h3 class="feature-title" data-i18n="feature-4-title"></h3>
+<p data-i18n="feature-4-text"></p>
+</div>
+<div class="feature-card">
+<div class="feature-icon"><i class="fas fa-headset"></i></div>
+<h3 class="feature-title" data-i18n="feature-5-title"></h3>
+<p data-i18n="feature-5-text"></p>
+</div>
+<div class="feature-card">
+<div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
+<h3 class="feature-title" data-i18n="feature-6-title"></h3>
+<p data-i18n="feature-6-text"></p>
+</div>
+</div>
+</div>
+</section>
+<!-- Cómo funciona -->
+<section class="how-it-works" id="how-it-works">
+<div class="container">
+<h2 class="section-title" data-i18n="how-title"></h2>
+<div class="steps">
+<div class="step">
+<div class="step-number">1</div>
+<div class="step-content">
+<h3 class="step-title" data-i18n="step-1-title"></h3>
+<p data-i18n="step-1-text"></p>
+</div>
+</div>
+<div class="step">
+<div class="step-number">2</div>
+<div class="step-content">
+<h3 class="step-title" data-i18n="step-2-title"></h3>
+<p data-i18n="step-2-text"></p>
+</div>
+</div>
+<div class="step">
+<div class="step-number">3</div>
+<div class="step-content">
+<h3 class="step-title" data-i18n="step-3-title"></h3>
+<p data-i18n="step-3-text"></p>
+</div>
+</div>
+</div>
+<p data-i18n="how-final" style="margin-top: 24px; text-align:center;"></p>
+</div>
+</section>
+<!-- Testimonios -->
+<section class="testimonials" id="testimonials">
+<div class="container">
+<h2 class="section-title" data-i18n="testimonials-title"></h2>
+<div class="testimonials-grid">
+<div class="testimonial-card">
+<p class="testimonial-text">“Antes, con otras empresas, mi familia recibía menos. Con Lupo todo llega completo y sé que aprovecho mejor mi esfuerzo. Eso da mucha tranquilidad.”</p>
+<div class="testimonial-author">
+<img alt="Juan C." class="author-avatar" src="https://randomuser.me/api/portraits/men/45.jpg"/>
+<div class="author-info">
+<h4>Juan C.</h4>
+<p>Desde Roma</p>
+</div>
+</div>
+</div>
+<div class="testimonial-card">
+<p class="testimonial-text">“Me sorprendió la atención personalizada y la seguridad del proceso. Me avisaron en cada paso y mi familia recibió el dinero sin demora.”</p>
+<div class="testimonial-author">
+<img alt="Carla P." class="author-avatar" src="https://randomuser.me/api/portraits/women/32.jpg"/>
+<div class="author-info">
+<h4>Carla P.</h4>
+<p>Desde Milano</p>
+</div>
+</div>
+</div>
+<div class="testimonial-card">
+<p class="testimonial-text">“Con Lupo no hay descuentos ni comisiones. Ahora sé que lo que envío realmente llega a Bolivia, rápido y sin sorpresas.”</p>
+<div class="testimonial-author">
+<img alt="Rubén D." class="author-avatar" src="https://randomuser.me/api/portraits/men/68.jpg"/>
+<div class="author-info">
+<h4>Rubén D.</h4>
+<p>Desde Torino</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Mapa/contacto -->
+<section class="map-section" id="contact">
+<div class="container">
+<h5 class="section-title" data-i18n="footer-contact">Centro Comercial Cañoto #k2<br/>
+</h5>
+<div class="map-container">
+<iframe allowfullscreen="" loading="lazy" src="https://www.google.com/maps/embed?pb=!1m12!1m8!1m3!1d949.8067671825202!2d-63.18945788406143!3d-17.781022306645404!3m2!1i1024!2i768!4f13.1!2m1!1smap%20google%20comercial%20ca%C3%B1oto!5e0!3m2!1ses-419!2sbo!4v1749372329897!5m2!1ses-419!2sbo"></iframe>
+</div>
+</div>
+</section>
+<!-- Preguntas frecuentes -->
+<section class="faq" id="faq">
+<div class="container faq-container">
+<h2 class="section-title" data-i18n="faq-title"></h2>
+<div class="faq-item">
+<div class="faq-question"><span data-i18n="faq-q1"></span><i class="fas fa-chevron-down"></i></div>
+<div class="faq-answer"><p data-i18n="faq-a1"></p></div>
+</div>
+<div class="faq-item">
+<div class="faq-question"><span data-i18n="faq-q2"></span><i class="fas fa-chevron-down"></i></div>
+<div class="faq-answer"><p data-i18n="faq-a2"></p></div>
+</div>
+<div class="faq-item">
+<div class="faq-question"><span data-i18n="faq-q3"></span><i class="fas fa-chevron-down"></i></div>
+<div class="faq-answer"><p data-i18n="faq-a3"></p></div>
+</div>
+<div class="faq-item">
+<div class="faq-question"><span data-i18n="faq-q4"></span><i class="fas fa-chevron-down"></i></div>
+<div class="faq-answer"><p data-i18n="faq-a4"></p></div>
+</div>
+<div class="faq-item">
+<div class="faq-question"><span data-i18n="faq-q5"></span><i class="fas fa-chevron-down"></i></div>
+<div class="faq-answer"><p data-i18n="faq-a5"></p></div>
+</div>
+<div class="faq-item">
+<div class="faq-question"><span data-i18n="faq-q6"></span><i class="fas fa-chevron-down"></i></div>
+<div class="faq-answer"><p data-i18n="faq-a6"></p></div>
+</div>
+<div class="faq-item">
+<div class="faq-question"><span data-i18n="faq-q7"></span><i class="fas fa-chevron-down"></i></div>
+<div class="faq-answer"><p data-i18n="faq-a7"></p></div>
+</div>
+<div style="text-align:center;margin-top:28px;font-size:1.15em;color:#555;">
+<span style="font-size:1.25em;">🌟</span>
+<span data-i18n="faq-final"></span>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="cta">
+<div class="container">
+<h2 class="cta-title" data-i18n="cta-title"></h2>
+<p class="cta-subtitle" data-i18n="cta-subtitle"></p>
+<a class="btn btn-white" data-i18n="cta-btn" href="#"></a>
+</div>
+</section>
+<!-- Footer traducible y completo -->
+<footer>
+<div class="container">
+<div class="footer-grid">
+<div class="footer-about">
+<div class="footer-logo">
+<img alt="Lupo" src="http://lupo.lat/img/lupologo.png" style="height:32px;"/>
+<span class="footer-logo-text">Lupo</span>
+</div>
+<p data-i18n="footer-about"></p>
+<div class="social-links">
+<a href="#"><i class="fab fa-facebook-f"></i></a>
+<a href="#"><i class="fab fa-twitter"></i></a>
+<a href="#"><i class="fab fa-instagram"></i></a>
+<a href="#"><i class="fab fa-linkedin-in"></i></a>
+</div>
+</div>
+<div class="footer-links-container">
+<h3 class="footer-title" data-i18n="footer-servicios"></h3>
+<ul class="footer-links">
+<li><a data-i18n="footer-envios" href="#"></a></li>
+<li><a data-i18n="footer-tasas" href="#"></a></li>
+<li><a data-i18n="footer-calculadora" href="#"></a></li>
+<li><a data-i18n="footer-ubicaciones" href="#"></a></li>
+</ul>
+</div>
+<div class="footer-links-container">
+<h3 class="footer-title" data-i18n="footer-empresa"></h3>
+<ul class="footer-links">
+<li><a data-i18n="footer-nosotros" href="#"></a></li>
+<li><a data-i18n="footer-trabaja" href="#"></a></li>
+<li><a data-i18n="footer-prensa" href="#"></a></li>
+<li><a data-i18n="footer-blog" href="#"></a></li>
+</ul>
+</div>
+<div class="footer-links-container">
+<h3 class="footer-title" data-i18n="footer-legal"></h3>
+<ul class="footer-links">
+<li><a data-i18n="footer-terminos" href="#"></a></li>
+<li><a data-i18n="footer-privacidad" href="#"></a></li>
+<li><a data-i18n="footer-seguridad" href="#"></a></li>
+<li><a data-i18n="footer-regulaciones" href="#"></a></li>
+</ul>
+</div>
+<div class="footer-links-container">
+<h3 class="footer-title" data-i18n="footer-contact"></h3>
+<ul class="footer-links">
+<li><a data-i18n="footer-mail" href="mailto:hola@lupo.lat"></a></li>
+<li><a data-i18n="footer-tel" href="tel:+393341950037"></a></li>
+<li><a data-i18n="footer-soporte" href="https://wa.me/393341950037"></a></li>
+<li><a data-i18n="footer-whatsapp" href="https://wa.me/393341950037"></a></li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom">
+<p>© 2025 Lupo.lat - Todos los derechos reservados</p>
+</div>
+</div>
+</footer>
+<!-- Scripts externos -->
+<script src="js/textos.js"></script>
+<script src="js/main.js?v=10002"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const amountInput = document.getElementById("amount");
+  amountInput.addEventListener("input", function() {
+    if (amountInput.value.length > 0) {
+      document.querySelector('.calc').scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  });
+});
+</script>
+<a href="https://wa.me/393341950037" style="position: fixed; bottom: 20px; right: 20px; background-color: #25D366; color: white; padding: 12px 16px; border-radius: 50px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); font-size: 16px; display: flex; align-items: center; gap: 8px; z-index: 9999; text-decoration: none;" target="_blank">
+<img alt="WhatsApp" height="24" src="https://cdn-icons-png.flaticon.com/512/733/733585.png" style="filter: brightness(100);" width="24"/> Soporte
+</a>
+</body>
+</html>
