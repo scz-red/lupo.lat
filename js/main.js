@@ -80,7 +80,7 @@ window.addEventListener('DOMContentLoaded', () => {
         btn.style.display = 'block';
         btn.onclick = () => {
           window.location.href = `https://wa.me/393341950037?text=${encodeURIComponent(
-            `Envío ${v}€ con Lupo recibe ${l.toFixed(2)} Bs`
+            `Hola LUPO, quisiera Envíar ${v}€ a Bolivia. Que son ${l.toFixed(2)} Bs`
           )}`;
         };
       } else if (btn) {
