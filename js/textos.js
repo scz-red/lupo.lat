@@ -26,14 +26,14 @@ const translations = {
     "calc-btn": "Enviar",
 
     // FRASES DE AHORRO - Frases aleatorias
-    "save-1": "Tus envíos con LUPO te dan hasta {{save}} más para tu familia en Bolivia. ??",
+    "save-1": "Tu envío con LUPO hoy te dan hasta {{save}} más para tu familia en Bolivia. !",
     "save-2": "¿Sabías que aquí recibes {{save}} más que usando Western, Ria o MoneyGram? ??",
     "save-3": "Más ganancias, {{save}} más de tranquilidad. Eso solo te lo da LUPO. ??",
     "save-4": "Elige LUPO: aquí tu apoyo suma {{save}} extra para los tuyos.",
-    "save-5": "Aquí, cada euro rinde {{save}} más que con la competencia. ??",
-    "save-6": "Envía con LUPO y gana {{save}} extra en cada transferencia.",
+    "save-5": "Aquí, lo que quieres enviar son {{save}} más que con la competencia. ",
+    "save-6": "Envía con LUPO y gana {{save}} extra en esta transferencia.",
     "save-7": "Manda dinero sin perder: tu familia recibe {{save}} más solo aquí.",
-    "save-8": "Con LUPO, el esfuerzo de tu trabajo significa {{save}} más en casa. ??",
+    "save-8": "Con LUPO, en este envio el esfuerzo de tu trabajo significa {{save}} más en casa. ",
 
     // BENEFICIOS - Features
     "features-title": "¿Por qué elegir Lupo?",
