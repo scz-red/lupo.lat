@@ -42,7 +42,7 @@ window.addEventListener('DOMContentLoaded', () => {
   if (inputAmount) inputAmount.placeholder = translations[lang]["calc-placeholder"];
 
   // Lógica de la calculadora
-  const rates = { lupo:16.22, ria:14.12, wu:12.80, mg:13.70 };
+  const rates = { lupo:16.10, ria:14.05, wu:12.70, mg:13.50 };
   const totalLupo = document.getElementById('total-lupo');
   const totalRia = document.getElementById('total-ria');
   const totalWu = document.getElementById('total-wu');
@@ -80,7 +80,7 @@ window.addEventListener('DOMContentLoaded', () => {
         btn.style.display = 'block';
         btn.onclick = () => {
           window.location.href = `https://wa.me/393341950037?text=${encodeURIComponent(
-            `Envío ${v}€ con Lupo recibe ${l.toFixed(2)} Bs`
+            `Hola Lupo, Quisiera enviar ${v}€ a Bolivia. Que  reciban ${l.toFixed(2)} Bs`
           )}`;
         };
       } else if (btn) {
