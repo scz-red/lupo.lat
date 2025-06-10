@@ -45,7 +45,21 @@
 <section class="hero">
 <div class="container hero-container">
 <div class="hero-content">
-<h1 class="hero-title" data-i18n="hero-title-1"></h1>
+<h1 class="hero-title" data-i18n="hero-title-1" style="
+        font-family: 'Inter', 'Segoe UI', sans-serif;
+        font-weight: 800;
+        font-size: 1.3rem;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        background: linear-gradient(90deg, #f8f9fa, #e0e0e0);
+        padding: 10px 14px;
+        border-radius: 12px;
+        line-height: 1.4;
+        text-align: center;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        max-width: 100%;
+        display: inline-block;
+    "></h1>
 <p class="hero-subtitle" data-i18n="hero-subtitle"></p>
 <div class="hero-buttons">
 <a class="btn btn-primary" data-i18n="btn-send" href="#"></a>
@@ -78,32 +92,28 @@
 <p>0.00 Bs</p>
 </div>
 </li>
-</ul>
-<p style="font-weight: 500; font-size: 0.95rem; margin-top: 16px; margin-bottom: 6px;">Ellos te darían:</p>
-<div style="border: 1.5px solid #dddddd; border-radius: 12px; background: #fafafa; padding: 10px 14px;">
-<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-<div style="display: flex; align-items: center; gap: 8px;">
-<img alt="RIA" src="https://lupo.lat/img/ria.png" style="border-radius: 50%;" width="22"/>
-<span style="font-size: 0.9rem; color: #888;">RIA</span>
+<li class="item" style="opacity: 0.6; background-color: #fafafa; border-color: #dddddd;">
+<div class="service">
+<img alt="RIA" src="https://lupo.lat/img/ria.png" style="border-radius: 50%; background: white;" width="20"/>
+<span style="color: #aaaaaa; font-weight: 300; font-size: 0.95rem; margin-left: 6px;">RIA</span>
 </div>
 <div class="values" id="total-ria">0.00 Bs</div>
-</div>
-<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-<div style="display: flex; align-items: center; gap: 8px;">
-<img alt="WESTERN" src="https://lupo.lat/img/217427.png" style="border-radius: 50%;" width="22"/>
-<span style="font-size: 0.9rem; color: #888;">WESTERN</span>
+</li>
+<li class="item" style="opacity: 0.6; background-color: #fafafa; border-color: #dddddd;">
+<div class="service">
+<img alt="Western" src="https://lupo.lat/img/217427.png" style="border-radius: 50%; background: white;" width="20"/>
+<span style="color: #aaaaaa; font-weight: 300; font-size: 0.95rem; margin-left: 6px;">WESTERN</span>
 </div>
 <div class="values" id="total-wu">0.00 Bs</div>
-</div>
-<div style="display: flex; justify-content: space-between; align-items: center;">
-<div style="display: flex; align-items: center; gap: 8px;">
-<img alt="MONEYGRAM" src="https://lupo.lat/img/money.png" style="border-radius: 50%;" width="22"/>
-<span style="font-size: 0.9rem; color: #888;">MONEYGRAM</span>
+</li>
+<li class="item" style="opacity: 0.6; background-color: #fafafa; border-color: #dddddd;">
+<div class="service">
+<img alt="MoneyGram" src="https://lupo.lat/img/money.png" style="border-radius: 50%; background: white;" width="20"/>
+<span style="color: #aaaaaa; font-weight: 300; font-size: 0.95rem; margin-left: 6px;">MONEYGRAM</span>
 </div>
 <div class="values" id="total-mg">0.00 Bs</div>
-</div>
-</div>
-
+</li>
+</ul>
 <div class="footer">
 <div class="savings" style="background: #ffffcc; padding: 8px; border-radius: 6px; font-weight: 500; color: #333; display: inline-block;">
               💰 <span id="save">0.00 Bs</span>
