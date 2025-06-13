@@ -42,7 +42,7 @@ window.addEventListener('DOMContentLoaded', () => {
   if (inputAmount) inputAmount.placeholder = translations[lang]["calc-placeholder"];
 
   // Lógica de la calculadora
-  const rates = { lupo:17.21, ria:15, wu:12.70, mg:14.50 };
+  const rates = { lupo:17.00, ria:15.05, wu:12.90, mg:14.80 };
   const totalLupo = document.getElementById('total-lupo');
   const totalRia = document.getElementById('total-ria');
   const totalWu = document.getElementById('total-wu');
