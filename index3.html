@@ -1,117 +1,178 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Envíos de remesas de Europa a Bolivia sin comisiones al mejor tipo de cambio. Calcula y envía de forma rápida y segura.">
-  <meta name="keywords" content="envío dinero, remesas, Bolivia, tipo de cambio, sin comisiones, Lupo Transfer">
-  <title>LUPO - Envíos a Bolivia</title>
-
-  <!-- Íconos para pantalla de inicio y navegador -->
-  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-  <link rel="manifest" href="icons/manifest.json">
-  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
-
-  <!-- Estilos y scripts -->
-  <link rel="stylesheet" href="css/styles.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" defer></script>
-  <script src="js/main.js" defer></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Conversor paralelo</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f6fa;
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+    }
+    .app {
+      background: white;
+      padding: 24px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+      max-width: 460px;
+      width: 100%;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    select, input {
+      flex: 1;
+      padding: 12px;
+      font-size: 1rem;
+      border-radius: 12px;
+      border: 1px solid #ccc;
+    }
+    .swap {
+      width: 100%;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .swap button {
+      background: #0055ff;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 12px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .rate-display {
+      text-align: center;
+      color: #444;
+      font-size: 0.95rem;
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <div class="header-container">
-      <div class="logo"><img src="img/lupo01.png" alt="Lupo logo"></div>
-      <i id="menuToggle" class="fas fa-bars menu-toggle"></i>
-      <nav class="nav-links" id="navLinks">
-        <a href="#">Inicio</a>
-        <a href="#">&nbsp;Cómo funciona</a>
-        <a href="#">&nbsp;Contacto</a>
-      </nav>
+  <div class="app">
+    <h2>💱 Conversor paralelo no oficial</h2>
+    <div class="row">
+      <select id="fromCurrency"></select>
+      <input type="number" id="fromAmount" value="100" oninput="convert()">
     </div>
-  </header>
-
-  <div class="main-content">
-    <section class="hero">
-      <h1>ENVIA MAS, PAGA MENOS!&nbsp;</h1>
-      <p>Desde tu celular, sin perder el tiempo.
-      Sin comisiones, tipo de cambio correcto.
-      Tan simple como enviar un mensaje, directo. <br>
-      <strong>Con</strong> <strong>Lupo, tu dinero va completo</strong>.</p>
-    </section>
-
-    <section class="calculator-section">
-      <div class="calculator-card">
-        <div class="calculator-body">
-          <span class="badge">0% Comisión</span>
-
-          <div class="inline-group">
-            <label class="inline-label">Envías exactamente</label>
-            <div class="inline-wrapper">
-              <input type="number" id="eurInput" placeholder="0.00">
-              <select id="sendCurrency">
-                <option value="EUR">EUR</option>
-              </select>
-              <img src="https://flagcdn.com/w40/eu.png" alt="EUR" class="provider-icon">
-            </div>
-          </div>
-
-          <div class="inline-group">
-            <label class="inline-label">El destinatario recibe</label>
-            <div class="inline-wrapper">
-              <input type="number" id="localInput" placeholder="0.00" readonly>
-              <select id="destination">
-                <option value="bolivia">BOB</option>
-                <option value="colombia">COP</option>
-              </select>
-              <img id="destFlag" src="https://flagcdn.com/w40/bo.png" alt="BOB" class="provider-icon">
-            </div>
-          </div>
-
-          <a id="whatsappBtn" class="action-btn" target="_blank">Enviar Dinero</a>
-
-          <div class="comparison-section">
-            <h4>Lo que otros te ofrecen:</h4>
-            <div class="result-item">
-              <span><img src="img/money.png" class="provider-icon" alt="MoneyGram">MoneyGram</span>
-              <span id="mgReceived" class="result-value">0.00</span>
-            </div>
-            <div class="result-item">
-              <span><img src="img/217427.png" class="provider-icon" alt="Western Union">Western Union</span>
-              <span id="wuReceived" class="result-value">0.00</span>
-            </div>
-            <div class="result-item">
-              <span><img src="img/ria.png" class="provider-icon" alt="Ria Envia">Ria Envia</span>
-              <span id="riaReceived" class="result-value">0.00</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <div class="swap">
+      <button onclick="swapCurrencies()">⇅ Cambiar</button>
+    </div>
+    <div class="row">
+      <select id="toCurrency"></select>
+      <input type="number" id="toAmount" disabled>
+    </div>
+    <div class="rate-display" id="rateInfo"></div>
   </div>
 
-  <!-- Depósito bancario -->
-  <h3 class="partners-title">Depósito bancario:</h3>
-  <section class="partners-section">
-    <div class="partners-carousel" id="partnersCarousel">
-      <img src="img/banco union.png" alt="BBVA" width="100" height="30"> &nbsp;
-      <img src="img/banco sol.png" alt="BancoSol"> &nbsp;
-      <img src="img/ganadero.png" alt="Banco Ganadero">&nbsp;<br>
-      <img src="img/banco bisa.png" alt="Banco BISA">&nbsp;<br>
-      <img src="img/nacional de bolivia.png" alt="Banco Nacional de Bolivia">&nbsp;<br>
-      <img src="img/yape.png" alt="Yape">&nbsp;<br>
-    </div>
-  </section>
+  <script>
+    const currencies = [
+      { code: 'BOB', name: 'Boliviano', flag: '🇧🇴' },
+      { code: 'EUR', name: 'Euro', flag: '🇪🇺' },
+      { code: 'GBP', name: 'Libra Esterlina', flag: '🇬🇧' },
+      { code: 'ARS', name: 'Peso Argentino', flag: '🇦🇷' },
+      { code: 'CLP', name: 'Peso Chileno', flag: '🇨🇱' },
+      { code: 'PEN', name: 'Sol Peruano', flag: '🇵🇪' },
+      { code: 'CNY', name: 'Yuan Chino', flag: '🇨🇳' },
+      { code: 'BRL', name: 'Real Brasileño', flag: '🇧🇷' }
+    ];
 
-  <a href="https://wa.me/393341950037" class="floating-btn"><i class="fab fa-whatsapp"></i></a>
+    let usdToBob = null;
+    let usdRates = {};
 
-  <footer>
-    <div class="footer-links">
-      <a href="#"> Términos </a>
-      <a href="#"> Contacto </a>
-      <a href="#"> Ayuda </a>
-    </div>
-    <p>© 2025 Lupo Transfer. Todos los derechos reservados.</p>
-  </footer>
+    async function fetchUsdBob() {
+      const res = await fetch('https://p2p.binance.com/bapi/c2c/v2/friendly/c2c/adv/search', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ page:1, rows:10, asset:'USDT', tradeType:'SELL', fiat:'BOB', payTypes: [] })
+      });
+      const data = await res.json();
+      const prices = data.data.map(ad => parseFloat(ad.adv.price));
+      return prices.reduce((a, b) => a + b, 0) / prices.length;
+    }
+
+    async function fetchUsdOthers() {
+      const symbols = currencies.filter(c => c.code !== 'BOB').map(c => c.code).join(',');
+      const res = await fetch(`https://api.exchangerate.host/latest?base=USD&symbols=${symbols}`);
+      const data = await res.json();
+      return data.rates;
+    }
+
+    function populateSelects() {
+      const from = document.getElementById('fromCurrency');
+      const to = document.getElementById('toCurrency');
+      currencies.forEach(c => {
+        const opt1 = document.createElement('option');
+        opt1.value = c.code;
+        opt1.textContent = `${c.flag} ${c.name} (${c.code})`;
+        from.appendChild(opt1.cloneNode(true));
+        to.appendChild(opt1);
+      });
+      from.value = 'BOB';
+      to.value = 'EUR';
+    }
+
+    function swapCurrencies() {
+      const from = document.getElementById('fromCurrency');
+      const to = document.getElementById('toCurrency');
+      const temp = from.value;
+      from.value = to.value;
+      to.value = temp;
+      convert();
+    }
+
+    function convert() {
+      const fromCur = document.getElementById('fromCurrency').value;
+      const toCur = document.getElementById('toCurrency').value;
+      const fromAmt = parseFloat(document.getElementById('fromAmount').value) || 0;
+      const toAmt = document.getElementById('toAmount');
+      const info = document.getElementById('rateInfo');
+
+      if (fromCur === toCur) {
+        toAmt.value = fromAmt.toFixed(2);
+        info.textContent = `1 ${fromCur} = 1 ${toCur}`;
+        return;
+      }
+
+      let usd;
+      if (fromCur === 'BOB') {
+        usd = fromAmt / usdToBob;
+      } else if (usdRates[fromCur]) {
+        usd = fromAmt / usdRates[fromCur];
+      }
+
+      let target;
+      if (toCur === 'BOB') {
+        target = usd * usdToBob;
+      } else {
+        target = usd * usdRates[toCur];
+      }
+
+      toAmt.value = target.toFixed(2);
+
+      const rateText = `1 ${fromCur} ≈ ${(1 / fromAmt * target).toFixed(4)} ${toCur}`;
+      info.textContent = rateText;
+    }
+
+    async function init() {
+      populateSelects();
+      usdToBob = await fetchUsdBob();
+      usdRates = await fetchUsdOthers();
+      convert();
+    }
+
+    init();
+  </script>
 </body>
 </html>
