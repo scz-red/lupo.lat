@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Recepción Xiaomi - Servicio Técnico</title>
+  <title>DR.Xiaomi - Servicio Técnico</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -71,9 +71,12 @@
           <select id="marca" required>
             <option value="">Seleccionar</option>
             <option>Xiaomi</option>
-            <option>Redmi</option>
-            <option>POCO</option>
-            <option>Otro</option>
+            <option>Samsung</option>
+			<option>Huawei</option>
+			<option>Tecno</option>
+			<option>Honor</option>
+            <option>Infinix</option>
+            <option>iPhone</option>
           </select>
           <label class="required-field">Modelo</label>
           <input type="text" id="modelo" required placeholder="Ej: Redmi Note 10">
@@ -162,10 +165,10 @@
     // Contador de recibos (empieza en 1340)
     let contadorRecibos = 1340;
     const config = {
-      nombreTienda: "XIAOMI SCZ",
+      nombreTienda: "DR . XIAOMI SCZ",
       direccion: "Centro Comercial Cañoto #k1, Santa Cruz",
       telefono: "75522004",
-      horario: "Lunes a Viernes 9:00 - 18:00"
+      horario: "Lunes a Viernes 9:00 - 20:00"
     };
     
     document.addEventListener('DOMContentLoaded',()=>{
@@ -526,10 +529,9 @@
           const terminos = [
             "1. Conserve esta Nota, pues únicamente contra su entrega podrá retirar su equipo.",
             "2. La fecha de entrega puede variar según disponibilidad de repuestos.",
-            "3. Reparaciones deben retirarse dentro de los 30 días luego del comunicado.",
-            "4. Equipos no reclamados pasados 60 días serán considerados abandonados.",
-            "5. No nos hacemos responsables por pérdida de datos durante la reparación.",
-            "6. Garantía de 30 días para repuestos y 90 días para mano de obra."
+            "3. Reparaciones deben retirarse dentro de los 10 días luego del comunicado.",
+            "4. Equipos no reclamados pasados 30 días serán considerados abandonados.",
+            "5. Garantía de 30 días para repuestos y 60 días para mano de obra."
           ];
           
           terminos.forEach((termino, index) => {
