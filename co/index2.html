@@ -3,223 +3,396 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Calculadora de Remesas - Dólar Paralelo Bolivia</title>
+<title>Calculadora de Remesas</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 <style>
+  :root {
+    --primary: #4361ee;
+    --primary-dark: #3a56d4;
+    --background: #f8fafc;
+    --card: #ffffff;
+    --text: #1e293b;
+    --text-light: #64748b;
+    --border: #e2e8f0;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+
   * {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
   }
+
   body {
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    background: #f5f7fa;
-    margin: 0;
-    padding: 20px;
-    color: #222;
-  }
-  header {
-    max-width: 600px;
-    margin: 0 auto 20px;
-    text-align: center;
-  }
-  header h1 {
-    margin-bottom: 10px;
-    font-weight: 700;
-    color: #0a3d62;
-  }
-  .input-group {
-    display: flex;
-    max-width: 400px;
-    margin: 0 auto;
-    gap: 10px;
-  }
-  input[type="number"] {
-    flex: 1;
-    padding: 12px;
-    font-size: 1rem;
-    border: 2px solid #0a3d62;
-    border-radius: 6px;
-    outline-offset: 2px;
-    outline-color: #2f3640;
-  }
-  button {
-    background-color: #0a3d62;
-    color: white;
-    border: none;
-    padding: 12px 18px;
-    font-size: 1rem;
-    cursor: pointer;
-    border-radius: 6px;
-    transition: background-color 0.3s ease;
-  }
-  button:hover {
-    background-color: #065a82;
-  }
-  main {
-    max-width: 700px;
-    margin: 30px auto;
-    background: white;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 0 10px rgb(0 0 0 / 0.1);
-  }
-  section {
-    margin-bottom: 30px;
-  }
-  h2 {
-    border-bottom: 2px solid #0a3d62;
-    padding-bottom: 6px;
-    margin-bottom: 15px;
-    font-weight: 700;
-    color: #0a3d62;
-  }
-  ul {
-    list-style: none;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--background);
+    color: var(--text);
+    min-height: 100vh;
     padding: 0;
-    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    line-height: 1.5;
   }
-  li {
+
+  .app-container {
+    width: 100%;
+    max-width: 420px;
+    min-height: 100vh;
+    background: var(--card);
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header {
+    padding: 24px 20px 16px;
+    background: var(--primary);
+    color: white;
+    position: relative;
+    z-index: 1;
+  }
+
+  .header h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .header p {
+    font-size: 0.875rem;
+    opacity: 0.9;
+  }
+
+  .input-container {
+    padding: 20px;
+    margin-top: -20px;
+    position: relative;
+    z-index: 2;
+    background: var(--card);
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.03);
+  }
+
+  .input-group {
+    position: relative;
+    margin-bottom: 16px;
+  }
+
+  .input-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: var(--text-light);
+  }
+
+  .input-group input {
+    width: 100%;
+    padding: 16px 20px;
+    font-size: 1rem;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--background);
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .input-group input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+  }
+
+  .currency-selector {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    background: var(--primary);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  button {
+    width: 100%;
+    padding: 16px;
+    background: var(--primary);
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.2s ease;
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 10px 0;
-    border-bottom: 1px solid #ddd;
+    justify-content: center;
+    gap: 8px;
   }
-  li:last-child {
+
+  button:hover {
+    background: var(--primary-dark);
+  }
+
+  .results {
+    padding: 0 20px 20px;
+  }
+
+  .section-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 24px 0 12px;
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .currency-list {
+    list-style: none;
+    background: var(--card);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+
+  .currency-item {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s ease;
+  }
+
+  .currency-item:last-child {
     border-bottom: none;
   }
-  .icon {
-    font-size: 20px;
-    color: #0a3d62;
-    width: 28px;
-    text-align: center;
+
+  .currency-item:hover {
+    background: rgba(0, 0, 0, 0.02);
   }
-  .moneda-nombre {
+
+  .currency-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(67, 97, 238, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    color: var(--primary);
+    font-size: 1rem;
+  }
+
+  .currency-details {
     flex: 1;
   }
-  .moneda-valor {
-    font-weight: 700;
-    color: #0a3d62;
+
+  .currency-name {
+    font-weight: 500;
+    font-size: 0.95rem;
+    margin-bottom: 2px;
   }
+
+  .currency-code {
+    font-size: 0.75rem;
+    color: var(--text-light);
+  }
+
+  .currency-value {
+    font-weight: 600;
+    text-align: right;
+  }
+
+  .currency-subvalue {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    text-align: right;
+    margin-top: 2px;
+  }
+
+  /* Loading state */
+  .loading {
+    padding: 20px;
+    text-align: center;
+    color: var(--text-light);
+  }
+
+  /* Responsive adjustments */
   @media (max-width: 480px) {
-    .input-group {
-      flex-direction: column;
-    }
-    button {
-      width: 100%;
+    .app-container {
+      min-height: 100vh;
+      max-width: 100%;
+      border-radius: 0;
     }
   }
 </style>
 </head>
 <body>
-<header>
-  <h1>Calculadora de Remesas - Dólar Paralelo Bolivia</h1>
-  <div class="input-group">
-    <input id="montoBob" type="number" min="1" value="1000" placeholder="Monto en Bolivianos (BOB)" />
-    <button id="btnCalcular">Calcular</button>
+  <div class="app-container">
+    <div class="header">
+      <h1>Calculadora de Remesas</h1>
+      <p>Convierte BOB a diferentes monedas</p>
+    </div>
+
+    <div class="input-container">
+      <div class="input-group">
+        <label for="monto">Monto a convertir</label>
+        <input type="number" id="monto" min="1" value="1000" placeholder="Ej: 1000" />
+        <span class="currency-selector">BOB</span>
+      </div>
+      <button id="calcular">
+        <i class="fas fa-calculator"></i>
+        Calcular
+      </button>
+    </div>
+
+    <div class="results" aria-live="polite" aria-atomic="true">
+      <div class="section-title">
+        <i class="fas fa-money-bill-wave"></i>
+        <span>Monedas tradicionales</span>
+      </div>
+      <ul class="currency-list" id="fiat-list"></ul>
+
+      <div class="section-title">
+        <i class="fas fa-coins"></i>
+        <span>Criptomonedas</span>
+      </div>
+      <ul class="currency-list" id="crypto-list"></ul>
+    </div>
   </div>
-</header>
-<main>
-  <section id="fiatSection">
-    <h2>Monedas Fiat</h2>
-    <ul id="fiatList"></ul>
-  </section>
-  <section id="cryptoSection">
-    <h2>Criptomonedas</h2>
-    <ul id="cryptoList"></ul>
-  </section>
-</main>
 
-<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 <script>
-const API_BASE = "https://api.lupo.lat";
+  const fiatCurrencies = {
+    "Dólar estadounidense": { code: "USD", icon: "fa-dollar-sign" },
+    "Peso colombiano": { code: "COP", icon: "fa-peso-sign" },
+    "Peso argentino": { code: "ARS", icon: "fa-peso-sign" },
+    "Peso chileno": { code: "CLP", icon: "fa-peso-sign" },
+    "Real brasileño": { code: "BRL", icon: "fa-real-sign" },
+    "Sol peruano": { code: "PEN", icon: "fa-sun" },
+    "Euro": { code: "EUR", icon: "fa-euro-sign" },
+    "Yuan chino": { code: "CNY", icon: "fa-yen-sign" },
+    "Guaraní paraguayo": { code: "PYG", icon: "fa-guarani-sign" },
+    "Peso mexicano": { code: "MXN", icon: "fa-peso-sign" }
+  };
 
-const fiatIcons = {
-  "Dólar estadounidense": "fas fa-dollar-sign",
-  "Peso colombiano": "fas fa-coins",
-  "Peso argentino": "fas fa-coins",
-  "Peso chileno": "fas fa-coins",
-  "Real brasileño": "fas fa-coins",
-  "Sol peruano": "fas fa-coins",
-  "Euro": "fas fa-euro-sign",
-  "Yuan chino": "fas fa-yen-sign",
-  "Guaraní paraguayo": "fas fa-coins",
-  "Peso mexicano": "fas fa-coins"
-};
+  const cryptoCurrencies = {
+    "Tether": { code: "USDT", icon: "fa-usdt" },
+    "Bitcoin": { code: "BTC", icon: "fa-btc" },
+    "Ethereum": { code: "ETH", icon: "fa-ethereum" },
+    "USD Coin": { code: "USDC", icon: "fa-coins" },
+    "Dogecoin": { code: "DOGE", icon: "fa-dog" },
+    "Solana": { code: "SOL", icon: "fa-s" },
+    "Pepe": { code: "PEPE", icon: "fa-frog" },
+    "Trump": { code: "TRUMP", icon: "fa-flag-usa" }
+  };
 
-const cryptoIcons = {
-  "Tether (USDT)": "fas fa-dollar-sign",
-  "BTC": "fab fa-bitcoin",
-  "ETH": "fab fa-ethereum",
-  "USDC": "fas fa-coins",
-  "DOGE": "fas fa-dog",
-  "SOL": "fas fa-s",
-  "PEPE": "fas fa-frog",
-  "TRUMP": "fas fa-flag-usa"
-};
+  const montoInput = document.getElementById('monto');
+  const calcularBtn = document.getElementById('calcular');
+  const fiatList = document.getElementById('fiat-list');
+  const cryptoList = document.getElementById('crypto-list');
 
-const fiatListEl = document.getElementById("fiatList");
-const cryptoListEl = document.getElementById("cryptoList");
-const btnCalcular = document.getElementById("btnCalcular");
-const montoInput = document.getElementById("montoBob");
-
-function clearResults() {
-  fiatListEl.innerHTML = '';
-  cryptoListEl.innerHTML = '';
-}
-
-function renderList(listElement, data, iconMap) {
-  for (const [name, value] of Object.entries(data)) {
-    const li = document.createElement('li');
-    const icon = document.createElement('i');
-    icon.className = 'icon ' + (iconMap[name] || 'fas fa-coins');
-
-    const spanName = document.createElement('span');
-    spanName.className = 'moneda-nombre';
-    spanName.textContent = name;
-
-    const spanValue = document.createElement('span');
-    spanValue.className = 'moneda-valor';
-    spanValue.textContent = typeof value === 'number' ? value.toLocaleString() : value;
-
-    li.append(icon, spanName, spanValue);
-    listElement.appendChild(li);
-  }
-}
-
-async function calcular() {
-  const monto = montoInput.value;
-  if (!monto || monto <= 0) {
-    alert("Ingresa un monto válido");
-    return;
+  function clearResults() {
+    fiatList.innerHTML = '';
+    cryptoList.innerHTML = '';
   }
 
-  clearResults();
+  function showLoading() {
+    fiatList.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> Cargando...</div>';
+    cryptoList.innerHTML = '';
+  }
 
-  try {
-    const res = await fetch(`${API_BASE}/convertir_bob?monto_bob=${monto}`);
-    if (!res.ok) throw new Error(`Error API: ${res.status}`);
+  function renderCurrencyList(listElement, data, currencyData) {
+    listElement.innerHTML = '';
+    
+    for (const [name, value] of Object.entries(data)) {
+      const currencyInfo = currencyData[name] || { code: '', icon: 'fa-coins' };
+      
+      const li = document.createElement('li');
+      li.className = 'currency-item';
+      
+      // Icon
+      const icon = document.createElement('div');
+      icon.className = 'currency-icon';
+      const iconElement = document.createElement('i');
+      iconElement.className = `fas ${currencyInfo.icon}`;
+      icon.appendChild(iconElement);
+      
+      // Details
+      const details = document.createElement('div');
+      details.className = 'currency-details';
+      
+      const nameElement = document.createElement('div');
+      nameElement.className = 'currency-name';
+      nameElement.textContent = name;
+      
+      const codeElement = document.createElement('div');
+      codeElement.className = 'currency-code';
+      codeElement.textContent = currencyInfo.code;
+      
+      details.appendChild(nameElement);
+      details.appendChild(codeElement);
+      
+      // Value
+      const valueContainer = document.createElement('div');
+      
+      const valueElement = document.createElement('div');
+      valueElement.className = 'currency-value';
+      valueElement.textContent = typeof value === "number" ? value.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : value;
+      
+      valueContainer.appendChild(valueElement);
+      
+      li.appendChild(icon);
+      li.appendChild(details);
+      li.appendChild(valueContainer);
+      
+      listElement.appendChild(li);
+    }
+  }
 
-    const data = await res.json();
-
-    if (data.error) {
-      alert("Error: " + data.error);
+  async function calcular() {
+    const monto = montoInput.value;
+    if (!monto || monto <= 0) {
+      alert("Por favor ingresa un monto válido");
       return;
     }
 
-    renderList(fiatListEl, data.conversiones_fiat, fiatIcons);
-    renderList(cryptoListEl, data.conversiones_cripto, cryptoIcons);
+    clearResults();
+    showLoading();
 
-  } catch (error) {
-    alert("No se pudo obtener datos. Intenta luego.");
-    console.error(error);
+    try {
+      const res = await fetch(`https://api.lupo.lat/convertir_bob?monto_bob=${monto}`);
+      if (!res.ok) throw new Error(`Error API: ${res.status}`);
+
+      const data = await res.json();
+
+      if (data.error) {
+        alert("Error: " + data.error);
+        return;
+      }
+
+      renderCurrencyList(fiatList, data.conversiones_fiat, fiatCurrencies);
+      renderCurrencyList(cryptoList, data.conversiones_cripto, cryptoCurrencies);
+
+    } catch (error) {
+      fiatList.innerHTML = '<div class="loading"><i class="fas fa-exclamation-circle"></i> Error al cargar datos</div>';
+      console.error(error);
+    }
   }
-}
 
-btnCalcular.addEventListener('click', calcular);
+  calcularBtn.addEventListener('click', calcular);
+  montoInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') calcular();
+  });
 
-// Ejecutar la primera vez con monto por defecto
-window.addEventListener('load', () => {
-  calcular();
-});
+  // Ejecutar la primera vez con monto por defecto
+  window.addEventListener('load', () => {
+    calcular();
+  });
 </script>
 </body>
 </html>
