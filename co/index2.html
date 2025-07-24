@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Calculadora de Remesas</title>
+<!-- <title>Calculadora Divisas [LUPO.LAT]</title> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 <style>
   :root {
@@ -162,7 +162,7 @@
   .currency-item {
     display: flex;
     align-items: center;
-    padding: 16px;
+    padding: 8px;
     border-bottom: 1px solid var(--border);
     transition: background 0.2s ease;
   }
@@ -184,8 +184,13 @@
     align-items: center;
     justify-content: center;
     margin-right: 12px;
-    color: var(--primary);
-    font-size: 1rem;
+    overflow: hidden;
+  }
+
+  .currency-icon img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
   }
 
   .currency-details {
@@ -247,7 +252,7 @@
       </div>
       <button id="calcular">
         <i class="fas fa-calculator"></i>
-        Calcular
+        <span>Calcular</span>
       </button>
     </div>
 
@@ -267,28 +272,84 @@
   </div>
 
 <script>
+  // Iconos oficiales de monedas fiat (usando API de CurrencyFreaks)
   const fiatCurrencies = {
-    "Dólar estadounidense": { code: "USD", icon: "fa-dollar-sign" },
-    "Peso colombiano": { code: "COP", icon: "fa-peso-sign" },
-    "Peso argentino": { code: "ARS", icon: "fa-peso-sign" },
-    "Peso chileno": { code: "CLP", icon: "fa-peso-sign" },
-    "Real brasileño": { code: "BRL", icon: "fa-real-sign" },
-    "Sol peruano": { code: "PEN", icon: "fa-sun" },
-    "Euro": { code: "EUR", icon: "fa-euro-sign" },
-    "Yuan chino": { code: "CNY", icon: "fa-yen-sign" },
-    "Guaraní paraguayo": { code: "PYG", icon: "fa-guarani-sign" },
-    "Peso mexicano": { code: "MXN", icon: "fa-peso-sign" }
+    "Dólar estadounidense": { 
+      code: "USD", 
+      icon: "https://currencyfreaks.com/photos/flags/usd.png" 
+    },
+    "Peso colombiano": { 
+      code: "COP", 
+      icon: "https://currencyfreaks.com/photos/flags/cop.png" 
+    },
+    "Peso argentino": { 
+      code: "ARS", 
+      icon: "https://currencyfreaks.com/photos/flags/ars.png" 
+    },
+    "Peso chileno": { 
+      code: "CLP", 
+      icon: "https://currencyfreaks.com/photos/flags/clp.png" 
+    },
+    "Real brasileño": { 
+      code: "BRL", 
+      icon: "https://currencyfreaks.com/photos/flags/brl.png" 
+    },
+    "Sol peruano": { 
+      code: "PEN", 
+      icon: "https://currencyfreaks.com/photos/flags/pen.png" 
+    },
+    "Euro": { 
+      code: "EUR", 
+      icon: "https://currencyfreaks.com/photos/flags/eur.png" 
+    },
+    "Yuan chino": { 
+      code: "CNY", 
+      icon: "https://currencyfreaks.com/photos/flags/cny.png" 
+    },
+    "Guaraní paraguayo": { 
+      code: "PYG", 
+      icon: "https://currencyfreaks.com/photos/flags/pyg.png" 
+    },
+    "Peso mexicano": { 
+      code: "MXN", 
+      icon: "https://currencyfreaks.com/photos/flags/mxn.png" 
+    }
   };
 
+  // Iconos oficiales de criptomonedas (usando CoinGecko API)
   const cryptoCurrencies = {
-    "Tether": { code: "USDT", icon: "fa-usdt" },
-    "Bitcoin": { code: "BTC", icon: "fa-btc" },
-    "Ethereum": { code: "ETH", icon: "fa-ethereum" },
-    "USD Coin": { code: "USDC", icon: "fa-coins" },
-    "Dogecoin": { code: "DOGE", icon: "fa-dog" },
-    "Solana": { code: "SOL", icon: "fa-s" },
-    "Pepe": { code: "PEPE", icon: "fa-frog" },
-    "Trump": { code: "TRUMP", icon: "fa-flag-usa" }
+    "Tether": { 
+      code: "USDT", 
+      icon: "https://tether.to/images/logoCircle.png" 
+    },
+    "Bitcoin": { 
+      code: "BTC", 
+      icon: "https://assets.coingecko.com/coins/images/1/large/bitcoin.png" 
+    },
+    "Ethereum": { 
+      code: "ETH", 
+      icon: "https://assets.coingecko.com/coins/images/279/large/ethereum.png" 
+    },
+    "USD Coin": { 
+      code: "USDC", 
+      icon: "https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png" 
+    },
+    "Dogecoin": { 
+      code: "DOGE", 
+      icon: "https://assets.coingecko.com/coins/images/5/large/dogecoin.png" 
+    },
+    "Solana": { 
+      code: "SOL", 
+      icon: "https://s2.coinmarketcap.com/static/img/coins/200x200/74.png" 
+    },
+    "Pepe": { 
+      code: "PEPE", 
+      icon: "https://assets.coingecko.com/coins/images/29850/large/pepe-token.jpeg" 
+    },
+    "Trump": { 
+      code: "TRUMP", 
+      icon: "https://assets.coingecko.com/coins/images/34947/large/trump.jpg" 
+    }
   };
 
   const montoInput = document.getElementById('monto');
@@ -310,17 +371,22 @@
     listElement.innerHTML = '';
     
     for (const [name, value] of Object.entries(data)) {
-      const currencyInfo = currencyData[name] || { code: '', icon: 'fa-coins' };
+      const currencyInfo = currencyData[name] || { 
+        code: '', 
+        icon: 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png' // Default icon
+      };
       
       const li = document.createElement('li');
       li.className = 'currency-item';
       
-      // Icon
+      // Icon with official currency image
       const icon = document.createElement('div');
       icon.className = 'currency-icon';
-      const iconElement = document.createElement('i');
-      iconElement.className = `fas ${currencyInfo.icon}`;
-      icon.appendChild(iconElement);
+      const iconImg = document.createElement('img');
+      iconImg.src = currencyInfo.icon;
+      iconImg.alt = name;
+      iconImg.loading = "lazy";
+      icon.appendChild(iconImg);
       
       // Details
       const details = document.createElement('div');
@@ -342,7 +408,9 @@
       
       const valueElement = document.createElement('div');
       valueElement.className = 'currency-value';
-      valueElement.textContent = typeof value === "number" ? value.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : value;
+      valueElement.textContent = typeof value === "number" ? 
+        value.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 
+        value;
       
       valueContainer.appendChild(valueElement);
       
