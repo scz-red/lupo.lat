@@ -1,12 +1,607 @@
-async function calcular() {
-  // ...
-  const response = await fetch(`https://api.lupo.lat/convertir_bob?monto_bob=${monto}`);
-  const data = await response.json();
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Calculadora de Remesas</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<style>
+  :root {
+    --primary: #4361ee;
+    --primary-dark: #3a0ca3;
+    --background: #f8fafc;
+    --card: #ffffff;
+    --text: #1e293b;
+    --text-light: #64748b;
+    --border: rgba(0, 0, 0, 0.08);
+    --shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.1);
+    --glass: rgba(255, 255, 255, 0.8);
+  }
+
+  /* Modo oscuro */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background: #0f172a;
+      --card: #1e293b;
+      --text: #f8fafc;
+      --text-light: #94a3b8;
+      --border: rgba(255, 255, 255, 0.08);
+      --glass: rgba(30, 41, 59, 0.8);
+    }
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--background);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    line-height: 1.5;
+    transition: background 0.3s ease;
+  }
+
+  .app-container {
+    width: 100%;
+    max-width: 420px;
+    min-height: 100vh;
+    background: var(--card);
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header {
+    padding: 24px 20px 80px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .header::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: var(--card);
+    border-radius: 24px 24px 0 0;
+    z-index: 2;
+  }
+
+  .wave-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.1;
+  }
+
+  .header h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 3;
+  }
+
+  .header p {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    position: relative;
+    z-index: 3;
+  }
+
+  .input-container {
+    padding: 24px 20px;
+    margin-top: -60px;
+    position: relative;
+    z-index: 3;
+    background: var(--glass);
+    border-radius: 24px 24px 0 0;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
+    margin-bottom: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .input-group {
+    position: relative;
+    margin-bottom: 20px;
+  }
+
+  .input-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: var(--text-light);
+  }
+
+  .input-group input {
+    width: 100%;
+    padding: 18px 20px;
+    font-size: 1.1rem;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: var(--background);
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow);
+  }
+
+  .input-group input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+    transform: translateY(-2px);
+  }
+
+  .currency-selector {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    background: var(--primary);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    box-shadow: var(--shadow);
+  }
+
+  button {
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: var(--shadow);
+  }
+
+  button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(67, 97, 238, 0.3);
+  }
+
+  button:active {
+    transform: scale(0.98);
+  }
+
+  .results {
+    padding: 0 20px 20px;
+  }
+
+  .section-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 24px 0 16px;
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-title i {
+    color: var(--primary);
+  }
+
+  .currency-list {
+    list-style: none;
+    background: var(--card);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .currency-item {
+    display: flex;
+    align-items: center;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    transition: all 0.3s ease;
+    animation: fadeIn 0.4s ease-out forwards;
+    opacity: 0;
+    background: var(--card);
+  }
+
+  .currency-item:nth-child(1) { animation-delay: 0.1s; }
+  .currency-item:nth-child(2) { animation-delay: 0.2s; }
+  .currency-item:nth-child(3) { animation-delay: 0.3s; }
+  .currency-item:nth-child(4) { animation-delay: 0.4s; }
+
+  .currency-item:last-child {
+    border-bottom: none;
+  }
+
+  .currency-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+
+  .currency-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(67, 97, 238, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 16px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .currency-icon img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+  }
+
+  .currency-details {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .currency-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .currency-code {
+    font-size: 0.75rem;
+    color: var(--text-light);
+  }
+
+  .currency-value {
+    font-weight: 700;
+    text-align: right;
+    font-size: 1rem;
+  }
+
+  .currency-subvalue {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    text-align: right;
+    margin-top: 4px;
+  }
+
+  /* Loading state */
+  .loading {
+    padding: 40px 20px;
+    text-align: center;
+    color: var(--text-light);
+    font-size: 0.9rem;
+  }
+
+  .loading i {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: var(--primary);
+    display: block;
+  }
+
+  /* Skeleton loading */
+  .skeleton {
+    animation: skeleton-loading 1.5s infinite ease-in-out;
+    background: linear-gradient(90deg, var(--border), #f0f0f0, var(--border));
+    background-size: 200% 100%;
+    border-radius: 8px;
+  }
+
+  @keyframes skeleton-loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 480px) {
+    .app-container {
+      min-height: 100vh;
+      max-width: 100%;
+      border-radius: 0;
+    }
+    
+    .header {
+      padding: 24px 20px 80px;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="app-container">
+    <div class="header">
+      <svg class="wave-bg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path fill="rgba(255,255,255,0.1)" d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
+      </svg>
+      <h1>Calculadora de Divisas [LUPO]</h1>
+      <p>Convierte BOB a diferentes monedas al instante</p>
+    </div>
+
+    <div class="input-container">
+      <div class="input-group">
+        <label for="monto">Monto a convertir</label>
+        <input type="number" id="monto" min="1" value="1000" placeholder="Ej: 1000" autofocus />
+        <span class="currency-selector">BOB</span>
+      </div>
+      <button id="calcular">
+        <i class="fas fa-calculator"></i>
+        <span>Calcular</span>
+      </button>
+    </div>
+
+    <div class="results" aria-live="polite" aria-atomic="true">
+      <div class="section-title">
+        <i class="fas fa-money-bill-wave"></i>
+        <span>Monedas tradicionales</span>
+      </div>
+      <ul class="currency-list" id="fiat-list"></ul>
+
+      <div class="section-title">
+        <i class="fas fa-coins"></i>
+        <span>Criptomonedas</span>
+      </div>
+      <ul class="currency-list" id="crypto-list"></ul>
+    </div>
+  </div>
+
+<script>
+  // Iconos oficiales de monedas fiat
+  const fiatCurrencies = {
+    "Dólar estadounidense": { 
+      code: "USD", 
+      icon: "https://currencyfreaks.com/photos/flags/usd.png" 
+    },
+    "Euro": { 
+      code: "EUR", 
+      icon: "https://currencyfreaks.com/photos/flags/eur.png" 
+    },
+    "Peso colombiano": { 
+      code: "COP", 
+      icon: "https://currencyfreaks.com/photos/flags/cop.png" 
+    },
+    "Peso argentino": { 
+      code: "ARS", 
+      icon: "https://currencyfreaks.com/photos/flags/ars.png" 
+    },
+    "Peso chileno": { 
+      code: "CLP", 
+      icon: "https://currencyfreaks.com/photos/flags/clp.png" 
+    },
+    "Real brasileño": { 
+      code: "BRL", 
+      icon: "https://currencyfreaks.com/photos/flags/brl.png" 
+    },
+    "Sol peruano": { 
+      code: "PEN", 
+      icon: "https://currencyfreaks.com/photos/flags/pen.png" 
+    },
+    "Yuan chino": { 
+      code: "CNY", 
+      icon: "https://currencyfreaks.com/photos/flags/cny.png" 
+    },
+    "Guaraní paraguayo": { 
+      code: "PYG", 
+      icon: "https://currencyfreaks.com/photos/flags/pyg.png" 
+    },
+    "Peso mexicano": { 
+      code: "MXN", 
+      icon: "https://currencyfreaks.com/photos/flags/mxn.png" 
+    }
+  };
+
+  // Iconos oficiales de criptomonedas
+  const cryptoCurrencies = {
+    "Tether": { 
+      code: "USDT", 
+      icon: "https://tether.to/images/logoCircle.png" 
+    },
+    "Bitcoin": { 
+      code: "BTC", 
+      icon: "https://assets.coingecko.com/coins/images/1/large/bitcoin.png" 
+    },
+    "Ethereum": { 
+      code: "ETH", 
+      icon: "https://assets.coingecko.com/coins/images/279/large/ethereum.png" 
+    },
+    "USD Coin": { 
+      code: "USDC", 
+      icon: "https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png" 
+    },
+    "Dogecoin": { 
+      code: "DOGE", 
+      icon: "https://assets.coingecko.com/coins/images/5/large/dogecoin.png" 
+    },
+    "Solana": { 
+      code: "SOL", 
+      icon: "https://s2.coinmarketcap.com/static/img/coins/200x200/74.png" 
+    },
+    "Pepe": { 
+      code: "PEPE", 
+      icon: "https://assets.coingecko.com/coins/images/29850/large/pepe-token.jpeg" 
+    },
+    "Trump": { 
+      code: "TRUMP", 
+      icon: "https://assets.coingecko.com/coins/images/34947/large/trump.jpg" 
+    }
+  };
+
+  const montoInput = document.getElementById('monto');
+  const calcularBtn = document.getElementById('calcular');
+  const fiatList = document.getElementById('fiat-list');
+  const cryptoList = document.getElementById('crypto-list');
+
+  function clearResults() {
+    fiatList.innerHTML = '';
+    cryptoList.innerHTML = '';
+  }
+
+  function showLoading() {
+    fiatList.innerHTML = `
+      <div class="loading">
+        <i class="fas fa-spinner fa-spin"></i>
+        Calculando tasas de cambio...
+      </div>
+    `;
+    cryptoList.innerHTML = '';
+  }
+
+  function renderSkeletonLoader(element, count = 5) {
+    element.innerHTML = '';
+    for (let i = 0; i < count; i++) {
+      const li = document.createElement('li');
+      li.className = 'currency-item';
+      li.innerHTML = `
+        <div class="currency-icon skeleton" style="background: var(--border)"></div>
+        <div class="currency-details">
+          <div class="currency-name skeleton" style="width: 120px; height: 16px; background: var(--border)"></div>
+          <div class="currency-code skeleton" style="width: 60px; height: 12px; background: var(--border); margin-top: 6px"></div>
+        </div>
+        <div class="currency-value skeleton" style="width: 80px; height: 18px; background: var(--border)"></div>
+      `;
+      element.appendChild(li);
+    }
+  }
+
+  function renderCurrencyList(listElement, data, currencyData) {
+    listElement.innerHTML = '';
+    
+    for (const [name, value] of Object.entries(data)) {
+      const currencyInfo = currencyData[name] || { 
+        code: '', 
+        icon: 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png'
+      };
+      
+      const li = document.createElement('li');
+      li.className = 'currency-item';
+      
+      // Icono
+      const icon = document.createElement('div');
+      icon.className = 'currency-icon';
+      const iconImg = document.createElement('img');
+      iconImg.src = currencyInfo.icon;
+      iconImg.alt = name;
+      iconImg.loading = "lazy";
+      icon.appendChild(iconImg);
+      
+      // Detalles
+      const details = document.createElement('div');
+      details.className = 'currency-details';
+      
+      const nameElement = document.createElement('div');
+      nameElement.className = 'currency-name';
+      nameElement.textContent = name;
+      
+      const codeElement = document.createElement('div');
+      codeElement.className = 'currency-code';
+      codeElement.textContent = currencyInfo.code;
+      
+      details.appendChild(nameElement);
+      details.appendChild(codeElement);
+      
+      // Valor
+      const valueContainer = document.createElement('div');
+      
+      const valueElement = document.createElement('div');
+      valueElement.className = 'currency-value';
+      valueElement.textContent = typeof value === "number" ? 
+        value.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 
+        value;
+      
+      valueContainer.appendChild(valueElement);
+      
+      li.appendChild(icon);
+      li.appendChild(details);
+      li.appendChild(valueContainer);
+      
+      listElement.appendChild(li);
+    }
+  }
+
+  async function calcular() {
+    const monto = montoInput.value;
+    if (!monto || monto <= 0) {
+      alert("Por favor ingresa un monto válido");
+      return;
+    }
+
+    clearResults();
+    renderSkeletonLoader(fiatList);
+    renderSkeletonLoader(cryptoList, 4);
+
+    try {
+      const res = await fetch(`https://api.lupo.lat/convertir_bob?monto_bob=${monto}`);
+      if (!res.ok) throw new Error(`Error API: ${res.status}`);
+
+      const data = await res.json();
+
+      if (data.error) {
+        alert("Error: " + data.error);
+        return;
+      }
+
+      renderCurrencyList(fiatList, data.conversiones_fiat, fiatCurrencies);
+      renderCurrencyList(cryptoList, data.conversiones_cripto, cryptoCurrencies);
+
+    } catch (error) {
+      fiatList.innerHTML = `
+        <div class="loading">
+          <i class="fas fa-exclamation-circle"></i>
+          Error al cargar datos. Intenta nuevamente.
+        </div>
+      `;
+      console.error(error);
+    }
+  }
+
+  // Event listeners
+  calcularBtn.addEventListener('click', calcular);
   
-  // Filtra criptomonedas no disponibles
-  const cryptoData = Object.fromEntries(
-    Object.entries(data.conversiones_cripto).filter(([_, value]) => value !== "No disponible")
-  );
-  
-  renderCurrencyList(cryptoList, cryptoData, cryptoCurrencies);
-}
+  let timeout;
+  montoInput.addEventListener('input', () => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      if (montoInput.value.length > 0) calcular();
+    }, 800);
+  });
+
+  // Ejecutar al cargar
+  document.addEventListener('DOMContentLoaded', () => {
+    montoInput.focus();
+    calcular();
+  });
+</script>
+</body>
+</html>
