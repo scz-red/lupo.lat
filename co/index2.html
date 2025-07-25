@@ -17,7 +17,6 @@
     --shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.1);
     --glass: rgba(255, 255, 255, 0.8);
   }
-
   @media (prefers-color-scheme: dark) {
     :root {
       --background: #0f172a;
@@ -28,13 +27,7 @@
       --glass: rgba(30, 41, 59, 0.8);
     }
   }
-
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
+  * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     background: var(--background);
@@ -47,7 +40,6 @@
     line-height: 1.5;
     transition: background 0.3s ease;
   }
-
   .app-container {
     width: 100%;
     max-width: 420px;
@@ -57,7 +49,6 @@
     position: relative;
     overflow: hidden;
   }
-
   .header {
     padding: 24px 20px 80px;
     background: linear-gradient(135deg, var(--primary), var(--primary-dark));
@@ -66,7 +57,6 @@
     overflow: hidden;
     z-index: 1;
   }
-
   .header::after {
     content: "";
     position: absolute;
@@ -78,7 +68,6 @@
     border-radius: 24px 24px 0 0;
     z-index: 2;
   }
-
   .wave-bg {
     position: absolute;
     top: 0;
@@ -87,7 +76,6 @@
     height: 100%;
     opacity: 0.1;
   }
-
   .header h1 {
     font-size: 1.6rem;
     font-weight: 700;
@@ -95,14 +83,12 @@
     position: relative;
     z-index: 3;
   }
-
   .header p {
     font-size: 0.9rem;
     opacity: 0.9;
     position: relative;
     z-index: 3;
   }
-
   .input-container {
     padding: 24px 20px;
     margin-top: -60px;
@@ -116,12 +102,10 @@
     margin-bottom: 8px;
     transition: all 0.3s ease;
   }
-
   .input-group {
     position: relative;
     margin-bottom: 20px;
   }
-
   .input-group label {
     display: block;
     font-size: 0.875rem;
@@ -129,7 +113,6 @@
     margin-bottom: 8px;
     color: var(--text-light);
   }
-
   .input-group input {
     width: 100%;
     padding: 18px 20px;
@@ -141,14 +124,12 @@
     transition: all 0.3s ease;
     box-shadow: var(--shadow);
   }
-
   .input-group input:focus {
     outline: none;
     border-color: var(--primary);
     box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
     transform: translateY(-2px);
   }
-
   .currency-selector {
     position: absolute;
     right: 12px;
@@ -161,14 +142,12 @@
     font-weight: 600;
     box-shadow: var(--shadow);
   }
-
   .tasas-referencia {
     display: flex;
     justify-content: space-between;
     gap: 10px;
     margin-top: 15px;
   }
-
   .tasa-item {
     flex: 1;
     background: var(--glass);
@@ -178,23 +157,19 @@
     border: 1px solid var(--border);
     box-shadow: var(--shadow);
   }
-
   .tasa-monedas {
     font-size: 0.8rem;
     color: var(--text-light);
     margin-bottom: 5px;
   }
-
   .tasa-valor {
     font-weight: 700;
     font-size: 1.1rem;
     color: var(--primary);
   }
-
   .results {
     padding: 0 20px 20px;
   }
-
   .section-title {
     font-size: 1rem;
     font-weight: 600;
@@ -204,11 +179,9 @@
     align-items: center;
     gap: 10px;
   }
-
   .section-title i {
     color: var(--primary);
   }
-
   .currency-list {
     list-style: none;
     background: var(--card);
@@ -217,12 +190,10 @@
     box-shadow: var(--shadow);
     border: 1px solid var(--border);
   }
-
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
   }
-
   .currency-item {
     display: flex;
     align-items: center;
@@ -233,21 +204,17 @@
     opacity: 0;
     background: var(--card);
   }
-
   .currency-item:nth-child(1) { animation-delay: 0.1s; }
   .currency-item:nth-child(2) { animation-delay: 0.2s; }
   .currency-item:nth-child(3) { animation-delay: 0.3s; }
   .currency-item:nth-child(4) { animation-delay: 0.4s; }
-
   .currency-item:last-child {
     border-bottom: none;
   }
-
   .currency-item:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   }
-
   .currency-icon {
     width: 44px;
     height: 44px;
@@ -260,18 +227,15 @@
     overflow: hidden;
     flex-shrink: 0;
   }
-
   .currency-icon img {
     width: 24px;
     height: 24px;
     object-fit: contain;
   }
-
   .currency-details {
     flex: 1;
     min-width: 0;
   }
-
   .currency-name {
     font-weight: 600;
     font-size: 0.95rem;
@@ -280,51 +244,43 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
-
   .currency-code {
     font-size: 0.75rem;
     color: var(--text-light);
   }
-
   .currency-value {
     font-weight: 700;
     text-align: right;
     font-size: 1rem;
   }
-
   .currency-subvalue {
     font-size: 0.75rem;
     color: var(--text-light);
     text-align: right;
     margin-top: 4px;
   }
-
   .loading {
     padding: 40px 20px;
     text-align: center;
     color: var(--text-light);
     font-size: 0.9rem;
   }
-
   .loading i {
     font-size: 1.5rem;
     margin-bottom: 10px;
     color: var(--primary);
     display: block;
   }
-
   .skeleton {
     animation: skeleton-loading 1.5s infinite ease-in-out;
     background: linear-gradient(90deg, var(--border), #f0f0f0, var(--border));
     background-size: 200% 100%;
     border-radius: 8px;
   }
-
   @keyframes skeleton-loading {
     0% { background-position: 200% 0; }
     100% { background-position: -200% 0; }
   }
-
   @media (max-width: 480px) {
     .app-container {
       min-height: 100vh;
@@ -416,6 +372,7 @@
   let lastMonto = null;
   let lastTasaUpdate = 0;
   const CACHE_EXP = 60000;
+
   function clearResults() {
     fiatList.innerHTML = '';
     cryptoList.innerHTML = '';
@@ -478,7 +435,7 @@
     return !navigator.onLine;
   }
 
-  // MEJORA: Tipos de cambio USD/BOB y EUR/BOB directos con API
+  // === TIPO DE CAMBIO USD/BOB y EUR/BOB robusto ===
   async function actualizarTasasUI(force=false) {
     if (!force && cacheTasas && Date.now() - lastTasaUpdate < CACHE_EXP) {
       tasaUSD.textContent = cacheTasas.usd;
@@ -491,16 +448,27 @@
       return;
     }
     try {
-      // Consulta directa API
       const [resUSD, resEUR] = await Promise.all([
         fetch('https://api.lupo.lat/cambio_a_bob?moneda=usd&monto=1'),
         fetch('https://api.lupo.lat/cambio_a_bob?moneda=eur&monto=1')
       ]);
-      if (!resUSD.ok || !resEUR.ok) throw new Error("Error API");
       const dataUSD = await resUSD.json();
       const dataEUR = await resEUR.json();
-      const tasaUSDval = (dataUSD.resultado).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-      const tasaEURval = (dataEUR.resultado).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+      const showValue = (data) => {
+        if ('resultado' in data && typeof data.resultado === "number") {
+          return data.resultado.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+        if (data.resultado && !isNaN(data.resultado)) {
+          return Number(data.resultado).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+        if (data.error) return "Error API";
+        return "Error";
+      };
+
+      const tasaUSDval = showValue(dataUSD);
+      const tasaEURval = showValue(dataEUR);
+
       tasaUSD.textContent = tasaUSDval;
       tasaEUR.textContent = tasaEURval;
       cacheTasas = {usd: tasaUSDval, eur: tasaEURval};
