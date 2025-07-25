@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>PARALELO </title>
+<title>PARALELO</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 <style>
   :root {
@@ -18,7 +18,6 @@
     --glass: rgba(255, 255, 255, 0.8);
   }
 
-  /* Modo oscuro */
   @media (prefers-color-scheme: dark) {
     :root {
       --background: #0f172a;
@@ -163,31 +162,33 @@
     box-shadow: var(--shadow);
   }
 
-  button {
-    width: 100%;
-    padding: 18px;
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    color: white;
-    font-weight: 600;
-    font-size: 1rem;
-    border: none;
-    border-radius: 14px;
-    cursor: pointer;
-    transition: all 0.3s ease;
+  .tasas-referencia {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     gap: 10px;
+    margin-top: 15px;
+  }
+
+  .tasa-item {
+    flex: 1;
+    background: var(--glass);
+    border-radius: 14px;
+    padding: 12px;
+    text-align: center;
+    border: 1px solid var(--border);
     box-shadow: var(--shadow);
   }
 
-  button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(67, 97, 238, 0.3);
+  .tasa-monedas {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    margin-bottom: 5px;
   }
 
-  button:active {
-    transform: scale(0.98);
+  .tasa-valor {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--primary);
   }
 
   .results {
@@ -298,7 +299,6 @@
     margin-top: 4px;
   }
 
-  /* Loading state */
   .loading {
     padding: 40px 20px;
     text-align: center;
@@ -313,7 +313,6 @@
     display: block;
   }
 
-  /* Skeleton loading */
   .skeleton {
     animation: skeleton-loading 1.5s infinite ease-in-out;
     background: linear-gradient(90deg, var(--border), #f0f0f0, var(--border));
@@ -326,14 +325,12 @@
     100% { background-position: -200% 0; }
   }
 
-  /* Responsive adjustments */
   @media (max-width: 480px) {
     .app-container {
       min-height: 100vh;
       max-width: 100%;
       border-radius: 0;
     }
-    
     .header {
       padding: 24px 20px 80px;
     }
@@ -349,165 +346,96 @@
       <h1>Calculadora al Paralelo</h1>
       <p>Convierte BOB a diferentes monedas al instante</p>
     </div>
-
     <div class="input-container">
       <div class="input-group">
         <label for="monto">Monto a convertir</label>
         <input type="number" id="monto" min="1" value="1000" placeholder="Ej: 1000" autofocus />
         <span class="currency-selector">BOB</span>
       </div>
-      <button id="calcular">
-        <i class="fas fa-calculator"></i>
-        <span>Calcular</span>
-      </button>
+      <div class="tasas-referencia">
+        <div class="tasa-item">
+          <div class="tasa-monedas">USD/BOB</div>
+          <div class="tasa-valor" id="tasa-usd">--</div>
+        </div>
+        <div class="tasa-item">
+          <div class="tasa-monedas">EUR/BOB</div>
+          <div class="tasa-valor" id="tasa-eur">--</div>
+        </div>
+      </div>
     </div>
-
     <div class="results" aria-live="polite" aria-atomic="true">
       <div class="section-title">
         <i class="fas fa-money-bill-wave"></i>
         <span>Monedas tradicionales</span>
       </div>
       <ul class="currency-list" id="fiat-list"></ul>
-
       <div class="section-title">
         <i class="fas fa-coins"></i>
         <span>Criptomonedas</span>
       </div>
       <ul class="currency-list" id="crypto-list"></ul>
+      <div id="loader-global" style="display:none;" role="status" aria-live="polite">
+        <div class="loading">
+          <i class="fas fa-spinner fa-spin"></i>
+          Calculando tasas de cambio...
+        </div>
+      </div>
     </div>
   </div>
-
 <script>
-  // Iconos oficiales de monedas fiat
   const fiatCurrencies = {
-    "Dólar estadounidense": { 
-      code: "USD", 
-      icon: "https://currencyfreaks.com/photos/flags/usd.png" 
-    },
-    "Euro": { 
-      code: "EUR", 
-      icon: "https://currencyfreaks.com/photos/flags/eur.png" 
-    },
-    "Peso colombiano": { 
-      code: "COP", 
-      icon: "https://currencyfreaks.com/photos/flags/cop.png" 
-    },
-    "Peso argentino": { 
-      code: "ARS", 
-      icon: "https://currencyfreaks.com/photos/flags/ars.png" 
-    },
-    "Peso chileno": { 
-      code: "CLP", 
-      icon: "https://currencyfreaks.com/photos/flags/clp.png" 
-    },
-    "Real brasileño": { 
-      code: "BRL", 
-      icon: "https://currencyfreaks.com/photos/flags/brl.png" 
-    },
-    "Sol peruano": { 
-      code: "PEN", 
-      icon: "https://currencyfreaks.com/photos/flags/pen.png" 
-    },
-    "Yuan chino": { 
-      code: "CNY", 
-      icon: "https://currencyfreaks.com/photos/flags/cny.png" 
-    },
-    "Guaraní paraguayo": { 
-      code: "PYG", 
-      icon: "https://currencyfreaks.com/photos/flags/pyg.png" 
-    },
-    "Peso mexicano": { 
-      code: "MXN", 
-      icon: "https://currencyfreaks.com/photos/flags/mxn.png" 
-    }
+    "Dólar estadounidense": { code: "USD", icon: "https://currencyfreaks.com/photos/flags/usd.png" },
+    "Euro": { code: "EUR", icon: "https://currencyfreaks.com/photos/flags/eur.png" },
+    "Peso colombiano": { code: "COP", icon: "https://currencyfreaks.com/photos/flags/cop.png" },
+    "Peso argentino": { code: "ARS", icon: "https://currencyfreaks.com/photos/flags/ars.png" },
+    "Peso chileno": { code: "CLP", icon: "https://currencyfreaks.com/photos/flags/clp.png" },
+    "Real brasileño": { code: "BRL", icon: "https://currencyfreaks.com/photos/flags/brl.png" },
+    "Sol peruano": { code: "PEN", icon: "https://currencyfreaks.com/photos/flags/pen.png" },
+    "Yuan chino": { code: "CNY", icon: "https://currencyfreaks.com/photos/flags/cny.png" },
+    "Guaraní paraguayo": { code: "PYG", icon: "https://currencyfreaks.com/photos/flags/pyg.png" },
+    "Peso mexicano": { code: "MXN", icon: "https://currencyfreaks.com/photos/flags/mxn.png" }
   };
-
-  // Iconos oficiales de criptomonedas
   const cryptoCurrencies = {
-    "Tether": { 
-      code: "USDT", 
-      icon: "https://tether.to/images/logoCircle.png" 
-    },
-    "Bitcoin": { 
-      code: "BTC", 
-      icon: "https://assets.coingecko.com/coins/images/1/large/bitcoin.png" 
-    },
-    "Ethereum": { 
-      code: "ETH", 
-      icon: "https://assets.coingecko.com/coins/images/279/large/ethereum.png" 
-    },
-    "USD Coin": { 
-      code: "USDC", 
-      icon: "https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png" 
-    },
-    "Dogecoin": { 
-      code: "DOGE", 
-      icon: "https://assets.coingecko.com/coins/images/5/large/dogecoin.png" 
-    },
-    "Solana": { 
-      code: "SOL", 
-      icon: "https://s2.coinmarketcap.com/static/img/coins/200x200/74.png" 
-    },
-    "Pepe": { 
-      code: "PEPE", 
-      icon: "https://assets.coingecko.com/coins/images/29850/large/pepe-token.jpeg" 
-    },
-    "Trump": { 
-      code: "TRUMP", 
-      icon: "https://assets.coingecko.com/coins/images/34947/large/trump.jpg" 
-    }
+    "Tether": { code: "USDT", icon: "https://cryptologos.cc/logos/tether-usdt-logo.png" },
+    "Bitcoin": { code: "BTC", icon: "https://cryptologos.cc/logos/bitcoin-btc-logo.png" },
+    "Ethereum": { code: "ETH", icon: "https://cryptologos.cc/logos/ethereum-eth-logo.png" },
+    "USD Coin": { code: "USDC", icon: "https://cryptologos.cc/logos/usd-coin-usdc-logo.png" },
+    "Dogecoin": { code: "DOGE", icon: "https://cryptologos.cc/logos/dogecoin-doge-logo.png" },
+    "Solana": { code: "SOL", icon: "https://cryptologos.cc/logos/solana-sol-logo.png" },
+    "Pepe": { code: "PEPE", icon: "https://cryptologos.cc/logos/pepe-pepe-logo.png" },
+    "Trump": { code: "TRUMP", icon: "https://assets.coingecko.com/coins/images/34947/large/trump.jpg" }
   };
-
   const montoInput = document.getElementById('monto');
-  const calcularBtn = document.getElementById('calcular');
   const fiatList = document.getElementById('fiat-list');
   const cryptoList = document.getElementById('crypto-list');
-
+  const loaderGlobal = document.getElementById('loader-global');
+  const tasaUSD = document.getElementById('tasa-usd');
+  const tasaEUR = document.getElementById('tasa-eur');
+  let cache = {};
+  let cacheTasas = null;
+  let lastMonto = null;
+  let lastTasaUpdate = 0;
+  const CACHE_EXP = 60000;
   function clearResults() {
     fiatList.innerHTML = '';
     cryptoList.innerHTML = '';
   }
-
-  function showLoading() {
-    fiatList.innerHTML = `
-      <div class="loading">
-        <i class="fas fa-spinner fa-spin"></i>
-        Calculando tasas de cambio...
-      </div>
-    `;
-    cryptoList.innerHTML = '';
-  }
-
-  function renderSkeletonLoader(element, count = 5) {
-    element.innerHTML = '';
-    for (let i = 0; i < count; i++) {
-      const li = document.createElement('li');
-      li.className = 'currency-item';
-      li.innerHTML = `
-        <div class="currency-icon skeleton" style="background: var(--border)"></div>
-        <div class="currency-details">
-          <div class="currency-name skeleton" style="width: 120px; height: 16px; background: var(--border)"></div>
-          <div class="currency-code skeleton" style="width: 60px; height: 12px; background: var(--border); margin-top: 6px"></div>
-        </div>
-        <div class="currency-value skeleton" style="width: 80px; height: 18px; background: var(--border)"></div>
-      `;
-      element.appendChild(li);
+  function showGlobalLoader(show=true) {
+    loaderGlobal.style.display = show ? 'block' : 'none';
+    if (show) {
+      fiatList.innerHTML = '';
+      cryptoList.innerHTML = '';
     }
   }
-
   function renderCurrencyList(listElement, data, currencyData) {
     listElement.innerHTML = '';
-    
     for (const [name, value] of Object.entries(data)) {
-      const currencyInfo = currencyData[name] || { 
-        code: '', 
-        icon: 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png'
+      const currencyInfo = currencyData[name] || {
+        code: '', icon: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png'
       };
-      
       const li = document.createElement('li');
       li.className = 'currency-item';
-      
-      // Icono
+      li.setAttribute('role', 'listitem');
       const icon = document.createElement('div');
       icon.className = 'currency-icon';
       const iconImg = document.createElement('img');
@@ -515,92 +443,148 @@
       iconImg.alt = name;
       iconImg.loading = "lazy";
       icon.appendChild(iconImg);
-      
-      // Detalles
       const details = document.createElement('div');
       details.className = 'currency-details';
-      
       const nameElement = document.createElement('div');
       nameElement.className = 'currency-name';
       nameElement.textContent = name;
-      
       const codeElement = document.createElement('div');
       codeElement.className = 'currency-code';
       codeElement.textContent = currencyInfo.code;
-      
       details.appendChild(nameElement);
       details.appendChild(codeElement);
-      
-      // Valor
       const valueContainer = document.createElement('div');
-      
       const valueElement = document.createElement('div');
       valueElement.className = 'currency-value';
-      valueElement.textContent = typeof value === "number" ? 
-        value.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 
+      valueElement.textContent = typeof value === "number" ?
+        value.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) :
         value;
-      
       valueContainer.appendChild(valueElement);
-      
       li.appendChild(icon);
       li.appendChild(details);
       li.appendChild(valueContainer);
-      
       listElement.appendChild(li);
     }
   }
+  function validarMonto(monto) {
+    if (!monto || isNaN(monto)) return false;
+    const n = Number(monto);
+    if (!Number.isFinite(n) || n <= 0) return false;
+    if (!/^\d+(\.\d{1,2})?$/.test(monto)) return false;
+    if (monto.length > 10) return false;
+    return true;
+  }
+  function isOffline() {
+    return !navigator.onLine;
+  }
 
-  async function calcular() {
-    const monto = montoInput.value;
-    if (!monto || monto <= 0) {
-      alert("Por favor ingresa un monto válido");
+  // MEJORA: Tipos de cambio USD/BOB y EUR/BOB directos con API
+  async function actualizarTasasUI(force=false) {
+    if (!force && cacheTasas && Date.now() - lastTasaUpdate < CACHE_EXP) {
+      tasaUSD.textContent = cacheTasas.usd;
+      tasaEUR.textContent = cacheTasas.eur;
       return;
     }
-
-    clearResults();
-    renderSkeletonLoader(fiatList);
-    renderSkeletonLoader(cryptoList, 4);
-
+    if (isOffline()) {
+      tasaUSD.textContent = "Sin conexión";
+      tasaEUR.textContent = "Sin conexión";
+      return;
+    }
     try {
-      const res = await fetch(`https://api.lupo.lat/convertir_bob?monto_bob=${monto}`);
-      if (!res.ok) throw new Error(`Error API: ${res.status}`);
-
-      const data = await res.json();
-
-      if (data.error) {
-        alert("Error: " + data.error);
-        return;
-      }
-
-      renderCurrencyList(fiatList, data.conversiones_fiat, fiatCurrencies);
-      renderCurrencyList(cryptoList, data.conversiones_cripto, cryptoCurrencies);
-
+      // Consulta directa API
+      const [resUSD, resEUR] = await Promise.all([
+        fetch('https://api.lupo.lat/cambio_a_bob?moneda=usd&monto=1'),
+        fetch('https://api.lupo.lat/cambio_a_bob?moneda=eur&monto=1')
+      ]);
+      if (!resUSD.ok || !resEUR.ok) throw new Error("Error API");
+      const dataUSD = await resUSD.json();
+      const dataEUR = await resEUR.json();
+      const tasaUSDval = (dataUSD.resultado).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      const tasaEURval = (dataEUR.resultado).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      tasaUSD.textContent = tasaUSDval;
+      tasaEUR.textContent = tasaEURval;
+      cacheTasas = {usd: tasaUSDval, eur: tasaEURval};
+      lastTasaUpdate = Date.now();
     } catch (error) {
-      fiatList.innerHTML = `
-        <div class="loading">
-          <i class="fas fa-exclamation-circle"></i>
-          Error al cargar datos. Intenta nuevamente.
-        </div>
-      `;
-      console.error(error);
+      tasaUSD.textContent = "Error";
+      tasaEUR.textContent = "Error";
     }
   }
 
-  // Event listeners
-  calcularBtn.addEventListener('click', calcular);
-  
+  async function calcular(force=false) {
+    const monto = montoInput.value.trim();
+    if (!validarMonto(monto)) {
+      clearResults();
+      showGlobalLoader(false);
+      tasaUSD.textContent = "--";
+      tasaEUR.textContent = "--";
+      if (monto.length > 0) alert("Por favor ingresa un monto válido (solo números positivos, hasta 2 decimales, sin ceros a la izquierda)");
+      return;
+    }
+    if (!force && lastMonto === monto && cache[monto]) return;
+    if (cache[monto] && Date.now() - cache[monto].timestamp < CACHE_EXP) {
+      showGlobalLoader(false);
+      renderCurrencyList(fiatList, cache[monto].data.conversiones_fiat, fiatCurrencies);
+      renderCurrencyList(cryptoList, cache[monto].data.conversiones_cripto, cryptoCurrencies);
+      actualizarTasasUI();
+      lastMonto = monto;
+      return;
+    }
+    if (isOffline()) {
+      clearResults();
+      showGlobalLoader(false);
+      tasaUSD.textContent = "Sin conexión";
+      tasaEUR.textContent = "Sin conexión";
+      fiatList.innerHTML = `<div class="loading"><i class="fas fa-exclamation-triangle"></i>Sin conexión</div>`;
+      cryptoList.innerHTML = '';
+      return;
+    }
+    showGlobalLoader(true);
+    try {
+      const res = await fetch(`https://api.lupo.lat/convertir_bob?monto_bob=${monto}`);
+      if (!res.ok) throw new Error(`Error API: ${res.status}`);
+      const data = await res.json();
+      if (data.error) throw new Error(data.error);
+      cache[monto] = {data, timestamp: Date.now()};
+      showGlobalLoader(false);
+      renderCurrencyList(fiatList, data.conversiones_fiat, fiatCurrencies);
+      renderCurrencyList(cryptoList, data.conversiones_cripto, cryptoCurrencies);
+      actualizarTasasUI();
+      lastMonto = monto;
+    } catch (error) {
+      showGlobalLoader(false);
+      fiatList.innerHTML = `<div class="loading"><i class="fas fa-exclamation-circle"></i>${error.message.includes('network') ? 'Error de red. Verifica tu conexión.' : 'Error al cargar datos. Intenta nuevamente.'}</div>`;
+      cryptoList.innerHTML = '';
+    }
+  }
   let timeout;
   montoInput.addEventListener('input', () => {
     clearTimeout(timeout);
     timeout = setTimeout(() => {
-      if (montoInput.value.length > 0) calcular();
+      calcular();
     }, 800);
   });
-
-  // Ejecutar al cargar
+  montoInput.addEventListener('keypress', (e) => {
+    const char = String.fromCharCode(e.which);
+    if (!/[0-9.]/.test(char)) e.preventDefault();
+    if (char === '.' && montoInput.value.includes('.')) e.preventDefault();
+  });
+  montoInput.addEventListener('paste', (e) => {
+    const value = (e.clipboardData || window.clipboardData).getData('text');
+    if (!/^\d+(\.\d{1,2})?$/.test(value)) e.preventDefault();
+  });
+  window.addEventListener('online', () => calcular(true));
+  window.addEventListener('offline', () => {
+    tasaUSD.textContent = "Sin conexión";
+    tasaEUR.textContent = "Sin conexión";
+    fiatList.innerHTML = `<div class="loading"><i class="fas fa-exclamation-triangle"></i>Sin conexión</div>`;
+    cryptoList.innerHTML = '';
+    showGlobalLoader(false);
+  });
   document.addEventListener('DOMContentLoaded', () => {
     montoInput.focus();
-    calcular();
+    calcular(true);
+    setInterval(() => actualizarTasasUI(), 60000);
   });
 </script>
 </body>
