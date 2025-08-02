@@ -41,18 +41,45 @@ window.addEventListener('DOMContentLoaded', () => {
   const inputAmount = document.getElementById('amount');
   if (inputAmount) inputAmount.placeholder = translations[lang]["calc-placeholder"];
 
-  // Lógica de la calculadora
-  const rates = { lupo:14.5, ria:13.2, wu:12.90, mg:13.10 };
+  // Elementos DOM
   const totalLupo = document.getElementById('total-lupo');
   const totalRia = document.getElementById('total-ria');
   const totalWu = document.getElementById('total-wu');
   const totalMg = document.getElementById('total-mg');
   const saveEl = document.getElementById('save');
   const btn = document.getElementById('whatsapp');
-  if (inputAmount) {
-    inputAmount.addEventListener('input', () => {
+  const rateEl = document.getElementById('rate');
+  const fechaEl = document.getElementById('calc-datetime');
+
+  // Tasas fijas para la competencia
+  const rates = { ria:13.2, wu:12.90, mg:13.10 };
+
+  // --- CACHÉ DE LA API DE LUPO
+  let cachedEuroBsLupo = null;
+  let cachedTime = 0;
+  const CACHE_TIME = 60 * 1000; // 1 minuto
+
+  function getLupoRate() {
+    const now = Date.now();
+    if (cachedEuroBsLupo && (now - cachedTime < CACHE_TIME)) {
+      return Promise.resolve(cachedEuroBsLupo);
+    }
+    return fetch('https://api.lupo.lat/cambio_a_bob?moneda=eur&monto=1')
+      .then(res => res.json())
+      .then(data => {
+        cachedEuroBsLupo = data.resultado * 1.10;
+        cachedTime = now;
+        return cachedEuroBsLupo;
+      });
+  }
+
+  function actualizarCalculadora() {
+    getLupoRate().then(euroBsLupo => {
+      // Actualiza la tasa visible (API + 10%)
+      if (rateEl) rateEl.textContent = euroBsLupo.toFixed(2);
+
       const v = parseFloat(inputAmount.value) || 0;
-      const l = v * rates.lupo;
+      const l = v * euroBsLupo;
       const r = v * rates.ria;
       const w = v * rates.wu;
       const m = v * rates.mg;
@@ -73,14 +100,17 @@ window.addEventListener('DOMContentLoaded', () => {
           `<span style="font-weight:bold;text-decoration:underline;">${savings.toFixed(2)} Bs</span>`
         );
         if (saveEl) saveEl.innerHTML = msg;
+      } else if (saveEl) {
+        saveEl.textContent = `${savings.toFixed(2)} Bs`;
       }
 
+      // Botón WhatsApp
       if (l > 0 && btn) {
         btn.textContent = (translations[lang]["calc-btn"] || "Enviar") + ` ${l.toFixed(2)}`;
         btn.style.display = 'block';
         btn.onclick = () => {
           window.location.href = `https://wa.me/393341950037?text=${encodeURIComponent(
-            `Hola Lupo, Quisiera enviar ${v}€ a Bolivia. Que  reciban ${l.toFixed(2)} Bs`
+            `Hola Lupo, Quisiera enviar ${v}€ a Bolivia. Que reciban ${l.toFixed(2)} Bs`
           )}`;
         };
       } else if (btn) {
@@ -88,8 +118,13 @@ window.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
-  // Inicializa la fecha y hora en la calculadora
-  const fechaEl = document.getElementById('calc-datetime');
+
+  if (inputAmount) inputAmount.addEventListener('input', actualizarCalculadora);
+
+  // Primera carga de calculadora y rate
+  actualizarCalculadora();
+
+  // Fecha y hora de la cotización
   function setFecha() {
     const now = new Date();
     let h = now.getHours().toString().padStart(2, '0');
@@ -114,5 +149,3 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
-
-
