@@ -1,16 +1,34 @@
 function getUserLang() {
-  const lang = navigator.language || navigator.userLanguage;
-  if (lang.startsWith('it')) return 'it';
-  return 'es';
+  const raw = (navigator.language || navigator.userLanguage || "es").toLowerCase();
+  if (raw.startsWith("it")) return "it";
+  return "es";
+}
+
+const lang = getUserLang();
+
+function getTranslation(key) {
+  if (
+    typeof translations !== "undefined" &&
+    translations[lang] &&
+    translations[lang][key]
+  ) {
+    return translations[lang][key];
+  }
+  // fallback español si la clave no existe
+  if (translations["es"] && translations["es"][key]) {
+    return translations["es"][key];
+  }
+  // fallback clave literal
+  return key;
 }
 
 function translatePage(lang) {
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     if (el.closest('.faq-answer')) {
-      el.innerHTML = translations[lang][key] || '';
+      el.innerHTML = getTranslation(key);
     } else {
-      el.textContent = translations[lang][key] || '';
+      el.textContent = getTranslation(key);
     }
   });
 }
@@ -20,26 +38,25 @@ function randomKey(keysArray) {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  const lang = getUserLang();
   translatePage(lang);
 
   // Hero: mensaje aleatorio
   const heroTitle = document.querySelector('[data-i18n^="hero-title"]');
   if (heroTitle && typeof heroPhraseKeys !== 'undefined') {
     const key = randomKey(heroPhraseKeys);
-    heroTitle.textContent = translations[lang][key];
+    heroTitle.textContent = getTranslation(key);
   }
 
   // Calculadora: título aleatorio
   const calcTitle = document.querySelector('[data-i18n^="calc-title"]');
   if (calcTitle && typeof calcPhraseKeys !== 'undefined') {
     const key = randomKey(calcPhraseKeys);
-    calcTitle.textContent = translations[lang][key];
+    calcTitle.textContent = getTranslation(key);
   }
 
   // Placeholder calculadora
   const inputAmount = document.getElementById('amount');
-  if (inputAmount) inputAmount.placeholder = translations[lang]["calc-placeholder"];
+  if (inputAmount) inputAmount.placeholder = getTranslation("calc-placeholder");
 
   // Elementos DOM
   const totalLupo = document.getElementById('total-lupo');
@@ -95,7 +112,7 @@ window.addEventListener('DOMContentLoaded', () => {
       // Mensaje de ahorro aleatorio (cifra resaltada)
       if (typeof savePhraseKeys !== 'undefined') {
         const saveKey = randomKey(savePhraseKeys);
-        const msg = translations[lang][saveKey].replace(
+        const msg = getTranslation(saveKey).replace(
           "{{save}}",
           `<span style="font-weight:bold;text-decoration:underline;">${savings.toFixed(2)} Bs</span>`
         );
@@ -106,7 +123,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
       // Botón WhatsApp
       if (l > 0 && btn) {
-        btn.textContent = (translations[lang]["calc-btn"] || "Enviar") + ` ${l.toFixed(2)}`;
+        btn.textContent = (getTranslation("calc-btn") || "Enviar") + ` ${l.toFixed(2)}`;
         btn.style.display = 'block';
         btn.onclick = () => {
           window.location.href = `https://wa.me/393341950037?text=${encodeURIComponent(
@@ -149,4 +166,3 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
-
