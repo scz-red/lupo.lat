@@ -1,275 +1,294 @@
-/* Tailwind-like CSS mejorado para Lupo.lat */
-
-/* Base */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-
-:root {
-  --primary: #22c55e;
-  --primary-dark: #16a34a;
-  --secondary: #3b82f6;
-  --accent: #f59e0b;
-  --dark: #111827;
-  --light: #f9fafb;
-  --gray: #6b7280;
-  --light-gray: #e5e7eb;
-}
-
+/* ===== ESTILOS GENERALES ===== */
 body {
-  font-family: 'Inter', sans-serif;
-  @apply bg-gray-50 text-gray-900;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f8f9fb;
+  color: #222;
+  line-height: 1.6;
 }
 
-/* Container */
+/* ===== ESTRUCTURA PRINCIPAL ===== */
 .container {
-  @apply max-w-6xl mx-auto px-5;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 16px;
 }
 
-/* Header */
-.header {
-  @apply bg-white shadow-sm sticky top-0 z-50;
+/* ===== LOGO ===== */
+.logo {
+  max-width: 120px;
+  display: block;
+  margin: 0 auto 12px;
 }
 
-.header-container {
-  @apply flex justify-between items-center py-4;
+/* ===== SECCIÓN HERO ===== */
+.hero h1 {
+  text-align: center;
+  font-size: 1.5rem;
+  margin: 8px 0;
+  color: #111827;
+  font-weight: 700;
 }
 
-.logo img {
-  @apply h-10 transition-transform duration-300 hover:scale-105;
+.hero p {
+  text-align: center;
+  font-size: 0.95rem;
+  color: #666;
+  margin-bottom: 16px;
 }
 
-/* Hero Section */
-.hero {
-  @apply py-20 bg-gradient-to-br from-green-50 to-green-100 relative overflow-hidden;
+/* ===== BADGE ===== */
+.badge {
+  background-color: #e53935;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 8px;
+  width: fit-content;
+  margin: 10px auto;
+  font-weight: bold;
+  font-size: 0.9rem;
 }
 
-.hero::before {
-  content: '';
-  @apply absolute -top-12 -right-12 w-72 h-72 bg-[url('https://lupo.lat/img/pattern.svg')] bg-no-repeat opacity-10;
+/* ===== FORMULARIO ===== */
+.form-box {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  margin-top: 24px;
+  font-family: 'Segoe UI', sans-serif;
 }
 
-.hero-container {
-  @apply grid md:grid-cols-2 gap-10 items-center;
+/* ===== TIPO DE CAMBIO ===== */
+.rate-section {
+  text-align: center;
+  margin-bottom: 16px;
 }
 
-.hero-title {
-  @apply text-4xl md:text-5xl font-extrabold leading-tight mb-4;
+.rate-bubble-centered {
+  background: #eaf7ef;
+  padding: 10px 16px;
+  border-radius: 20px;
+  font-weight: bold;
+  color: #256029;
+  display: inline-block;
+  font-size: 0.95rem;
 }
 
-.hero-subtitle {
-  @apply text-lg text-gray-600 mb-8 max-w-[90%];
+.rate-row-icons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.93rem;
+  font-weight: 500;
+  margin-bottom: 18px;
+  color: #374151;
+  padding: 0 4px;
 }
 
-.hero-buttons {
-  @apply flex flex-col sm:flex-row gap-4;
+.rate-row-icons .left {
+  background-color: #e5f4e0;
+  color: #064e3b;
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
-/* Calculator */
-.calc {
-  @apply bg-white rounded-2xl p-8 shadow-xl border border-opacity-5 animate-fade-in-up;
+.rate-row-icons .right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
-.calc-header {
-  @apply flex justify-between items-center pb-5 mb-6 border-b border-gray-200;
+/* ===== CAMPOS DEL FORMULARIO ===== */
+.field {
+  margin-bottom: 20px;
 }
 
-.rate {
-  @apply flex items-center gap-2 text-lg font-semibold;
+.field label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  display: block;
+  color: #111827;
 }
 
-.rate strong {
-  @apply text-green-500 text-xl;
+.input-group {
+  display: flex;
+  align-items: center;
+  border: 2px solid #111827;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #fff;
 }
 
-.input {
-  @apply relative mb-6;
+.input-group input {
+  flex: 1;
+  padding: 16px;
+  border: none;
+  font-size: 1.1rem;
+  outline: none;
+  background: transparent;
+  font-weight: 500;
+  color: #111827;
 }
 
-.input input {
-  @apply w-full pl-16 pr-5 py-4 text-xl rounded-xl border-2 border-gray-200 bg-gray-50 font-medium transition-all;
+.currency {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f9fafb;
+  padding: 0 14px;
+  height: 100%;
 }
 
-.input input:focus {
-  @apply border-blue-500 ring-4 ring-blue-100 outline-none;
+.currency img {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
 }
 
-.input img {
-  @apply absolute left-4 top-1/2 transform -translate-y-1/2 w-8;
+.currency span {
+  font-weight: 700;
+  color: #111827;
+  font-size: 1rem;
 }
 
-/* Comparison List */
-.comparison-list {
-  @apply my-7;
+/* ===== BOTÓN ===== */
+#submitBtn {
+  width: 100%;
+  padding: 16px;
+  font-size: 1.05rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  color: white;
+  background: linear-gradient(to right, #ef4444, #facc15, #22c55e);
+  cursor: pointer;
+  margin-top: 16px;
+  transition: all 0.3s ease;
 }
 
-.comparison-item {
-  @apply flex justify-between items-center p-4 rounded-xl mb-3 transition-all;
+#submitBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.comparison-item.highlight {
-  @apply bg-gradient-to-r from-green-50 to-green-100 border-2 border-green-200;
+#submitBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: #e5e7eb;
+  color: #9ca3af;
+  transform: none;
+  box-shadow: none;
 }
 
-.comparison-item:hover {
-  @apply -translate-y-0.5 shadow-md;
+/* ===== COMPARACIÓN ===== */
+.comparacion {
+  margin-top: 24px;
+  background: #f9fafb;
+  padding: 20px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  border: 1px solid #e5e7eb;
 }
 
-.service {
-  @apply flex items-center gap-3;
+.comparacion h4 {
+  margin-bottom: 12px;
+  font-weight: bold;
+  color: #444;
+  font-size: 1.1rem;
 }
 
-.service img {
-  @apply w-10 h-10 rounded-full object-contain;
+.comparacion .item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #e5e7eb;
 }
 
-.values {
-  @apply font-bold text-lg;
+.comparacion .item:last-child {
+  border-bottom: none;
 }
 
-.values.highlight {
-  @apply text-green-500;
+.comparacion img {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
-/* Buttons */
-.btn {
-  @apply inline-block px-7 py-3.5 rounded-full font-semibold text-center transition-all;
+.comparacion .name {
+  flex: 1;
+  font-weight: 500;
+  color: #333;
+  margin-left: 10px;
 }
 
-.btn-primary {
-  @apply bg-gradient-to-r from-green-500 to-green-600 text-white shadow-lg hover:-translate-y-0.5 hover:shadow-xl;
+.comparacion .amount {
+  font-weight: bold;
+  color: #000;
 }
 
-.btn-outline {
-  @apply border-2 border-green-500 text-green-500 hover:bg-green-50;
+/* ===== BOTÓN FLOTANTE ===== */
+.floating-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #007bff;
+  color: white;
+  font-size: 22px;
+  border-radius: 50%;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  z-index: 100;
 }
 
-/* Features */
-.features {
-  @apply py-20;
+.floating-btn:hover {
+  transform: scale(1.1);
+  background: #0069d9;
 }
 
-.features-grid {
-  @apply grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12;
-}
-
-.feature-card {
-  @apply bg-white p-8 rounded-xl shadow-md transition-all hover:-translate-y-1 hover:shadow-lg;
-  animation: fadeInUp 0.6s ease forwards;
-}
-
-.feature-icon {
-  @apply w-14 h-14 bg-gradient-to-br from-blue-100 to-blue-200 rounded-xl flex items-center justify-center text-blue-500 text-2xl mb-6;
-}
-
-.feature-title {
-  @apply text-xl font-semibold mb-3;
-}
-
-/* Testimonials */
-.testimonials {
-  @apply py-20;
-}
-
-.testimonial-card {
-  @apply bg-white p-8 rounded-xl shadow-md relative;
-}
-
-.quote-icon {
-  @apply text-5xl text-gray-200 mb-3;
-}
-
-.testimonial-text {
-  @apply italic text-gray-600 mb-6 relative z-10;
-}
-
-.author {
-  @apply flex items-center gap-4;
-}
-
-.author-photo {
-  @apply w-12 h-12 rounded-full object-cover;
-}
-
-.author-rating {
-  @apply text-yellow-400;
-}
-
-/* Steps */
-.steps {
-  @apply grid md:grid-cols-3 gap-8;
-}
-
-.step {
-  @apply bg-white p-8 rounded-xl shadow-md text-center;
-}
-
-.step-number {
-  @apply w-12 h-12 bg-green-500 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6;
-}
-
-/* CTA */
-.cta {
-  @apply py-20 bg-gradient-to-r from-green-500 to-green-600 text-white text-center;
-}
-
-/* Footer */
-.footer {
-  @apply bg-gray-900 text-white py-16;
-}
-
-.footer-grid {
-  @apply grid md:grid-cols-5 gap-10 mb-12;
-}
-
-.footer-logo img {
-  @apply h-8;
-}
-
-.social-links {
-  @apply flex gap-4 mt-6;
-}
-
-.social-links a {
-  @apply text-white text-xl hover:text-green-400 transition-colors;
-}
-
-.footer-links ul {
-  @apply space-y-3;
-}
-
-.footer-links a {
-  @apply text-gray-400 hover:text-white transition-colors;
-}
-
-/* WhatsApp Float */
-.whatsapp-float {
-  @apply fixed bottom-8 right-8 bg-green-500 text-white px-5 py-3 rounded-full shadow-lg flex items-center gap-3 z-50 animate-pulse;
-}
-
-/* Animations */
-@keyframes fadeInUp {
-  from {
-    @apply opacity-0 translate-y-6;
+/* ===== RESPONSIVE ===== */
+@media (max-width: 480px) {
+  .container {
+    padding: 12px;
   }
-  to {
-    @apply opacity-100 translate-y-0;
+  
+  .rate-row-icons {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  
+  .input-group input {
+    padding: 14px;
+    font-size: 1rem;
+  }
+  
+  .currency img {
+    width: 22px;
+    height: 22px;
   }
 }
 
-@keyframes pulse {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
+/* ===== ANIMACIONES ===== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .hero-container {
-    @apply grid-cols-1;
-  }
-  .hero-title {
-    @apply text-3xl;
-  }
+.form-box {
+  animation: fadeIn 0.5s ease-out;
 }
