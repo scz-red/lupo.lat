@@ -537,3 +537,54 @@ body {
   background: #e5e7eb;
   color: #9ca3af;
 }
+/* ==== FRANJA TRICOLOR PATRIA BOLIVIANA ==== */
+.patria-bar {
+  width: 100vw;
+  height: 8px;
+  background: linear-gradient(to right, #d32f2f 33%, #ffd600 33% 66%, #388e3c 66%);
+  margin-bottom: 0px;
+  z-index: 99999;
+  position: relative;
+}
+
+/* ==== BANNER PATRIÓTICO HERO ==== */
+.banner-patria {
+  width: 100%;
+  background: linear-gradient(90deg, #d32f2f 0%, #ffd600 50%, #388e3c 100%);
+  color: #222;
+  font-weight: 600;
+  padding: 7px 0;
+  text-align: center;
+  letter-spacing: 0.5px;
+  border-radius: 0 0 12px 12px;
+  margin-bottom: 18px;
+  font-size: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* ==== BOTÓN PRINCIPAL CALCULADORA PATRIO ==== */
+.btn-patria, #submitBtn {
+  border-bottom: 3.5px solid #388e3c !important;
+  background: linear-gradient(90deg, #d32f2f 0%, #ffd600 75%, #388e3c 100%) !important;
+  color: #fff !important;
+  font-weight: bold;
+  transition: 0.16s;
+  border-radius: 12px;
+  padding: 12px 28px;
+  font-size: 1.15rem;
+  border: none;
+  margin-top: 16px;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+  cursor: pointer;
+}
+.btn-patria:hover, #submitBtn:hover {
+  background: linear-gradient(90deg, #d32f2f 0%, #ffd600 45%, #388e3c 100%) !important;
+  filter: brightness(0.96);
+  border-bottom: 3.5px solid #d32f2f !important;
+  color: #ffd600 !important;
+}
