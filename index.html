@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
   <meta charset="utf-8" />
@@ -42,9 +41,61 @@
 
   <!-- CSS principal -->
   <link href="css/main.css?v=10009" rel="stylesheet">
+  <!-- CSS patrio directo en el head para prioridad -->
+  <style>
+    .patria-bar {
+      width: 100vw;
+      height: 8px;
+      background: linear-gradient(to right, #d32f2f 33%, #ffd600 33% 66%, #388e3c 66%);
+      margin-bottom: 0px;
+      z-index: 99999;
+      position: relative;
+    }
+    .banner-patria {
+      width: 100%;
+      background: linear-gradient(90deg, #d32f2f 0%, #ffd600 50%, #388e3c 100%);
+      color: #222;
+      font-weight: 600;
+      padding: 7px 0;
+      text-align: center;
+      letter-spacing: 0.5px;
+      border-radius: 0 0 12px 12px;
+      margin-bottom: 18px;
+      font-size: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-patria {
+      border-bottom: 3.5px solid #388e3c;
+      background: linear-gradient(90deg, #d32f2f 0%, #ffd600 75%, #388e3c 100%);
+      color: #fff !important;
+      font-weight: bold;
+      transition: 0.16s;
+      border-radius: 12px;
+      padding: 12px 28px;
+      font-size: 1.15rem;
+      border: none;
+      margin-top: 16px;
+      margin-bottom: 14px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+      cursor: pointer;
+    }
+    .btn-patria:hover {
+      background: linear-gradient(90deg, #d32f2f 0%, #ffd600 45%, #388e3c 100%);
+      filter: brightness(0.96);
+      border-bottom: 3.5px solid #d32f2f;
+      color: #ffd600 !important;
+    }
+  </style>
 </head>
 
 <body>
+<!-- Franja tricolor patriótica arriba de todo -->
+<div class="patria-bar"></div>
+
 <!-- Header -->
 <header>
 <div class="container header-container">
@@ -75,6 +126,11 @@
 <a class="btn btn-primary" data-i18n="btn-send" href="#"></a>
 <a class="btn btn-outline" data-i18n="btn-how" href="#how-it-works"></a>
 </div>
+</div>
+<!-- Banner patrio justo debajo del hero -->
+<div class="banner-patria">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/4/48/Flag_of_Bolivia.svg" style="height:22px;margin-right:7px;vertical-align:middle;border-radius:4px;">
+  <span>¡Agosto, mes de la Patria! Envía a Bolivia con el mejor tipo de cambio 🇧🇴</span>
 </div>
 <div class="hero-calculator">
 <div class="calc">
@@ -148,7 +204,7 @@
 <div class="savings" style="background: #ffffcc; padding: 8px; border-radius: 6px; font-weight: 500; color: #333; display: inline-block;  margin-top: -2px;">
               💰 <span id="save">0.00 Bs</span>
 </div>
-<button aria-live="polite" class="btn-calc" data-i18n="calc-btn" id="whatsapp" style="display: none;">Enviar</button>
+<button aria-live="polite" class="btn-calc btn-patria" data-i18n="calc-btn" id="whatsapp" style="display: none;">Enviar</button>
 </div>
 </div>
 </div>
@@ -393,9 +449,3 @@ document.addEventListener("DOMContentLoaded", function() {
 </a>
 </body>
 </html>
-
-
-
-
-
-
