@@ -4,14 +4,13 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- SEO -->
-  <title>Envía dinero a Bolivia con Lupo - Mejor tipo de cambio y sin comisiones</title>
+  <title>Envía dinero a Bolivia con Lupo - Mejor tipo de cambio y sin comisiones!!</title>
   <meta name="description" content="Envía dinero de Europa a Bolivia con Lupo. Sin comisiones, rápido y seguro. Gana hasta 20% más que con otras empresas.">
   <meta name="robots" content="index, follow" />
   <meta name="author" content="Lupo.lat" />
 
   <!-- PWA y Mobile -->
-  <meta name="theme-color" content="#ffffff" />
+  <meta name="theme-color" content="#121212" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
@@ -29,18 +28,231 @@
   <meta property="og:title" content="Envía dinero a Bolivia con LUPO - Mejor tipo de cambio">
   <meta property="og:description" content="Ahorra hasta 130 Bs más por cada 100 € con LUPO. Rápido, seguro y sin comisiones.">
   <meta property="og:image" content="https://lupo.lat/img/preview.jpg">
-
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="LUPO - Envía dinero a Bolivia sin comisiones">
   <meta name="twitter:description" content="Hasta 10% más que otras plataformas. Fácil, rápido y confiable.">
   <meta name="twitter:image" content="https://lupo.lat/img/preview.jpg">
 
   <!-- Fuentes e íconos -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
-  <!-- CSS principal -->
-  <link href="css/styles.css" rel="stylesheet">
+  <!-- CSS MODERNO INTEGRADO -->
+  <style>
+    :root {
+      --primary-bg: #121212;
+      --primary-text: #fff;
+      --secondary-bg: #23272f;
+      --accent: #00ffb3;
+      --accent-alt: #6c63ff;
+      --card-bg: rgba(30, 30, 35, 0.7);
+      --border-radius: 20px;
+      --box-shadow: 0 8px 32px 0 rgba(0,0,0,0.25);
+      --glass-blur: blur(14px);
+    }
+    body {
+      background: var(--primary-bg);
+      color: var(--primary-text);
+      font-family: 'Inter', 'Poppins', sans-serif;
+      transition: background 0.3s, color 0.3s;
+    }
+    header {
+      background: rgba(30, 30, 35, 0.8);
+      backdrop-filter: var(--glass-blur);
+      box-shadow: var(--box-shadow);
+      position: fixed;
+      width: 100%;
+      z-index: 1000;
+    }
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+    }
+    .logo img { height: 40px; filter: brightness(1.2) drop-shadow(0 0 2px var(--accent)); }
+    .logo-text { color: var(--primary-text); font-weight: bold; font-size: 1.5rem; }
+
+    .toggle-darkmode {
+      background: linear-gradient(90deg, var(--accent), var(--accent-alt));
+      color: #222;
+      border: none;
+      border-radius: 32px;
+      padding: 6px 18px 6px 14px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1.05rem;
+      margin-left: 14px;
+      box-shadow: 0 2px 12px 0 var(--accent-alt);
+      transition: filter 0.17s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .toggle-darkmode:hover { filter: brightness(1.2); }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 30px;
+    }
+    nav a {
+      text-decoration: none;
+      color: var(--primary-text);
+      font-weight: 500;
+      transition: color .2s;
+    }
+    nav a:hover { color: var(--accent); }
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--accent);
+    }
+    @media (max-width: 900px) {
+      nav ul { display: none; }
+      .mobile-menu-btn { display: block; }
+    }
+
+    .hero {
+      padding: 160px 0 80px;
+      background: linear-gradient(120deg, #23272f 0%, #121212 100%);
+      min-height: 500px;
+    }
+    .hero-title {
+      font-size: 3.1rem;
+      font-weight: 900;
+      background: linear-gradient(90deg, var(--accent), var(--accent-alt));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
+      margin-bottom: 18px;
+    }
+    .hero-subtitle { color: #bbbbbb; font-size: 1.2rem; margin-bottom: 30px; }
+    .hero-buttons .btn { margin-right: 12px; }
+
+    .calc, .feature-card, .testimonial-card, .faq-item, .cta {
+      background: var(--card-bg) !important;
+      box-shadow: var(--box-shadow);
+      border-radius: var(--border-radius);
+      backdrop-filter: var(--glass-blur);
+      border: 1.5px solid rgba(255,255,255,0.07);
+    }
+
+    .btn, .btn-primary {
+      background: linear-gradient(90deg, var(--accent), var(--accent-alt) 90%);
+      color: #fff;
+      border: none;
+      border-radius: 40px;
+      font-weight: 600;
+      box-shadow: 0 2px 16px 0 var(--accent);
+      padding: 12px 32px;
+      font-size: 1.12rem;
+      transition: transform .12s, box-shadow .18s, background .2s;
+      display: inline-block;
+    }
+    .btn-outline {
+      background: transparent !important;
+      color: var(--accent-alt);
+      border: 2px solid var(--accent-alt);
+      box-shadow: none;
+    }
+    .btn:hover, .btn-primary:hover {
+      transform: scale(1.04);
+      box-shadow: 0 4px 24px 0 var(--accent);
+      background: linear-gradient(90deg, var(--accent-alt), var(--accent) 90%);
+      color: #fff;
+    }
+    .btn-outline:hover {
+      background: var(--accent-alt);
+      color: #fff;
+    }
+    .btn-white {
+      background: #fff !important;
+      color: var(--accent-alt) !important;
+      border: 2px solid var(--accent-alt);
+      font-weight: bold;
+    }
+    .btn-white:hover {
+      background: var(--accent-alt) !important;
+      color: #fff !important;
+      border-color: #fff;
+    }
+
+    input, .calc input {
+      background: rgba(255,255,255,0.08);
+      border: 1.5px solid var(--accent);
+      color: #fff;
+      font-size: 1.15em;
+      border-radius: 12px;
+      box-shadow: 0 1px 8px 0 #00ffb310;
+      padding: 14px 18px 14px 48px;
+    }
+    input:focus, .calc input:focus {
+      outline: none;
+      border-color: #fff;
+    }
+
+    .feature-icon {
+      font-size: 2.5rem;
+      color: var(--accent-alt);
+      margin-bottom: 20px;
+    }
+
+    .footer, footer {
+      background: #181b22 !important;
+      color: #fff;
+    }
+    .footer-logo img { filter: brightness(1.2) drop-shadow(0 0 2px var(--accent)); }
+    .footer-logo-text { color: #fff; }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+      background: #23272f;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 12px;
+    }
+    @media (max-width: 576px) {
+      .hero { padding: 40px 0 16px !important; }
+      .hero-title { font-size: 1.7rem; }
+    }
+
+    /* MODO CLARO */
+    body.lightmode {
+      background: #f5f6fa !important;
+      color: #222 !important;
+    }
+    body.lightmode header,
+    body.lightmode .calc,
+    body.lightmode .feature-card,
+    body.lightmode .testimonial-card,
+    body.lightmode .faq-item,
+    body.lightmode .cta,
+    body.lightmode footer {
+      background: #fff !important;
+      color: #222 !important;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.07);
+      border: 1.5px solid #f0f0f0;
+    }
+    body.lightmode .hero-title {
+      background: linear-gradient(90deg, #008aff, #6c63ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    body.lightmode .btn,
+    body.lightmode .btn-primary {
+      background: linear-gradient(90deg, #008aff, #6c63ff 90%);
+      color: #fff;
+    }
+    body.lightmode .btn-outline {
+      color: #008aff !important;
+      border-color: #008aff;
+    }
+  </style>
 </head>
 
 <body>
@@ -48,239 +260,90 @@
 <header>
   <div class="container header-container">
     <div class="logo">
-      <img alt="Lupo" src="http://lupo.lat/img/lupologo.png" width="120"/>
-    </div>
-    <nav>
-      <ul>
-        <li><a href="#features">Beneficios</a></li>
-        <li><a href="#how-it-works">Cómo funciona</a></li>
-        <li><a href="#testimonials">Testimonios</a></li>
-        <li><a href="#faq">Preguntas</a></li>
-        <li><a href="#contact">Contacto</a></li>
-      </ul>
-    </nav>
-    <button class="mobile-menu-btn">
-      <i class="fas fa-bars"></i>
-    </button>
-  </div>
-</header>
-
-<!-- Hero + Calculadora -->
-<section class="hero">
-  <div class="container hero-container">
-    <div class="hero-content">
-      <h1 class="hero-title">Envía dinero a Bolivia <span style="color: #22c55e;">sin comisiones ocultas</span></h1>
-      <p class="hero-subtitle">Recibe hasta un 20% más que con otras plataformas de envío de dinero. Rápido, seguro y con el mejor tipo de cambio.</p>
-      <div class="hero-buttons">
-        <a class="btn btn-primary" href="#calculator">Enviar dinero ahora</a>
-        <a class="btn btn-outline" href="#how-it-works">Cómo funciona</a>
-      </div>
-    </div>
-    
-    <div class="calc" id="calculator">
-      <div class="calc-header">
-        <div class="rate">
-          1 EUR = <strong id="rate">15.5</strong>
-          <img alt="Bandera Bolivia" src="https://flagcdn.com/w40/bo.png" width="20"/>
-        </div>
-        <span id="calc-datetime">Actualizado hoy</span>
-      </div>
-      
-      <div class="input">
-        <img alt="UE" src="https://flagcdn.com/w40/eu.png" width="30"/>
-        <input id="amount" placeholder="Ingresa cantidad en EUR" type="number" min="1"/>
-      </div>
-      
-      <div class="comparison-list">
-        <div class="comparison-item highlight">
-          <div class="service">
-            <img alt="LUPO" src="http://lupo.lat/img/lupologo.png" width="40"/>
-            <span class="service-name">LUPO</span>
-          </div>
-          <div class="values highlight" id="total-lupo">0.00 Bs</div>
-        </div>
-        
-        <div class="comparison-item">
-          <div class="service">
-            <img alt="RIA" src="https://lupo.lat/img/ria.png" width="24"/>
-            <span class="service-name">RIA</span>
-          </div>
-          <div class="values" id="total-ria">0.00 Bs</div>
-        </div>
-        
-        <div class="comparison-item">
-          <div class="service">
-            <img alt="WESTERN" src="https://lupo.lat/img/217427.png" width="24"/>
-            <span class="service-name">WESTERN</span>
-          </div>
-          <div class="values" id="total-wu">0.00 Bs</div>
-        </div>
-        
-        <div class="comparison-item">
-          <div class="service">
-            <img alt="MONEYGRAM" src="https://lupo.lat/img/money.png" width="24"/>
-            <span class="service-name">MONEYGRAM</span>
-          </div>
-          <div class="values" id="total-mg">0.00 Bs</div>
-        </div>
-      </div>
-      
-      <div style="margin-top: 20px; text-align: center;">
-        <div class="savings" style="background: #f0fdf4; padding: 10px; border-radius: 8px; display: inline-block;">
-          💰 Ahorras aproximadamente <strong id="save">0.00 Bs</strong>
-        </div>
-      </div>
-      
-      <button class="btn btn-primary" style="width: 100%; margin-top: 20px;" id="whatsapp-btn">
-        Enviar por WhatsApp
-      </button>
-    </div>
-  </div>
-</section<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- SEO -->
-  <title>Envía dinero a Bolivia con Lupo - Mejor tipo de cambio y sin comisiones</title>
-  <meta name="description" content="Envía dinero de Europa a Bolivia con Lupo. Sin comisiones, rápido y seguro. Gana hasta 20% más que con otras empresas.">
-  <meta name="robots" content="index, follow" />
-  <meta name="author" content="Lupo.lat" />
-
-  <!-- PWA -->
-  <meta name="theme-color" content="#0066ff" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <link rel="manifest" href="/manifest.json">
-
-  <!-- Preloads -->
-  <link rel="preload" href="css/main.css" as="style">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  
-  <!-- Favicons -->
-  <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
-
-  <!-- Social Meta -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://lupo.lat">
-  <meta property="og:title" content="Envía dinero a Bolivia con LUPO - Mejor tipo de cambio">
-  <meta property="og:description" content="Ahorra hasta 130 Bs más por cada 100€ con LUPO. Rápido, seguro y sin comisiones.">
-  <meta property="og:image" content="https://lupo.lat/img/preview.jpg">
-
-  <!-- Fuentes -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-
-  <!-- CSS -->
-  <link href="css/main.css" rel="stylesheet">
-</head>
-
-<body itemscope itemtype="http://schema.org/FinancialService">
-<!-- Header -->
-<header>
-  <div class="container header-container">
-    <div class="logo">
-      <img itemprop="logo" src="img/lupologo.png" alt="Lupo - Envíos a Bolivia" width="100" height="40">
+      <img alt="Lupo" src="http://lupo.lat/img/lupologo.png" />
       <span class="logo-text">Lupo</span>
     </div>
     <nav>
       <ul>
-        <li><a href="#features">Ventajas</a></li>
-        <li><a href="#how-it-works">Cómo funciona</a></li>
-        <li><a href="#testimonials">Testimonios</a></li>
-        <li><a href="#faq">Preguntas</a></li>
-        <li><a href="#contact">Contacto</a></li>
+        <li><a data-i18n="features-title" href="#features">Beneficios</a></li>
+        <li><a data-i18n="how-title" href="#how-it-works">Cómo funciona</a></li>
+        <li><a data-i18n="testimonials-title" href="#testimonials">Testimonios</a></li>
+        <li><a data-i18n="faq-title" href="#faq">Preguntas</a></li>
+        <li><a data-i18n="footer-contact" href="#contact">Contacto</a></li>
       </ul>
     </nav>
-    <button class="mobile-menu-btn" aria-label="Menú">
-      <i class="fas fa-bars"></i>
-    </button>
+    <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+    <button class="toggle-darkmode" id="darkmode-toggle"><i class="fas fa-moon"></i> Oscuro</button>
   </div>
 </header>
 
 <!-- Hero + Calculadora -->
 <section class="hero">
-  <div class="container hero-container">
+  <div class="container hero-container" style="display: flex; align-items: center; gap: 50px;">
     <div class="hero-content">
-      <h1 class="hero-title">Envía dinero a Bolivia <span class="highlight-text">sin comisiones ocultas</span></h1>
-      <p class="hero-subtitle">Recibe hasta un 20% más comparado con otras plataformas de envío de dinero</p>
-      
-      <div class="urgency-banner">
-        <i class="fas fa-clock"></i>
-        <div>
-          <strong>¡Tipo de cambio actualizado!</strong>
-          <div>Envía ahora y asegura esta tasa.</div>
-        </div>
-      </div>
-      
+      <h1 class="hero-title" data-i18n="hero-title-1">El mejor envío de dinero digital<br>de Europa a Bolivia</h1>
+      <p class="hero-subtitle" data-i18n="hero-subtitle">Rápido. Sin recortes. Sin comisiones. Más para tu familia.</p>
       <div class="hero-buttons">
-        <a class="btn btn-primary" href="#">
-          <i class="fas fa-bolt"></i> ENVIAR DINERO AHORA
-        </a>
-        <a class="btn btn-outline" href="#how-it-works">Cómo funciona</a>
+        <a class="btn btn-primary" data-i18n="btn-send" href="#">Enviar ahora</a>
+        <a class="btn btn-outline" data-i18n="btn-how" href="#how-it-works">¿Cómo funciona?</a>
       </div>
     </div>
-    
     <div class="hero-calculator">
       <div class="calc">
         <div class="header">
-          <h1>COMPARA Y AHORRA</h1>
-          <div class="calc-header">
-            <div class="rate">
-              1 EUR = <strong id="rate">15.5</strong>
-              <img src="https://flagcdn.com/w40/bo.png" alt="Bolivia" width="20">
+          <h1 data-i18n="calc-title-1" style="text-transform: uppercase;font-family: 'Inter', 'Segoe UI', sans-serif;font-weight: 800;font-size: 1.05rem;text-align: center;background: linear-gradient(90deg, #23272f, #1a1a1a);padding: 10px 14px;border-radius: 12px;letter-spacing: 0.5px;margin-bottom: 10px;box-shadow: 0 2px 6px rgba(0,0,0,0.05);max-width: 100%;line-height: 1.3;word-break: break-word;">ENVIÁ DINERO SIN RECORTES NI COMISIONES</h1>
+          <div class="calc-header" style="display:flex;justify-content:space-between;align-items:center;">
+            <div class="rate" style="display:flex;align-items:center;gap:6px;">
+                1 EUR = <strong id="rate">15.5</strong>
+                <img alt="Bandera Bolivia" src="https://flagcdn.com/w40/bo.png" style="margin-left:4px;" width="20"/>
             </div>
-            <span id="calc-datetime"></span>
+            <span id="calc-datetime" style="font-size:13px;color:#bbb;"></span>
           </div>
         </div>
-        
-        <div class="input">
-          <label for="amount" class="sr-only">Cantidad a enviar</label>
-          <img class="icon" src="https://flagcdn.com/w40/eu.png" alt="Euros" width="24">
-          <input id="amount" type="number" min="1" placeholder="100" aria-describedby="rate-description">
+        <div class="input" style="margin-bottom: 6px; position: relative;">
+          <label class="sr-only" data-i18n="calc-placeholder" for="amount"></label>
+          <img alt="UE" class="icon" src="https://flagcdn.com/w40/eu.png" width="32" style="position: absolute;top: 50%;left: 12px;transform: translateY(-50%);"/>
+          <input aria-describedby="rate" id="amount" min="1" type="number" placeholder="Monto en EUR"/>
         </div>
-        
         <ul class="list">
-          <li class="item highlight">
+          <li class="item highlight" style="border-width: 3px; background: #1a2520; padding: 12px 16px;">
             <div class="service">
-              <img src="img/lupologo.png" alt="Lupo" width="90">
+              <img alt="LUPO" src="http://lupo.lat/img/lupologo.png" style="border-radius: 30%; background: #212; box-shadow: 0 0 12px #00ffb399;" width="70"/>
             </div>
-            <div class="values" id="total-lupo">
+            <div class="values" id="total-lupo" style="font-size: 1.25rem; font-weight: bold;">
               <p>0.00 Bs</p>
             </div>
           </li>
         </ul>
-        
-        <div class="competitors-box">
-          <div class="competitors-label">Ellos te darían:</div>
-          <div class="competitor-item">
-            <img src="img/ria.png" alt="RIA" width="22">
-            <span>RIA</span>
+        <div style="border: 1.5px solid #333; border-radius: 12px; background: #222c; padding: 10px 14px; margin-top: -2px;">
+          <div data-i18n="calc-competencia-label" style="font-weight: 600; font-size: 0.86rem; color: #ddd; background: #1b1b1b; padding: 3px 10px 2px; border-bottom: 1px solid #252525; margin-bottom: -4px; line-height: 1.2;">Ellos te darían:</div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <img alt="RIA" src="https://lupo.lat/img/ria.png" style="border-radius: 50%;" width="22"/>
+              <span style="font-size: 0.9rem; color: #aaa;">RIA</span>
+            </div>
             <div class="values" id="total-ria">0.00 Bs</div>
           </div>
-          <div class="competitor-item">
-            <img src="img/western-union.png" alt="Western Union" width="22">
-            <span>WESTERN UNION</span>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <img alt="WESTERN" src="https://lupo.lat/img/217427.png" style="border-radius: 50%;" width="22"/>
+              <span style="font-size: 0.9rem; color: #aaa;">WESTERN</span>
+            </div>
             <div class="values" id="total-wu">0.00 Bs</div>
           </div>
-          <div class="competitor-item">
-            <img src="img/moneygram.png" alt="MoneyGram" width="22">
-            <span>MONEYGRAM</span>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <img alt="MONEYGRAM" src="https://lupo.lat/img/money.png" style="border-radius: 50%;" width="22"/>
+              <span style="font-size: 0.9rem; color: #aaa;">MONEYGRAM</span>
+            </div>
             <div class="values" id="total-mg">0.00 Bs</div>
           </div>
         </div>
-        
         <div class="footer">
-          <div class="savings">
-            💰 Ahorras <span id="save">0.00 Bs</span> más con Lupo
+          <div class="savings" style="background: #00ffb322; padding: 8px; border-radius: 6px; font-weight: 500; color: #00ffb3; display: inline-block; margin-top: -2px;">
+                💰 <span id="save">0.00 Bs</span>
           </div>
-          <button class="btn-calc" id="whatsapp">
-            <i class="fab fa-whatsapp"></i> Enviar por WhatsApp
-          </button>
+          <button aria-live="polite" class="btn-calc" data-i18n="calc-btn" id="whatsapp" style="display: none;">Enviar</button>
         </div>
       </div>
     </div>
@@ -484,32 +547,26 @@
   </div>
 </footer>
 
-<!-- WhatsApp Float -->
-<a href="https://wa.me/393341950037" class="whatsapp-float" target="_blank">
-  <i class="fab fa-whatsapp" style="font-size: 1.5rem;"></i>
-  <span>Envíanos un mensaje</span>
+<!-- WhatsApp floating button -->
+<a href="https://wa.me/393341950037" style="position: fixed; bottom: 20px; right: 20px; background-color: #25D366; color: white; padding: 12px 16px; border-radius: 50px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); font-size: 16px; display: flex; align-items: center; gap: 8px; z-index: 9999; text-decoration: none;" target="_blank">
+  <img alt="WhatsApp" height="24" src="https://cdn-icons-png.flaticon.com/512/733/733585.png" style="filter: brightness(100);" width="24"/> Soporte
 </a>
 
-<!-- Scripts -->
-<script src="js/main.js"></script>
+<!-- JS toggle dark/light -->
 <script>
-  // Inicialización de la calculadora
-  document.getElementById('amount').addEventListener('input', function(e) {
-    const amount = parseFloat(e.target.value) || 0;
-    const lupoRate = 15.5;
-    const competitorRate = 14.2;
-    
-    document.getElementById('total-lupo').textContent = (amount * lupoRate).toFixed(2) + ' Bs';
-    document.getElementById('total-ria').textContent = (amount * competitorRate).toFixed(2) + ' Bs';
-    document.getElementById('total-wu').textContent = (amount * (competitorRate - 0.5)).toFixed(2) + ' Bs';
-    document.getElementById('total-mg').textContent = (amount * (competitorRate - 0.7)).toFixed(2) + ' Bs';
-    document.getElementById('save').textContent = (amount * (lupoRate - competitorRate)).toFixed(2) + ' Bs';
-  });
+const btn = document.getElementById('darkmode-toggle');
+let dark = true;
+btn.onclick = function() {
+  document.body.classList.toggle('lightmode');
+  dark = !dark;
+  btn.innerHTML = dark
+    ? '<i class="fas fa-moon"></i> Oscuro'
+    : '<i class="fas fa-sun"></i> Claro';
+};
 </script>
 
-<!-- Botón de WhatsApp -->
-<a href="https://wa.me/393341950037" class="whatsapp-float">
-  <i class="fab fa-whatsapp"></i> Soporte
-</a>
+<!-- Tus scripts y traducciones -->
+<script src="js/textos.js"></script>
+<script src="js/main.js?v=10023"></script>
 </body>
 </html>
