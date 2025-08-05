@@ -136,6 +136,155 @@
       </button>
     </div>
   </div>
+</section<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO -->
+  <title>Envía dinero a Bolivia con Lupo - Mejor tipo de cambio y sin comisiones</title>
+  <meta name="description" content="Envía dinero de Europa a Bolivia con Lupo. Sin comisiones, rápido y seguro. Gana hasta 20% más que con otras empresas.">
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Lupo.lat" />
+
+  <!-- PWA -->
+  <meta name="theme-color" content="#0066ff" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="manifest" href="/manifest.json">
+
+  <!-- Preloads -->
+  <link rel="preload" href="css/main.css" as="style">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+
+  <!-- Social Meta -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lupo.lat">
+  <meta property="og:title" content="Envía dinero a Bolivia con LUPO - Mejor tipo de cambio">
+  <meta property="og:description" content="Ahorra hasta 130 Bs más por cada 100€ con LUPO. Rápido, seguro y sin comisiones.">
+  <meta property="og:image" content="https://lupo.lat/img/preview.jpg">
+
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+  <!-- CSS -->
+  <link href="css/main.css" rel="stylesheet">
+</head>
+
+<body itemscope itemtype="http://schema.org/FinancialService">
+<!-- Header -->
+<header>
+  <div class="container header-container">
+    <div class="logo">
+      <img itemprop="logo" src="img/lupologo.png" alt="Lupo - Envíos a Bolivia" width="100" height="40">
+      <span class="logo-text">Lupo</span>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#features">Ventajas</a></li>
+        <li><a href="#how-it-works">Cómo funciona</a></li>
+        <li><a href="#testimonials">Testimonios</a></li>
+        <li><a href="#faq">Preguntas</a></li>
+        <li><a href="#contact">Contacto</a></li>
+      </ul>
+    </nav>
+    <button class="mobile-menu-btn" aria-label="Menú">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+</header>
+
+<!-- Hero + Calculadora -->
+<section class="hero">
+  <div class="container hero-container">
+    <div class="hero-content">
+      <h1 class="hero-title">Envía dinero a Bolivia <span class="highlight-text">sin comisiones ocultas</span></h1>
+      <p class="hero-subtitle">Recibe hasta un 20% más comparado con otras plataformas de envío de dinero</p>
+      
+      <div class="urgency-banner">
+        <i class="fas fa-clock"></i>
+        <div>
+          <strong>¡Tipo de cambio actualizado!</strong>
+          <div>Envía ahora y asegura esta tasa.</div>
+        </div>
+      </div>
+      
+      <div class="hero-buttons">
+        <a class="btn btn-primary" href="#">
+          <i class="fas fa-bolt"></i> ENVIAR DINERO AHORA
+        </a>
+        <a class="btn btn-outline" href="#how-it-works">Cómo funciona</a>
+      </div>
+    </div>
+    
+    <div class="hero-calculator">
+      <div class="calc">
+        <div class="header">
+          <h1>COMPARA Y AHORRA</h1>
+          <div class="calc-header">
+            <div class="rate">
+              1 EUR = <strong id="rate">15.5</strong>
+              <img src="https://flagcdn.com/w40/bo.png" alt="Bolivia" width="20">
+            </div>
+            <span id="calc-datetime"></span>
+          </div>
+        </div>
+        
+        <div class="input">
+          <label for="amount" class="sr-only">Cantidad a enviar</label>
+          <img class="icon" src="https://flagcdn.com/w40/eu.png" alt="Euros" width="24">
+          <input id="amount" type="number" min="1" placeholder="100" aria-describedby="rate-description">
+        </div>
+        
+        <ul class="list">
+          <li class="item highlight">
+            <div class="service">
+              <img src="img/lupologo.png" alt="Lupo" width="90">
+            </div>
+            <div class="values" id="total-lupo">
+              <p>0.00 Bs</p>
+            </div>
+          </li>
+        </ul>
+        
+        <div class="competitors-box">
+          <div class="competitors-label">Ellos te darían:</div>
+          <div class="competitor-item">
+            <img src="img/ria.png" alt="RIA" width="22">
+            <span>RIA</span>
+            <div class="values" id="total-ria">0.00 Bs</div>
+          </div>
+          <div class="competitor-item">
+            <img src="img/western-union.png" alt="Western Union" width="22">
+            <span>WESTERN UNION</span>
+            <div class="values" id="total-wu">0.00 Bs</div>
+          </div>
+          <div class="competitor-item">
+            <img src="img/moneygram.png" alt="MoneyGram" width="22">
+            <span>MONEYGRAM</span>
+            <div class="values" id="total-mg">0.00 Bs</div>
+          </div>
+        </div>
+        
+        <div class="footer">
+          <div class="savings">
+            💰 Ahorras <span id="save">0.00 Bs</span> más con Lupo
+          </div>
+          <button class="btn-calc" id="whatsapp">
+            <i class="fab fa-whatsapp"></i> Enviar por WhatsApp
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- Beneficios -->
@@ -342,36 +491,25 @@
 </a>
 
 <!-- Scripts -->
+<script src="js/main.js"></script>
 <script>
-  // Calculadora funcional
+  // Inicialización de la calculadora
   document.getElementById('amount').addEventListener('input', function(e) {
     const amount = parseFloat(e.target.value) || 0;
-    const rate = 15.5; // Tipo de cambio de ejemplo
+    const lupoRate = 15.5;
+    const competitorRate = 14.2;
     
-    // Calcular valores
-    const lupoTotal = (amount * rate).toFixed(2);
-    const riaTotal = (amount * (rate * 0.92)).toFixed(2);
-    const wuTotal = (amount * (rate * 0.90)).toFixed(2);
-    const mgTotal = (amount * (rate * 0.88)).toFixed(2);
-    
-    // Actualizar UI
-    document.getElementById('total-lupo').textContent = lupoTotal + ' Bs';
-    document.getElementById('total-ria').textContent = riaTotal + ' Bs';
-    document.getElementById('total-wu').textContent = wuTotal + ' Bs';
-    document.getElementById('total-mg').textContent = mgTotal + ' Bs';
-    
-    // Calcular ahorro (vs RIA como ejemplo)
-    const savings = (amount * rate * 0.08).toFixed(2);
-    document.getElementById('save').textContent = savings + ' Bs';
-  });
-  
-  // Botón WhatsApp
-  document.getElementById('whatsapp-btn').addEventListener('click', function() {
-    const amount = document.getElementById('amount').value;
-    const message = `Hola Lupo, quisiera enviar ${amount}€ a Bolivia`;
-    window.open(`https://wa.me/393341950037?text=${encodeURIComponent(message)}`, '_blank');
+    document.getElementById('total-lupo').textContent = (amount * lupoRate).toFixed(2) + ' Bs';
+    document.getElementById('total-ria').textContent = (amount * competitorRate).toFixed(2) + ' Bs';
+    document.getElementById('total-wu').textContent = (amount * (competitorRate - 0.5)).toFixed(2) + ' Bs';
+    document.getElementById('total-mg').textContent = (amount * (competitorRate - 0.7)).toFixed(2) + ' Bs';
+    document.getElementById('save').textContent = (amount * (lupoRate - competitorRate)).toFixed(2) + ' Bs';
   });
 </script>
+
+<!-- Botón de WhatsApp -->
+<a href="https://wa.me/393341950037" class="whatsapp-float">
+  <i class="fab fa-whatsapp"></i> Soporte
+</a>
 </body>
 </html>
-
