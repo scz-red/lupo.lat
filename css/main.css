@@ -1,8 +1,16 @@
-/* ===== RESET Y ESTILOS BASE ===== */
+/* ===== RESET PARA MODO APP ===== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  position: fixed;
 }
 
 body {
@@ -10,393 +18,151 @@ body {
   background-color: #f5f7fa;
   color: #1f2937;
   line-height: 1.6;
-  padding: 2rem;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  touch-action: manipulation;
 }
 
-/* ===== ESTILOS DE LA CALCULADORA ===== */
+/* ===== CONTENEDOR PRINCIPAL SIN SCROLL ===== */
+.app-container {
+  width: 100%;
+  height: 100vh;
+  max-height: -webkit-fill-available;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ===== CALCULADORA ESTILO APP ===== */
 .calculator {
   width: 100%;
-  max-width: 460px;
+  max-width: 100%;
+  height: 100%;
   margin: 0 auto;
   background: white;
-  border-radius: 1rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
-  transition: all 0.3s ease;
-}
-
-.calculator:hover {
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  position: relative;
 }
 
 .calculator-header {
-  padding: 1.5rem;
+  padding: clamp(1rem, 5vh, 1.5rem);
   background: linear-gradient(135deg, #0046ff, #0066ff);
   color: white;
   text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.calculator-header::after {
-  content: "";
-  position: absolute;
-  top: -50%;
-  right: -50%;
-  width: 100%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
-  transform: rotate(30deg);
-}
-
-.calculator-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  position: relative;
-  z-index: 1;
-}
-
-.calculator-subtitle {
-  font-size: 1.1rem;
-  font-weight: 500;
-  opacity: 0.95;
-  margin-bottom: 0.25rem;
-  position: relative;
-  z-index: 1;
-}
-
-.calculator-description {
-  font-size: 0.95rem;
-  opacity: 0.9;
-  max-width: 20rem;
-  margin: 0 auto;
-  position: relative;
-  z-index: 1;
+  flex-shrink: 0;
 }
 
 .calculator-body {
-  padding: 1.5rem;
-}
-
-/* ===== SECCIÓN DE TASA DE CAMBIO ===== */
-.rate-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #f8f9fa;
-  padding: 0.75rem 1rem;
-  border-radius: 0.5rem;
-  margin-bottom: 1.25rem;
-  border: 1px solid #e5e7eb;
-}
-
-.rate-value {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 1.1rem;
-}
-
-.rate-value strong {
-  font-weight: 700;
-  color: #0046ff;
-}
-
-.rate-flag {
-  width: 1.25rem;
-  height: auto;
-  border-radius: 0.15rem;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05);
-}
-
-.rate-update {
-  font-size: 0.85rem;
-  color: #6b7280;
-  font-weight: 500;
-}
-
-/* ===== INPUT ===== */
-.input-group {
-  margin-bottom: 1.5rem;
-}
-
-.input-label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-  color: #374151;
-  font-size: 0.95rem;
-}
-
-.input-wrapper {
-  position: relative;
-}
-
-.input-icon {
-  position: absolute;
-  left: 1rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #0046ff;
-  font-weight: 700;
-  font-size: 1.1rem;
-}
-
-.input-field {
-  width: 100%;
-  padding: 0.875rem 1rem 0.875rem 2.625rem;
-  font-size: 1.1rem;
-  border: 2px solid #e5e7eb;
-  border-radius: 0.5rem;
-  transition: all 0.3s ease;
-  font-weight: 500;
-  color: #1f2937;
-  background-color: #f9fafb;
-}
-
-.input-field:focus {
-  outline: none;
-  border-color: #0046ff;
-  background-color: white;
-  box-shadow: 0 0 0 3px rgba(0, 70, 255, 0.1);
-}
-
-.input-field::placeholder {
-  color: #9ca3af;
-  font-weight: 400;
-}
-
-/* ===== RESULTADOS ===== */
-.results-container {
-  margin-bottom: 1.25rem;
-}
-
-.result-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.875rem 1rem;
-  margin-bottom: 0.5rem;
-  background: #f8f9fa;
-  border-radius: 0.5rem;
-  transition: all 0.3s ease;
-  border: 1px solid #e5e7eb;
-}
-
-.result-item.highlight {
-  background: #e6f0ff;
-  border: 2px solid #0046ff;
-  box-shadow: 0 2px 5px rgba(0, 70, 255, 0.1);
-}
-
-.service {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.service-logo {
-  width: 1.875rem;
-  height: 1.875rem;
-  object-fit: contain;
-  border-radius: 50%;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05);
-}
-
-.service-name {
-  font-weight: 500;
-  color: #1f2937;
-}
-
-.amount {
-  font-weight: 600;
-  color: #1f2937;
-}
-
-.result-item.highlight .amount {
-  color: #0046ff;
-  font-size: 1.1rem;
-}
-
-.divider {
-  text-align: center;
-  margin: 1rem 0;
-  color: #6b7280;
-  font-size: 0.9rem;
-  position: relative;
-  font-weight: 500;
-}
-
-.divider::before,
-.divider::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  width: 30%;
-  height: 1px;
-  background: #e5e7eb;
-}
-
-.divider::before {
-  left: 0;
-}
-
-.divider::after {
-  right: 0;
-}
-
-/* ===== BANNER DE AHORRO ===== */
-.savings-banner {
-  padding: 0.75rem 1rem;
-  margin: 1.25rem 0;
-  background: #f0fdf4;
-  border-radius: 0.5rem;
-  text-align: center;
-  color: #166534;
-  border: 1px solid #bbf7d0;
-  font-size: 0.95rem;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-}
-
-.savings-banner strong {
-  font-weight: 700;
-}
-
-/* ===== BOTONES ===== */
-.actions {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: clamp(1rem, 3vh, 1.5rem);
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
 }
 
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.875rem 1rem;
-  font-size: 1rem;
-  font-weight: 600;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  border: none;
-  text-decoration: none;
+/* Asegurar que el contenido no exceda la altura visible */
+.calculator-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.btn-primary {
-  background: #0046ff;
-  color: white;
-  box-shadow: 0 2px 5px rgba(0, 70, 255, 0.2);
-}
-
-.btn-primary:hover {
-  background: #003acc;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 70, 255, 0.25);
-}
-
-.btn-primary:active {
-  transform: translateY(0);
-}
-
-.btn-secondary {
-  background: white;
-  color: #0046ff;
-  border: 2px solid #0046ff;
-}
-
-.btn-secondary:hover {
-  background: #f0f5ff;
-}
-
-/* ===== FOOTER ===== */
-.footer {
-  margin-top: 2rem;
-  text-align: center;
-  font-size: 0.9rem;
-  color: #6b7280;
-  padding: 0 1rem;
-}
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 480px) {
-  body {
-    padding: 1rem;
-  }
-  
-  .calculator {
-    border-radius: 0.75rem;
-  }
-  
+/* ===== AJUSTES ESPECÍFICOS PARA MODO APP ===== */
+/* iOS Safe Areas */
+@supports (padding: max(0px)) {
   .calculator-header {
-    padding: 1.25rem;
+    padding-top: max(1.5rem, env(safe-area-inset-top));
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
   }
   
   .calculator-body {
-    padding: 1.25rem;
+    padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+  }
+}
+
+/* Input en modo app */
+.input-field {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  font-size: 1.1rem;
+}
+
+/* Botones estilo app */
+.btn {
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+/* Deshabilitar zoom en iOS */
+@media (touch-action: manipulation) {
+  body {
+    touch-action: manipulation;
+  }
+}
+
+/* ===== MEDIA QUERIES PARA DIFERENTES ASPECT RATIOS ===== */
+@media (max-aspect-ratio: 3/4) {
+  .calculator-header {
+    padding: 0.75rem;
   }
   
-  .calculator-title {
-    font-size: 1.3rem;
-  }
-  
-  .calculator-subtitle {
-    font-size: 1rem;
+  .calculator-body {
+    padding: 0.75rem;
   }
   
   .input-field {
-    padding: 0.75rem 1rem 0.75rem 2.625rem;
+    font-size: 1rem;
   }
 }
 
-/* ===== ANIMACIONES ===== */
+/* ===== ANIMACIONES PARA MODO APP ===== */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .result-item {
-  animation: fadeIn 0.4s ease forwards;
+  animation: fadeIn 0.3s ease-out forwards;
 }
 
-.result-item:nth-child(1) { animation-delay: 0.1s; }
-.result-item:nth-child(2) { animation-delay: 0.2s; }
-.result-item:nth-child(3) { animation-delay: 0.3s; }
-.result-item:nth-child(4) { animation-delay: 0.4s; }
-
-/* ===== ACCESIBILIDAD ===== */
-:focus-visible {
-  outline: 3px solid #0046ff;
-  outline-offset: 2px;
+/* ===== ESTILOS ADICIONALES PWA ===== */
+/* Para instalar como PWA */
+.app-install-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #1f2937;
+  color: white;
+  padding: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
 }
 
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
+.app-install-banner.visible {
+  transform: translateY(0);
+}
+
+/* Status bar color (Android) */
+@media (display-mode: standalone) {
+  body {
+    background-color: #0046ff;
+  }
+  
+  .calculator {
+    border-radius: 0;
+  }
 }
