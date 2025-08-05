@@ -1,390 +1,107 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Envía dinero a Bolivia - Lupo</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <style>
-    :root {
-      --azul: #0046ff;
-      --azul-claro: #f0f5ff;
-      --borde: #e0e0e0;
-      --gris-bg: #f7f9fb;
-      --verde: #166534;
-      --shadow: 0 4px 24px rgba(0, 30, 110, 0.09);
-      --radius: 1.1rem;
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--gris-bg);
-      color: #23272e;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 24px;
-    }
-
-    .calculator {
-      width: 100%;
-      max-width: 410px;
-      background: #fff;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      overflow: hidden;
-      margin: 32px 0;
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-
-    .calculator-header {
-      background: linear-gradient(120deg, var(--azul) 60%, #497fff 100%);
-      color: #fff;
-      padding: 30px 24px 20px 24px;
-      text-align: center;
-      border-bottom: 1px solid #e7eaf0;
-    }
-    .calculator-title {
-      font-size: 1.4rem;
-      font-weight: 700;
-      margin-bottom: 8px;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-    }
-    .calculator-subtitle {
-      font-size: 1.05rem;
-      font-weight: 500;
-      opacity: 0.96;
-      margin-bottom: 6px;
-    }
-    .calculator-description {
-      font-size: 0.98rem;
-      opacity: 0.83;
-    }
-
-    .calculator-body {
-      padding: 24px 22px 20px 22px;
-      background: #fff;
-    }
-
-    .rate-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: var(--azul-claro);
-      padding: 11px 15px;
-      border-radius: 7px;
-      margin-bottom: 19px;
-      border: 1px solid #e5e8f1;
-    }
-    .rate-value {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      font-size: 1.1rem;
-    }
-    .rate-value strong {
-      font-weight: 700;
-      color: var(--azul);
-      letter-spacing: 0.5px;
-    }
-    .rate-flag {
-      width: 21px;
-      border-radius: 2px;
-    }
-    .rate-update {
-      font-size: 0.87rem;
-      color: #7c8799;
-      font-weight: 500;
-    }
-
-    .input-group { margin-bottom: 19px; }
-    .input-label {
-      display: block;
-      margin-bottom: 7px;
-      font-weight: 600;
-      color: #38405a;
-      font-size: 1.05rem;
-    }
-    .input-wrapper { position: relative; }
-    .input-icon {
-      position: absolute;
-      left: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--azul);
-      font-weight: 600;
-      opacity: 0.95;
-      font-size: 1.05rem;
-    }
-    .input-field {
-      width: 100%;
-      padding: 13px 16px 13px 40px;
-      font-size: 1.08rem;
-      border: 1.7px solid var(--borde);
-      border-radius: 7px;
-      transition: border 0.25s, box-shadow 0.25s;
-      background: #fafdff;
-      color: #23272e;
-      font-weight: 500;
-      outline: none;
-    }
-    .input-field:focus {
-      border-color: var(--azul);
-      box-shadow: 0 0 0 2px #bed5ff;
-    }
-
-    .results-container { margin-bottom: 14px; }
-    .result-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 13px 13px;
-      margin-bottom: 7px;
-      background: #f8fafc;
-      border-radius: 7px;
-      border: 1.1px solid #e8eaef;
-      transition: border 0.2s;
-    }
-    .result-item.highlight {
-      background: #e9f1ff;
-      border: 1.7px solid var(--azul);
-      font-size: 1.06rem;
-    }
-    .service {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .service-logo {
-      width: 26px;
-      height: 26px;
-      object-fit: contain;
-      border-radius: 50%;
-      box-shadow: 0 2px 8px #e1e8f3;
-    }
-    .service-name {
-      font-weight: 600;
-      letter-spacing: 0.3px;
-      font-size: 1rem;
-      color: #222;
-    }
-    .amount {
-      font-weight: 600;
-      letter-spacing: 0.3px;
-      font-size: 1.01rem;
-      color: #1e2026;
-    }
-    .result-item.highlight .amount {
-      color: var(--azul);
-      font-size: 1.12rem;
-      font-weight: 700;
-    }
-
-    .divider {
-      text-align: center;
-      margin: 13px 0 9px 0;
-      color: #798197;
-      font-size: 0.94rem;
-      font-weight: 500;
-      letter-spacing: 0.1px;
-      position: relative;
-    }
-    .divider::before, .divider::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      width: 32%;
-      height: 1.2px;
-      background: #e6e8f2;
-    }
-    .divider::before { left: 0; }
-    .divider::after { right: 0; }
-
-    .savings-banner {
-      padding: 11px 0;
-      margin: 16px 0 10px 0;
-      background: #e6fbee;
-      border-radius: 7px;
-      text-align: center;
-      color: var(--verde);
-      border: 1px solid #bbf7d0;
-      font-size: 0.99rem;
-      font-weight: 600;
-      letter-spacing: 0.1px;
-      box-shadow: 0 1px 4px #e0f8e8;
-    }
-
-    .actions {
-      display: flex;
-      flex-direction: column;
-      gap: 11px;
-      margin-top: 8px;
-    }
-    .btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 13px 0;
-      font-size: 1rem;
-      font-weight: 700;
-      border-radius: 7px;
-      cursor: pointer;
-      transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.15s;
-      border: none;
-      width: 100%;
-      letter-spacing: 0.2px;
-    }
-    .btn-primary {
-      background: var(--azul);
-      color: #fff;
-      box-shadow: 0 3px 14px #bed5ff33;
-    }
-    .btn-primary:hover {
-      background: #003acc;
-      transform: translateY(-1px) scale(1.02);
-      box-shadow: 0 6px 18px #bed5ff2a;
-    }
-    .btn-secondary {
-      background: #fff;
-      color: var(--azul);
-      border: 2px solid var(--azul);
-      box-shadow: 0 2px 6px #bed5ff14;
-    }
-    .btn-secondary:hover {
-      background: var(--azul-claro);
-      color: #003acc;
-      border-color: #003acc;
-    }
-
-    .footer {
-      margin-top: 16px;
-      text-align: center;
-      font-size: 0.96rem;
-      color: #9199a9;
-      padding-bottom: 8px;
-    }
-
-    /* Responsive */
-    @media (max-width: 600px) {
-      .calculator { max-width: 97vw; margin: 18px 0; }
-      .calculator-header { padding: 19px 7vw 14px 7vw; }
-      .calculator-body { padding: 16px 4vw 15px 4vw; }
-      .savings-banner { font-size: 0.95rem; }
-      .input-field { font-size: 1rem; padding: 11px 11px 11px 36px; }
-    }
-    @media (max-width: 410px) {
-      body { padding: 3vw; }
-      .calculator { max-width: 100vw; }
-      .footer { font-size: 0.90rem; }
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Compara y Ahorra con LUPO</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+  <!-- TU CSS AQUI -->
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-  <div class="calculator">
-    <div class="calculator-header">
-      <h2 class="calculator-title">Compara y Ahorra</h2>
-      <p class="calculator-subtitle">Envía dinero a Bolivia sin comisiones ocultas</p>
-      <p class="calculator-description">Recibe hasta un 20% más que con otras plataformas</p>
-    </div>
-    <div class="calculator-body">
+  <div class="app-bar">Compara y Ahorra</div>
+
+  <div class="main-content">
+    <div class="lupo-card">
       <div class="rate-container">
-        <div class="rate-value">
-          <span>1 EUR = </span>
-          <strong>15.5</strong>
-          <img src="https://flagcdn.com/w40/bo.png" alt="Bolivia" class="rate-flag">
-        </div>
-        <span class="rate-update">Actualizado hoy</span>
+        <span>1 EUR = <strong>15.5</strong></span>
+        <img src="https://flagcdn.com/w40/bo.png" alt="BO" style="width:18px;vertical-align:middle;">
+        <span style="font-size:.87em;color:#888;font-weight:400;margin-left:0.3em;">Hoy</span>
       </div>
       <div class="input-group">
-        <label for="amount" class="input-label">Ingresa cantidad en EUR</label>
+        <label class="input-label" for="amount">Cantidad en EUR</label>
         <div class="input-wrapper">
           <span class="input-icon">€</span>
-          <input type="number" id="amount" class="input-field" placeholder="Ej: 100" min="1">
+          <input type="number" class="input-field" id="amount" placeholder="Ej: 100" min="1" autocomplete="off">
         </div>
       </div>
-      <div class="results-container">
-        <div class="result-item highlight">
-          <div class="service">
-            <img src="https://lupo.lat/img/lupologo.png" alt="LUPO" class="service-logo">
-            <span class="service-name">LUPO</span>
-          </div>
-          <div class="amount">0.00 Bs</div>
+      <div class="lupo-result">
+        <div class="lupo-service">
+          <img src="https://lupo.lat/img/lupologo.png" class="lupo-logo" alt="LUPO">
+          <span>LUPO</span>
         </div>
-        <div class="divider">Compara con otras plataformas</div>
-        <div class="result-item">
-          <div class="service">
-            <img src="https://lupo.lat/img/ria.png" alt="RIA" class="service-logo">
-            <span class="service-name">RIA</span>
-          </div>
-          <div class="amount">0.00 Bs</div>
+        <span class="lupo-amount">0.00 Bs</span>
+      </div>
+      <div class="competitors-row">
+        <div class="competitor-chip">
+          <img src="https://lupo.lat/img/ria.png" class="competitor-logo" alt="RIA">
+          <span class="competitor-name">RIA</span>
+          <span class="competitor-amount">0.00 Bs</span>
         </div>
-        <div class="result-item">
-          <div class="service">
-            <img src="https://lupo.lat/img/217427.png" alt="Western Union" class="service-logo">
-            <span class="service-name">WESTERN UNION</span>
-          </div>
-          <div class="amount">0.00 Bs</div>
+        <div class="competitor-chip">
+          <img src="https://lupo.lat/img/217427.png" class="competitor-logo" alt="Western">
+          <span class="competitor-name">WESTERN</span>
+          <span class="competitor-amount">0.00 Bs</span>
         </div>
-        <div class="result-item">
-          <div class="service">
-            <img src="https://lupo.lat/img/money.png" alt="MoneyGram" class="service-logo">
-            <span class="service-name">MONEYGRAM</span>
-          </div>
-          <div class="amount">0.00 Bs</div>
+        <div class="competitor-chip">
+          <img src="https://lupo.lat/img/money.png" class="competitor-logo" alt="MoneyGram">
+          <span class="competitor-name">MONEYGRAM</span>
+          <span class="competitor-amount">0.00 Bs</span>
         </div>
       </div>
       <div class="savings-banner">
-        💰 <strong>Ahorras aproximadamente 0.00 Bs</strong> con LUPO
-      </div>
-      <div class="actions">
-        <button class="btn btn-primary">
-          <i class="fab fa-whatsapp"></i> Enviar por WhatsApp
-        </button>
-        <button class="btn btn-secondary">
-          <i class="fas fa-headset"></i> Soporte 24/7
-        </button>
+        💰 <strong>Ahorras aproximadamente <span id="saving-lupo">0.00 Bs</span> con LUPO</strong>
       </div>
     </div>
   </div>
-  <div class="footer">
-    <p>© 2023 Lupo - Todos los derechos reservados</p>
+
+  <div class="action-bar">
+    <button class="btn-main" id="btn-whatsapp">
+      <i class="fab fa-whatsapp"></i>Enviar por WhatsApp
+    </button>
   </div>
+  <div class="footer">
+    © 2023 Lupo - Todos los derechos reservados
+  </div>
+
   <script>
-    // Cálculos dinámicos
-    document.getElementById('amount').addEventListener('input', function(e) {
-      const amount = parseFloat(e.target.value) || 0;
-      const lupoRate = 15.5, riaRate = 14.2, westernRate = 13.8, moneygramRate = 13.5;
-      const lupoAmount = (amount * lupoRate).toFixed(2);
-      const riaAmount = (amount * riaRate).toFixed(2);
-      const westernAmount = (amount * westernRate).toFixed(2);
-      const moneygramAmount = (amount * moneygramRate).toFixed(2);
-      const savings = (amount * (lupoRate - riaRate)).toFixed(2);
-      document.querySelector('.highlight .amount').textContent = lupoAmount + ' Bs';
-      document.querySelectorAll('.result-item:not(.highlight) .amount')[0].textContent = riaAmount + ' Bs';
-      document.querySelectorAll('.result-item:not(.highlight) .amount')[1].textContent = westernAmount + ' Bs';
-      document.querySelectorAll('.result-item:not(.highlight) .amount')[2].textContent = moneygramAmount + ' Bs';
-      document.querySelector('.savings-banner strong').textContent = savings + ' Bs';
+    // Calculadora lógica
+    const eurInput = document.getElementById('amount');
+    const lupoAmount = document.querySelector('.lupo-amount');
+    const competitorAmounts = document.querySelectorAll('.competitor-amount');
+    const savingSpan = document.getElementById('saving-lupo');
+
+    // Rates
+    const rates = {
+      lupo: 15.5,
+      ria: 14.2,
+      western: 13.8,
+      moneygram: 13.5
+    };
+
+    eurInput.addEventListener('input', function(e) {
+      const amount = parseFloat(eurInput.value) || 0;
+      const lupo = (amount * rates.lupo).toFixed(2);
+      const ria = (amount * rates.ria).toFixed(2);
+      const western = (amount * rates.western).toFixed(2);
+      const moneygram = (amount * rates.moneygram).toFixed(2);
+
+      lupoAmount.textContent = lupo + ' Bs';
+      competitorAmounts[0].textContent = ria + ' Bs';
+      competitorAmounts[1].textContent = western + ' Bs';
+      competitorAmounts[2].textContent = moneygram + ' Bs';
+
+      const saving = (amount * (rates.lupo - rates.ria)).toFixed(2);
+      savingSpan.textContent = saving + ' Bs';
     });
 
-    // WhatsApp
-    document.querySelector('.btn-primary').addEventListener('click', function() {
-      const amount = document.getElementById('amount').value;
-      const message = `Hola Lupo, estoy interesado en enviar ${amount || '___'} EUR a Bolivia.`;
-      const whatsappUrl = `https://wa.me/591123456789?text=${encodeURIComponent(message)}`;
-      window.open(whatsappUrl, '_blank');
-    });
-
-    // Soporte
-    document.querySelector('.btn-secondary').addEventListener('click', function() {
-      window.open('tel:+591123456789');
+    // Botón WhatsApp
+    document.getElementById('btn-whatsapp').addEventListener('click', function() {
+      const amount = eurInput.value || '';
+      const msg = `Hola Lupo, quiero enviar ${amount} EUR a Bolivia.`;
+      const url = `https://wa.me/591123456789?text=${encodeURIComponent(msg)}`;
+      window.open(url, '_blank');
     });
   </script>
 </body>
