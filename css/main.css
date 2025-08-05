@@ -1,46 +1,307 @@
-<div class="app-bar">Compara y Ahorra</div>
-<div class="main-content">
-  <div class="lupo-card">
-    <div class="rate-container">1 EUR = <strong>15.5</strong> <img src="https://flagcdn.com/w40/bo.png" alt="BO" style="width:18px;"> Actualizado hoy</div>
-    <div class="input-group">
-      <label class="input-label" for="amount">Cantidad en EUR</label>
-      <div class="input-wrapper">
-        <span class="input-icon">€</span>
-        <input type="number" class="input-field" id="amount" placeholder="Ej: 100" min="1">
-      </div>
-    </div>
-    <div class="lupo-result">
-      <div class="lupo-service">
-        <img src="https://lupo.lat/img/lupologo.png" class="lupo-logo" alt="LUPO">
-        <span>LUPO</span>
-      </div>
-      <span class="lupo-amount">0.00 Bs</span>
-    </div>
-    <div class="competitors-row">
-      <div class="competitor-chip">
-        <img src="https://lupo.lat/img/ria.png" class="competitor-logo" alt="RIA">
-        <span class="competitor-name">RIA</span>
-        <span class="competitor-amount">0.00 Bs</span>
-      </div>
-      <div class="competitor-chip">
-        <img src="https://lupo.lat/img/217427.png" class="competitor-logo" alt="Western">
-        <span class="competitor-name">WESTERN</span>
-        <span class="competitor-amount">0.00 Bs</span>
-      </div>
-      <div class="competitor-chip">
-        <img src="https://lupo.lat/img/money.png" class="competitor-logo" alt="MoneyGram">
-        <span class="competitor-name">MONEYGRAM</span>
-        <span class="competitor-amount">0.00 Bs</span>
-      </div>
-    </div>
-    <div class="savings-banner">
-      💰 <strong>Ahorras aproximadamente 0.00 Bs con LUPO</strong>
-    </div>
-  </div>
-</div>
-<div class="action-bar">
-  <button class="btn-main"><i class="fab fa-whatsapp"></i>Enviar por WhatsApp</button>
-</div>
-<div class="footer">
-  © 2023 Lupo - Todos los derechos reservados
-</div>
+:root {
+  --rojo: #ea1818;
+  --amarillo: #ffd600;
+  --verde: #18843b;
+  --azul: #2563eb;
+  --azul-oscuro: #1e40af;
+  --gris-bg: #f5f7fa;
+  --borde: #e5e7eb;
+  --verde-text: #166534;
+  --verde-bg: #e6fbee;
+}
+
+body {
+  background: var(--gris-bg);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #1f2937;
+  margin: 0;
+  min-height: 100vh;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  -webkit-touch-callout: none;
+  user-select: none;
+}
+
+.app-bar {
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 54px;
+  z-index: 20;
+  background: linear-gradient(90deg, var(--rojo) 0%, var(--amarillo) 52%, var(--verde) 100%);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.09rem;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  border-radius: 0 0 1.1rem 1.1rem;
+  box-shadow: 0 2px 8px rgba(30,64,175,0.07);
+  border-bottom: 1px solid #e5e7eb;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.07);
+}
+
+.main-content {
+  margin-top: 62px;
+  margin-bottom: 70px;
+  width: 100vw;
+  max-width: 430px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0.3rem 0.3rem 0 0.3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: calc(100vh - 130px);
+}
+
+/* Tarjeta principal LUPO */
+.lupo-card {
+  width: 100%;
+  background: #fff;
+  border-radius: 1.05rem;
+  box-shadow: 0 4px 18px rgba(30,64,175,0.07);
+  padding: 0.8rem 0.7rem 0.6rem 0.7rem;
+  margin-bottom: 0.27rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.rate-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f0f5ff;
+  border-radius: 0.8rem;
+  padding: 0.32rem 0.7rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  gap: 0.28rem;
+  margin-bottom: 0.15rem;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.11rem;
+}
+.input-label {
+  font-size: 0.93rem;
+  font-weight: 600;
+  color: var(--azul-oscuro);
+}
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+.input-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--rojo);
+  font-size: 1.05rem;
+  font-weight: 700;
+  opacity: 0.9;
+  pointer-events: none;
+}
+.input-field {
+  width: 100%;
+  padding: 0.62rem 0.8rem 0.62rem 2.3rem;
+  border: 1.4px solid var(--borde);
+  border-radius: 0.6rem;
+  background: #f7fafd;
+  font-size: 1.08rem;
+  font-weight: 500;
+  color: #1f2937;
+  margin-bottom: 0.18rem;
+  transition: border .15s;
+}
+.input-field:focus {
+  border-color: var(--rojo);
+  background: #fff;
+}
+
+.lupo-result {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #e6f0ff;
+  border: 2px solid var(--rojo);
+  border-radius: 0.83rem;
+  padding: 0.63rem 1rem;
+  margin: 0.18rem 0;
+  font-size: 1.18rem;
+  font-weight: 700;
+  box-shadow: 0 3px 10px #bed5ff26;
+}
+.lupo-service {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+.lupo-logo {
+  width: 1.9rem;
+  height: 1.9rem;
+  object-fit: contain;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 1px #bed5ff44;
+}
+
+/* Competencia horizontal tipo chip */
+.competitors-row {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 0.25rem;
+  margin: 0.1rem 0 0.45rem 0;
+  width: 100%;
+  padding-bottom: 0.18rem;
+}
+.competitor-chip {
+  flex: 1 1 0;
+  min-width: 88px;
+  max-width: 120px;
+  background: #f7f9fc;
+  border-radius: 0.65rem;
+  padding: 0.39rem 0.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0.72;
+  font-size: 0.74rem;
+  box-shadow: 0 0 0.5px #d6d9e4;
+  border: 1.1px solid #e5e7eb;
+  gap: 0.2rem;
+}
+.competitor-logo {
+  width: 1.15rem;
+  height: 1.15rem;
+  object-fit: contain;
+  border-radius: 50%;
+  background: #fff;
+}
+.competitor-name {
+  font-weight: 600;
+  margin-bottom: 0.07rem;
+  color: #23272e;
+}
+.competitor-amount {
+  font-weight: 700;
+  color: #1f2937;
+}
+
+/* Savings */
+.savings-banner {
+  background: var(--verde-bg);
+  color: var(--verde-text);
+  border: 1px solid #bbf7d0;
+  font-size: 0.79rem;
+  font-weight: 600;
+  border-radius: 0.42rem;
+  padding: 0.38rem 0.5rem;
+  text-align: center;
+  margin: 0.18rem 0 0.12rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.24rem;
+}
+
+/* Botón principal fijo estilo app */
+.action-bar {
+  width: 100vw;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  height: 62px;
+  background: linear-gradient(90deg, var(--rojo), var(--amarillo) 55%, var(--verde));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 30;
+  box-shadow: 0 -2px 8px #18843b14;
+  border-radius: 1.1rem 1.1rem 0 0;
+}
+.btn-main {
+  width: 90vw;
+  max-width: 390px;
+  height: 42px;
+  background: #fff;
+  color: var(--rojo);
+  border: none;
+  border-radius: 0.8rem;
+  font-size: 1.11rem;
+  font-weight: 800;
+  letter-spacing: 0.1rem;
+  box-shadow: 0 4px 18px #00000011;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  cursor: pointer;
+  transition: background .16s, color .13s;
+}
+.btn-main:hover,
+.btn-main:focus {
+  background: #ffe08c;
+  color: #1e40af;
+}
+
+/* Footer */
+.footer {
+  margin-top: 0.5rem;
+  margin-bottom: 78px;
+  text-align: center;
+  font-size: 0.78rem;
+  color: #6b7280;
+  padding: 0 0.4rem;
+  letter-spacing: 0.03rem;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .app-bar {
+    height: 45px;
+    font-size: 0.99rem;
+  }
+  .main-content {
+    margin-top: 48px;
+    margin-bottom: 60px;
+    max-width: 100vw;
+    padding-left: 0.09rem;
+    padding-right: 0.09rem;
+  }
+  .lupo-card {
+    padding: 0.55rem 0.38rem;
+  }
+  .btn-main {
+    font-size: 1rem;
+    height: 40px;
+  }
+  .action-bar { height: 54px; }
+  .footer { font-size: 0.72rem; }
+}
+
+/* Accesibilidad */
+:focus-visible {
+  outline: 2px solid var(--rojo);
+  outline-offset: 2px;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
