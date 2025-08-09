@@ -84,7 +84,7 @@ window.addEventListener('DOMContentLoaded', () => {
     return fetch('https://api.lupo.lat/cambio_a_bob?moneda=eur&monto=1')
       .then(res => res.json())
       .then(data => {
-        cachedEuroBsLupo = data.resultado * 0.90;
+        cachedEuroBsLupo = data.resultado * 0.92;
         cachedTime = now;
         return cachedEuroBsLupo;
       });
@@ -166,3 +166,4 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
