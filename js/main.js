@@ -69,7 +69,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const fechaEl = document.getElementById('calc-datetime');
 
   // Tasas fijas para la competencia
-  const rates = { ria:13.2, wu:12.90, mg:13.10 };
+  const rates = { ria:12.9, wu:12.60, mg:13.10 };
 
   // --- CACHÉ DE LA API DE LUPO
   let cachedEuroBsLupo = null;
@@ -166,5 +166,6 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
 
 
