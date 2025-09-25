@@ -60,80 +60,73 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // Elementos DOM
   const totalLupo = document.getElementById('total-lupo');
-  const totalRia = document.getElementById('total-ria');
-  const totalWu = document.getElementById('total-wu');
-  const totalMg = document.getElementById('total-mg');
-  const saveEl = document.getElementById('save');
-  const btn = document.getElementById('whatsapp');
-  const rateEl = document.getElementById('rate');
-  const fechaEl = document.getElementById('calc-datetime');
+  const totalRia  = document.getElementById('total-ria');
+  const totalWu   = document.getElementById('total-wu');
+  const totalMg   = document.getElementById('total-mg');
+  const saveEl    = document.getElementById('save');
+  const btn       = document.getElementById('whatsapp');
+  const rateEl    = document.getElementById('rate');
+  const fechaEl   = document.getElementById('calc-datetime');
 
-  // Tasas fijas para la competencia
-  const rates = { ria:12.8, wu:12.60, mg:13 };
+  // ====== CONFIGURACIÓN SIN API ======
+  // Tasa base de euro (Bs por 1 EUR)
+  const BASE_EUR_BS = 14.8;   // ← lo que pediste
+  // Descuento/margen (10%)
+  const FRONTEND_DISCOUNT = 0.10;
+  const MULT = 1 - FRONTEND_DISCOUNT; // 0.90
+  // Tasa neta que se usa para calcular y mostrar (como hacía tu app: tasa con descuento)
+  const EURO_BS_LUPO = BASE_EUR_BS * MULT; // 14.8 * 0.90 = 13.32
 
-  // --- CACHÉ DE LA API DE LUPO
-  let cachedEuroBsLupo = null;
-  let cachedTime = 0;
-  const CACHE_TIME = 60 * 1000; // 1 minuto
+  // Si quieres que 14.8 ya sea la tasa "neto" mostrada y usada, comenta la línea de arriba
+  // y usa esta en su lugar:
+  // const EURO_BS_LUPO = 14.8;
 
-  function getLupoRate() {
-    const now = Date.now();
-    if (cachedEuroBsLupo && (now - cachedTime < CACHE_TIME)) {
-      return Promise.resolve(cachedEuroBsLupo);
-    }
-    return fetch('https://api.lupo.lat/cambio_a_bob?moneda=eur&monto=1')
-      .then(res => res.json())
-      .then(data => {
-        cachedEuroBsLupo = data.resultado * 0.90;
-        cachedTime = now;
-        return cachedEuroBsLupo;
-      });
-  }
+  // Tasas fijas para la competencia (igual que tu archivo)
+  const rates = { ria: 12.8, wu: 12.60, mg: 13 };
 
   function actualizarCalculadora() {
-    getLupoRate().then(euroBsLupo => {
-      // Actualiza la tasa visible (API + 10%)
-      if (rateEl) rateEl.textContent = euroBsLupo.toFixed(2);
+    // Mostrar la tasa neta (antes mostrabas la tasa tras aplicar descuento)
+    if (rateEl) rateEl.textContent = EURO_BS_LUPO.toFixed(2);
 
-      const v = parseFloat(inputAmount.value) || 0;
-      const l = v * euroBsLupo;
-      const r = v * rates.ria;
-      const w = v * rates.wu;
-      const m = v * rates.mg;
+    const v = parseFloat((inputAmount?.value || '0').replace(',', '.')) || 0;
 
-      if (totalLupo) totalLupo.textContent = `${l.toFixed(2)} Bs`;
-      if (totalRia) totalRia.textContent = `${r.toFixed(2)} Bs`;
-      if (totalWu) totalWu.textContent = `${w.toFixed(2)} Bs`;
-      if (totalMg) totalMg.textContent = `${m.toFixed(2)} Bs`;
+    const l = v * EURO_BS_LUPO; // Lupo (neto)
+    const r = v * rates.ria;
+    const w = v * rates.wu;
+    const m = v * rates.mg;
 
-      const minComp = Math.max(r, w, m);
-      const savings = l - minComp;
+    if (totalLupo) totalLupo.textContent = `${l.toFixed(2)} Bs`;
+    if (totalRia)  totalRia.textContent  = `${r.toFixed(2)} Bs`;
+    if (totalWu)   totalWu.textContent   = `${w.toFixed(2)} Bs`;
+    if (totalMg)   totalMg.textContent   = `${m.toFixed(2)} Bs`;
 
-      // Mensaje de ahorro aleatorio (cifra resaltada)
-      if (typeof savePhraseKeys !== 'undefined') {
-        const saveKey = randomKey(savePhraseKeys);
-        const msg = getTranslation(saveKey).replace(
-          "{{save}}",
-          `<span style="font-weight:bold;text-decoration:underline;">${savings.toFixed(2)} Bs</span>`
-        );
-        if (saveEl) saveEl.innerHTML = msg;
-      } else if (saveEl) {
-        saveEl.textContent = `${savings.toFixed(2)} Bs`;
-      }
+    const maxComp = Math.max(r, w, m);
+    const savings = l - maxComp;
 
-      // Botón WhatsApp
-      if (l > 0 && btn) {
-        btn.textContent = (getTranslation("calc-btn") || "Enviar") + ` ${l.toFixed(2)}`;
-        btn.style.display = 'block';
-        btn.onclick = () => {
-          window.location.href = `https://wa.me/393341950037?text=${encodeURIComponent(
-            `Hola Lupo, Quisiera enviar ${v}€ a Bolivia. Que reciban ${l.toFixed(2)} Bs`
-          )}`;
-        };
-      } else if (btn) {
-        btn.style.display = 'none';
-      }
-    });
+    // Mensaje de ahorro aleatorio (cifra resaltada)
+    if (typeof savePhraseKeys !== 'undefined') {
+      const saveKey = randomKey(savePhraseKeys);
+      const msg = getTranslation(saveKey).replace(
+        "{{save}}",
+        `<span style="font-weight:bold;text-decoration:underline;">${savings.toFixed(2)} Bs</span>`
+      );
+      if (saveEl) saveEl.innerHTML = msg;
+    } else if (saveEl) {
+      saveEl.textContent = `${savings.toFixed(2)} Bs`;
+    }
+
+    // Botón WhatsApp
+    if (l > 0 && btn) {
+      btn.textContent = (getTranslation("calc-btn") || "Enviar") + ` ${l.toFixed(2)}`;
+      btn.style.display = 'block';
+      btn.onclick = () => {
+        window.location.href = `https://wa.me/393341950037?text=${encodeURIComponent(
+          `Hola Lupo, Quisiera enviar ${v}€ a Bolivia. Que reciban ${l.toFixed(2)} Bs`
+        )}`;
+      };
+    } else if (btn) {
+      btn.style.display = 'none';
+    }
   }
 
   if (inputAmount) inputAmount.addEventListener('input', actualizarCalculadora);
@@ -166,7 +159,3 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
-
-
-
-
