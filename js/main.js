@@ -70,7 +70,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // ====== CONFIGURACIÓN SIN API ======
   // Tasa base de euro (Bs por 1 EUR)
-  const BASE_EUR_BS = 14.5;   // ← lo que pediste
+  const BASE_EUR_BS = 14.9;   // ← lo que pediste
   // Descuento/margen (10%)
   const FRONTEND_DISCOUNT = 0.10;
   const MULT = 1 - FRONTEND_DISCOUNT; // 0.90
@@ -159,5 +159,6 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
 
 
