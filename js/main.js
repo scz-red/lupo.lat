@@ -82,7 +82,7 @@ window.addEventListener('DOMContentLoaded', () => {
   // const EURO_BS_LUPO = 14.8;
 
   // Tasas fijas para la competencia (igual que tu archivo)
-  const rates = { ria: 12.8, wu: 12.60, mg: 13 };
+  const rates = { ria: 9.8, wu:9.60, mg: 9 };
 
   function actualizarCalculadora() {
     // Mostrar la tasa neta (antes mostrabas la tasa tras aplicar descuento)
@@ -159,6 +159,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
 
 
 
