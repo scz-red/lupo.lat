@@ -387,6 +387,15 @@
             font-size: 0.7rem;
         }
 
+        .hidden-price {
+            color: var(--text-secondary);
+            font-style: italic;
+            background-color: var(--bg-tertiary);
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 10px;
+        }
+
         /* Modal styles */
         .modal {
             display: none;
@@ -587,10 +596,10 @@
             </div>
             <div class="switch-container">
                 <label class="switch">
-                    <input type="checkbox" id="showProvidersToggle" checked>
+                    <input type="checkbox" id="showProvidersToggle">
                     <span class="slider"></span>
                 </label>
-                <span>Mostrar precios de proveedores</span>
+                <span id="providersLabel">Mostrar precios de proveedores</span>
             </div>
         </div>
 
@@ -644,7 +653,22 @@
         </div>
     </div>
 
-    <!-- Modal mejorado para editar/agregar item -->
+    <!-- Modal para mostrar proveedores -->
+    <div class="modal" id="providersModal">
+        <div class="modal-content">
+            <h2>🔐 Ver Precios de Proveedores</h2>
+            <p style="margin-bottom: 15px; color: var(--text-secondary); text-align: center; font-size: 12px;">
+                Ingrese la clave para ver los precios de compra de proveedores
+            </p>
+            <input type="password" id="providersPassword" class="modal-input" placeholder="Clave para ver proveedores" autocomplete="off">
+            <div class="modal-buttons">
+                <button class="modal-btn secondary" id="cancelProvidersBtn">Cancelar</button>
+                <button class="modal-btn primary" id="confirmProvidersBtn">Ver Proveedores</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para editar/agregar item -->
     <div class="modal" id="itemModal">
         <div class="modal-content">
             <h2 id="itemModalTitle">✏️ Editar Item</h2>
@@ -680,15 +704,17 @@
         const ADMIN_PASSWORD = "123456";
         const EDIT_PASSWORD = "123456";
         const ITEM_PASSWORD = "123456";
+        const PROVIDERS_PASSWORD = "123456";
         let allData = [];
         let filteredData = [];
         let sortColumn = null;
         let sortDirection = 'asc';
         let searchTerm = '';
-        let showProviders = true;
+        let showProviders = false; // Inicialmente oculto
         let editMode = false;
         let currentEditRow = null;
         let currentAction = ''; // 'edit' o 'add'
+        let providersAccess = false; // Control de acceso a proveedores
 
         // Inicializar la aplicación
         document.addEventListener('DOMContentLoaded', function() {
@@ -696,7 +722,7 @@
 
             // Configurar event listeners
             document.getElementById('searchInput').addEventListener('input', handleSearch);
-            document.getElementById('showProvidersToggle').addEventListener('change', handleProvidersToggle);
+            document.getElementById('showProvidersToggle').addEventListener('click', handleProvidersToggle);
             
             // Configurar modales
             document.getElementById('adminBtn').addEventListener('click', showAdminModal);
@@ -710,6 +736,9 @@
 
             document.getElementById('cancelItemBtn').addEventListener('click', hideItemModal);
             document.getElementById('confirmItemBtn').addEventListener('click', handleItemAccess);
+
+            document.getElementById('cancelProvidersBtn').addEventListener('click', hideProvidersModal);
+            document.getElementById('confirmProvidersBtn').addEventListener('click', handleProvidersAccess);
             
             document.getElementById('adminPassword').addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') handleAdminAccess();
@@ -723,6 +752,10 @@
                 if (e.key === 'Enter') handleItemAccess();
             });
 
+            document.getElementById('providersPassword').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') handleProvidersAccess();
+            });
+
             // Configurar ordenamiento de columnas
             document.querySelectorAll('th[data-column]').forEach(th => {
                 th.addEventListener('click', () => {
@@ -732,6 +765,7 @@
             });
 
             loadEditsFromStorage();
+            updateProvidersUI();
         });
 
         // Mostrar modal administrativo
@@ -758,6 +792,18 @@
             document.getElementById('editPassword').value = '';
         }
 
+        // Mostrar modal de proveedores
+        function showProvidersModal() {
+            document.getElementById('providersModal').style.display = 'flex';
+            document.getElementById('providersPassword').focus();
+        }
+
+        // Ocultar modal de proveedores
+        function hideProvidersModal() {
+            document.getElementById('providersModal').style.display = 'none';
+            document.getElementById('providersPassword').value = '';
+        }
+
         // Mostrar modal de item mejorado
         function showItemModal(rowId = null, isAdd = false) {
             currentEditRow = rowId;
@@ -780,7 +826,6 @@
             } else {
                 title.textContent = '✏️ Editar Item';
                 form.style.display = 'none';
-                // Aquí podrías cargar los datos del item si quisieras
             }
             
             modal.style.display = 'flex';
@@ -831,6 +876,59 @@
                 setTimeout(() => {
                     document.getElementById('statusMessage').style.display = 'none';
                 }, 2000);
+            }
+        }
+
+        // Manejar acceso para ver proveedores
+        function handleProvidersAccess() {
+            const password = document.getElementById('providersPassword').value;
+            
+            if (password === PROVIDERS_PASSWORD) {
+                providersAccess = true;
+                showProviders = true;
+                hideProvidersModal();
+                updateProvidersUI();
+                applyFilters();
+                showStatus('✅ Acceso a proveedores activado', 'success');
+                setTimeout(() => {
+                    document.getElementById('statusMessage').style.display = 'none';
+                }, 2000);
+            } else {
+                showStatus('❌ Clave incorrecta. Intente nuevamente.', 'error');
+                document.getElementById('providersPassword').value = '';
+                document.getElementById('providersPassword').focus();
+                setTimeout(() => {
+                    document.getElementById('statusMessage').style.display = 'none';
+                }, 2000);
+            }
+        }
+
+        // Manejar toggle de proveedores
+        function handleProvidersToggle(e) {
+            if (!providersAccess) {
+                // Si no tiene acceso, mostrar modal de clave
+                showProvidersModal();
+                // Mantener el toggle desactivado
+                e.target.checked = false;
+                return;
+            }
+            
+            showProviders = e.target.checked;
+            applyFilters();
+            updateProvidersUI();
+        }
+
+        // Actualizar UI de proveedores
+        function updateProvidersUI() {
+            const toggle = document.getElementById('showProvidersToggle');
+            const label = document.getElementById('providersLabel');
+            
+            if (providersAccess) {
+                toggle.checked = showProviders;
+                label.textContent = showProviders ? 'Ocultar precios de proveedores' : 'Mostrar precios de proveedores';
+            } else {
+                toggle.checked = false;
+                label.textContent = 'Mostrar precios de proveedores';
             }
         }
 
@@ -1013,12 +1111,6 @@
             applyFilters();
         }
 
-        // Manejar toggle de proveedores
-        function handleProvidersToggle(e) {
-            showProviders = e.target.checked;
-            applyFilters();
-        }
-
         // Aplicar todos los filtros
         function applyFilters() {
             // Filtrar por término de búsqueda
@@ -1158,12 +1250,21 @@
                             placeholder="0.00">` :
                     `<span class="price-compra">${formatCurrency(row.precio_compra)}</span>`;
                 
+                // Mostrar u ocultar precios de proveedores según el acceso
+                const proveedorDisplay = showProviders ? 
+                    highlightMatches(row.proveedor) : 
+                    `<span class="hidden-price">🔒 Requiere clave</span>`;
+                
+                const precioCompraDisplay = showProviders ? 
+                    compraField : 
+                    `<span class="hidden-price">🔒</span>`;
+                
                 tr.innerHTML = `
                     <td>${highlightMatches(row.marca)}</td>
                     <td>${highlightMatches(row.modelo)}</td>
                     <td class="${tipoClass}">${highlightMatches(row.tipo)}</td>
-                    <td>${highlightMatches(row.proveedor)}</td>
-                    <td>${compraField}</td>
+                    <td>${proveedorDisplay}</td>
+                    <td>${precioCompraDisplay}</td>
                     <td>
                         <input type="text" 
                                class="editable" 
