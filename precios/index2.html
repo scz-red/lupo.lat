@@ -814,7 +814,7 @@
             const passwordInput = document.getElementById('itemPassword');
             
             if (isAdd) {
-                title.textContent = '➕ Agregar Nuevo Item';
+                title.textContent = '➕ ';
                 form.style.display = 'block';
                 // Limpiar formulario
                 document.getElementById('editMarca').value = '';
@@ -928,7 +928,7 @@
                 label.textContent = showProviders ? 'Ocultar precios de proveedores' : 'Mostrar precios de proveedores';
             } else {
                 toggle.checked = false;
-                label.textContent = 'Mostrar precios de proveedores';
+                label.textContent = 'Importadoras';
             }
         }
 
@@ -1279,7 +1279,7 @@
                                 ✏️
                             </button>
                             <button class="action-btn add-btn" onclick="showItemModal(null, true)">
-                                ➕ Agregar
+                                ➕
                             </button>
                         </div>
                     </td>
