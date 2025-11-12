@@ -582,7 +582,7 @@
             <div class="subtitle">Encuentra rápidamente los precios de pantallas por calidad y proveedor</div>
             <div class="admin-access">
                 <button class="admin-btn" id="adminBtn">⚙️ Subir Listas</button>
-                <button class="admin-btn edit-mode-btn" id="editModeBtn">✏️ Modo Edición</button>
+                <button class="admin-btn edit-mode-btn" id="editModeBtn">✏️</button>
             </div>
         </header>
 
@@ -671,7 +671,7 @@
     <!-- Modal para editar/agregar item -->
     <div class="modal" id="itemModal">
         <div class="modal-content">
-            <h2 id="itemModalTitle">✏️ Editar Item</h2>
+            <h2 id="itemModalTitle">✏️ </h2>
             <div id="itemForm" style="display: none;">
                 <input type="text" id="editMarca" class="modal-input" placeholder="Marca">
                 <input type="text" id="editModelo" class="modal-input" placeholder="Modelo">
@@ -814,7 +814,7 @@
             const passwordInput = document.getElementById('itemPassword');
             
             if (isAdd) {
-                title.textContent = '➕ Agregar Nuevo Item';
+                title.textContent = '➕ ';
                 form.style.display = 'block';
                 // Limpiar formulario
                 document.getElementById('editMarca').value = '';
@@ -824,7 +824,7 @@
                 document.getElementById('editPrecioCompra').value = '';
                 document.getElementById('editPrecioVenta').value = '';
             } else {
-                title.textContent = '✏️ Editar Item';
+                title.textContent = '✏️ ';
                 form.style.display = 'none';
             }
             
@@ -928,7 +928,7 @@
                 label.textContent = showProviders ? 'Ocultar precios de proveedores' : 'Mostrar precios de proveedores';
             } else {
                 toggle.checked = false;
-                label.textContent = 'Mostrar precios de proveedores';
+                label.textContent = 'Importadoras';
             }
         }
 
@@ -1253,7 +1253,7 @@
                 // Mostrar u ocultar precios de proveedores según el acceso
                 const proveedorDisplay = showProviders ? 
                     highlightMatches(row.proveedor) : 
-                    `<span class="hidden-price">🔒 Requiere clave</span>`;
+                    `<span class="hidden-price">🔒 </span>`;
                 
                 const precioCompraDisplay = showProviders ? 
                     compraField : 
@@ -1276,10 +1276,10 @@
                     <td>
                         <div class="action-buttons">
                             <button class="action-btn" onclick="showItemModal('${generateRowId(row)}', false)">
-                                ✏️ Editar
+                                ✏️
                             </button>
                             <button class="action-btn add-btn" onclick="showItemModal(null, true)">
-                                ➕ Agregar
+                                ➕
                             </button>
                         </div>
                     </td>
