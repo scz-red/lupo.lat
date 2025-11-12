@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buscador de Listas de Precios</title>
+    <title>Dr. Xiaomi</title>
     <style>
         :root {
             --bg-primary: #121212;
@@ -212,6 +212,7 @@
             position: relative;
             transition: background-color 0.3s ease;
             font-size: 11px;
+            white-space: nowrap;
         }
 
         th:hover {
@@ -396,6 +397,60 @@
             font-size: 10px;
         }
 
+        /* Columnas dinámicas */
+        .col-proveedor, .col-compra {
+            display: table-cell;
+        }
+
+        .hide-columns .col-proveedor,
+        .hide-columns .col-compra {
+            display: none;
+        }
+
+        /* Anchos fijos para mejor legibilidad */
+        .col-marca {
+            width: 100px;
+            min-width: 100px;
+            max-width: 100px;
+        }
+
+        .col-modelo {
+            width: 150px;
+            min-width: 150px;
+            max-width: 150px;
+            word-wrap: break-word;
+        }
+
+        .col-tipo {
+            width: 70px;
+            min-width: 70px;
+            max-width: 70px;
+        }
+
+        .col-proveedor {
+            width: 100px;
+            min-width: 100px;
+            max-width: 100px;
+        }
+
+        .col-compra {
+            width: 90px;
+            min-width: 90px;
+            max-width: 90px;
+        }
+
+        .col-venta {
+            width: 90px;
+            min-width: 90px;
+            max-width: 90px;
+        }
+
+        .col-acciones {
+            width: 80px;
+            min-width: 80px;
+            max-width: 80px;
+        }
+
         /* Modal styles */
         .modal {
             display: none;
@@ -516,6 +571,49 @@
                 padding: 2px 4px;
                 font-size: 8px;
             }
+
+            /* Ajustes de ancho para móvil */
+            .col-marca {
+                width: 80px;
+                min-width: 80px;
+                max-width: 80px;
+            }
+
+            .col-modelo {
+                width: 120px;
+                min-width: 120px;
+                max-width: 120px;
+            }
+
+            .col-tipo {
+                width: 60px;
+                min-width: 60px;
+                max-width: 60px;
+            }
+
+            .col-proveedor {
+                width: 80px;
+                min-width: 80px;
+                max-width: 80px;
+            }
+
+            .col-compra {
+                width: 70px;
+                min-width: 70px;
+                max-width: 70px;
+            }
+
+            .col-venta {
+                width: 70px;
+                min-width: 70px;
+                max-width: 70px;
+            }
+
+            .col-acciones {
+                width: 70px;
+                min-width: 70px;
+                max-width: 70px;
+            }
         }
 
         @media (min-width: 768px) {
@@ -578,10 +676,10 @@
 <body>
     <div class="container">
         <header>
-            <h1>🔍 Buscador de Precios</h1>
+            <h1>🔍 DR: XIAOMI </h1>
             <div class="subtitle">Encuentra rápidamente los precios de pantallas por calidad y proveedor</div>
             <div class="admin-access">
-                <button class="admin-btn" id="adminBtn">⚙️ Subir Listas</button>
+                <button class="admin-btn" id="adminBtn">⚙️ </button>
                 <button class="admin-btn edit-mode-btn" id="editModeBtn">✏️</button>
             </div>
         </header>
@@ -599,7 +697,7 @@
                     <input type="checkbox" id="showProvidersToggle">
                     <span class="slider"></span>
                 </label>
-                <span id="providersLabel">Mostrar precios de proveedores</span>
+                <span id="providersLabel">Importadoras</span>
             </div>
         </div>
 
@@ -610,13 +708,13 @@
             <table id="resultsTable">
                 <thead>
                     <tr>
-                        <th data-column="marca">Marca</th>
-                        <th data-column="modelo">Modelo</th>
-                        <th data-column="tipo">Tipo</th>
-                        <th data-column="proveedor">Proveedor</th>
-                        <th data-column="precio_compra">Compra (Bs)</th>
-                        <th data-column="precio_venta">Venta (Bs)</th>
-                        <th data-column="acciones">Acciones</th>
+                        <th data-column="marca" class="col-marca">Marca</th>
+                        <th data-column="modelo" class="col-modelo">Modelo</th>
+                        <th data-column="tipo" class="col-tipo">Tipo</th>
+                        <th data-column="proveedor" class="col-proveedor">Prov.</th>
+                        <th data-column="precio_compra" class="col-compra">Compra</th>
+                        <th data-column="precio_venta" class="col-venta">Venta</th>
+                        <th data-column="acciones" class="col-acciones">Acciones</th>
                     </tr>
                 </thead>
                 <tbody id="resultsBody">
@@ -656,14 +754,14 @@
     <!-- Modal para mostrar proveedores -->
     <div class="modal" id="providersModal">
         <div class="modal-content">
-            <h2>🔐 Ver Precios de Proveedores</h2>
+            <h2>🔐 Ver Importadoras</h2>
             <p style="margin-bottom: 15px; color: var(--text-secondary); text-align: center; font-size: 12px;">
-                Ingrese la clave para ver los precios de compra de proveedores
+                Ingrese la clave para ver las importadoras y precios de compra
             </p>
-            <input type="password" id="providersPassword" class="modal-input" placeholder="Clave para ver proveedores" autocomplete="off">
+            <input type="password" id="providersPassword" class="modal-input" placeholder="Clave para ver importadoras" autocomplete="off">
             <div class="modal-buttons">
                 <button class="modal-btn secondary" id="cancelProvidersBtn">Cancelar</button>
-                <button class="modal-btn primary" id="confirmProvidersBtn">Ver Proveedores</button>
+                <button class="modal-btn primary" id="confirmProvidersBtn">Ver Importadoras</button>
             </div>
         </div>
     </div>
@@ -707,7 +805,7 @@
         const PROVIDERS_PASSWORD = "123456";
         let allData = [];
         let filteredData = [];
-        let sortColumn = null;
+        let sortColumn = 'marca'; // Ordenar por marca por defecto
         let sortDirection = 'asc';
         let searchTerm = '';
         let showProviders = false; // Inicialmente oculto
@@ -766,6 +864,7 @@
 
             loadEditsFromStorage();
             updateProvidersUI();
+            updateTableColumns();
         });
 
         // Mostrar modal administrativo
@@ -888,8 +987,9 @@
                 showProviders = true;
                 hideProvidersModal();
                 updateProvidersUI();
+                updateTableColumns();
                 applyFilters();
-                showStatus('✅ Acceso a proveedores activado', 'success');
+                showStatus('✅ Acceso a importadoras activado', 'success');
                 setTimeout(() => {
                     document.getElementById('statusMessage').style.display = 'none';
                 }, 2000);
@@ -914,6 +1014,7 @@
             }
             
             showProviders = e.target.checked;
+            updateTableColumns();
             applyFilters();
             updateProvidersUI();
         }
@@ -925,10 +1026,20 @@
             
             if (providersAccess) {
                 toggle.checked = showProviders;
-                label.textContent = showProviders ? 'Ocultar precios de proveedores' : 'Mostrar precios de proveedores';
+                label.textContent = showProviders ? 'Ocultar importadoras' : 'Mostrar importadoras';
             } else {
                 toggle.checked = false;
                 label.textContent = 'Importadoras';
+            }
+        }
+
+        // Actualizar columnas de la tabla
+        function updateTableColumns() {
+            const tableContainer = document.querySelector('.table-container');
+            if (showProviders) {
+                tableContainer.classList.remove('hide-columns');
+            } else {
+                tableContainer.classList.add('hide-columns');
             }
         }
 
@@ -1027,6 +1138,9 @@
 
                 const results = await Promise.all(promises);
                 allData = results.flat();
+                
+                // Ordenar por marca por defecto
+                sortData('marca', 'asc');
                 
                 applyFilters();
                 showStatus('✅ Datos cargados correctamente', 'success');
@@ -1188,7 +1302,9 @@
             });
             
             const currentTh = document.querySelector(`th[data-column="${column}"]`);
-            currentTh.classList.add(`sort-${sortDirection}`);
+            if (currentTh) {
+                currentTh.classList.add(`sort-${sortDirection}`);
+            }
             
             sortData(column, sortDirection);
             renderTable();
@@ -1250,22 +1366,13 @@
                             placeholder="0.00">` :
                     `<span class="price-compra">${formatCurrency(row.precio_compra)}</span>`;
                 
-                // Mostrar u ocultar precios de proveedores según el acceso
-                const proveedorDisplay = showProviders ? 
-                    highlightMatches(row.proveedor) : 
-                    `<span class="hidden-price">🔒 </span>`;
-                
-                const precioCompraDisplay = showProviders ? 
-                    compraField : 
-                    `<span class="hidden-price">🔒</span>`;
-                
                 tr.innerHTML = `
-                    <td>${highlightMatches(row.marca)}</td>
-                    <td>${highlightMatches(row.modelo)}</td>
-                    <td class="${tipoClass}">${highlightMatches(row.tipo)}</td>
-                    <td>${proveedorDisplay}</td>
-                    <td>${precioCompraDisplay}</td>
-                    <td>
+                    <td class="col-marca">${highlightMatches(row.marca)}</td>
+                    <td class="col-modelo">${highlightMatches(row.modelo)}</td>
+                    <td class="col-tipo ${tipoClass}">${highlightMatches(row.tipo)}</td>
+                    <td class="col-proveedor">${showProviders ? highlightMatches(row.proveedor) : '<span class="hidden-price">🔒</span>'}</td>
+                    <td class="col-compra">${showProviders ? compraField : '<span class="hidden-price">🔒</span>'}</td>
+                    <td class="col-venta">
                         <input type="text" 
                                class="editable" 
                                data-id="${generateRowId(row)}" 
@@ -1273,7 +1380,7 @@
                                value="${formatCurrency(row.precio_venta)}"
                                placeholder="0.00">
                     </td>
-                    <td>
+                    <td class="col-acciones">
                         <div class="action-buttons">
                             <button class="action-btn" onclick="showItemModal('${generateRowId(row)}', false)">
                                 ✏️
