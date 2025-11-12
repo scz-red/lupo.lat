@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buscador de Precios</title>
+    <title>Buscador de Listas de Precios</title>
     <style>
         :root {
             --bg-primary: #121212;
@@ -19,8 +19,6 @@
             --oled: #9c27b0;
             --lcd: #2196f3;
             --edit: #ffeb3b;
-            --proveedor: #ff9800;
-            --cliente: #4caf50;
         }
 
         * {
@@ -34,46 +32,45 @@
             background-color: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.6;
-            padding: 20px;
+            padding: 10px;
         }
 
         .container {
-            max-width: 1600px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
         header {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             text-align: center;
             position: relative;
         }
 
         h1 {
             color: var(--accent);
-            margin-bottom: 10px;
-            font-size: 2rem;
+            margin-bottom: 8px;
+            font-size: 1.5rem;
         }
 
         .subtitle {
             color: var(--text-secondary);
-            font-size: 1rem;
-            margin-bottom: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
         }
 
         .admin-access {
-            position: absolute;
-            top: 0;
-            right: 0;
             display: flex;
-            gap: 10px;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 15px;
         }
 
         .admin-btn {
             background: transparent;
             color: var(--text-secondary);
             border: 1px solid var(--border);
-            padding: 8px 15px;
-            font-size: 14px;
+            padding: 6px 12px;
+            font-size: 12px;
             border-radius: 4px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -98,27 +95,24 @@
 
         .search-controls {
             display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 20px;
-            align-items: center;
-            justify-content: center;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
         }
 
         .search-box {
-            flex: 1;
-            min-width: 300px;
+            width: 100%;
             position: relative;
         }
 
         input[type="text"] {
             width: 100%;
-            padding: 15px 20px;
+            padding: 12px 15px;
             background-color: var(--bg-secondary);
             border: 1px solid var(--border);
             border-radius: 8px;
             color: var(--text-primary);
-            font-size: 16px;
+            font-size: 14px;
             transition: all 0.3s ease;
         }
 
@@ -128,29 +122,23 @@
             box-shadow: 0 0 0 2px rgba(255, 123, 0, 0.2);
         }
 
-        .controls-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            align-items: center;
-        }
-
         .switch-container {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             white-space: nowrap;
             background-color: var(--bg-secondary);
-            padding: 10px 15px;
+            padding: 8px 12px;
             border-radius: 8px;
             border: 1px solid var(--border);
+            justify-content: center;
         }
 
         .switch {
             position: relative;
             display: inline-block;
-            width: 50px;
-            height: 24px;
+            width: 40px;
+            height: 20px;
         }
 
         .switch input {
@@ -168,16 +156,16 @@
             bottom: 0;
             background-color: var(--bg-tertiary);
             transition: .4s;
-            border-radius: 24px;
+            border-radius: 20px;
         }
 
         .slider:before {
             position: absolute;
             content: "";
-            height: 16px;
-            width: 16px;
-            left: 4px;
-            bottom: 4px;
+            height: 14px;
+            width: 14px;
+            left: 3px;
+            bottom: 3px;
             background-color: white;
             transition: .4s;
             border-radius: 50%;
@@ -188,41 +176,14 @@
         }
 
         input:checked + .slider:before {
-            transform: translateX(26px);
-        }
-
-        .view-toggle {
-            display: flex;
-            background-color: var(--bg-secondary);
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            overflow: hidden;
-        }
-
-        .view-option {
-            padding: 10px 20px;
-            background: transparent;
-            border: none;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-        }
-
-        .view-option.active {
-            background-color: var(--accent);
-            color: var(--bg-primary);
-        }
-
-        .view-option:not(.active):hover {
-            background-color: var(--bg-tertiary);
+            transform: translateX(20px);
         }
 
         .table-container {
             overflow-x: auto;
             border-radius: 8px;
             border: 1px solid var(--border);
-            max-height: calc(100vh - 250px);
+            max-height: calc(100vh - 200px);
             position: relative;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
@@ -230,7 +191,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 1200px;
+            min-width: 600px;
         }
 
         thead {
@@ -241,7 +202,7 @@
 
         th {
             background-color: var(--bg-tertiary);
-            padding: 15px;
+            padding: 10px 8px;
             text-align: left;
             font-weight: 600;
             border-bottom: 1px solid var(--border);
@@ -249,6 +210,7 @@
             user-select: none;
             position: relative;
             transition: background-color 0.3s ease;
+            font-size: 12px;
         }
 
         th:hover {
@@ -257,21 +219,22 @@
 
         th.sort-asc::after {
             content: " ▲";
-            font-size: 12px;
+            font-size: 10px;
             color: var(--text-primary);
         }
 
         th.sort-desc::after {
             content: " ▼";
-            font-size: 12px;
+            font-size: 10px;
             color: var(--text-primary);
         }
 
         td {
-            padding: 12px 15px;
+            padding: 8px;
             border-bottom: 1px solid var(--border);
             background-color: var(--bg-secondary);
             transition: background-color 0.2s ease;
+            font-size: 12px;
         }
 
         tbody tr:hover td {
@@ -281,18 +244,19 @@
         mark {
             background-color: var(--accent);
             color: var(--text-primary);
-            padding: 2px 4px;
+            padding: 1px 2px;
             border-radius: 2px;
         }
 
         input.editable {
             width: 100%;
-            padding: 8px;
+            padding: 6px;
             background-color: transparent;
             border: 1px solid transparent;
             color: var(--text-primary);
             border-radius: 4px;
             transition: all 0.2s ease;
+            font-size: 11px;
         }
 
         input.editable:focus {
@@ -308,12 +272,12 @@
         }
 
         .price-compra {
-            color: var(--proveedor);
+            color: var(--accent);
             font-weight: 600;
         }
 
         .price-venta {
-            color: var(--cliente);
+            color: var(--success);
             font-weight: 600;
         }
 
@@ -327,45 +291,47 @@
             font-weight: 600;
         }
 
-        .price-section {
+        .action-buttons {
             display: flex;
-            flex-direction: column;
             gap: 5px;
+            justify-content: center;
         }
 
-        .price-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .price-label {
-            font-size: 0.75rem;
+        .action-btn {
+            background: transparent;
+            border: 1px solid var(--border);
             color: var(--text-secondary);
-            min-width: 40px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 10px;
+            transition: all 0.3s ease;
         }
 
-        .price-value {
-            flex: 1;
-            text-align: right;
+        .action-btn:hover {
+            background-color: var(--accent);
+            color: var(--bg-primary);
+            border-color: var(--accent);
         }
 
-        .model-group {
-            background-color: rgba(255, 123, 0, 0.05);
-            border-left: 3px solid var(--accent);
+        .add-btn {
+            background-color: var(--success);
+            color: var(--bg-primary);
+            border: 1px solid var(--success);
         }
 
-        .model-group:hover td {
-            background-color: rgba(255, 123, 0, 0.1) !important;
+        .add-btn:hover {
+            background-color: #45a049;
+            border-color: #45a049;
         }
 
         .status {
-            padding: 12px;
-            margin-bottom: 15px;
+            padding: 10px;
+            margin-bottom: 10px;
             border-radius: 8px;
             text-align: center;
             font-weight: 500;
+            font-size: 12px;
         }
 
         .status.success {
@@ -394,29 +360,29 @@
 
         .loading {
             text-align: center;
-            padding: 40px;
+            padding: 30px;
             color: var(--text-secondary);
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
 
         .empty {
             text-align: center;
-            padding: 60px 40px;
+            padding: 40px 20px;
             color: var(--text-secondary);
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
 
         .empty .icon {
-            font-size: 3rem;
-            margin-bottom: 15px;
+            font-size: 2rem;
+            margin-bottom: 10px;
             opacity: 0.5;
         }
 
         .results-count {
             text-align: center;
             color: var(--text-secondary);
-            margin-bottom: 15px;
-            font-size: 0.9rem;
+            margin-bottom: 10px;
+            font-size: 0.8rem;
         }
 
         /* Modal styles */
@@ -436,30 +402,30 @@
 
         .modal-content {
             background-color: var(--bg-secondary);
-            padding: 30px;
+            padding: 20px;
             border-radius: 12px;
             width: 90%;
-            max-width: 400px;
+            max-width: 350px;
             border: 1px solid var(--border);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
         }
 
         .modal h2 {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             color: var(--accent);
             text-align: center;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
         }
 
         .modal-input {
             width: 100%;
-            padding: 15px;
-            margin-bottom: 20px;
+            padding: 12px;
+            margin-bottom: 15px;
             background-color: var(--bg-primary);
             border: 1px solid var(--border);
             border-radius: 8px;
             color: var(--text-primary);
-            font-size: 16px;
+            font-size: 14px;
             transition: all 0.3s ease;
         }
 
@@ -471,17 +437,18 @@
 
         .modal-buttons {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             justify-content: flex-end;
         }
 
         .modal-btn {
-            padding: 12px 24px;
+            padding: 10px 20px;
             border: none;
             border-radius: 6px;
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s ease;
+            font-size: 12px;
         }
 
         .modal-btn.primary {
@@ -505,93 +472,56 @@
 
         .edit-notice {
             text-align: center;
-            padding: 10px;
+            padding: 8px;
             background-color: rgba(255, 235, 59, 0.1);
             border: 1px solid var(--edit);
             border-radius: 4px;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             color: var(--edit);
+            font-size: 12px;
         }
 
-        @media (max-width: 1024px) {
+        @media (min-width: 768px) {
+            body {
+                padding: 20px;
+            }
+
             .search-controls {
-                flex-direction: column;
-                align-items: stretch;
+                flex-direction: row;
+                align-items: center;
             }
             
             .search-box {
-                min-width: auto;
-            }
-
-            .controls-group {
-                justify-content: center;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .admin-access {
-                position: static;
-                margin-bottom: 15px;
-                justify-content: center;
-            }
-
-            .controls-group {
-                flex-direction: column;
-                width: 100%;
-            }
-
-            .switch-container, .view-toggle {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .view-toggle {
-                justify-content: stretch;
-            }
-
-            .view-option {
-                flex: 1;
-                text-align: center;
+                min-width: 300px;
             }
 
             h1 {
-                font-size: 1.5rem;
+                font-size: 2rem;
             }
 
             .subtitle {
-                font-size: 0.9rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            body {
-                padding: 10px;
+                font-size: 1rem;
             }
 
-            .container {
-                padding: 0 5px;
-            }
-
-            input[type="text"] {
-                padding: 12px 15px;
+            .admin-access {
+                position: absolute;
+                top: 0;
+                right: 0;
+                margin-bottom: 0;
             }
 
             th, td {
-                padding: 10px 12px;
-                font-size: 0.9rem;
+                padding: 12px 15px;
+                font-size: 14px;
             }
 
-            .price-row {
-                flex-direction: column;
-                gap: 2px;
+            input.editable {
+                font-size: 14px;
             }
 
-            .price-label {
-                font-size: 0.7rem;
-            }
-
-            .price-value {
-                text-align: left;
+            .action-btn {
+                font-size: 12px;
+                padding: 6px 12px;
             }
         }
     </style>
@@ -615,19 +545,12 @@
             <div class="search-box">
                 <input type="text" id="searchInput" placeholder="Escribe marca, modelo, tipo o proveedor...">
             </div>
-            <div class="controls-group">
-                <div class="view-toggle">
-                    <button class="view-option active" data-view="cliente">Precios Cliente</button>
-                    <button class="view-option" data-view="proveedor">Precios Proveedor</button>
-                    <button class="view-option" data-view="completo">Vista Completa</button>
-                </div>
-                <div class="switch-container">
-                    <label class="switch">
-                        <input type="checkbox" id="bestPriceToggle">
-                        <span class="slider"></span>
-                    </label>
-                    <span>Mejor precio</span>
-                </div>
+            <div class="switch-container">
+                <label class="switch">
+                    <input type="checkbox" id="showProvidersToggle">
+                    <span class="slider"></span>
+                </label>
+                <span>Mostrar proveedores</span>
             </div>
         </div>
 
@@ -642,8 +565,9 @@
                         <th data-column="modelo">Modelo</th>
                         <th data-column="tipo">Tipo</th>
                         <th data-column="proveedor">Proveedor</th>
-                        <th data-column="precios">Precios (Bs)</th>
-                        <th data-column="notas">Notas</th>
+                        <th data-column="precio_compra">Compra (Bs)</th>
+                        <th data-column="precio_venta">Venta (Bs)</th>
+                        <th data-column="acciones">Acciones</th>
                     </tr>
                 </thead>
                 <tbody id="resultsBody">
@@ -680,6 +604,18 @@
         </div>
     </div>
 
+    <!-- Modal para editar/agregar item -->
+    <div class="modal" id="itemModal">
+        <div class="modal-content">
+            <h2 id="itemModalTitle">✏️ Editar Item</h2>
+            <input type="password" id="itemPassword" class="modal-input" placeholder="Clave para editar" autocomplete="off">
+            <div class="modal-buttons">
+                <button class="modal-btn secondary" id="cancelItemBtn">Cancelar</button>
+                <button class="modal-btn primary" id="confirmItemBtn">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Configuración de listas
         const CONFIG = [
@@ -691,14 +627,15 @@
         // Variables globales
         const ADMIN_PASSWORD = "123456";
         const EDIT_PASSWORD = "123456";
+        const ITEM_PASSWORD = "123456";
         let allData = [];
         let filteredData = [];
         let sortColumn = null;
         let sortDirection = 'asc';
         let searchTerm = '';
-        let showBestPriceOnly = false;
+        let showProviders = true;
         let editMode = false;
-        let currentView = 'cliente'; // 'cliente', 'proveedor', 'completo'
+        let currentEditRow = null;
 
         // Inicializar la aplicación
         document.addEventListener('DOMContentLoaded', function() {
@@ -706,17 +643,7 @@
 
             // Configurar event listeners
             document.getElementById('searchInput').addEventListener('input', handleSearch);
-            document.getElementById('bestPriceToggle').addEventListener('change', handleBestPriceToggle);
-            
-            // Configurar vista toggle
-            document.querySelectorAll('.view-option').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    document.querySelectorAll('.view-option').forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    currentView = this.getAttribute('data-view');
-                    renderTable();
-                });
-            });
+            document.getElementById('showProvidersToggle').addEventListener('change', handleProvidersToggle);
             
             // Configurar modales
             document.getElementById('adminBtn').addEventListener('click', showAdminModal);
@@ -727,6 +654,9 @@
             
             document.getElementById('cancelEditBtn').addEventListener('click', hideEditModal);
             document.getElementById('confirmEditBtn').addEventListener('click', handleEditAccess);
+
+            document.getElementById('cancelItemBtn').addEventListener('click', hideItemModal);
+            document.getElementById('confirmItemBtn').addEventListener('click', handleItemAccess);
             
             document.getElementById('adminPassword').addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') handleAdminAccess();
@@ -734,6 +664,10 @@
             
             document.getElementById('editPassword').addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') handleEditAccess();
+            });
+
+            document.getElementById('itemPassword').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') handleItemAccess();
             });
 
             // Configurar ordenamiento de columnas
@@ -771,6 +705,29 @@
             document.getElementById('editPassword').value = '';
         }
 
+        // Mostrar modal de item
+        function showItemModal(rowId = null, isAdd = false) {
+            currentEditRow = rowId;
+            const modal = document.getElementById('itemModal');
+            const title = document.getElementById('itemModalTitle');
+            
+            if (isAdd) {
+                title.textContent = '➕ Agregar Item';
+            } else {
+                title.textContent = '✏️ Editar Item';
+            }
+            
+            modal.style.display = 'flex';
+            document.getElementById('itemPassword').focus();
+        }
+
+        // Ocultar modal de item
+        function hideItemModal() {
+            document.getElementById('itemModal').style.display = 'none';
+            document.getElementById('itemPassword').value = '';
+            currentEditRow = null;
+        }
+
         // Manejar acceso administrativo
         function handleAdminAccess() {
             const password = document.getElementById('adminPassword').value;
@@ -800,6 +757,29 @@
                 alert('❌ Clave incorrecta. Intente nuevamente.');
                 document.getElementById('editPassword').value = '';
                 document.getElementById('editPassword').focus();
+            }
+        }
+
+        // Manejar acceso para editar/agregar item
+        function handleItemAccess() {
+            const password = document.getElementById('itemPassword').value;
+            
+            if (password === ITEM_PASSWORD) {
+                hideItemModal();
+                if (currentEditRow) {
+                    // Lógica para editar item existente
+                    showStatus('✅ Item editado correctamente', 'success');
+                } else {
+                    // Lógica para agregar nuevo item
+                    showStatus('✅ Nuevo item agregado', 'success');
+                }
+                setTimeout(() => {
+                    document.getElementById('statusMessage').style.display = 'none';
+                }, 2000);
+            } else {
+                alert('❌ Clave incorrecta. Intente nuevamente.');
+                document.getElementById('itemPassword').value = '';
+                document.getElementById('itemPassword').focus();
             }
         }
 
@@ -927,9 +907,9 @@
             applyFilters();
         }
 
-        // Manejar toggle de mejor precio
-        function handleBestPriceToggle(e) {
-            showBestPriceOnly = e.target.checked;
+        // Manejar toggle de proveedores
+        function handleProvidersToggle(e) {
+            showProviders = e.target.checked;
             applyFilters();
         }
 
@@ -948,8 +928,8 @@
                 filteredData = [...allData];
             }
             
-            // Aplicar filtro de mejor precio si está activo
-            if (showBestPriceOnly) {
+            // Aplicar filtro de proveedores si está desactivado
+            if (!showProviders) {
                 filteredData = getBestPrices(filteredData);
             }
             
@@ -1047,7 +1027,7 @@
             if (filteredData.length === 0) {
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="6" class="empty">
+                        <td colspan="7" class="empty">
                             <div class="icon">🔍</div>
                             ${searchTerm ? 'No se encontraron resultados para su búsqueda' : 'No hay datos para mostrar'}
                         </td>
@@ -1058,118 +1038,51 @@
             
             tbody.innerHTML = '';
             
-            // Agrupar por marca y modelo para mostrar tipos juntos
-            const groupedData = groupByModel(filteredData);
-            
-            groupedData.forEach(group => {
-                group.types.forEach((row, index) => {
-                    const tr = document.createElement('tr');
-                    if (group.types.length > 1 && index === 0) {
-                        tr.classList.add('model-group');
-                    }
-                    
-                    const tipoClass = row.tipo === 'OLED' ? 'tipo-oled' : 'tipo-lcd';
-                    
-                    // Renderizar precios según la vista seleccionada
-                    const preciosHTML = renderPrecios(row);
-                    
-                    tr.innerHTML = `
-                        <td>${index === 0 ? highlightMatches(row.marca) : ''}</td>
-                        <td>${index === 0 ? highlightMatches(row.modelo) : ''}</td>
-                        <td class="${tipoClass}">${highlightMatches(row.tipo)}</td>
-                        <td>${highlightMatches(row.proveedor)}</td>
-                        <td>${preciosHTML}</td>
-                        <td>
-                            <input type="text" 
-                                   class="editable" 
-                                   data-id="${generateRowId(row)}" 
-                                   data-field="notas" 
-                                   value="${row.notas || ''}"
-                                   placeholder="Notas">
-                        </td>
-                    `;
-                    tbody.appendChild(tr);
-                });
+            filteredData.forEach(row => {
+                const tr = document.createElement('tr');
+                const tipoClass = row.tipo === 'OLED' ? 'tipo-oled' : 'tipo-lcd';
+                
+                // Determinar si el campo de precio_compra es editable
+                const compraField = editMode ? 
+                    `<input type="text" 
+                            class="editable editable-compra" 
+                            data-id="${generateRowId(row)}" 
+                            data-field="precio_compra" 
+                            value="${formatCurrency(row.precio_compra)}"
+                            placeholder="0.00">` :
+                    `<span class="price-compra">${formatCurrency(row.precio_compra)}</span>`;
+                
+                tr.innerHTML = `
+                    <td>${highlightMatches(row.marca)}</td>
+                    <td>${highlightMatches(row.modelo)}</td>
+                    <td class="${tipoClass}">${highlightMatches(row.tipo)}</td>
+                    <td>${highlightMatches(row.proveedor)}</td>
+                    <td>${compraField}</td>
+                    <td>
+                        <input type="text" 
+                               class="editable" 
+                               data-id="${generateRowId(row)}" 
+                               data-field="precio_venta" 
+                               value="${formatCurrency(row.precio_venta)}"
+                               placeholder="0.00">
+                    </td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="action-btn" onclick="showItemModal('${generateRowId(row)}', false)">
+                                ✏️ Editar
+                            </button>
+                            <button class="action-btn add-btn" onclick="showItemModal(null, true)">
+                                ➕ Agregar
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
             });
             
             document.querySelectorAll('.editable').forEach(input => {
                 input.addEventListener('change', handleEdit);
             });
-        }
-
-        // Agrupar datos por marca y modelo
-        function groupByModel(data) {
-            const grouped = {};
-            
-            data.forEach(row => {
-                const key = `${row.marca}|${row.modelo}`;
-                if (!grouped[key]) {
-                    grouped[key] = {
-                        marca: row.marca,
-                        modelo: row.modelo,
-                        types: []
-                    };
-                }
-                grouped[key].types.push(row);
-            });
-            
-            return Object.values(grouped);
-        }
-
-        // Renderizar sección de precios según la vista
-        function renderPrecios(row) {
-            const compraField = editMode ? 
-                `<input type="text" 
-                        class="editable editable-compra" 
-                        data-id="${generateRowId(row)}" 
-                        data-field="precio_compra" 
-                        value="${formatCurrency(row.precio_compra)}"
-                        placeholder="0.00">` :
-                `<span class="price-compra">${formatCurrency(row.precio_compra)}</span>`;
-            
-            const ventaField = 
-                `<input type="text" 
-                        class="editable" 
-                        data-id="${generateRowId(row)}" 
-                        data-field="precio_venta" 
-                        value="${formatCurrency(row.precio_venta)}"
-                        placeholder="0.00">`;
-            
-            switch(currentView) {
-                case 'cliente':
-                    return `
-                        <div class="price-section">
-                            <div class="price-row">
-                                <span class="price-label">Venta:</span>
-                                <span class="price-value">${ventaField}</span>
-                            </div>
-                        </div>
-                    `;
-                
-                case 'proveedor':
-                    return `
-                        <div class="price-section">
-                            <div class="price-row">
-                                <span class="price-label">Compra:</span>
-                                <span class="price-value">${compraField}</span>
-                            </div>
-                        </div>
-                    `;
-                
-                case 'completo':
-                    return `
-                        <div class="price-section">
-                            <div class="price-row">
-                                <span class="price-label">Compra:</span>
-                                <span class="price-value">${compraField}</span>
-                            </div>
-                            <div class="price-row">
-                                <span class="price-label">Venta:</span>
-                                <span class="price-value">${ventaField}</span>
-                            </div>
-                        </div>
-                    `;
-            }
         }
 
         // Resaltar coincidencias de búsqueda
@@ -1255,9 +1168,6 @@
                 if (edits[rowId]) {
                     if (edits[rowId].precio_venta !== undefined) {
                         row.precio_venta = edits[rowId].precio_venta;
-                    }
-                    if (edits[rowId].notas !== undefined) {
-                        row.notas = edits[rowId].notas;
                     }
                 }
             });
