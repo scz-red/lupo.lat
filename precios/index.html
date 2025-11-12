@@ -32,7 +32,7 @@
             background-color: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.6;
-            padding: 10px;
+            padding: 8px;
         }
 
         .container {
@@ -41,36 +41,36 @@
         }
 
         header {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             text-align: center;
-            position: relative;
         }
 
         h1 {
             color: var(--accent);
-            margin-bottom: 8px;
-            font-size: 1.5rem;
+            margin-bottom: 6px;
+            font-size: 1.3rem;
         }
 
         .subtitle {
             color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-bottom: 15px;
+            font-size: 0.8rem;
+            margin-bottom: 12px;
         }
 
         .admin-access {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             justify-content: center;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
         }
 
         .admin-btn {
             background: transparent;
             color: var(--text-secondary);
             border: 1px solid var(--border);
-            padding: 6px 12px;
-            font-size: 12px;
+            padding: 5px 10px;
+            font-size: 11px;
             border-radius: 4px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -96,8 +96,8 @@
         .search-controls {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            margin-bottom: 15px;
+            gap: 8px;
+            margin-bottom: 12px;
         }
 
         .search-box {
@@ -107,10 +107,10 @@
 
         input[type="text"] {
             width: 100%;
-            padding: 12px 15px;
+            padding: 10px 12px;
             background-color: var(--bg-secondary);
             border: 1px solid var(--border);
-            border-radius: 8px;
+            border-radius: 6px;
             color: var(--text-primary);
             font-size: 14px;
             transition: all 0.3s ease;
@@ -128,17 +128,18 @@
             gap: 8px;
             white-space: nowrap;
             background-color: var(--bg-secondary);
-            padding: 8px 12px;
-            border-radius: 8px;
+            padding: 6px 10px;
+            border-radius: 6px;
             border: 1px solid var(--border);
             justify-content: center;
+            font-size: 12px;
         }
 
         .switch {
             position: relative;
             display: inline-block;
-            width: 40px;
-            height: 20px;
+            width: 36px;
+            height: 18px;
         }
 
         .switch input {
@@ -156,14 +157,14 @@
             bottom: 0;
             background-color: var(--bg-tertiary);
             transition: .4s;
-            border-radius: 20px;
+            border-radius: 18px;
         }
 
         .slider:before {
             position: absolute;
             content: "";
-            height: 14px;
-            width: 14px;
+            height: 12px;
+            width: 12px;
             left: 3px;
             bottom: 3px;
             background-color: white;
@@ -176,22 +177,22 @@
         }
 
         input:checked + .slider:before {
-            transform: translateX(20px);
+            transform: translateX(18px);
         }
 
         .table-container {
             overflow-x: auto;
-            border-radius: 8px;
+            border-radius: 6px;
             border: 1px solid var(--border);
-            max-height: calc(100vh - 200px);
+            max-height: calc(100vh - 180px);
             position: relative;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 600px;
+            min-width: 500px;
         }
 
         thead {
@@ -202,7 +203,7 @@
 
         th {
             background-color: var(--bg-tertiary);
-            padding: 10px 8px;
+            padding: 8px 6px;
             text-align: left;
             font-weight: 600;
             border-bottom: 1px solid var(--border);
@@ -210,7 +211,7 @@
             user-select: none;
             position: relative;
             transition: background-color 0.3s ease;
-            font-size: 12px;
+            font-size: 11px;
         }
 
         th:hover {
@@ -219,22 +220,22 @@
 
         th.sort-asc::after {
             content: " ▲";
-            font-size: 10px;
+            font-size: 9px;
             color: var(--text-primary);
         }
 
         th.sort-desc::after {
             content: " ▼";
-            font-size: 10px;
+            font-size: 9px;
             color: var(--text-primary);
         }
 
         td {
-            padding: 8px;
+            padding: 6px;
             border-bottom: 1px solid var(--border);
             background-color: var(--bg-secondary);
             transition: background-color 0.2s ease;
-            font-size: 12px;
+            font-size: 11px;
         }
 
         tbody tr:hover td {
@@ -250,13 +251,13 @@
 
         input.editable {
             width: 100%;
-            padding: 6px;
+            padding: 4px;
             background-color: transparent;
             border: 1px solid transparent;
             color: var(--text-primary);
-            border-radius: 4px;
+            border-radius: 3px;
             transition: all 0.2s ease;
-            font-size: 11px;
+            font-size: 10px;
         }
 
         input.editable:focus {
@@ -293,7 +294,7 @@
 
         .action-buttons {
             display: flex;
-            gap: 5px;
+            gap: 3px;
             justify-content: center;
         }
 
@@ -301,11 +302,12 @@
             background: transparent;
             border: 1px solid var(--border);
             color: var(--text-secondary);
-            padding: 4px 8px;
-            border-radius: 4px;
+            padding: 3px 6px;
+            border-radius: 3px;
             cursor: pointer;
-            font-size: 10px;
+            font-size: 9px;
             transition: all 0.3s ease;
+            white-space: nowrap;
         }
 
         .action-btn:hover {
@@ -326,12 +328,12 @@
         }
 
         .status {
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 8px;
+            padding: 8px;
+            margin-bottom: 8px;
+            border-radius: 6px;
             text-align: center;
             font-weight: 500;
-            font-size: 12px;
+            font-size: 11px;
         }
 
         .status.success {
@@ -360,29 +362,29 @@
 
         .loading {
             text-align: center;
-            padding: 30px;
+            padding: 20px;
             color: var(--text-secondary);
-            font-size: 1rem;
+            font-size: 0.9rem;
         }
 
         .empty {
             text-align: center;
-            padding: 40px 20px;
+            padding: 30px 15px;
             color: var(--text-secondary);
-            font-size: 1rem;
+            font-size: 0.9rem;
         }
 
         .empty .icon {
-            font-size: 2rem;
-            margin-bottom: 10px;
+            font-size: 1.5rem;
+            margin-bottom: 8px;
             opacity: 0.5;
         }
 
         .results-count {
             text-align: center;
             color: var(--text-secondary);
-            margin-bottom: 10px;
-            font-size: 0.8rem;
+            margin-bottom: 8px;
+            font-size: 0.7rem;
         }
 
         /* Modal styles */
@@ -398,32 +400,33 @@
             align-items: center;
             justify-content: center;
             backdrop-filter: blur(5px);
+            padding: 10px;
         }
 
         .modal-content {
             background-color: var(--bg-secondary);
-            padding: 20px;
-            border-radius: 12px;
-            width: 90%;
-            max-width: 350px;
+            padding: 15px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 320px;
             border: 1px solid var(--border);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
         }
 
         .modal h2 {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             color: var(--accent);
             text-align: center;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
         }
 
         .modal-input {
             width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
+            padding: 10px;
+            margin-bottom: 12px;
             background-color: var(--bg-primary);
             border: 1px solid var(--border);
-            border-radius: 8px;
+            border-radius: 6px;
             color: var(--text-primary);
             font-size: 14px;
             transition: all 0.3s ease;
@@ -437,18 +440,18 @@
 
         .modal-buttons {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             justify-content: flex-end;
         }
 
         .modal-btn {
-            padding: 10px 20px;
+            padding: 8px 16px;
             border: none;
-            border-radius: 6px;
+            border-radius: 4px;
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s ease;
-            font-size: 12px;
+            font-size: 11px;
         }
 
         .modal-btn.primary {
@@ -458,7 +461,7 @@
 
         .modal-btn.primary:hover {
             background-color: var(--accent-hover);
-            transform: translateY(-2px);
+            transform: translateY(-1px);
         }
 
         .modal-btn.secondary {
@@ -472,18 +475,43 @@
 
         .edit-notice {
             text-align: center;
-            padding: 8px;
+            padding: 6px;
             background-color: rgba(255, 235, 59, 0.1);
             border: 1px solid var(--edit);
-            border-radius: 4px;
-            margin-bottom: 10px;
+            border-radius: 3px;
+            margin-bottom: 8px;
             color: var(--edit);
-            font-size: 12px;
+            font-size: 11px;
+        }
+
+        /* Mobile-first responsive design */
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+            
+            .table-container {
+                max-height: calc(100vh - 160px);
+            }
+            
+            table {
+                min-width: 450px;
+            }
+            
+            th, td {
+                padding: 4px;
+                font-size: 10px;
+            }
+            
+            .action-btn {
+                padding: 2px 4px;
+                font-size: 8px;
+            }
         }
 
         @media (min-width: 768px) {
             body {
-                padding: 20px;
+                padding: 15px;
             }
 
             .search-controls {
@@ -492,15 +520,15 @@
             }
             
             .search-box {
-                min-width: 300px;
+                min-width: 250px;
             }
 
             h1 {
-                font-size: 2rem;
+                font-size: 1.8rem;
             }
 
             .subtitle {
-                font-size: 1rem;
+                font-size: 0.9rem;
             }
 
             .admin-access {
@@ -511,17 +539,29 @@
             }
 
             th, td {
-                padding: 12px 15px;
-                font-size: 14px;
+                padding: 10px 8px;
+                font-size: 12px;
             }
 
             input.editable {
-                font-size: 14px;
+                font-size: 12px;
             }
 
             .action-btn {
-                font-size: 12px;
-                padding: 6px 12px;
+                font-size: 10px;
+                padding: 4px 8px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            th, td {
+                padding: 12px 10px;
+                font-size: 13px;
+            }
+            
+            .action-btn {
+                font-size: 11px;
+                padding: 5px 10px;
             }
         }
     </style>
@@ -547,10 +587,10 @@
             </div>
             <div class="switch-container">
                 <label class="switch">
-                    <input type="checkbox" id="showProvidersToggle">
+                    <input type="checkbox" id="showProvidersToggle" checked>
                     <span class="slider"></span>
                 </label>
-                <span>Mostrar proveedores</span>
+                <span>Mostrar precios de proveedores</span>
             </div>
         </div>
 
@@ -593,7 +633,7 @@
     <div class="modal" id="editModal">
         <div class="modal-content">
             <h2>🔓 Modo Edición</h2>
-            <p style="margin-bottom: 20px; color: var(--text-secondary); text-align: center;">
+            <p style="margin-bottom: 15px; color: var(--text-secondary); text-align: center; font-size: 12px;">
                 Ingrese la clave para editar precios de compra y toda la lista
             </p>
             <input type="password" id="editPassword" class="modal-input" placeholder="Clave de edición" autocomplete="off">
@@ -604,10 +644,22 @@
         </div>
     </div>
 
-    <!-- Modal para editar/agregar item -->
+    <!-- Modal mejorado para editar/agregar item -->
     <div class="modal" id="itemModal">
         <div class="modal-content">
             <h2 id="itemModalTitle">✏️ Editar Item</h2>
+            <div id="itemForm" style="display: none;">
+                <input type="text" id="editMarca" class="modal-input" placeholder="Marca">
+                <input type="text" id="editModelo" class="modal-input" placeholder="Modelo">
+                <select id="editTipo" class="modal-input">
+                    <option value="">Seleccionar tipo</option>
+                    <option value="OLED">OLED</option>
+                    <option value="LCD">LCD</option>
+                </select>
+                <input type="text" id="editProveedor" class="modal-input" placeholder="Proveedor">
+                <input type="number" id="editPrecioCompra" class="modal-input" placeholder="Precio Compra (Bs)" step="0.01">
+                <input type="number" id="editPrecioVenta" class="modal-input" placeholder="Precio Venta (Bs)" step="0.01">
+            </div>
             <input type="password" id="itemPassword" class="modal-input" placeholder="Clave para editar" autocomplete="off">
             <div class="modal-buttons">
                 <button class="modal-btn secondary" id="cancelItemBtn">Cancelar</button>
@@ -636,6 +688,7 @@
         let showProviders = true;
         let editMode = false;
         let currentEditRow = null;
+        let currentAction = ''; // 'edit' o 'add'
 
         // Inicializar la aplicación
         document.addEventListener('DOMContentLoaded', function() {
@@ -705,27 +758,42 @@
             document.getElementById('editPassword').value = '';
         }
 
-        // Mostrar modal de item
+        // Mostrar modal de item mejorado
         function showItemModal(rowId = null, isAdd = false) {
             currentEditRow = rowId;
+            currentAction = isAdd ? 'add' : 'edit';
             const modal = document.getElementById('itemModal');
             const title = document.getElementById('itemModalTitle');
+            const form = document.getElementById('itemForm');
+            const passwordInput = document.getElementById('itemPassword');
             
             if (isAdd) {
-                title.textContent = '➕ Agregar Item';
+                title.textContent = '➕ Agregar Nuevo Item';
+                form.style.display = 'block';
+                // Limpiar formulario
+                document.getElementById('editMarca').value = '';
+                document.getElementById('editModelo').value = '';
+                document.getElementById('editTipo').value = '';
+                document.getElementById('editProveedor').value = '';
+                document.getElementById('editPrecioCompra').value = '';
+                document.getElementById('editPrecioVenta').value = '';
             } else {
                 title.textContent = '✏️ Editar Item';
+                form.style.display = 'none';
+                // Aquí podrías cargar los datos del item si quisieras
             }
             
             modal.style.display = 'flex';
-            document.getElementById('itemPassword').focus();
+            passwordInput.focus();
         }
 
         // Ocultar modal de item
         function hideItemModal() {
             document.getElementById('itemModal').style.display = 'none';
             document.getElementById('itemPassword').value = '';
+            document.getElementById('itemForm').style.display = 'none';
             currentEditRow = null;
+            currentAction = '';
         }
 
         // Manejar acceso administrativo
@@ -735,9 +803,12 @@
             if (password === ADMIN_PASSWORD) {
                 window.location.href = 'upload.php';
             } else {
-                alert('❌ Clave incorrecta. Intente nuevamente.');
+                showStatus('❌ Clave incorrecta. Intente nuevamente.', 'error');
                 document.getElementById('adminPassword').value = '';
                 document.getElementById('adminPassword').focus();
+                setTimeout(() => {
+                    document.getElementById('statusMessage').style.display = 'none';
+                }, 2000);
             }
         }
 
@@ -754,32 +825,67 @@
                     document.getElementById('statusMessage').style.display = 'none';
                 }, 2000);
             } else {
-                alert('❌ Clave incorrecta. Intente nuevamente.');
+                showStatus('❌ Clave incorrecta. Intente nuevamente.', 'error');
                 document.getElementById('editPassword').value = '';
                 document.getElementById('editPassword').focus();
+                setTimeout(() => {
+                    document.getElementById('statusMessage').style.display = 'none';
+                }, 2000);
             }
         }
 
-        // Manejar acceso para editar/agregar item
+        // Manejar acceso para editar/agregar item MEJORADO
         function handleItemAccess() {
             const password = document.getElementById('itemPassword').value;
             
             if (password === ITEM_PASSWORD) {
-                hideItemModal();
-                if (currentEditRow) {
+                if (currentAction === 'add') {
+                    // Validar campos del formulario
+                    const marca = document.getElementById('editMarca').value.trim();
+                    const modelo = document.getElementById('editModelo').value.trim();
+                    const tipo = document.getElementById('editTipo').value;
+                    const proveedor = document.getElementById('editProveedor').value.trim();
+                    const precioCompra = parseFloat(document.getElementById('editPrecioCompra').value);
+                    const precioVenta = parseFloat(document.getElementById('editPrecioVenta').value);
+                    
+                    if (!marca || !modelo || !tipo || !proveedor || isNaN(precioCompra)) {
+                        showStatus('❌ Complete todos los campos obligatorios', 'error');
+                        setTimeout(() => {
+                            document.getElementById('statusMessage').style.display = 'none';
+                        }, 2000);
+                        return;
+                    }
+                    
+                    // Agregar nuevo item
+                    const newItem = {
+                        lista: 'Manual',
+                        marca: marca,
+                        modelo: modelo,
+                        tipo: tipo,
+                        proveedor: proveedor,
+                        precio_compra: precioCompra,
+                        precio_venta: precioVenta || null
+                    };
+                    
+                    allData.push(newItem);
+                    applyFilters();
+                    showStatus('✅ Nuevo item agregado correctamente', 'success');
+                } else {
                     // Lógica para editar item existente
                     showStatus('✅ Item editado correctamente', 'success');
-                } else {
-                    // Lógica para agregar nuevo item
-                    showStatus('✅ Nuevo item agregado', 'success');
                 }
+                
+                hideItemModal();
                 setTimeout(() => {
                     document.getElementById('statusMessage').style.display = 'none';
                 }, 2000);
             } else {
-                alert('❌ Clave incorrecta. Intente nuevamente.');
+                showStatus('❌ Clave incorrecta. Intente nuevamente.', 'error');
                 document.getElementById('itemPassword').value = '';
                 document.getElementById('itemPassword').focus();
+                setTimeout(() => {
+                    document.getElementById('statusMessage').style.display = 'none';
+                }, 2000);
             }
         }
 
