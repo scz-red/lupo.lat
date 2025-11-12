@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Buscador de Precios</title>
+  <meta name="description" content="Buscador rápido para listas de precios (OLED / LCD) con mejor precio, exportación y edición protegida." />
+  <meta name="color-scheme" content="dark light" />
+  <style>
+    :root{
+      --bg:#0c0c10; --card:#14141a; --muted:#a1a1aa; --text:#e7e7ea; --ok:#10b981;
+      --brand:#ff7a00; --brand-600:#ff8f2b; --danger:#ef4444; --border:#23232a;
+      --shadow:0 8px 30px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background:linear-gradient(180deg,#0d0d12 0%,#111118 100%);color:var(--text);font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial;-webkit-font-smoothing:antialiased}
+    a{color:var(--brand-600);text-decoration:none}
+    .wrap{max-width:1200px;margin-inline:auto;padding:16px}
+
+    /* Header */
+    header{display:flex;gap:12px;align-items:center;justify-content:space-between;margin:4px 0 12px}
+    .title{display:flex;gap:10px;align-items:center}
+    .logo{width:34px;height:34px;border-radius:10px;background:linear-gradient(150deg,var(--brand) 0%, var(--brand-600) 60%, #ff6100 100%);box-shadow:0 10px 30px rgba(255,122,0,.25)}
+    h1{font-size:18px;margin:0;letter-spacing:.2px}
+
+    /* Sticky search bar */
+    .toolbar{position:sticky;top:0;z-index:20;background:rgba(18,18,26,.8);backdrop-filter:blur(10px);border:1px solid var(--border);box-shadow:var(--shadow);
+             display:grid;grid-template-columns:1fr auto auto;gap:8px;padding:10px;border-radius:14px}
+    .toolbar input[type="text"]{background:#0f0f15;border:1px solid var(--border);color:var(--text);padding:14px 12px;border-radius:12px;outline:none;font-size:16px}
+    .toolbar input[type="text"]:focus{border-color:var(--brand)}
+    .switch{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+    .btn{background:var(--brand);border:none;color:#111;padding:12px 14px;border-radius:12px;font-weight:700;cursor:pointer;min-height:44px}
+    .btn.secondary{background:#1a1a22;border:1px solid var(--border);color:var(--text)}
+    .btn.small{padding:6px 10px;font-size:12px;border-radius:10px}
+
+    /* Action row (mobile bottom bar) */
+    .actions{position:sticky;bottom:0;z-index:15;margin-top:10px;background:rgba(20,20,26,.8);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:14px;padding:8px;display:flex;gap:8px}
+    .actions .btn{flex:1}
+
+    /* Table/Card container */
+    .card{margin-top:12px;background:rgba(255,255,255,.03);backdrop-filter:blur(6px);border:1px solid var(--border);border-radius:18px;overflow:hidden}
+    .table-container{width:100%;overflow-x:auto}
+    table{width:100%;border-collapse:collapse;table-layout:fixed}
+    thead th{position:sticky;top:66px;background:linear-gradient(180deg,#17171c 0%,#121216 100%);border-bottom:1px solid var(--border);padding:10px;text-align:left;font-size:12px;color:#c7cbd1}
+    thead th.sortable{cursor:pointer}
+    thead th .arrows{opacity:.45;margin-left:6px}
+    tbody td{border-bottom:1px solid #1d1e24;padding:10px;font-size:13px;word-wrap:break-word}
+    tbody tr:hover{background:#15151c}
+    .price{font-variant-numeric:tabular-nums}
+    .muted{color:var(--muted)}
+    .editable{background:#0f0f15;border:1px dashed #2a2b33;border-radius:10px;padding:8px 10px;min-width:100px;color:var(--text)}
+    .badge{display:inline-block;padding:2px 8px;border-radius:999px;border:1px solid var(--border);font-size:12px;color:#d4d4d8}
+
+    .footer{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;color:var(--muted);font-size:13px}
+    .count{color:#cbd5e1}
+
+    /* Compact widths so all columns fit on phones */
+    thead th:nth-child(1), tbody td:nth-child(1){width:10%}  /* Lista */
+    thead th:nth-child(2), tbody td:nth-child(2){width:18%}  /* Marca */
+    thead th:nth-child(3), tbody td:nth-child(3){width:22%}  /* Modelo */
+    thead th:nth-child(4), tbody td:nth-child(4){width:10%}  /* Tipo */
+    thead th:nth-child(5), tbody td:nth-child(5){width:16%}  /* Proveedor */
+    thead th:nth-child(6), tbody td:nth-child(6){width:12%}  /* Compra */
+    thead th:nth-child(7), tbody td:nth-child(7){width:12%}  /* Venta */
+    thead th:nth-child(8), tbody td:nth-child(8){width:10%}  /* Acción */
+
+    /* Ocultar Proveedor (col 5) y Compra (col 6) cuando se apaga el toggle */
+    .table-container.hide-provider thead th:nth-child(5),
+    .table-container.hide-provider tbody td:nth-child(5),
+    .table-container.hide-provider thead th:nth-child(6),
+    .table-container.hide-provider tbody td:nth-child(6){
+      display:none;
+    }
+
+    @media (max-width: 520px){
+      th, td { padding: 6px; font-size: 11px; }
+      input.editable { font-size: 11px; padding: 5px; min-width:auto }
+      .btn.small { font-size: 11px; padding: 5px 8px; }
+      h1{font-size:16px}
+    }
+
+    mark{background:rgba(255,122,0,.25);color:inherit;border-radius:4px;padding:0 3px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="title"><div class="logo"></div><h1>Buscador de Lista de Precios</h1></div>
+      <div style="display:flex; gap:8px; align-items:center">
+        <button class="btn secondary" id="btnRecargar" title="Volver a leer los CSV">Recargar</button>
+      </div>
+    </header>
+
+    <div class="toolbar" role="search">
+      <input id="q" type="text" placeholder="Escribe modelo, marca o cualquier palabra…" aria-label="Buscar" />
+      <label class="switch"><input type="checkbox" id="showProvidersToggle"/> Mostrar proveedores (precios de compra)</label>
+      <button class="btn" id="btnExport" title="Exportar a CSV">Exportar CSV</button>
+    </div>
+
+    <div class="actions">
+      <button class="btn secondary" id="btnLimpiar" title="Borrar datos locales">Limpiar caché</button>
+      <button class="btn secondary" id="btnGuardar" title="Guardar edición local">Guardar</button>
+    </div>
+
+    <div class="card">
+      <div class="table-container" id="tableWrap">
+        <table class="table" id="grid">
+          <thead>
+            <tr>
+              <th class="sortable" data-key="lista">Lista <span class="arrows">▲▼</span></th>
+              <th class="sortable" data-key="marca">Marca <span class="arrows">▲▼</span></th>
+              <th class="sortable" data-key="modelo">Modelo <span class="arrows">▲▼</span></th>
+              <th class="sortable" data-key="tipo">Tipo <span class="arrows">▲▼</span></th>
+              <th class="sortable" data-key="proveedor">Proveedor <span class="arrows">▲▼</span></th>
+              <th class="sortable" data-key="precio_compra">Compra (Bs) <span class="arrows">▲▼</span></th>
+              <th class="sortable" data-key="precio_venta">Venta (Bs) <span class="arrows">▲▼</span></th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+      <div class="footer">
+        <span class="count" id="counter">0 ítems</span>
+        <span class="muted">Para editar una fila, pulsa “Editar” (pedirá clave).</span>
+      </div>
+    </div>
+
+    <details class="help" style="margin-top:10px;color:#a1a1aa;font-size:13px">
+      <summary><strong>Cómo usar / actualizar</strong></summary>
+      <ol>
+        <li>Sube tus CSV a <code>/data/</code> (usa <code>upload.php</code> → clave).</li>
+        <li>Formato exacto: <code>marca,modelo,tipo,proveedor,precio_compra,precio_venta,notas</code></li>
+        <li>Presiona <strong>Recargar</strong> para ver cambios.</li>
+        <li>Apaga <em>Mostrar proveedores</em> para ver solo el mejor precio y ocultar Proveedor + Compra.</li>
+      </ol>
+    </details>
+  </div>
+
+  <script>
+    // ====== CONFIGURA TUS LISTAS ======
+    const CONFIG = [
+      { nombre: 'J&A', archivo: 'data/ja.csv' }
+      // Añade más proveedores si quieres
+      // { nombre: 'MóvilMax', archivo: 'data/movilmax.csv' },
+      // { nombre: 'TecnoParts', archivo: 'data/tecnoparts.csv' }
+    ];
+    // ===================================
+
+    // Clave de edición (PIDE CLAVE al apretar "Editar")
+    const EDIT_PASSWORD = "2025"; // cambia aquí si necesitas otra
+    let editUnlocked = false;      // se habilita una vez por sesión
+
+    const q = document.getElementById('q');
+    const tbody = document.getElementById('tbody');
+    const counter = document.getElementById('counter');
+    const btnExport = document.getElementById('btnExport');
+    const btnGuardar = document.getElementById('btnGuardar');
+    const btnLimpiar = document.getElementById('btnLimpiar');
+    const btnRecargar = document.getElementById('btnRecargar');
+    const showToggle = document.getElementById('showProvidersToggle');
+    const tableWrap = document.getElementById('tableWrap');
+
+    let rows = [];
+    let view = [];
+    let sortState = { key: 'precio_compra', dir: 'asc' };
+    const numberFmt = new Intl.NumberFormat('es-BO', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+
+    // Utils
+    const slug = (s)=> (s||'').toString().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+    const escapeHtml = (s)=> (s??'').toString().replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+    const escapeAttr = (s)=> (s??'').toString().replace(/"/g,'&quot;');
+    function highlight(text,query){ if(!query) return text; const esc=query.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); return text.replace(new RegExp(esc,'ig'), m=>`<mark>${m}</mark>`); }
+
+    function parseCSV(text){
+      const sep = text.indexOf(';')>-1 && text.indexOf(',')===-1 ? ';' : ',';
+      const lines = text.replace(/\r\n/g,'\n').replace(/\r/g,'\n').split('\n').filter(l=>l.trim().length>0);
+      const out = []; let headers = [];
+      function splitLine(line){ const res=[]; let cur=''; let q=false; for(let i=0;i<line.length;i++){ const ch=line[i]; if(ch==='"'){ if(q && line[i+1]==='"'){cur+='"'; i++;} else q=!q; } else if(ch===sep && !q){res.push(cur); cur='';} else cur+=ch; } res.push(cur); return res.map(v=>v.trim()); }
+      lines.forEach((line,idx)=>{ const cols=splitLine(line); if(idx===0){ headers = cols.map(h=>slug(h)); } else { const obj={}; cols.forEach((v,i)=> obj[headers[i]||`col${i}`]=v ); out.push(obj);} });
+      return out;
+    }
+
+    function coerceRow(obj, listaNombre){
+      return {
+        lista: listaNombre,
+        marca: obj.marca || obj.brand || '',
+        modelo: obj.modelo || obj.model || '',
+        tipo: (obj.tipo||'').toUpperCase(),
+        proveedor: obj.proveedor || obj.vendor || '',
+        precio_compra: parseFloat(String(obj.precio_compra||obj.precio||obj.price||'').replace(/[^0-9.,]/g,'').replace(',','.')) || 0,
+        precio_venta: (obj.precio_venta===''||obj.precio_venta==null)?'':(parseFloat(String(obj.precio_venta).replace(/[^0-9.,]/g,'').replace(',','.'))),
+        notas: obj.notas || ''
+      }
+    }
+
+    async function cargarListas(){
+      const cacheKey = 'precios.rows.cache.v3';
+      try{
+        const all=[];
+        for(const l of CONFIG){
+          const res = await fetch(l.archivo, {cache:'no-store'});
+          if(!res.ok){ console.warn('No se pudo cargar', l.archivo); continue; }
+          const text = await res.text();
+          const parsed = parseCSV(text).map(o=>coerceRow(o, l.nombre));
+          all.push(...parsed);
+        }
+        rows = all;
+        localStorage.setItem(cacheKey, JSON.stringify(rows));
+        applyFilters();
+      }catch(err){
+        console.error(err);
+        const s = localStorage.getItem(cacheKey);
+        if(s){ rows = JSON.parse(s)||[]; applyFilters(); }
+      }
+    }
+
+    function applyFilters(){
+      const s = slug(q.value);
+      let base = rows.filter(r=>{
+        const hay = slug([r.lista,r.marca,r.modelo,r.tipo,r.proveedor,r.notas, r.precio_compra, r.precio_venta].join(' '));
+        return !s || hay.includes(s);
+      });
+      if(!showToggle.checked){
+        // Toggle APAGADO → agrupar por mejor precio
+        const map = new Map();
+        base.forEach(r=>{
+          const key = [r.marca,r.modelo,r.tipo].join('|');
+          const curr = map.get(key);
+          if(!curr || Number(r.precio_compra)<Number(curr.precio_compra)) map.set(key, r);
+        });
+        view = Array.from(map.values());
+      } else {
+        view = base; // Toggle ENCENDIDO → lista completa por proveedor
+      }
+      sortAndRender();
+    }
+
+    function sortAndRender(){
+      const {key,dir} = sortState;
+      view.sort((a,b)=>{
+        let va=a[key], vb=b[key];
+        if(key.includes('precio')){ va=Number(va)||0; vb=Number(vb)||0; }
+        else { va=String(va).toLowerCase(); vb=String(vb).toLowerCase(); }
+        if(va<vb) return dir==='asc'?-1:1;
+        if(va>vb) return dir==='asc'?1:-1;
+        return 0;
+      });
+      renderTable();
+    }
+
+    function renderTable(){
+      const s = q.value.trim();
+      tbody.innerHTML = view.map((r)=>{
+        return `<tr>
+          <td class="muted" data-label="Lista">${escapeHtml(r.lista)}</td>
+          <td data-label="Marca">${highlight(escapeHtml(r.marca), s)}</td>
+          <td data-label="Modelo">${highlight(escapeHtml(r.modelo), s)}</td>
+          <td class="muted" data-label="Tipo"><span class="badge">${escapeHtml(r.tipo)}</span></td>
+          <td class="muted" data-label="Proveedor"><span class="badge">${escapeHtml(r.proveedor)}</span></td>
+          <td class="price" data-label="Compra (Bs)">${numberFmt.format(r.precio_compra)}</td>
+          <td data-label="Venta (Bs)">
+            <input class="editable" type="text" inputmode="decimal" value="${r.precio_venta!==''?r.precio_venta:''}" placeholder="—" data-field="precio_venta" data-key="${rowKey(r)}" disabled />
+          </td>
+          <td data-label="Acción">
+            <button class="btn small edit-btn" data-key="${rowKey(r)}">Editar</button>
+          </td>
+        </tr>`
+      }).join('');
+      counter.textContent = `${view.length} ítem${view.length===1?'':'s'}`;
+    }
+
+    function rowKey(r){
+      return [r.lista,r.marca,r.modelo,r.tipo,r.proveedor,r.precio_compra].join('|');
+    }
+
+    // === Edición protegida ===
+    function requestEditUnlock(){
+      if (editUnlocked) return true;
+      const pass = prompt('Ingrese la clave de edición:');
+      if (pass === EDIT_PASSWORD){
+        editUnlocked = true; return true;
+      } else { alert('Clave incorrecta'); return false; }
+    }
+
+    tbody.addEventListener('click', (e)=>{
+      const btn = e.target.closest('.edit-btn');
+      if (!btn) return;
+      if (!requestEditUnlock()) return;
+      const tr = btn.closest('tr');
+      const inp = tr.querySelector('input.editable[data-field="precio_venta"]');
+      if (inp){ inp.disabled = false; inp.focus(); btn.textContent = 'Editar (activo)'; }
+    });
+
+    tbody.addEventListener('focusin', (e)=>{
+      const inp = e.target.closest('input.editable');
+      if (!inp) return;
+      if (inp.disabled && !editUnlocked){ e.target.blur(); alert('Para editar, pulsa “Editar” y coloca la clave.'); }
+    });
+
+    // Guardar cambios en memoria + cache
+    tbody.addEventListener('change', (e)=>{
+      const inp = e.target.closest('input.editable');
+      if (!inp) return;
+      const key = inp.dataset.key; const f = inp.dataset.field; const val = inp.value;
+      const i = rows.findIndex(rr=>rowKey(rr)===key);
+      if(i>-1){
+        if(f==='precio_venta'){
+          const n = parseFloat(val.replace(/[^0-9.,]/g,'').replace(',', '.'));
+          rows[i][f] = isNaN(n)?'':n;
+        }
+        saveCache();
+      }
+    });
+
+    // Events generales
+    document.querySelectorAll('thead th.sortable').forEach(th=>{
+      th.addEventListener('click',()=>{
+        const key = th.dataset.key; sortState.dir = (sortState.key===key && sortState.dir==='asc')?'desc':'asc'; sortState.key = key; sortAndRender();
+      })
+    })
+
+    q.addEventListener('input', applyFilters);
+
+    showToggle.addEventListener('change', ()=>{
+      // Oculta visualmente proveedor + compra cuando está APAGADO
+      tableWrap.classList.toggle('hide-provider', !showToggle.checked);
+      applyFilters();
+    });
+
+    btnRecargar.addEventListener('click', ()=>{ cargarListas(); flash(btnRecargar,'Recargado') })
+    btnGuardar.addEventListener('click', ()=>{ saveCache(); flash(btnGuardar,'Guardado'); })
+    btnLimpiar.addEventListener('click', ()=>{
+      if(confirm('¿Eliminar datos guardados y limpiar la tabla?')){
+        rows=[]; view=[]; localStorage.removeItem('precios.rows.cache.v3'); renderTable(); counter.textContent='0 ítems';
+      }
+    })
+    btnExport.addEventListener('click', ()=>{
+      if(!view.length){ alert('No hay datos para exportar.'); return; }
+      const headers=['lista','marca','modelo','tipo','proveedor','precio_compra','precio_venta'];
+      const csv = [headers.join(',')].concat(view.map(r=> headers.map(h=> csvCell(r[h])).join(','))).join('\n');
+      download('precios_filtrados.csv', csv);
+    })
+
+    function saveCache(){ localStorage.setItem('precios.rows.cache.v3', JSON.stringify(rows)); }
+
+    function flash(el, text){
+      const old=el.textContent; el.textContent=text; el.disabled=true; setTimeout(()=>{el.disabled=false; el.textContent=old},900)
+    }
+
+    function csvCell(v){ const s=(v===undefined||v===null)?'':String(v); return /[",\n]/.test(s) ? '"'+s.replace(/"/g,'""')+'"' : s }
+    function download(name, content){ const blob=new Blob([content],{type:'text/csv;charset=utf-8;'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=name; a.click(); URL.revokeObjectURL(url); }
+
+    (async function init(){
+      await cargarListas();
+      // Sincroniza estado inicial del toggle (oculta proveedor + compra si está apagado)
+      tableWrap.classList.toggle('hide-provider', !showToggle.checked);
+    })();
+  </script>
+</body>
+</html>
