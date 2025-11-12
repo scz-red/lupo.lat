@@ -1,7 +1,7 @@
 marca,modelo,tipo,proveedor,precio_compra,precio_venta,notas
 Honor,X8,LCD,J&A,125.0,280.0,
 Honor,X5,LCD,J&A,125.0,380.0,
-Huawei,Nova 4,LCD,J&A,190.0,,
+Huawei,Nova 4,LCD,J&A,190.0,350.0,
 Huawei,Nova 5T,LCD,J&A,155.0,310.0,
 Huawei,P30 Lite,LCD,J&A,150.0,330.0,
 Huawei,Y5 2019,LCD,J&A,100.0,230.0,
