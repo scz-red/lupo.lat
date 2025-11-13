@@ -791,14 +791,13 @@
     </div>
 
     <script>
-        // Configuración de listas
+        // Configuración de listas CORREGIDA
         const CONFIG = [
             { nombre: "J&A", archivo: "data/ja.csv" },
             { nombre: "CentralCell", archivo: "data/centralcel.csv" },
-            { nombre: "Osmobil", archivo: "data/osmobil.csv" }
-            { nombre: "CFH LP", archivo: "data/CFH.csv" }
+            { nombre: "Osmobil", archivo: "data/osmobil.csv" },
+            { nombre: "CFH LP", archivo: "data/CFH.csv" },
             { nombre: "BITE", archivo: "data/bite.csv" }
-            
         ];
 
         // Variables globales
@@ -916,7 +915,7 @@
             const passwordInput = document.getElementById('itemPassword');
             
             if (isAdd) {
-                title.textContent = '➕ ';
+                title.textContent = '➕ Agregar Nuevo Item';
                 form.style.display = 'block';
                 // Limpiar formulario
                 document.getElementById('editMarca').value = '';
@@ -926,7 +925,7 @@
                 document.getElementById('editPrecioCompra').value = '';
                 document.getElementById('editPrecioVenta').value = '';
             } else {
-                title.textContent = '✏️ ';
+                title.textContent = '✏️ Editar Item';
                 form.style.display = 'none';
             }
             
@@ -1135,6 +1134,7 @@
                         .then(csvText => parseCSV(csvText, list.nombre))
                         .catch(error => {
                             console.error(`Error cargando ${list.archivo}:`, error);
+                            showStatus(`❌ Error cargando ${list.nombre}`, 'error');
                             return [];
                         })
                 );
