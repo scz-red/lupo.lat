@@ -1,6 +1,7 @@
 marca,modelo,tipo,proveedor,precio_compra,precio_venta,notas
 Honnor,Magic 5 lite,INCEL,J&A,230.0,390.0,
-Honor,50 lite,LCD,J&A,215.0,280.0,
+Honor,50 lite,LCD,J&A,215.0,380.0,
+Honor,90 lite,LCD,J&A,135.0,280.0,
 Honor,X8,LCD,J&A,125.0,280.0,
 Honor,X5,LCD,J&A,125.0,330.0,
 Honor,X5 Plus,LCD,J&A,125.0,330.0,
