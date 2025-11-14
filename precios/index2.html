@@ -74,21 +74,29 @@
       <div class="home-hero">
         <h2>🎥 Servicio técnico — videos</h2>
         <p class="home-sub">Tips, cambios de pantallas y diagnósticos rápidos. Empieza a escribir arriba para buscar precios.</p>
-        <div class="video-wrap">
-          <!-- Opción A: playlist (recomendado). Reemplaza PLAYLIST_ID -->
-          <iframe
-            src="https://www.youtube.com/embed/videoseries?list=PLAYLIST_ID&autoplay=1&mute=1&rel=0&playsinline=1"
-            title="YouTube playlist" frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen loading="lazy"></iframe>
+       <!-- 🎥 Videos aleatorios de servicio técnico -->
+<div class="video-wrap">
+  <iframe id="ytFrame" frameborder="0" allowfullscreen
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    loading="lazy"></iframe>
+</div>
 
-          <!-- Opción B: video único (si no tienes playlist). Reemplaza VIDEO_ID
-          <iframe
-            src="https://www.youtube.com/embed/VIDEO_ID?autoplay=1&mute=1&rel=0&playsinline=1&loop=1&playlist=VIDEO_ID"
-            title="YouTube video" frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen loading="lazy"></iframe> -->
-        </div>
+<script>
+  // 🎞️ Lista de videos de YouTube (solo los IDs, no las URLs completas)
+  const videos = [
+    "41IIFUWPwug", // Ejemplo: cambio de pantalla
+    "GR8TLPJxihk", // Ejemplo: cambio de batería
+    "zHj43FDLdTk", // Ejemplo: reparación de carga
+    "jyrbTnFhA0A", // Ejemplo: limpieza de placa
+    "3Fc23G1O-BA"  // Ejemplo: tips de diagnóstico
+  ];
+
+  // 🔀 Elegir uno al azar y cargarlo
+  const randomId = videos[Math.floor(Math.random() * videos.length)];
+  const videoUrl = `https://www.youtube.com/embed/${randomId}?autoplay=1&mute=1&rel=0&playsinline=1&loop=1&playlist=${randomId}`;
+  document.getElementById("ytFrame").src = videoUrl;
+</script>
+
         <small class="home-tip">La tabla aparecerá automáticamente cuando empieces a escribir.</small>
       </div>
     </div>
