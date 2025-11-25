@@ -1,76 +1,1483 @@
-// -------------------------
-// POPUP CON API DE MODELOS
-// -------------------------
-
-function showPhoneInfoModal() {
-    document.getElementById('phoneInfoModal').style.display = 'flex';
-}
-
-function hidePhoneInfoModal() {
-    document.getElementById('phoneInfoModal').style.display = 'none';
-    document.getElementById('phoneInfoBody').innerHTML = '';
-}
-
-/**
- * Abre el popup y busca info del modelo usando la API:
- * https://api-mobilespecs.azharimm.dev
- */
-async function openPhoneInfo(marcaEnc, modeloEnc) {
-    const marca = decodeURIComponent(marcaEnc);
-    const modelo = decodeURIComponent(modeloEnc);
-    const phoneInfoBody = document.getElementById('phoneInfoBody');
-
-    showPhoneInfoModal();
-    phoneInfoBody.innerHTML = `<p>Buscando <strong>${marca} ${modelo}</strong>...</p>`;
-
-    try {
-        const query = encodeURIComponent(`${marca} ${modelo}`);
-        const searchRes = await fetch(`https://api-mobilespecs.azharimm.dev/search?query=${query}`);
-        const searchData = await searchRes.json();
-
-        const phones = (searchData.data && searchData.data.phones) || [];
-        if (!phones.length) {
-            phoneInfoBody.innerHTML = `
-                <p>No se encontró información para <strong>${marca} ${modelo}</strong>.</p>
-                <p style="font-size:11px;">Prueba escribir el modelo más exacto en el CSV (por ejemplo: "Redmi Note 12 4G").</p>
-            `;
-            return;
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dr. Xiaomi – Lista de Pantallas</title>
+    <style>
+        :root {
+            --bg-primary: #121212;
+            --bg-secondary: #1e1e1e;
+            --bg-tertiary: #2d2d2d;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --accent: #ff7b00;
+            --accent-hover: #ff9a3d;
+            --border: #444444;
+            --success: #4caf50;
+            --error: #f44336;
+            --oled: #9c27b0;
+            --lcd: #2196f3;
+            --edit: #ffeb3b;
         }
 
-        // Tomamos el primer resultado
-        const phone = phones[0];
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-        // Segundo fetch para detalles completos
-        const detailRes = await fetch(`https://api-mobilespecs.azharimm.dev/${phone.slug}`);
-        const detailData = await detailRes.json();
-        const info = detailData.data || {};
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 6px;
+            padding-bottom: 80px; /* espacio para bottom nav */
+        }
 
-        const img = info.thumbnail || phone.image;
-        const name = info.phone_name || phone.phone_name || `${marca} ${modelo}`;
-        const brand = info.brand || marca;
-        const release = info.release_date || '';
-        const os = info.os || '';
-        const storage = info.storage || '';
-        const dimension = info.dimension || info.dimensions || '';
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
 
-        phoneInfoBody.innerHTML = `
-            <div style="text-align:center; margin-bottom:10px;">
-                ${img ? `<img src="${img}" alt="${name}" style="max-width:140px; border-radius:10px; margin-bottom:8px;">` : ''}
-                <div style="font-size:13px; color:#fff;"><strong>${name}</strong></div>
-                <div style="font-size:11px;">${brand}</div>
+        /* HEADER + BUSCADOR TIPO APP */
+        .app-header-shell {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: linear-gradient(to bottom, #121212 70%, rgba(18,18,18,0.9));
+            padding-bottom: 6px;
+        }
+
+        header {
+            margin-bottom: 6px;
+            text-align: center;
+            padding-bottom: 4px;
+            border-bottom: 1px solid rgba(68,68,68,0.7);
+        }
+
+        h1 {
+            color: var(--accent);
+            margin-bottom: 2px;
+            font-size: 1.3rem;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            margin-bottom: 4px;
+        }
+
+        .admin-access {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            margin-bottom: 4px;
+            flex-wrap: wrap;
+        }
+
+        .admin-btn {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            padding: 4px 10px;
+            font-size: 11px;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .admin-btn:hover {
+            background-color: var(--accent);
+            color: var(--bg-primary);
+            border-color: var(--accent);
+        }
+
+        .edit-mode-btn {
+            background-color: var(--edit);
+            color: var(--bg-primary);
+            border: 1px solid var(--edit);
+        }
+
+        .edit-mode-btn:hover {
+            background-color: #ffd600;
+            border-color: #ffd600;
+        }
+
+        .edit-notice {
+            text-align: center;
+            padding: 4px 6px;
+            background-color: rgba(255, 235, 59, 0.08);
+            border: 1px solid var(--edit);
+            border-radius: 4px;
+            margin: 0 2px 6px 2px;
+            color: var(--edit);
+            font-size: 11px;
+        }
+
+        .search-wrapper {
+            padding: 4px 2px 6px 2px;
+        }
+
+        .search-controls {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 4px;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 1;
+            position: relative;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 9px 12px;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            color: var(--text-primary);
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(255, 123, 0, 0.3);
+        }
+
+        .switch-container {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+            background-color: var(--bg-secondary);
+            padding: 4px 8px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            justify-content: center;
+            font-size: 11px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 36px;
+            height: 18px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--bg-tertiary);
+            transition: .4s;
+            border-radius: 18px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 12px;
+            width: 12px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--accent);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(18px);
+        }
+
+        .status {
+            padding: 6px;
+            margin-bottom: 4px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 500;
+            font-size: 11px;
+        }
+
+        .status.success {
+            background-color: rgba(76, 175, 80, 0.2);
+            border: 1px solid var(--success);
+            color: #a5d6a7;
+        }
+
+        .status.error {
+            background-color: rgba(244, 67, 54, 0.2);
+            border: 1px solid var(--error);
+            color: #ef9a9a;
+        }
+
+        .status.info {
+            background-color: rgba(33, 150, 243, 0.2);
+            border: 1px solid #2196f3;
+            color: #90caf9;
+        }
+
+        .status.warning {
+            background-color: rgba(255, 235, 59, 0.2);
+            border: 1px solid var(--edit);
+            color: #fff59d;
+        }
+
+        .results-count {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            font-size: 0.7rem;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            max-height: calc(100vh - 220px);
+            position: relative;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            background-color: var(--bg-secondary);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 500px;
+        }
+
+        thead {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        th {
+            background-color: var(--bg-tertiary);
+            padding: 8px 6px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.3s ease;
+            font-size: 11px;
+            white-space: nowrap;
+        }
+
+        th:hover {
+            background-color: var(--accent);
+        }
+
+        th.sort-asc::after {
+            content: " ▲";
+            font-size: 9px;
+            color: var(--text-primary);
+        }
+
+        th.sort-desc::after {
+            content: " ▼";
+            font-size: 9px;
+            color: var(--text-primary);
+        }
+
+        td {
+            padding: 6px;
+            border-bottom: 1px solid var(--border);
+            background-color: var(--bg-secondary);
+            transition: background-color 0.2s ease;
+            font-size: 11px;
+        }
+
+        tbody tr:hover td {
+            background-color: var(--bg-tertiary);
+        }
+
+        mark {
+            background-color: var(--accent);
+            color: var(--text-primary);
+            padding: 1px 2px;
+            border-radius: 2px;
+        }
+
+        input.editable {
+            width: 100%;
+            padding: 4px;
+            background-color: transparent;
+            border: 1px solid transparent;
+            color: var(--text-primary);
+            border-radius: 3px;
+            transition: all 0.2s ease;
+            font-size: 10px;
+        }
+
+        input.editable:focus {
+            outline: none;
+            border-color: var(--accent);
+            background-color: var(--bg-primary);
+            box-shadow: 0 0 0 2px rgba(255, 123, 0, 0.2);
+        }
+
+        input.editable-compra {
+            border: 1px solid var(--edit);
+            background-color: rgba(255, 235, 59, 0.1);
+        }
+
+        .price-compra {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .price-venta {
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .tipo-oled {
+            color: var(--oled);
+            font-weight: 600;
+        }
+
+        .tipo-lcd {
+            color: var(--lcd);
+            font-weight: 600;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 3px;
+            justify-content: center;
+        }
+
+        .action-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 3px 6px;
+            border-radius: 999px;
+            cursor: pointer;
+            font-size: 9px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .action-btn:hover {
+            background-color: var(--accent);
+            color: var(--bg-primary);
+            border-color: var(--accent);
+        }
+
+        .add-btn {
+            background-color: var(--success);
+            color: var(--bg-primary);
+            border: 1px solid var(--success);
+        }
+
+        .add-btn:hover {
+            background-color: #45a049;
+            border-color: #45a049;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 30px 15px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .empty .icon {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            opacity: 0.5;
+        }
+
+        .hidden-price {
+            color: var(--text-secondary);
+            font-style: italic;
+            background-color: var(--bg-tertiary);
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 10px;
+        }
+
+        /* Columnas dinámicas (se ocultan cuando no se muestran importadoras) */
+        .col-proveedor, .col-compra, .col-acciones {
+            display: table-cell;
+        }
+
+        .hide-columns .col-proveedor,
+        .hide-columns .col-compra,
+        .hide-columns .col-acciones {
+            display: none;
+        }
+
+        /* Anchos fijos para mejor legibilidad */
+        .col-marca {
+            width: 100px;
+            min-width: 100px;
+        }
+
+        .col-modelo {
+            width: 150px;
+            min-width: 150px;
+            word-wrap: break-word;
+        }
+
+        .col-tipo {
+            width: 70px;
+            min-width: 70px;
+        }
+
+        .col-proveedor {
+            width: 100px;
+            min-width: 100px;
+        }
+
+        .col-compra {
+            width: 90px;
+            min-width: 90px;
+        }
+
+        .col-venta {
+            width: 90px;
+            min-width: 90px;
+        }
+
+        .col-acciones {
+            width: 90px;
+            min-width: 90px;
+        }
+
+        /* Modal genérico */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+            padding: 10px;
+        }
+
+        .modal-content {
+            background-color: var(--bg-secondary);
+            padding: 15px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 340px;
+            border: 1px solid var(--border);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal h2 {
+            margin-bottom: 10px;
+            color: var(--accent);
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 9px;
+            margin-bottom: 10px;
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .modal-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(255, 123, 0, 0.2);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 6px;
+            justify-content: flex-end;
+        }
+
+        .modal-btn {
+            padding: 8px 14px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 11px;
+        }
+
+        .modal-btn.primary {
+            background-color: var(--accent);
+            color: var(--bg-primary);
+        }
+
+        .modal-btn.primary:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        .modal-btn.secondary {
+            background-color: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .modal-btn.secondary:hover {
+            background-color: var(--border);
+        }
+
+        /* FAB (botón flotante) tipo app */
+        .fab-add {
+            position: fixed;
+            right: 16px;
+            bottom: 80px;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            border: none;
+            background: var(--accent);
+            color: var(--bg-primary);
+            font-size: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+            cursor: pointer;
+            z-index: 60;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        }
+
+        .fab-add:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 24px rgba(0,0,0,0.6);
+            background: var(--accent-hover);
+        }
+
+        /* Bottom nav tipo app */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 56px;
+            background: rgba(18,18,18,0.98);
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 55;
+            backdrop-filter: blur(8px);
+        }
+
+        .bottom-nav button {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 11px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            cursor: pointer;
+        }
+
+        .bottom-nav button span.icon {
+            font-size: 16px;
+        }
+
+        .bottom-nav button.active,
+        .bottom-nav button:hover {
+            color: var(--accent);
+        }
+
+        /* Mobile-first */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.15rem;
+            }
+
+            .table-container {
+                max-height: calc(100vh - 230px);
+            }
+
+            table {
+                min-width: 460px;
+            }
+
+            th, td {
+                padding: 4px;
+                font-size: 10px;
+            }
+
+            .action-btn {
+                padding: 2px 4px;
+                font-size: 8px;
+            }
+
+            .col-marca { width: 80px; }
+            .col-modelo { width: 120px; }
+            .col-tipo { width: 60px; }
+            .col-proveedor { width: 80px; }
+            .col-compra { width: 70px; }
+            .col-venta { width: 70px; }
+            .col-acciones { width: 80px; }
+        }
+
+        @media (min-width: 768px) {
+            body {
+                padding: 15px;
+                padding-bottom: 80px;
+            }
+
+            .admin-access {
+                position: absolute;
+                top: 8px;
+                right: 12px;
+                margin-bottom: 0;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .subtitle {
+                font-size: 0.9rem;
+            }
+
+            th, td {
+                padding: 10px 8px;
+                font-size: 12px;
+            }
+
+            .action-btn {
+                font-size: 10px;
+                padding: 4px 8px;
+            }
+
+            .fab-add {
+                bottom: 86px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            th, td {
+                padding: 12px 10px;
+                font-size: 13px;
+            }
+
+            .action-btn {
+                font-size: 11px;
+                padding: 5px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER + BUSCADOR -->
+        <div class="app-header-shell">
+            <header>
+                <h1>🔍 DR: XIAOMI</h1>
+                <div class="subtitle">Precios de pantallas por modelo, tipo y proveedor</div>
+                <div class="admin-access">
+                    <button class="admin-btn" id="adminBtn">⚙️ Panel</button>
+                    <button class="admin-btn edit-mode-btn" id="editModeBtn">✏️ Modo Edición</button>
+                </div>
+            </header>
+
+            <div id="editNotice" class="edit-notice" style="display: none;">
+                🟡 <strong>Modo edición activado</strong> – puedes editar precios directamente en la tabla
             </div>
-            <div style="border-top:1px solid var(--border); padding-top:8px; font-size:11px;">
-                ${release ? `<p><strong>Lanzamiento:</strong> ${release}</p>` : ''}
-                ${os ? `<p><strong>SO:</strong> ${os}</p>` : ''}
-                ${storage ? `<p><strong>Almacenamiento:</strong> ${storage}</p>` : ''}
-                ${dimension ? `<p><strong>Dimensiones:</strong> ${dimension}</p>` : ''}
+
+            <div class="search-wrapper">
+                <div class="search-controls">
+                    <div class="search-box">
+                        <input type="text" id="searchInput" placeholder="Buscar marca, modelo, tipo..." />
+                    </div>
+                    <div class="switch-container">
+                        <label class="switch">
+                            <input type="checkbox" id="showProvidersToggle" />
+                            <span class="slider"></span>
+                        </label>
+                        <span id="providersLabel">Importadoras</span>
+                    </div>
+                </div>
+
+                <div id="statusMessage" class="status" style="display:none;"></div>
+                <div id="resultsCount" class="results-count"></div>
             </div>
-        `;
-    } catch (err) {
-        console.error(err);
-        phoneInfoBody.innerHTML = `
-            <p>⚠️ No se pudo obtener la información del modelo.</p>
-            <p style="font-size:11px;">Revisa tu conexión o intenta más tarde.</p>
-        `;
-    }
-}
+        </div>
+
+        <!-- TABLA -->
+        <div class="table-container">
+            <table id="resultsTable">
+                <thead>
+                    <tr>
+                        <th data-column="marca" class="col-marca">Marca</th>
+                        <th data-column="modelo" class="col-modelo">Modelo</th>
+                        <th data-column="tipo" class="col-tipo">Tipo</th>
+                        <th data-column="proveedor" class="col-proveedor">Prov.</th>
+                        <th data-column="precio_compra" class="col-compra">Compra</th>
+                        <th data-column="precio_venta" class="col-venta">Venta</th>
+                        <th data-column="acciones" class="col-acciones">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="resultsBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- FAB agregar item -->
+    <button class="fab-add" onclick="showItemModal(null, true)">+</button>
+
+    <!-- Bottom nav -->
+    <nav class="bottom-nav">
+        <button onclick="document.getElementById('searchInput').focus()">
+            <span class="icon">🔍</span>
+            Buscar
+        </button>
+        <button onclick="window.scrollTo({ top: 0, behavior: 'smooth' });" class="active">
+            <span class="icon">📋</span>
+            Lista
+        </button>
+        <button onclick="showEditModal()">
+            <span class="icon">✏️</span>
+            Editar
+        </button>
+    </nav>
+
+    <!-- Modales -->
+    <div class="modal" id="adminModal">
+        <div class="modal-content">
+            <h2>🔐 Acceso administrativo</h2>
+            <input type="password" id="adminPassword" class="modal-input" placeholder="Clave de acceso" autocomplete="off" />
+            <div class="modal-buttons">
+                <button class="modal-btn secondary" id="cancelAdminBtn">Cancelar</button>
+                <button class="modal-btn primary" id="confirmAdminBtn">Acceder</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="editModal">
+        <div class="modal-content">
+            <h2>🔓 Modo edición</h2>
+            <p style="margin-bottom: 12px; color: var(--text-secondary); text-align: center; font-size: 12px;">
+                Ingresa la clave para editar precios de compra y venta
+            </p>
+            <input type="password" id="editPassword" class="modal-input" placeholder="Clave de edición" autocomplete="off" />
+            <div class="modal-buttons">
+                <button class="modal-btn secondary" id="cancelEditBtn">Cancelar</button>
+                <button class="modal-btn primary" id="confirmEditBtn">Activar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="providersModal">
+        <div class="modal-content">
+            <h2>🔐 Ver importadoras</h2>
+            <p style="margin-bottom: 12px; color: var(--text-secondary); text-align: center; font-size: 12px;">
+                Ingresa la clave para ver importadoras y precios de compra
+            </p>
+            <input type="password" id="providersPassword" class="modal-input" placeholder="Clave importadoras" autocomplete="off" />
+            <div class="modal-buttons">
+                <button class="modal-btn secondary" id="cancelProvidersBtn">Cancelar</button>
+                <button class="modal-btn primary" id="confirmProvidersBtn">Ver</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="itemModal">
+        <div class="modal-content">
+            <h2 id="itemModalTitle">✏️ </h2>
+            <div id="itemForm" style="display:none;">
+                <input type="text" id="editMarca" class="modal-input" placeholder="Marca" />
+                <input type="text" id="editModelo" class="modal-input" placeholder="Modelo" />
+                <select id="editTipo" class="modal-input">
+                    <option value="">Tipo de pantalla</option>
+                    <option value="OLED">OLED</option>
+                    <option value="LCD">LCD</option>
+                </select>
+                <input type="text" id="editProveedor" class="modal-input" placeholder="Proveedor" />
+                <input type="number" id="editPrecioCompra" class="modal-input" placeholder="Precio compra (Bs)" step="0.01" />
+                <input type="number" id="editPrecioVenta" class="modal-input" placeholder="Precio venta (Bs)" step="0.01" />
+            </div>
+            <input type="password" id="itemPassword" class="modal-input" placeholder="Clave para editar" autocomplete="off" />
+            <div class="modal-buttons">
+                <button class="modal-btn secondary" id="cancelItemBtn">Cancelar</button>
+                <button class="modal-btn primary" id="confirmItemBtn">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal info de teléfono (API) -->
+    <div class="modal" id="phoneInfoModal">
+        <div class="modal-content">
+            <h2>📱 Detalles del modelo</h2>
+            <div id="phoneInfoBody" style="font-size:12px; color: var(--text-secondary); max-height: 60vh; overflow-y:auto;">
+                Cargando información...
+            </div>
+            <div class="modal-buttons" style="margin-top:10px;">
+                <button class="modal-btn secondary" onclick="hidePhoneInfoModal()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // CONFIGURACIÓN
+        const CONFIG = [
+            { nombre: "J&A", archivo: "data/ja.csv" },
+            { nombre: "CentralCell", archivo: "data/centralcel.csv" },
+            { nombre: "Osmobil", archivo: "data/osmobil.csv" },
+            { nombre: "CFH LP", archivo: "data/CFH.csv" },
+            { nombre: "BITE", archivo: "data/boe.csv" }
+        ];
+
+        const ADMIN_PASSWORD = "123456";
+        const EDIT_PASSWORD = "123456";
+        const ITEM_PASSWORD = "123456";
+        const PROVIDERS_PASSWORD = "123456";
+
+        let allData = [];
+        let filteredData = [];
+        let sortColumn = "marca";
+        let sortDirection = "asc";
+        let searchTerm = "";
+        let showProviders = false;
+        let editMode = false;
+        let currentEditRow = null;
+        let currentAction = ""; // 'edit' | 'add'
+        let providersAccess = false;
+
+        document.addEventListener("DOMContentLoaded", () => {
+            loadAllData();
+
+            document.getElementById("searchInput").addEventListener("input", handleSearch);
+            document.getElementById("showProvidersToggle").addEventListener("click", handleProvidersToggle);
+
+            document.getElementById("adminBtn").addEventListener("click", showAdminModal);
+            document.getElementById("editModeBtn").addEventListener("click", showEditModal);
+
+            document.getElementById("cancelAdminBtn").addEventListener("click", hideAdminModal);
+            document.getElementById("confirmAdminBtn").addEventListener("click", handleAdminAccess);
+
+            document.getElementById("cancelEditBtn").addEventListener("click", hideEditModal);
+            document.getElementById("confirmEditBtn").addEventListener("click", handleEditAccess);
+
+            document.getElementById("cancelProvidersBtn").addEventListener("click", hideProvidersModal);
+            document.getElementById("confirmProvidersBtn").addEventListener("click", handleProvidersAccess);
+
+            document.getElementById("cancelItemBtn").addEventListener("click", hideItemModal);
+            document.getElementById("confirmItemBtn").addEventListener("click", handleItemAccess);
+
+            document.getElementById("adminPassword").addEventListener("keypress", e => {
+                if (e.key === "Enter") handleAdminAccess();
+            });
+            document.getElementById("editPassword").addEventListener("keypress", e => {
+                if (e.key === "Enter") handleEditAccess();
+            });
+            document.getElementById("providersPassword").addEventListener("keypress", e => {
+                if (e.key === "Enter") handleProvidersAccess();
+            });
+            document.getElementById("itemPassword").addEventListener("keypress", e => {
+                if (e.key === "Enter") handleItemAccess();
+            });
+
+            document.querySelectorAll("th[data-column]").forEach(th => {
+                th.addEventListener("click", () => {
+                    const column = th.getAttribute("data-column");
+                    sortTable(column);
+                });
+            });
+
+            updateProvidersUI();
+            updateTableColumns();
+        });
+
+        // MODALES BÁSICOS
+        function showAdminModal() {
+            document.getElementById("adminModal").style.display = "flex";
+            document.getElementById("adminPassword").focus();
+        }
+        function hideAdminModal() {
+            document.getElementById("adminModal").style.display = "none";
+            document.getElementById("adminPassword").value = "";
+        }
+
+        function showEditModal() {
+            document.getElementById("editModal").style.display = "flex";
+            document.getElementById("editPassword").focus();
+        }
+        function hideEditModal() {
+            document.getElementById("editModal").style.display = "none";
+            document.getElementById("editPassword").value = "";
+        }
+
+        function showProvidersModal() {
+            document.getElementById("providersModal").style.display = "flex";
+            document.getElementById("providersPassword").focus();
+        }
+        function hideProvidersModal() {
+            document.getElementById("providersModal").style.display = "none";
+            document.getElementById("providersPassword").value = "";
+        }
+
+        function showItemModal(rowId = null, isAdd = false) {
+            currentEditRow = rowId;
+            currentAction = isAdd ? "add" : "edit";
+
+            const modal = document.getElementById("itemModal");
+            const title = document.getElementById("itemModalTitle");
+            const form = document.getElementById("itemForm");
+            const pass = document.getElementById("itemPassword");
+
+            if (isAdd) {
+                title.textContent = "➕ Agregar nuevo ítem";
+                form.style.display = "block";
+                document.getElementById("editMarca").value = "";
+                document.getElementById("editModelo").value = "";
+                document.getElementById("editTipo").value = "";
+                document.getElementById("editProveedor").value = "";
+                document.getElementById("editPrecioCompra").value = "";
+                document.getElementById("editPrecioVenta").value = "";
+            } else {
+                title.textContent = "✏️ Editar ítem";
+                form.style.display = "none";
+            }
+
+            modal.style.display = "flex";
+            pass.value = "";
+            pass.focus();
+        }
+
+        function hideItemModal() {
+            document.getElementById("itemModal").style.display = "none";
+            document.getElementById("itemPassword").value = "";
+            document.getElementById("itemForm").style.display = "none";
+            currentEditRow = null;
+            currentAction = "";
+        }
+
+        // MODAL PHONE INFO
+        function showPhoneInfoModal() {
+            document.getElementById("phoneInfoModal").style.display = "flex";
+        }
+        function hidePhoneInfoModal() {
+            document.getElementById("phoneInfoModal").style.display = "none";
+            document.getElementById("phoneInfoBody").innerHTML = "";
+        }
+
+        async function openPhoneInfo(marcaEnc, modeloEnc) {
+            const marca = decodeURIComponent(marcaEnc);
+            const modelo = decodeURIComponent(modeloEnc);
+            const phoneInfoBody = document.getElementById("phoneInfoBody");
+
+            showPhoneInfoModal();
+            phoneInfoBody.innerHTML = `<p>Buscando <strong>${marca} ${modelo}</strong>...</p>`;
+
+            try {
+                const query = encodeURIComponent(`${marca} ${modelo}`);
+                const searchRes = await fetch(`https://api-mobilespecs.azharimm.dev/search?query=${query}`);
+                const searchData = await searchRes.json();
+                const phones = (searchData.data && searchData.data.phones) || [];
+
+                if (!phones.length) {
+                    phoneInfoBody.innerHTML = `
+                        <p>No se encontró información para <strong>${marca} ${modelo}</strong>.</p>
+                        <p style="font-size:11px;">Prueba usar un nombre más exacto en el CSV.</p>
+                    `;
+                    return;
+                }
+
+                const phone = phones[0];
+                const detailRes = await fetch(`https://api-mobilespecs.azharimm.dev/${phone.slug}`);
+                const detailData = await detailRes.json();
+                const info = detailData.data || {};
+
+                const img = info.thumbnail || phone.image;
+                const name = info.phone_name || phone.phone_name || `${marca} ${modelo}`;
+                const brand = info.brand || marca;
+                const release = info.release_date || "";
+                const os = info.os || "";
+                const storage = info.storage || "";
+                const dimension = info.dimension || info.dimensions || "";
+
+                phoneInfoBody.innerHTML = `
+                    <div style="text-align:center; margin-bottom:10px;">
+                        ${img ? `<img src="${img}" alt="${name}" style="max-width:140px; border-radius:10px; margin-bottom:8px;">` : ""}
+                        <div style="font-size:13px; color:#fff;"><strong>${name}</strong></div>
+                        <div style="font-size:11px;">${brand}</div>
+                    </div>
+                    <div style="border-top:1px solid var(--border); padding-top:8px; font-size:11px;">
+                        ${release ? `<p><strong>Lanzamiento:</strong> ${release}</p>` : ""}
+                        ${os ? `<p><strong>SO:</strong> ${os}</p>` : ""}
+                        ${storage ? `<p><strong>Almacenamiento:</strong> ${storage}</p>` : ""}
+                        ${dimension ? `<p><strong>Dimensiones:</strong> ${dimension}</p>` : ""}
+                    </div>
+                `;
+            } catch (err) {
+                console.error(err);
+                phoneInfoBody.innerHTML = `
+                    <p>⚠️ No se pudo obtener la información del modelo.</p>
+                    <p style="font-size:11px;">Revisa tu conexión o intenta más tarde.</p>
+                `;
+            }
+        }
+
+        // ACCESOS
+        function handleAdminAccess() {
+            const password = document.getElementById("adminPassword").value;
+            if (password === ADMIN_PASSWORD) {
+                window.location.href = "upload.php";
+            } else {
+                showStatus("❌ Clave incorrecta", "error");
+            }
+        }
+
+        function handleEditAccess() {
+            const password = document.getElementById("editPassword").value;
+            if (password === EDIT_PASSWORD) {
+                editMode = true;
+                hideEditModal();
+                updateEditModeUI();
+                showStatus("✅ Modo edición activado", "success");
+            } else {
+                showStatus("❌ Clave incorrecta", "error");
+            }
+        }
+
+        function handleProvidersAccess() {
+            const password = document.getElementById("providersPassword").value;
+            if (password === PROVIDERS_PASSWORD) {
+                providersAccess = true;
+                showProviders = true;
+                hideProvidersModal();
+                updateProvidersUI();
+                updateTableColumns();
+                applyFilters();
+                showStatus("✅ Importadoras visibles", "success");
+            } else {
+                showStatus("❌ Clave incorrecta", "error");
+            }
+        }
+
+        function handleProvidersToggle(e) {
+            if (!providersAccess) {
+                showProvidersModal();
+                e.target.checked = false;
+                return;
+            }
+            showProviders = e.target.checked;
+            updateTableColumns();
+            applyFilters();
+            updateProvidersUI();
+        }
+
+        // UI
+        function updateEditModeUI() {
+            const editNotice = document.getElementById("editNotice");
+            const editBtn = document.getElementById("editModeBtn");
+            if (editMode) {
+                editNotice.style.display = "block";
+                editBtn.textContent = "✏️ Edición activada";
+                editBtn.style.backgroundColor = "#4caf50";
+                editBtn.style.borderColor = "#4caf50";
+            } else {
+                editNotice.style.display = "none";
+                editBtn.textContent = "✏️ Modo edición";
+                editBtn.style.backgroundColor = "";
+                editBtn.style.borderColor = "";
+            }
+            renderTable();
+        }
+
+        function updateProvidersUI() {
+            const toggle = document.getElementById("showProvidersToggle");
+            const label = document.getElementById("providersLabel");
+
+            if (providersAccess) {
+                toggle.checked = showProviders;
+                label.textContent = showProviders ? "Ocultar importadoras" : "Mostrar importadoras";
+            } else {
+                toggle.checked = false;
+                label.textContent = "Importadoras";
+            }
+        }
+
+        function updateTableColumns() {
+            const tableContainer = document.querySelector(".table-container");
+            if (showProviders) {
+                tableContainer.classList.remove("hide-columns");
+            } else {
+                tableContainer.classList.add("hide-columns");
+            }
+        }
+
+        function showStatus(message, type) {
+            const statusEl = document.getElementById("statusMessage");
+            statusEl.textContent = message;
+            statusEl.className = `status ${type}`;
+            statusEl.style.display = "block";
+            setTimeout(() => {
+                statusEl.style.display = "none";
+            }, 2000);
+        }
+
+        // DATOS
+        async function loadAllData() {
+            showStatus("🔄 Cargando datos...", "info");
+            try {
+                const promises = CONFIG.map(list =>
+                    fetch(list.archivo, { cache: "no-store" })
+                        .then(res => {
+                            if (!res.ok) throw new Error(`Error al cargar ${list.archivo}`);
+                            return res.text();
+                        })
+                        .then(csv => parseCSV(csv, list.nombre))
+                        .catch(err => {
+                            console.error(err);
+                            return [];
+                        })
+                );
+                const results = await Promise.all(promises);
+                allData = results.flat();
+
+                sortData("marca", "asc");
+                applyFilters();
+                showStatus("✅ Datos cargados", "success");
+            } catch (e) {
+                console.error(e);
+                showStatus("❌ Error cargando datos", "error");
+            }
+        }
+
+        function parseCSV(csvText, listaNombre) {
+            const lines = csvText.trim().split("\n");
+            if (lines.length < 2) return [];
+            const headers = lines[0].split(",").map(h => h.trim().toLowerCase());
+
+            const data = [];
+            for (let i = 1; i < lines.length; i++) {
+                const values = parseCSVLine(lines[i]);
+                if (values.length !== headers.length) continue;
+
+                const row = { lista: listaNombre };
+                headers.forEach((header, index) => {
+                    let value = values[index].trim();
+                    if (header === "precio_compra" || header === "precio_venta") {
+                        value = value.replace(",", ".");
+                        row[header] = value ? parseFloat(value) : null;
+                    } else {
+                        row[header] = value;
+                    }
+                });
+
+                if (row.precio_compra === undefined || row.precio_compra === null) continue;
+                data.push(row);
+            }
+            return data;
+        }
+
+        function parseCSVLine(line) {
+            const result = [];
+            let current = "";
+            let inQuotes = false;
+
+            for (let i = 0; i < line.length; i++) {
+                const char = line[i];
+                if (char === '"') {
+                    inQuotes = !inQuotes;
+                } else if (char === "," && !inQuotes) {
+                    result.push(current);
+                    current = "";
+                } else {
+                    current += char;
+                }
+            }
+            result.push(current);
+            return result;
+        }
+
+        // BÚSQUEDA + FILTROS
+        function handleSearch(e) {
+            searchTerm = e.target.value;
+            applyFilters();
+        }
+
+        function applyFilters() {
+            if (searchTerm) {
+                const normalizedSearch = normalizeText(searchTerm);
+                filteredData = allData.filter(row =>
+                    Object.values(row).some(val =>
+                        val !== null &&
+                        normalizeText(val.toString()).includes(normalizedSearch)
+                    )
+                );
+            } else {
+                filteredData = [...allData];
+            }
+
+            if (!showProviders) {
+                filteredData = getBestPrices(filteredData);
+            }
+
+            if (sortColumn) {
+                sortData(sortColumn, sortDirection);
+            }
+
+            renderTable();
+            updateResultsCount();
+        }
+
+        function normalizeText(text) {
+            return text
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .replace(/[^a-z0-9]/g, "");
+        }
+
+        function getBestPrices(data) {
+            const grouped = {};
+            data.forEach(row => {
+                const key = `${row.marca}|${row.modelo}|${row.tipo}`;
+                if (!grouped[key] || row.precio_compra < grouped[key].precio_compra) {
+                    grouped[key] = { ...row };
+                }
+            });
+            return Object.values(grouped);
+        }
+
+        function updateResultsCount() {
+            const el = document.getElementById("resultsCount");
+            if (!filteredData.length) {
+                el.textContent = "No se encontraron resultados";
+            } else {
+                el.textContent = `${filteredData.length} resultado${filteredData.length !== 1 ? "s" : ""}`;
+            }
+        }
+
+        // ORDENAMIENTO
+        function sortTable(column) {
+            if (sortColumn === column) {
+                sortDirection = sortDirection === "asc" ? "desc" : "asc";
+            } else {
+                sortColumn = column;
+                sortDirection = "asc";
+            }
+
+            document.querySelectorAll("th").forEach(th => th.classList.remove("sort-asc", "sort-desc"));
+            const currentTh = document.querySelector(`th[data-column="${column}"]`);
+            if (currentTh) currentTh.classList.add(`sort-${sortDirection}`);
+
+            sortData(column, sortDirection);
+            renderTable();
+        }
+
+        function sortData(column, direction) {
+            filteredData.sort((a, b) => {
+                let va = a[column];
+                let vb = b[column];
+
+                if (va === null || va === undefined) va = "";
+                if (vb === null || vb === undefined) vb = "";
+
+                if (column === "precio_compra" || column === "precio_venta") {
+                    va = va || 0;
+                    vb = vb || 0;
+                    return direction === "asc" ? va - vb : vb - va;
+                }
+
+                va = va.toString().toLowerCase();
+                vb = vb.toString().toLowerCase();
+
+                if (va < vb) return direction === "asc" ? -1 : 1;
+                if (va > vb) return direction === "asc" ? 1 : -1;
+                return 0;
+            });
+        }
+
+        // TABLA
+        function renderTable() {
+            const tbody = document.getElementById("resultsBody");
+            if (!filteredData.length) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="empty">
+                            <div class="icon">🔍</div>
+                            ${searchTerm ? "No se encontraron resultados para tu búsqueda" : "No hay datos para mostrar"}
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = "";
+            filteredData.forEach(row => {
+                const tr = document.createElement("tr");
+                const tipoClass = row.tipo === "OLED" ? "tipo-oled" : "tipo-lcd";
+
+                let compraField;
+                if (!showProviders) {
+                    compraField = '<span class="hidden-price">🔒</span>';
+                } else if (editMode) {
+                    compraField = `
+                        <input
+                            type="text"
+                            class="editable editable-compra"
+                            data-id="${generateRowId(row)}"
+                            data-field="precio_compra"
+                            value="${formatCurrency(row.precio_compra)}"
+                            placeholder="0.00"
+                        >
+                    `;
+                } else {
+                    compraField = `<span class="price-compra">${formatCurrency(row.precio_compra)}</span>`;
+                }
+
+                tr.innerHTML = `
+                    <td class="col-marca">${highlightMatches(row.marca)}</td>
+                    <td class="col-modelo">${highlightMatches(row.modelo)}</td>
+                    <td class="col-tipo ${tipoClass}">${highlightMatches(row.tipo)}</td>
+                    <td class="col-proveedor">
+                        ${showProviders ? highlightMatches(row.proveedor) : '<span class="hidden-price">🔒</span>'}
+                    </td>
+                    <td class="col-compra">${compraField}</td>
+                    <td class="col-venta">
+                        <input
+                            type="text"
+                            class="editable"
+                            data-id="${generateRowId(row)}"
+                            data-field="precio_venta"
+                            value="${formatCurrency(row.precio_venta)}"
+                            placeholder="0.00"
+                        >
+                    </td>
+                    <td class="col-acciones">
+                        <div class="action-buttons">
+                            <button
+                                class="action-btn"
+                                title="Ver ficha del modelo"
+                                onclick="openPhoneInfo('${encodeURIComponent(row.marca)}','${encodeURIComponent(row.modelo)}')"
+                            >
+                                📱
+                            </button>
+                            <button
+                                class="action-btn"
+                                title="Editar ítem"
+                                onclick="showItemModal('${generateRowId(row)}', false)"
+                            >
+                                ✏️
+                            </button>
+                            <button
+                                class="action-btn add-btn"
+                                title="Agregar nuevo ítem"
+                                onclick="showItemModal(null, true)"
+                            >
+                                ➕
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            document.querySelectorAll(".editable").forEach(input => {
+                input.addEventListener("change", handleEdit);
+            });
+        }
+
+        function highlightMatches(text) {
+            if (!searchTerm || !text) return text || "";
+            const normalizedText = normalizeText(text.toString());
+            const normalizedSearch = normalizeText(searchTerm);
+            if (!normalizedText.includes(normalizedSearch)) return text;
+
+            const regex = new RegExp(searchTerm, "gi");
+            return text.toString().replace(regex, match => `<mark>${match}</mark>`);
+        }
+
+        function formatCurrency(value) {
+            if (value === null || value === undefined || isNaN(value)) return "";
+            return parseFloat(value).toFixed(2);
+        }
+
+        function generateRowId(row) {
+            return `${row.lista}|${row.marca}|${row.modelo}|${row.tipo}|${row.proveedor}|${row.precio_compra}`;
+        }
+
+        function handleEdit(e) {
+            const input = e.target;
+            const rowId = input.getAttribute("data-id");
+            const field = input.getAttribute("data-field");
+            const value = input.value;
+
+            saveEditToStorage(rowId, field, value);
+            if (field === "precio_compra" && editMode) {
+                updateDataInMemory(rowId, field, value);
+            } else if (field === "precio_venta") {
+                updateDataInMemory(rowId, field, value);
+            }
+        }
+
+        function updateDataInMemory(rowId, field, value) {
+            const [lista, marca, modelo, tipo, proveedor, precio_compra] = rowId.split("|");
+            allData.forEach(row => {
+                if (
+                    row.lista === lista &&
+                    row.marca === marca &&
+                    row.modelo === modelo &&
+                    row.tipo === tipo &&
+                    row.proveedor === proveedor &&
+                    row.precio_compra == precio_compra
+                ) {
+                    if (field === "precio_compra") {
+                        row.precio_compra = parseFloat(value) || 0;
+                    }
+                    if (field === "precio_venta") {
+                        row.precio_venta = parseFloat(value) || null;
+                    }
+                }
+            });
+            applyFilters();
+        }
+
+        function saveEditToStorage(rowId, field, value) {
+            const edits = JSON.parse(localStorage.getItem("priceListEdits") || "{}");
+            if (!edits[rowId]) edits[rowId] = {};
+            edits[rowId][field] = value;
+            localStorage.setItem("priceListEdits", JSON.stringify(edits));
+        }
+    </script>
+</body>
+</html>
