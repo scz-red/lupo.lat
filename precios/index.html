@@ -2,8 +2,12 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#ff7b00">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Dr. Xiaomi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --bg-primary: #121212;
@@ -19,12 +23,20 @@
             --oled: #9c27b0;
             --lcd: #2196f3;
             --edit: #ffeb3b;
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            height: 100%;
+            scroll-behavior: smooth;
         }
 
         body {
@@ -32,54 +44,93 @@
             background-color: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.6;
-            padding: 8px;
+            padding: 0;
+            min-height: 100%;
+            overflow-x: hidden;
         }
 
-        .container {
-            max-width: 1400px;
+        /* App-like container */
+        .app-container {
+            max-width: 100%;
             margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-primary);
         }
 
-        header {
+        /* Header mejorado con gradiente */
+        .app-header {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+            padding: 16px 16px 12px;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             margin-bottom: 12px;
-            text-align: center;
+        }
+
+        .app-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         h1 {
             color: var(--accent);
-            margin-bottom: 6px;
-            font-size: 1.3rem;
+            margin: 0;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .app-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--accent) 0%, #ff5500 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 8px rgba(255, 123, 0, 0.3);
         }
 
         .subtitle {
             color: var(--text-secondary);
-            font-size: 0.8rem;
-            margin-bottom: 12px;
+            font-size: 0.85rem;
+            margin-bottom: 0;
+            text-align: center;
         }
 
         .admin-access {
             display: flex;
-            gap: 6px;
-            justify-content: center;
-            margin-bottom: 12px;
-            flex-wrap: wrap;
+            gap: 8px;
         }
 
         .admin-btn {
-            background: transparent;
+            background: rgba(255, 255, 255, 0.1);
             color: var(--text-secondary);
             border: 1px solid var(--border);
-            padding: 5px 10px;
-            font-size: 11px;
-            border-radius: 4px;
+            padding: 8px 12px;
+            font-size: 12px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
         }
 
         .admin-btn:hover {
             background-color: var(--accent);
             color: var(--bg-primary);
             border-color: var(--accent);
+            transform: translateY(-2px);
         }
 
         .edit-mode-btn {
@@ -93,11 +144,17 @@
             border-color: #ffd600;
         }
 
+        /* Search section mejorada */
+        .search-section {
+            padding: 16px;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+        }
+
         .search-controls {
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            margin-bottom: 12px;
+            gap: 12px;
         }
 
         .search-box {
@@ -107,39 +164,55 @@
 
         input[type="text"] {
             width: 100%;
-            padding: 10px 12px;
-            background-color: var(--bg-secondary);
+            padding: 14px 16px;
+            background-color: var(--bg-primary);
             border: 1px solid var(--border);
-            border-radius: 6px;
+            border-radius: 12px;
             color: var(--text-primary);
-            font-size: 14px;
-            transition: all 0.3s ease;
+            font-size: 16px;
+            transition: var(--transition);
+            box-shadow: var(--card-shadow);
         }
 
         input[type="text"]:focus {
             outline: none;
             border-color: var(--accent);
-            box-shadow: 0 0 0 2px rgba(255, 123, 0, 0.2);
+            box-shadow: 0 0 0 3px rgba(255, 123, 0, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .filter-controls {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: space-between;
         }
 
         .switch-container {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             white-space: nowrap;
-            background-color: var(--bg-secondary);
-            padding: 6px 10px;
-            border-radius: 6px;
+            background-color: var(--bg-primary);
+            padding: 10px 14px;
+            border-radius: 10px;
             border: 1px solid var(--border);
-            justify-content: center;
-            font-size: 12px;
+            flex: 1;
+            box-shadow: var(--card-shadow);
         }
 
         .switch {
             position: relative;
             display: inline-block;
-            width: 36px;
-            height: 18px;
+            width: 44px;
+            height: 24px;
         }
 
         .switch input {
@@ -156,19 +229,19 @@
             right: 0;
             bottom: 0;
             background-color: var(--bg-tertiary);
-            transition: .4s;
-            border-radius: 18px;
+            transition: var(--transition);
+            border-radius: 24px;
         }
 
         .slider:before {
             position: absolute;
             content: "";
-            height: 12px;
-            width: 12px;
+            height: 18px;
+            width: 18px;
             left: 3px;
             bottom: 3px;
             background-color: white;
-            transition: .4s;
+            transition: var(--transition);
             border-radius: 50%;
         }
 
@@ -177,22 +250,30 @@
         }
 
         input:checked + .slider:before {
-            transform: translateX(18px);
+            transform: translateX(20px);
+        }
+
+        /* Main content area */
+        .main-content {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
         }
 
         .table-container {
             overflow-x: auto;
-            border-radius: 6px;
+            border-radius: 12px;
             border: 1px solid var(--border);
-            max-height: calc(100vh - 180px);
+            max-height: calc(100vh - 240px); /* Reducido para móvil */
             position: relative;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--card-shadow);
+            background: var(--bg-secondary);
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 500px;
+            min-width: 400px; /* Reducido para móvil */
         }
 
         thead {
@@ -203,15 +284,15 @@
 
         th {
             background-color: var(--bg-tertiary);
-            padding: 8px 6px;
+            padding: 12px 8px;
             text-align: left;
             font-weight: 600;
             border-bottom: 1px solid var(--border);
             cursor: pointer;
             user-select: none;
             position: relative;
-            transition: background-color 0.3s ease;
-            font-size: 11px;
+            transition: var(--transition);
+            font-size: 12px;
             white-space: nowrap;
         }
 
@@ -221,44 +302,53 @@
 
         th.sort-asc::after {
             content: " ▲";
-            font-size: 9px;
+            font-size: 10px;
             color: var(--text-primary);
         }
 
         th.sort-desc::after {
             content: " ▼";
-            font-size: 9px;
+            font-size: 10px;
             color: var(--text-primary);
         }
 
         td {
-            padding: 6px;
+            padding: 10px 8px;
             border-bottom: 1px solid var(--border);
             background-color: var(--bg-secondary);
-            transition: background-color 0.2s ease;
-            font-size: 11px;
+            transition: var(--transition);
+            font-size: 12px;
+        }
+
+        tbody tr {
+            transition: var(--transition);
         }
 
         tbody tr:hover td {
             background-color: var(--bg-tertiary);
         }
 
+        tbody tr:active {
+            transform: scale(0.99);
+            background-color: rgba(255, 123, 0, 0.1);
+        }
+
         mark {
             background-color: var(--accent);
             color: var(--text-primary);
-            padding: 1px 2px;
-            border-radius: 2px;
+            padding: 2px 4px;
+            border-radius: 4px;
         }
 
         input.editable {
             width: 100%;
-            padding: 4px;
+            padding: 6px;
             background-color: transparent;
             border: 1px solid transparent;
             color: var(--text-primary);
-            border-radius: 3px;
-            transition: all 0.2s ease;
-            font-size: 10px;
+            border-radius: 6px;
+            transition: var(--transition);
+            font-size: 11px;
         }
 
         input.editable:focus {
@@ -295,7 +385,7 @@
 
         .action-buttons {
             display: flex;
-            gap: 3px;
+            gap: 4px;
             justify-content: center;
         }
 
@@ -303,11 +393,11 @@
             background: transparent;
             border: 1px solid var(--border);
             color: var(--text-secondary);
-            padding: 3px 6px;
-            border-radius: 3px;
+            padding: 6px 8px;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 9px;
-            transition: all 0.3s ease;
+            font-size: 10px;
+            transition: var(--transition);
             white-space: nowrap;
         }
 
@@ -315,6 +405,7 @@
             background-color: var(--accent);
             color: var(--bg-primary);
             border-color: var(--accent);
+            transform: translateY(-1px);
         }
 
         .add-btn {
@@ -329,12 +420,13 @@
         }
 
         .status {
-            padding: 8px;
-            margin-bottom: 8px;
-            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 12px;
+            border-radius: 10px;
             text-align: center;
             font-weight: 500;
-            font-size: 11px;
+            font-size: 12px;
+            box-shadow: var(--card-shadow);
         }
 
         .status.success {
@@ -363,95 +455,145 @@
 
         .loading {
             text-align: center;
-            padding: 20px;
+            padding: 30px;
             color: var(--text-secondary);
             font-size: 0.9rem;
         }
 
         .empty {
             text-align: center;
-            padding: 30px 15px;
+            padding: 40px 15px;
             color: var(--text-secondary);
             font-size: 0.9rem;
         }
 
         .empty .icon {
-            font-size: 1.5rem;
-            margin-bottom: 8px;
+            font-size: 2rem;
+            margin-bottom: 12px;
             opacity: 0.5;
         }
 
         .results-count {
             text-align: center;
             color: var(--text-secondary);
-            margin-bottom: 8px;
-            font-size: 0.7rem;
+            margin-bottom: 12px;
+            font-size: 0.8rem;
+            padding: 8px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: none; /* Oculto por defecto */
         }
 
         .hidden-price {
             color: var(--text-secondary);
             font-style: italic;
             background-color: var(--bg-tertiary);
-            padding: 4px 8px;
-            border-radius: 3px;
-            font-size: 10px;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 11px;
         }
 
-        /* Columnas dinámicas */
-        .col-proveedor, .col-compra {
+        /* Columnas dinámicas - MODIFICADO: Ahora incluye acciones */
+        .col-proveedor, .col-compra, .col-acciones {
             display: table-cell;
         }
 
         .hide-columns .col-proveedor,
-        .hide-columns .col-compra {
+        .hide-columns .col-compra,
+        .hide-columns .col-acciones {
             display: none;
         }
 
-        /* Anchos fijos para mejor legibilidad */
+        /* Anchos fijos para mejor legibilidad - AJUSTADOS PARA MÓVIL */
         .col-marca {
-            width: 100px;
-            min-width: 100px;
-            max-width: 100px;
+            width: 90px;
+            min-width: 90px;
+            max-width: 90px;
         }
 
         .col-modelo {
-            width: 150px;
-            min-width: 150px;
-            max-width: 150px;
+            width: 130px;
+            min-width: 130px;
+            max-width: 130px;
             word-wrap: break-word;
         }
 
         .col-tipo {
-            width: 70px;
-            min-width: 70px;
-            max-width: 70px;
+            width: 60px;
+            min-width: 60px;
+            max-width: 60px;
         }
 
         .col-proveedor {
-            width: 100px;
-            min-width: 100px;
-            max-width: 100px;
+            width: 90px;
+            min-width: 90px;
+            max-width: 90px;
         }
 
         .col-compra {
-            width: 90px;
-            min-width: 90px;
-            max-width: 90px;
-        }
-
-        .col-venta {
-            width: 90px;
-            min-width: 90px;
-            max-width: 90px;
-        }
-
-        .col-acciones {
             width: 80px;
             min-width: 80px;
             max-width: 80px;
         }
 
-        /* Modal styles */
+        .col-venta {
+            width: 80px;
+            min-width: 80px;
+            max-width: 80px;
+        }
+
+        .col-acciones {
+            width: 70px;
+            min-width: 70px;
+            max-width: 70px;
+        }
+
+        /* Bottom navigation - REDUCIDO */
+        .bottom-nav {
+            position: sticky;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            display: flex;
+            padding: 8px 16px; /* Reducido el padding */
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 6px; /* Reducido el padding */
+            color: var(--text-secondary);
+            transition: var(--transition);
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .nav-item.active {
+            color: var(--accent);
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 123, 0, 0.1);
+        }
+
+        .nav-icon {
+            font-size: 1rem; /* Reducido el tamaño */
+            margin-bottom: 2px; /* Reducido el margen */
+        }
+
+        .nav-label {
+            font-size: 0.65rem; /* Reducido el tamaño */
+        }
+
+        /* Modal styles mejorados */
         .modal {
             display: none;
             position: fixed;
@@ -464,58 +606,70 @@
             align-items: center;
             justify-content: center;
             backdrop-filter: blur(5px);
-            padding: 10px;
+            padding: 16px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .modal-content {
             background-color: var(--bg-secondary);
-            padding: 15px;
-            border-radius: 8px;
+            padding: 20px;
+            border-radius: 16px;
             width: 100%;
-            max-width: 320px;
+            max-width: 340px;
             border: 1px solid var(--border);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
         .modal h2 {
-            margin-bottom: 12px;
+            margin-bottom: 16px;
             color: var(--accent);
             text-align: center;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
         }
 
         .modal-input {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 12px;
+            padding: 14px;
+            margin-bottom: 16px;
             background-color: var(--bg-primary);
             border: 1px solid var(--border);
-            border-radius: 6px;
+            border-radius: 10px;
             color: var(--text-primary);
-            font-size: 14px;
-            transition: all 0.3s ease;
+            font-size: 16px;
+            transition: var(--transition);
         }
 
         .modal-input:focus {
             outline: none;
             border-color: var(--accent);
-            box-shadow: 0 0 0 2px rgba(255, 123, 0, 0.2);
+            box-shadow: 0 0 0 3px rgba(255, 123, 0, 0.2);
         }
 
         .modal-buttons {
             display: flex;
-            gap: 6px;
+            gap: 10px;
             justify-content: flex-end;
         }
 
         .modal-btn {
-            padding: 8px 16px;
+            padding: 12px 20px;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
-            transition: all 0.3s ease;
-            font-size: 11px;
+            transition: var(--transition);
+            font-size: 14px;
         }
 
         .modal-btn.primary {
@@ -525,7 +679,7 @@
 
         .modal-btn.primary:hover {
             background-color: var(--accent-hover);
-            transform: translateY(-1px);
+            transform: translateY(-2px);
         }
 
         .modal-btn.secondary {
@@ -539,40 +693,51 @@
 
         .edit-notice {
             text-align: center;
-            padding: 6px;
+            padding: 10px;
             background-color: rgba(255, 235, 59, 0.1);
             border: 1px solid var(--edit);
-            border-radius: 3px;
-            margin-bottom: 8px;
+            border-radius: 8px;
+            margin-bottom: 12px;
             color: var(--edit);
-            font-size: 11px;
+            font-size: 12px;
+            box-shadow: var(--card-shadow);
         }
 
         /* Mobile-first responsive design */
         @media (max-width: 480px) {
-            body {
-                padding: 5px;
+            .app-header {
+                padding: 12px 12px 8px;
+            }
+            
+            h1 {
+                font-size: 1.2rem;
+            }
+            
+            .app-icon {
+                width: 36px;
+                height: 36px;
+                font-size: 1rem;
             }
             
             .table-container {
-                max-height: calc(100vh - 160px);
+                max-height: calc(100vh - 220px); /* Más reducido para móvil */
             }
             
             table {
-                min-width: 450px;
+                min-width: 380px; /* Más reducido para móvil */
             }
             
             th, td {
-                padding: 4px;
-                font-size: 10px;
+                padding: 8px 6px;
+                font-size: 11px;
             }
             
             .action-btn {
-                padding: 2px 4px;
-                font-size: 8px;
+                padding: 4px 6px;
+                font-size: 9px;
             }
 
-            /* Ajustes de ancho para móvil */
+            /* Ajustes de ancho para móvil - MÁS COMPACTOS */
             .col-marca {
                 width: 80px;
                 min-width: 80px;
@@ -580,45 +745,65 @@
             }
 
             .col-modelo {
-                width: 120px;
-                min-width: 120px;
-                max-width: 120px;
+                width: 110px;
+                min-width: 110px;
+                max-width: 110px;
             }
 
             .col-tipo {
+                width: 50px;
+                min-width: 50px;
+                max-width: 50px;
+            }
+
+            .col-proveedor {
+                width: 70px;
+                min-width: 70px;
+                max-width: 70px;
+            }
+
+            .col-compra {
                 width: 60px;
                 min-width: 60px;
                 max-width: 60px;
             }
 
-            .col-proveedor {
-                width: 80px;
-                min-width: 80px;
-                max-width: 80px;
-            }
-
-            .col-compra {
-                width: 70px;
-                min-width: 70px;
-                max-width: 70px;
-            }
-
             .col-venta {
-                width: 70px;
+                width: 70px; /* Asegurado que sea visible */
                 min-width: 70px;
                 max-width: 70px;
             }
 
             .col-acciones {
-                width: 70px;
-                min-width: 70px;
-                max-width: 70px;
+                width: 60px;
+                min-width: 60px;
+                max-width: 60px;
+            }
+            
+            /* Bottom nav más compacto para móvil */
+            .bottom-nav {
+                padding: 6px 12px;
+            }
+            
+            .nav-item {
+                padding: 4px;
+            }
+            
+            .nav-icon {
+                font-size: 0.9rem;
+            }
+            
+            .nav-label {
+                font-size: 0.6rem;
             }
         }
 
         @media (min-width: 768px) {
-            body {
-                padding: 15px;
+            .app-container {
+                max-width: 768px;
+                margin: 0 auto;
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+                min-height: 100vh;
             }
 
             .search-controls {
@@ -631,7 +816,7 @@
             }
 
             h1 {
-                font-size: 1.8rem;
+                font-size: 1.6rem;
             }
 
             .subtitle {
@@ -639,15 +824,12 @@
             }
 
             .admin-access {
-                position: absolute;
-                top: 0;
-                right: 0;
-                margin-bottom: 0;
+                position: static;
             }
 
             th, td {
-                padding: 10px 8px;
-                font-size: 12px;
+                padding: 12px 10px;
+                font-size: 13px;
             }
 
             input.editable {
@@ -655,79 +837,135 @@
             }
 
             .action-btn {
-                font-size: 10px;
-                padding: 4px 8px;
+                font-size: 11px;
+                padding: 6px 10px;
+            }
+            
+            .table-container {
+                max-height: calc(100vh - 260px);
             }
         }
 
         @media (min-width: 1024px) {
+            .app-container {
+                max-width: 1024px;
+            }
+            
             th, td {
-                padding: 12px 10px;
-                font-size: 13px;
+                padding: 14px 12px;
+                font-size: 14px;
             }
             
             .action-btn {
-                font-size: 11px;
-                padding: 5px 10px;
+                font-size: 12px;
+                padding: 8px 12px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🔍 DR: XIAOMI </h1>
-            <div class="subtitle">Encuentra rápidamente los precios de pantallas por calidad y proveedor</div>
-            <div class="admin-access">
-                <button class="admin-btn" id="adminBtn">⚙️ </button>
-                <button class="admin-btn edit-mode-btn" id="editModeBtn">✏️</button>
+    <div class="app-container">
+        <header class="app-header">
+            <div class="header-content">
+                <div class="app-title">
+                    <div class="app-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h1>DR. XIAOMI</h1>
+                </div>
+                <div class="admin-access">
+                    <button class="admin-btn" id="adminBtn">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                    <button class="admin-btn edit-mode-btn" id="editModeBtn">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                </div>
             </div>
+            <div class="subtitle">Encuentra rápidamente los precios de pantallas por calidad y proveedor</div>
         </header>
 
-        <div id="editNotice" class="edit-notice" style="display: none;">
-            🟡 <strong>Modo Edición Activado</strong> - Puedes editar todos los precios directamente en la tabla
-        </div>
-
-        <div class="search-controls">
-            <div class="search-box">
-                <input type="text" id="searchInput" placeholder="Escribe marca, modelo, tipo o proveedor...">
+        <section class="search-section">
+            <div id="editNotice" class="edit-notice" style="display: none;">
+                <i class="fas fa-edit"></i> <strong>Modo Edición Activado</strong> - Puedes editar todos los precios directamente en la tabla
             </div>
-            <div class="switch-container">
-                <label class="switch">
-                    <input type="checkbox" id="showProvidersToggle">
-                    <span class="slider"></span>
-                </label>
-                <span id="providersLabel">Tecnico</span>
+
+            <div class="search-controls">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Buscar marca, modelo, tipo o proveedor...">
+                    <div class="search-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+                <div class="filter-controls">
+                    <div class="switch-container">
+                        <label class="switch">
+                            <input type="checkbox" id="showProvidersToggle">
+                            <span class="slider"></span>
+                        </label>
+                        <span id="providersLabel">Tecnico</span>
+                    </div>
+                    <!-- Botón Filtrar eliminado -->
+                </div>
             </div>
-        </div>
+        </section>
 
-        <div id="statusMessage" class="status" style="display: none;"></div>
-        <div id="resultsCount" class="results-count"></div>
+        <main class="main-content">
+            <div id="statusMessage" class="status" style="display: none;"></div>
+            <div id="resultsCount" class="results-count"></div>
 
-        <div class="table-container">
-            <table id="resultsTable">
-                <thead>
-                    <tr>
-                        <th data-column="marca" class="col-marca">Marca</th>
-                        <th data-column="modelo" class="col-modelo">Modelo</th>
-                        <th data-column="tipo" class="col-tipo">Tipo</th>
-                        <th data-column="proveedor" class="col-proveedor">Prov.</th>
-                        <th data-column="precio_compra" class="col-compra">Compra</th>
-                        <th data-column="precio_venta" class="col-venta">Venta</th>
-                        <th data-column="acciones" class="col-acciones">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody id="resultsBody">
-                    <!-- Los resultados se cargarán aquí -->
-                </tbody>
-            </table>
-        </div>
+            <div class="table-container">
+                <table id="resultsTable">
+                    <thead>
+                        <tr>
+                            <th data-column="marca" class="col-marca">Marca</th>
+                            <th data-column="modelo" class="col-modelo">Modelo</th>
+                            <th data-column="tipo" class="col-tipo">Tipo</th>
+                            <th data-column="proveedor" class="col-proveedor">Prov.</th>
+                            <th data-column="precio_compra" class="col-compra">Compra</th>
+                            <th data-column="precio_venta" class="col-venta">Venta</th>
+                            <th data-column="acciones" class="col-acciones">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultsBody">
+                        <!-- Los resultados se cargarán aquí -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+
+        <nav class="bottom-nav">
+            <div class="nav-item active">
+                <div class="nav-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <div class="nav-label">Inicio</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="nav-label">Buscar</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="nav-label">Precios</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">
+                    <i class="fas fa-cog"></i>
+                </div>
+                <div class="nav-label">Ajustes</div>
+            </div>
+        </nav>
     </div>
 
     <!-- Modal para acceso administrativo -->
     <div class="modal" id="adminModal">
         <div class="modal-content">
-            <h2>🔐 Acceso Administrativo</h2>
+            <h2><i class="fas fa-lock"></i> Acceso Administrativo</h2>
             <input type="password" id="adminPassword" class="modal-input" placeholder="Ingrese la clave de acceso" autocomplete="off">
             <div class="modal-buttons">
                 <button class="modal-btn secondary" id="cancelAdminBtn">Cancelar</button>
@@ -739,8 +977,8 @@
     <!-- Modal para modo edición -->
     <div class="modal" id="editModal">
         <div class="modal-content">
-            <h2>🔓 Modo Edición</h2>
-            <p style="margin-bottom: 15px; color: var(--text-secondary); text-align: center; font-size: 12px;">
+            <h2><i class="fas fa-edit"></i> Modo Edición</h2>
+            <p style="margin-bottom: 15px; color: var(--text-secondary); text-align: center; font-size: 13px;">
                 Ingrese la clave para editar precios de compra y toda la lista
             </p>
             <input type="password" id="editPassword" class="modal-input" placeholder="Clave de edición" autocomplete="off">
@@ -754,8 +992,8 @@
     <!-- Modal para mostrar proveedores -->
     <div class="modal" id="providersModal">
         <div class="modal-content">
-            <h2>🔐 Ver Importadoras</h2>
-            <p style="margin-bottom: 15px; color: var(--text-secondary); text-align: center; font-size: 12px;">
+            <h2><i class="fas fa-eye"></i> Ver Importadoras</h2>
+            <p style="margin-bottom: 15px; color: var(--text-secondary); text-align: center; font-size: 13px;">
                 Ingrese la clave para ver las importadoras y precios de compra
             </p>
             <input type="password" id="providersPassword" class="modal-input" placeholder="Clave para ver importadoras" autocomplete="off">
@@ -769,7 +1007,7 @@
     <!-- Modal para editar/agregar item -->
     <div class="modal" id="itemModal">
         <div class="modal-content">
-            <h2 id="itemModalTitle">✏️ </h2>
+            <h2 id="itemModalTitle"><i class="fas fa-edit"></i> Editar Item</h2>
             <div id="itemForm" style="display: none;">
                 <input type="text" id="editMarca" class="modal-input" placeholder="Marca">
                 <input type="text" id="editModelo" class="modal-input" placeholder="Modelo">
@@ -861,6 +1099,14 @@
                 th.addEventListener('click', () => {
                     const column = th.getAttribute('data-column');
                     sortTable(column);
+                });
+            });
+
+            // Configurar navegación inferior
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
                 });
             });
 
@@ -1035,7 +1281,7 @@
             }
         }
 
-        // Actualizar columnas de la tabla
+        // Actualizar columnas de la tabla - MODIFICADO: Ahora incluye acciones
         function updateTableColumns() {
             const tableContainer = document.querySelector('.table-container');
             if (showProviders) {
@@ -1257,13 +1503,14 @@
             updateResultsCount();
         }
 
-        // Actualizar contador de resultados
+        // Actualizar contador de resultados - MODIFICADO: Solo se muestra cuando hay acceso a proveedores
         function updateResultsCount() {
             const countEl = document.getElementById('resultsCount');
-            if (filteredData.length === 0) {
-                countEl.textContent = 'No se encontraron resultados';
-            } else {
+            if (providersAccess && filteredData.length > 0) {
                 countEl.textContent = `${filteredData.length} resultado${filteredData.length !== 1 ? 's' : ''} encontrado${filteredData.length !== 1 ? 's' : ''}`;
+                countEl.style.display = 'block';
+            } else {
+                countEl.style.display = 'none';
             }
         }
 
@@ -1337,7 +1584,7 @@
             });
         }
 
-        // Renderizar tabla
+        // Renderizar tabla - MODIFICADO: Ahora oculta acciones cuando corresponde
         function renderTable() {
             const tbody = document.getElementById('resultsBody');
             
@@ -1369,6 +1616,18 @@
                             placeholder="0.00">` :
                     `<span class="price-compra">${formatCurrency(row.precio_compra)}</span>`;
                 
+                // Determinar si mostrar acciones
+                const accionesField = showProviders ? 
+                    `<div class="action-buttons">
+                        <button class="action-btn" onclick="showItemModal('${generateRowId(row)}', false)">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="action-btn add-btn" onclick="showItemModal(null, true)">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>` :
+                    '<span class="hidden-price">🔒</span>';
+                
                 tr.innerHTML = `
                     <td class="col-marca">${highlightMatches(row.marca)}</td>
                     <td class="col-modelo">${highlightMatches(row.modelo)}</td>
@@ -1383,16 +1642,7 @@
                                value="${formatCurrency(row.precio_venta)}"
                                placeholder="0.00">
                     </td>
-                    <td class="col-acciones">
-                        <div class="action-buttons">
-                            <button class="action-btn" onclick="showItemModal('${generateRowId(row)}', false)">
-                                ✏️
-                            </button>
-                            <button class="action-btn add-btn" onclick="showItemModal(null, true)">
-                                ➕
-                            </button>
-                        </div>
-                    </td>
+                    <td class="col-acciones">${accionesField}</td>
                 `;
                 tbody.appendChild(tr);
             });
