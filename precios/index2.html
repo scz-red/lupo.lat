@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#ff7b00">
+    <meta name="theme-color" content="#121212">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="description" content="Dr. Xiaomi - Gestión de precios de pantallas">
@@ -12,24 +12,34 @@
     <style>
         :root {
             --bg-primary: #121212;
-            --bg-secondary: #1e1e1e;
+            --bg-secondary: #1a1a1a;
             --bg-tertiary: #2d2d2d;
             --text-primary: #ffffff;
             --text-secondary: #b0b0b0;
             --accent: #ff7b00;
             --accent-hover: #ff9a3d;
-            --border: #444444;
+            --accent-light: #ffa94d;
+            --accent-dark: #e66a00;
+            --border: #333333;
             --success: #4caf50;
             --error: #f44336;
             --warning: #ff9800;
             --info: #2196f3;
-            --oled: #9c27b0;
-            --lcd: #2196f3;
             --edit: #ffeb3b;
             --whatsapp: #25D366;
             --favorite: #ff4081;
-            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .light-mode {
+            --bg-primary: #f8f9fa;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #f0f0f0;
+            --text-primary: #2d3748;
+            --text-secondary: #718096;
+            --border: #e2e8f0;
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         * {
@@ -52,6 +62,7 @@
             padding: 0;
             min-height: 100%;
             overflow-x: hidden;
+            transition: var(--transition);
         }
 
         .app-container {
@@ -61,16 +72,17 @@
             display: flex;
             flex-direction: column;
             background: var(--bg-primary);
+            position: relative;
         }
 
         .app-header {
-            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+            background: var(--bg-secondary);
             padding: 16px 16px 12px;
             border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: var(--card-shadow);
         }
 
         .header-content {
@@ -83,7 +95,7 @@
         .app-title {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
         h1 {
@@ -94,15 +106,16 @@
         }
 
         .app-icon {
-            width: 40px;
-            height: 40px;
+            width: 42px;
+            height: 42px;
             border-radius: 10px;
-            background: linear-gradient(135deg, var(--accent) 0%, #ff5500 100%);
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
-            box-shadow: 0 2px 8px rgba(255, 123, 0, 0.3);
+            font-size: 1.3rem;
+            color: white;
+            box-shadow: 0 4px 12px rgba(255, 123, 0, 0.3);
         }
 
         .subtitle {
@@ -110,6 +123,7 @@
             font-size: 0.85rem;
             margin-bottom: 0;
             text-align: center;
+            font-weight: 500;
         }
 
         .admin-access {
@@ -118,7 +132,7 @@
         }
 
         .admin-btn {
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--bg-tertiary);
             color: var(--text-secondary);
             border: 1px solid var(--border);
             padding: 8px 12px;
@@ -126,14 +140,11 @@
             border-radius: 8px;
             cursor: pointer;
             transition: var(--transition);
-            backdrop-filter: blur(10px);
         }
 
         .admin-btn:hover {
-            background-color: var(--accent);
-            color: var(--bg-primary);
-            border-color: var(--accent);
-            transform: translateY(-2px);
+            background-color: var(--border);
+            color: var(--text-primary);
         }
 
         .edit-mode-btn {
@@ -145,6 +156,22 @@
         .edit-mode-btn:hover {
             background-color: #ffd600;
             border-color: #ffd600;
+        }
+
+        .theme-toggle {
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            padding: 8px 12px;
+            font-size: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--border);
+            color: var(--text-primary);
         }
 
         .search-section {
@@ -169,7 +196,7 @@
             padding: 14px 16px;
             background-color: var(--bg-primary);
             border: 1px solid var(--border);
-            border-radius: 12px;
+            border-radius: 10px;
             color: var(--text-primary);
             font-size: 16px;
             transition: var(--transition);
@@ -179,7 +206,7 @@
         input[type="text"]:focus, input[type="number"]:focus, select:focus {
             outline: none;
             border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(255, 123, 0, 0.2);
+            box-shadow: 0 0 0 2px rgba(255, 123, 0, 0.1);
         }
 
         .search-icon {
@@ -204,10 +231,11 @@
             white-space: nowrap;
             background-color: var(--bg-primary);
             padding: 10px 14px;
-            border-radius: 10px;
+            border-radius: 8px;
             border: 1px solid var(--border);
             flex: 1;
             box-shadow: var(--card-shadow);
+            transition: var(--transition);
         }
 
         .switch {
@@ -290,12 +318,13 @@
             position: relative;
             box-shadow: var(--card-shadow);
             background: var(--bg-secondary);
+            -webkit-overflow-scrolling: touch;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 500px;
+            min-width: 400px;
         }
 
         thead {
@@ -316,22 +345,23 @@
             transition: var(--transition);
             font-size: 12px;
             white-space: nowrap;
+            color: var(--text-primary);
         }
 
         th:hover {
-            background-color: var(--accent);
+            background-color: var(--border);
         }
 
         th.sort-asc::after {
             content: " ▲";
             font-size: 10px;
-            color: var(--text-primary);
+            color: var(--accent);
         }
 
         th.sort-desc::after {
             content: " ▼";
             font-size: 10px;
-            color: var(--text-primary);
+            color: var(--accent);
         }
 
         td {
@@ -350,14 +380,9 @@
             background-color: var(--bg-tertiary);
         }
 
-        tbody tr:active {
-            transform: scale(0.99);
-            background-color: rgba(255, 123, 0, 0.1);
-        }
-
         mark {
             background-color: var(--accent);
-            color: var(--text-primary);
+            color: white;
             padding: 2px 4px;
             border-radius: 4px;
         }
@@ -377,7 +402,7 @@
             outline: none;
             border-color: var(--accent);
             background-color: var(--bg-primary);
-            box-shadow: 0 0 0 2px rgba(255, 123, 0, 0.2);
+            box-shadow: 0 0 0 1px rgba(255, 123, 0, 0.2);
         }
 
         input.editable-compra {
@@ -396,33 +421,20 @@
         }
 
         .tipo-oled {
-            color: var(--oled);
+            color: var(--accent);
             font-weight: 600;
         }
 
         .tipo-lcd {
-            color: var(--lcd);
-            font-weight: 600;
-        }
-
-        .profit-margin {
-            font-size: 10px;
             color: var(--text-secondary);
-            display: block;
-        }
-
-        .profit-positive {
-            color: var(--success);
-        }
-
-        .profit-negative {
-            color: var(--error);
+            font-weight: 600;
         }
 
         .action-buttons {
             display: flex;
             gap: 4px;
             justify-content: center;
+            flex-wrap: wrap;
         }
 
         .action-btn {
@@ -438,15 +450,13 @@
         }
 
         .action-btn:hover {
-            background-color: var(--accent);
-            color: var(--bg-primary);
-            border-color: var(--accent);
-            transform: translateY(-1px);
+            background-color: var(--border);
+            color: var(--text-primary);
         }
 
         .add-btn {
             background-color: var(--success);
-            color: var(--bg-primary);
+            color: white;
             border: 1px solid var(--success);
         }
 
@@ -483,18 +493,17 @@
             background-color: var(--favorite);
             color: white;
             border-color: var(--favorite);
-            transform: scale(1.1);
         }
 
         .compare-btn {
-            background-color: var(--info);
+            background-color: var(--accent);
             color: white;
-            border: 1px solid var(--info);
+            border: 1px solid var(--accent);
         }
 
         .compare-btn:hover {
-            background-color: #0b7dda;
-            border-color: #0b7dda;
+            background-color: var(--accent-dark);
+            border-color: var(--accent-dark);
         }
 
         .compare-btn.active {
@@ -505,35 +514,30 @@
         .status {
             padding: 12px;
             margin-bottom: 12px;
-            border-radius: 10px;
+            border-radius: 8px;
             text-align: center;
             font-weight: 500;
             font-size: 12px;
             box-shadow: var(--card-shadow);
+            border-left: 3px solid var(--accent);
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border);
         }
 
         .status.success {
-            background-color: rgba(76, 175, 80, 0.2);
-            border: 1px solid var(--success);
-            color: #a5d6a7;
+            color: var(--success);
         }
 
         .status.error {
-            background-color: rgba(244, 67, 54, 0.2);
-            border: 1px solid var(--error);
-            color: #ef9a9a;
+            color: var(--error);
         }
 
         .status.info {
-            background-color: rgba(33, 150, 243, 0.2);
-            border: 1px solid #2196f3;
-            color: #90caf9;
+            color: var(--info);
         }
 
         .status.warning {
-            background-color: rgba(255, 235, 59, 0.2);
-            border: 1px solid var(--edit);
-            color: #fff59d;
+            color: var(--warning);
         }
 
         .loading {
@@ -572,36 +576,36 @@
             color: var(--text-secondary);
             font-style: italic;
             background-color: var(--bg-tertiary);
-            padding: 6px 10px;
-            border-radius: 6px;
+            padding: 4px 8px;
+            border-radius: 4px;
             font-size: 11px;
         }
 
         .price-container {
             display: flex;
             align-items: center;
-            gap: 5px;
-            justify-content: space-between;
+            gap: 8px;
+            justify-content: flex-start;
         }
 
         .price-text {
-            flex: 1;
+            flex: 0 0 auto;
         }
 
         .share-icon {
-            color: var(--whatsapp);
+            color: var(--accent);
             font-size: 14px;
             cursor: pointer;
             padding: 4px;
             border-radius: 4px;
             transition: var(--transition);
             opacity: 0.7;
+            flex: 0 0 auto;
         }
 
         .share-icon:hover {
             opacity: 1;
-            background-color: rgba(37, 211, 102, 0.1);
-            transform: scale(1.1);
+            background-color: rgba(255, 123, 0, 0.1);
         }
 
         .col-proveedor, .col-compra, .col-acciones {
@@ -651,12 +655,6 @@
             max-width: 100px;
         }
 
-        .col-margen {
-            width: 70px;
-            min-width: 70px;
-            max-width: 70px;
-        }
-
         .col-acciones {
             width: 120px;
             min-width: 120px;
@@ -673,7 +671,6 @@
             display: flex;
             padding: 8px 16px;
             z-index: 100;
-            backdrop-filter: blur(10px);
         }
 
         .nav-item {
@@ -691,10 +688,12 @@
 
         .nav-item.active {
             color: var(--accent);
+            background: var(--bg-tertiary);
         }
 
         .nav-item:hover {
-            background: rgba(255, 123, 0, 0.1);
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
         }
 
         .nav-icon {
@@ -704,6 +703,7 @@
 
         .nav-label {
             font-size: 0.65rem;
+            font-weight: 500;
         }
 
         .modal {
@@ -730,11 +730,11 @@
         .modal-content {
             background-color: var(--bg-secondary);
             padding: 20px;
-            border-radius: 16px;
+            border-radius: 12px;
             width: 100%;
             max-width: 400px;
             border: 1px solid var(--border);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
             animation: slideUp 0.3s ease;
             max-height: 90vh;
             overflow-y: auto;
@@ -750,6 +750,7 @@
             color: var(--accent);
             text-align: center;
             font-size: 1.2rem;
+            font-weight: 600;
         }
 
         .modal-input {
@@ -758,7 +759,7 @@
             margin-bottom: 16px;
             background-color: var(--bg-primary);
             border: 1px solid var(--border);
-            border-radius: 10px;
+            border-radius: 8px;
             color: var(--text-primary);
             font-size: 16px;
             transition: var(--transition);
@@ -767,7 +768,7 @@
         .modal-input:focus {
             outline: none;
             border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(255, 123, 0, 0.2);
+            box-shadow: 0 0 0 2px rgba(255, 123, 0, 0.1);
         }
 
         .modal-buttons {
@@ -787,18 +788,18 @@
         }
 
         .modal-btn.primary {
-            background-color: var(--accent);
-            color: var(--bg-primary);
+            background: var(--accent);
+            color: white;
         }
 
         .modal-btn.primary:hover {
-            background-color: var(--accent-hover);
-            transform: translateY(-2px);
+            background: var(--accent-dark);
         }
 
         .modal-btn.secondary {
             background-color: var(--bg-tertiary);
             color: var(--text-primary);
+            border: 1px solid var(--border);
         }
 
         .modal-btn.secondary:hover {
@@ -808,7 +809,7 @@
         .edit-notice {
             text-align: center;
             padding: 10px;
-            background-color: rgba(255, 235, 59, 0.1);
+            background: var(--bg-tertiary);
             border: 1px solid var(--edit);
             border-radius: 8px;
             margin-bottom: 12px;
@@ -832,19 +833,19 @@
         }
 
         .voice-search-btn:hover {
-            background-color: var(--accent);
-            color: var(--bg-primary);
+            background-color: var(--border);
+            color: var(--text-primary);
         }
 
         .voice-search-btn.listening {
-            background-color: var(--error);
+            background-color: var(--accent);
             color: white;
             animation: pulse 1s infinite;
         }
 
         @keyframes pulse {
             0% { transform: translateY(-50%) scale(1); }
-            50% { transform: translateY(-50%) scale(1.1); }
+            50% { transform: translateY(-50%) scale(1.05); }
             100% { transform: translateY(-50%) scale(1); }
         }
 
@@ -856,7 +857,7 @@
             right: 0;
             background: var(--bg-secondary);
             border: 1px solid var(--border);
-            border-radius: 0 0 10px 10px;
+            border-radius: 0 0 8px 8px;
             max-height: 200px;
             overflow-y: auto;
             z-index: 100;
@@ -875,12 +876,14 @@
 
         .search-item:hover {
             background-color: var(--bg-tertiary);
+            color: var(--accent);
         }
 
         .search-item:last-child {
             border-bottom: none;
         }
 
+        /* Responsive Design */
         @media (max-width: 480px) {
             .app-header {
                 padding: 12px 12px 8px;
@@ -901,7 +904,7 @@
             }
             
             table {
-                min-width: 600px;
+                min-width: 500px;
             }
             
             th, td {
@@ -950,12 +953,6 @@
                 max-width: 80px;
             }
 
-            .col-margen {
-                width: 60px;
-                min-width: 60px;
-                max-width: 60px;
-            }
-
             .col-acciones {
                 width: 100px;
                 min-width: 100px;
@@ -990,13 +987,41 @@
             .voice-search-btn {
                 right: 45px;
             }
+
+            .price-container {
+                gap: 5px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .admin-access {
+                gap: 4px;
+            }
+            
+            .admin-btn, .theme-toggle {
+                padding: 6px 8px;
+                font-size: 10px;
+            }
+            
+            .app-title {
+                gap: 8px;
+            }
+            
+            h1 {
+                font-size: 1.1rem;
+            }
+            
+            .app-icon {
+                width: 32px;
+                height: 32px;
+                font-size: 0.9rem;
+            }
         }
 
         @media (min-width: 768px) {
             .app-container {
                 max-width: 768px;
                 margin: 0 auto;
-                box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
                 min-height: 100vh;
             }
 
@@ -1059,6 +1084,39 @@
                 padding: 8px 12px;
             }
         }
+
+        /* Touch-friendly improvements */
+        @media (hover: none) and (pointer: coarse) {
+            .action-btn, .admin-btn, .nav-item {
+                min-height: 44px;
+                min-width: 44px;
+            }
+            
+            input, select {
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+            
+            .table-container {
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            :root {
+                --border: #000000;
+                --text-secondary: #000000;
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1083,6 +1141,9 @@
                     </button>
                     <button class="admin-btn" id="refreshBtn" title="Actualizar Datos">
                         <i class="fas fa-sync-alt"></i>
+                    </button>
+                    <button class="theme-toggle" id="themeToggle" title="Cambiar tema">
+                        <i class="fas fa-adjust"></i>
                     </button>
                 </div>
             </div>
@@ -1149,7 +1210,6 @@
                             <th data-column="proveedor" class="col-proveedor">Prov.</th>
                             <th data-column="precio_compra" class="col-compra">Compra</th>
                             <th data-column="precio_venta" class="col-venta">Venta</th>
-                            <th data-column="margen" class="col-margen">Margen</th>
                             <th class="col-acciones">Acciones</th>
                         </tr>
                     </thead>
@@ -1304,6 +1364,7 @@
         let comparingItems = new Set();
         let currentTab = 'main';
         let voiceRecognition = null;
+        let isLightMode = false;
 
         // ========== INICIALIZACIÓN ==========
         document.addEventListener('DOMContentLoaded', function() {
@@ -1317,6 +1378,12 @@
             updateProvidersUI();
             updateTableColumns();
             checkOnlineStatus();
+            
+            // Cargar preferencia de tema
+            const savedTheme = localStorage.getItem('themePreference');
+            if (savedTheme === 'light') {
+                toggleTheme();
+            }
         }
 
         function setupEventListeners() {
@@ -1326,6 +1393,7 @@
             document.getElementById('advancedFiltersBtn').addEventListener('click', toggleAdvancedFilters);
             document.getElementById('voiceSearchBtn').addEventListener('click', startVoiceSearch);
             document.getElementById('refreshBtn').addEventListener('click', loadAllData);
+            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
             
             // Filtros avanzados
             document.getElementById('marcaFilter').addEventListener('change', applyFilters);
@@ -1354,6 +1422,22 @@
             // Búsquedas recientes
             document.getElementById('searchInput').addEventListener('focus', showRecentSearches);
             document.addEventListener('click', hideRecentSearches);
+
+            // Responsive table scrolling
+            setupTableScrolling();
+        }
+
+        function setupTableScrolling() {
+            const tableContainer = document.querySelector('.table-container');
+            if (tableContainer) {
+                tableContainer.addEventListener('touchstart', function() {
+                    this.style.cursor = 'grabbing';
+                });
+                
+                tableContainer.addEventListener('touchend', function() {
+                    this.style.cursor = 'grab';
+                });
+            }
         }
 
         function setupModalEvents() {
@@ -1388,6 +1472,20 @@
             document.getElementById('editPassword').addEventListener('keypress', e => { if (e.key === 'Enter') handleEditAccess(); });
             document.getElementById('ventaPassword').addEventListener('keypress', e => { if (e.key === 'Enter') handleVentaAccess(); });
             document.getElementById('providersPassword').addEventListener('keypress', e => { if (e.key === 'Enter') handleProvidersAccess(); });
+        }
+
+        // ========== FUNCIONALIDAD TEMA CLARO/OSCURO ==========
+        function toggleTheme() {
+            isLightMode = !isLightMode;
+            if (isLightMode) {
+                document.body.classList.add('light-mode');
+                document.getElementById('themeToggle').innerHTML = '<i class="fas fa-moon"></i>';
+                localStorage.setItem('themePreference', 'light');
+            } else {
+                document.body.classList.remove('light-mode');
+                document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i>';
+                localStorage.setItem('themePreference', 'dark');
+            }
         }
 
         // ========== CARGA DE DATOS EXTERNOS ==========
@@ -1547,7 +1645,6 @@
                             <p><strong>Proveedor:</strong> ${item.proveedor}</p>
                             <p><strong>Compra:</strong> Bs. ${formatCurrency(item.precio_compra)}</p>
                             <p><strong>Venta:</strong> Bs. ${formatCurrency(item.precio_venta)}</p>
-                            <p><strong>Margen:</strong> <span class="${margin >= 0 ? 'profit-positive' : 'profit-negative'}">${margin}%</span></p>
                         </div>
                     `;
                 });
@@ -1686,7 +1783,7 @@
 
         // 6. Exportación de Datos
         function exportToCSV() {
-            const headers = ['Marca', 'Modelo', 'Tipo', 'Proveedor', 'Precio Compra', 'Precio Venta', 'Margen %'];
+            const headers = ['Marca', 'Modelo', 'Tipo', 'Proveedor', 'Precio Compra', 'Precio Venta'];
             const csvContent = [
                 headers.join(','),
                 ...filteredData.map(row => [
@@ -1695,8 +1792,7 @@
                     `"${row.tipo}"`,
                     `"${row.proveedor}"`,
                     row.precio_compra,
-                    row.precio_venta,
-                    calculateProfitMargin(row.precio_compra, row.precio_venta)
+                    row.precio_venta
                 ].join(','))
             ].join('\n');
             
@@ -1776,6 +1872,10 @@
                     case 'r':
                         event.preventDefault();
                         loadAllData();
+                        break;
+                    case 't':
+                        event.preventDefault();
+                        toggleTheme();
                         break;
                 }
             }
@@ -1993,7 +2093,7 @@
             if (filteredData.length === 0) {
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="8" class="empty">
+                        <td colspan="7" class="empty">
                             <div class="icon">🔍</div>
                             ${searchTerm ? 'No se encontraron resultados' : 'No hay datos para mostrar'}
                         </td>
@@ -2007,8 +2107,6 @@
             filteredData.forEach(row => {
                 const tr = document.createElement('tr');
                 const tipoClass = row.tipo === 'OLED' ? 'tipo-oled' : 'tipo-lcd';
-                const margin = calculateProfitMargin(row.precio_compra, row.precio_venta);
-                const marginClass = margin >= 0 ? 'profit-positive' : 'profit-negative';
                 const isComparing = comparingItems.has(generateRowId(row));
                 const isFav = isFavorite(row);
                 
@@ -2042,9 +2140,6 @@
                     <td class="col-proveedor">${showProviders ? highlightMatches(row.proveedor) : '<span class="hidden-price">🔒</span>'}</td>
                     <td class="col-compra">${showProviders ? compraField : '<span class="hidden-price">🔒</span>'}</td>
                     <td class="col-venta">${ventaField}</td>
-                    <td class="col-margen">
-                        <span class="profit-margin ${marginClass}">${margin}%</span>
-                    </td>
                     <td class="col-acciones">
                         <div class="action-buttons">
                             <button class="action-btn favorite-btn ${isFav ? 'active' : ''}" 
@@ -2056,11 +2151,6 @@
                                     onclick="toggleCompare(${JSON.stringify(row).replace(/"/g, '&quot;')})"
                                     title="${isComparing ? 'Quitar de comparación' : 'Agregar a comparación'}">
                                 <i class="fas fa-balance-scale"></i>
-                            </button>
-                            <button class="action-btn whatsapp-btn" 
-                                    onclick="showWhatsappModal(${JSON.stringify(row).replace(/"/g, '&quot;')})"
-                                    title="Compartir por WhatsApp">
-                                <i class="fab fa-whatsapp"></i>
                             </button>
                         </div>
                     </td>
@@ -2307,7 +2397,7 @@
             ventaInputs.forEach(input => {
                 input.removeAttribute('readonly');
                 input.style.border = '1px solid var(--accent)';
-                input.style.backgroundColor = 'rgba(255, 123, 0, 0.1)';
+                input.style.backgroundColor = 'rgba(255, 123, 0, 0.05)';
                 input.focus();
                 
                 input.addEventListener('blur', function() {
