@@ -520,6 +520,17 @@
             border-color: var(--warning);
         }
 
+        .info-btn {
+            background-color: var(--info);
+            color: white;
+            border: 1px solid var(--info);
+        }
+
+        .info-btn:hover {
+            background-color: #0b7dda;
+            border-color: #0b7dda;
+        }
+
         .status {
             padding: 12px;
             margin-bottom: 12px;
@@ -665,9 +676,9 @@
         }
 
         .col-acciones {
-            width: 120px;
-            min-width: 120px;
-            max-width: 120px;
+            width: 140px;
+            min-width: 140px;
+            max-width: 140px;
         }
 
         .bottom-nav {
@@ -741,7 +752,7 @@
             padding: 20px;
             border-radius: 12px;
             width: 100%;
-            max-width: 400px;
+            max-width: 500px;
             border: 1px solid var(--border);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
             animation: slideUp 0.3s ease;
@@ -892,6 +903,79 @@
             border-bottom: none;
         }
 
+        /* Estilos para el modal de información del teléfono */
+        .phone-info-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .phone-image {
+            text-align: center;
+        }
+
+        .phone-image img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .phone-details {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .phone-detail {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .phone-detail:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .detail-value {
+            color: var(--text-primary);
+            text-align: right;
+        }
+
+        .specs-section {
+            margin-top: 15px;
+        }
+
+        .specs-section h4 {
+            color: var(--accent);
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .loading-info {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-secondary);
+        }
+
+        .loading-info .spinner {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         /* Responsive Design */
         @media (max-width: 480px) {
             .app-header {
@@ -963,9 +1047,9 @@
             }
 
             .col-acciones {
-                width: 100px;
-                min-width: 100px;
-                max-width: 100px;
+                width: 120px;
+                min-width: 120px;
+                max-width: 120px;
             }
             
             .bottom-nav {
@@ -999,6 +1083,15 @@
 
             .price-container {
                 gap: 5px;
+            }
+
+            .phone-info-container {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .phone-image img {
+                max-height: 150px;
             }
         }
 
@@ -1343,6 +1436,19 @@
         </div>
     </div>
 
+    <!-- Modal para información del teléfono -->
+    <div class="modal" id="phoneInfoModal">
+        <div class="modal-content">
+            <h2><i class="fas fa-mobile-alt"></i> Información del Teléfono</h2>
+            <div id="phoneInfoContent">
+                <!-- La información del teléfono se cargará aquí -->
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn secondary" id="closePhoneInfoBtn">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // ========== CONFIGURACIÓN Y DATOS ==========
         const CONFIG = [
@@ -1475,6 +1581,9 @@
             // Compare Modal
             document.getElementById('closeCompareBtn').addEventListener('click', hideCompareModal);
             document.getElementById('clearCompareBtn').addEventListener('click', clearCompare);
+            
+            // Phone Info Modal
+            document.getElementById('closePhoneInfoBtn').addEventListener('click', hidePhoneInfoModal);
             
             // Enter key en modales
             document.getElementById('adminPassword').addEventListener('keypress', e => { if (e.key === 'Enter') handleAdminAccess(); });
@@ -2014,6 +2123,209 @@
             });
         }
 
+        // ========== API PARA INFORMACIÓN DE TELÉFONOS ==========
+        async function searchPhoneInfo(row) {
+            showPhoneInfoModal();
+            
+            // Mostrar loading
+            document.getElementById('phoneInfoContent').innerHTML = `
+                <div class="loading-info">
+                    <div class="spinner">⏳</div>
+                    <p>Buscando información del teléfono...</p>
+                </div>
+            `;
+            
+            try {
+                // Usar una API pública para información de teléfonos
+                // En este ejemplo usaremos una simulación, pero puedes integrar con APIs reales como:
+                // - GSMArena API (necesita proxy por CORS)
+                // - ThePhoneDB API
+                // - DeviceSpecifications API
+                
+                const phoneInfo = await fetchPhoneDataFromAPI(row.marca, row.modelo);
+                displayPhoneInfo(phoneInfo, row);
+                
+            } catch (error) {
+                console.error('Error buscando información:', error);
+                document.getElementById('phoneInfoContent').innerHTML = `
+                    <div class="loading-info">
+                        <div style="color: var(--error); font-size: 2rem;">❌</div>
+                        <p>No se pudo cargar la información del teléfono</p>
+                        <p style="font-size: 0.8rem; color: var(--text-secondary);">Error: ${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Función simulada que buscaría en una API real
+        async function fetchPhoneDataFromAPI(marca, modelo) {
+            // Simular delay de API
+            await new Promise(resolve => setTimeout(resolve, 1500));
+            
+            // En una implementación real, aquí harías:
+            // const response = await fetch(`https://api.ejemplo.com/phones?brand=${marca}&model=${modelo}`);
+            // return await response.json();
+            
+            // Por ahora, devolvemos datos de ejemplo
+            return {
+                success: true,
+                data: {
+                    name: `${marca} ${modelo}`,
+                    image: `https://via.placeholder.com/300x400/333/fff?text=${marca}+${modelo}`,
+                    release: "2023",
+                    dimensions: "160.5 x 75.7 x 7.9 mm",
+                    weight: "185 g",
+                    display: {
+                        type: "AMOLED",
+                        size: "6.5 inches",
+                        resolution: "1080 x 2400 pixels",
+                        protection: "Gorilla Glass 5"
+                    },
+                    platform: {
+                        os: "Android 13",
+                        chipset: "Snapdragon 778G",
+                        cpu: "Octa-core",
+                        gpu: "Adreno 642L"
+                    },
+                    memory: {
+                        internal: "128GB/256GB",
+                        ram: "8GB",
+                        cardSlot: "microSDXC"
+                    },
+                    camera: {
+                        main: "64 MP + 8 MP + 2 MP",
+                        features: "LED flash, HDR, panorama",
+                        video: "4K@30fps",
+                        selfie: "32 MP"
+                    },
+                    battery: {
+                        type: "Li-Po 5000 mAh",
+                        charging: "33W wired"
+                    },
+                    features: {
+                        sensors: "Fingerprint, accelerometer, gyro, compass",
+                        connectivity: "Wi-Fi 6, Bluetooth 5.2, NFC",
+                        colors: "Black, Blue, Green"
+                    }
+                }
+            };
+        }
+
+        function displayPhoneInfo(phoneInfo, originalRow) {
+            if (!phoneInfo.success) {
+                document.getElementById('phoneInfoContent').innerHTML = `
+                    <div class="loading-info">
+                        <div style="color: var(--error); font-size: 2rem;">❌</div>
+                        <p>No se encontró información para este modelo</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            const phone = phoneInfo.data;
+            const html = `
+                <div class="phone-info-container">
+                    <div class="phone-image">
+                        <img src="${phone.image}" alt="${phone.name}" onerror="this.src='https://via.placeholder.com/300x400/333/fff?text=Imagen+no+disponible'">
+                    </div>
+                    <div class="phone-details">
+                        <h3 style="color: var(--accent); margin-bottom: 10px;">${phone.name}</h3>
+                        
+                        <div class="phone-detail">
+                            <span class="detail-label">Lanzamiento:</span>
+                            <span class="detail-value">${phone.release}</span>
+                        </div>
+                        <div class="phone-detail">
+                            <span class="detail-label">Dimensiones:</span>
+                            <span class="detail-value">${phone.dimensions}</span>
+                        </div>
+                        <div class="phone-detail">
+                            <span class="detail-label">Peso:</span>
+                            <span class="detail-value">${phone.weight}</span>
+                        </div>
+                        
+                        <div class="specs-section">
+                            <h4>📱 Pantalla</h4>
+                            <div class="phone-detail">
+                                <span class="detail-label">Tipo:</span>
+                                <span class="detail-value">${phone.display.type}</span>
+                            </div>
+                            <div class="phone-detail">
+                                <span class="detail-label">Tamaño:</span>
+                                <span class="detail-value">${phone.display.size}</span>
+                            </div>
+                            <div class="phone-detail">
+                                <span class="detail-label">Resolución:</span>
+                                <span class="detail-value">${phone.display.resolution}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="specs-section">
+                            <h4>⚙️ Plataforma</h4>
+                            <div class="phone-detail">
+                                <span class="detail-label">Sistema:</span>
+                                <span class="detail-value">${phone.platform.os}</span>
+                            </div>
+                            <div class="phone-detail">
+                                <span class="detail-label">Procesador:</span>
+                                <span class="detail-value">${phone.platform.chipset}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="specs-section">
+                            <h4>💾 Memoria</h4>
+                            <div class="phone-detail">
+                                <span class="detail-label">Almacenamiento:</span>
+                                <span class="detail-value">${phone.memory.internal}</span>
+                            </div>
+                            <div class="phone-detail">
+                                <span class="detail-label">RAM:</span>
+                                <span class="detail-value">${phone.memory.ram}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="specs-section">
+                            <h4>🔋 Batería</h4>
+                            <div class="phone-detail">
+                                <span class="detail-label">Capacidad:</span>
+                                <span class="detail-value">${phone.battery.type}</span>
+                            </div>
+                            <div class="phone-detail">
+                                <span class="detail-label">Carga:</span>
+                                <span class="detail-value">${phone.battery.charging}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 15px; padding: 15px; background: var(--bg-primary); border-radius: 8px; border: 1px solid var(--border);">
+                    <h4 style="color: var(--accent); margin-bottom: 10px;">💎 Precios Dr. Xiaomi</h4>
+                    <div class="phone-detail">
+                        <span class="detail-label">Precio de compra:</span>
+                        <span class="detail-value" style="color: var(--accent);">Bs. ${formatCurrency(originalRow.precio_compra)}</span>
+                    </div>
+                    <div class="phone-detail">
+                        <span class="detail-label">Precio de venta:</span>
+                        <span class="detail-value" style="color: var(--success);">Bs. ${formatCurrency(originalRow.precio_venta)}</span>
+                    </div>
+                    <div class="phone-detail">
+                        <span class="detail-label">Tipo de pantalla:</span>
+                        <span class="detail-value">${originalRow.tipo}</span>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('phoneInfoContent').innerHTML = html;
+        }
+
+        function showPhoneInfoModal() {
+            document.getElementById('phoneInfoModal').style.display = 'flex';
+        }
+
+        function hidePhoneInfoModal() {
+            document.getElementById('phoneInfoModal').style.display = 'none';
+        }
+
         // ========== FUNCIONES EXISTENTES ==========
         function handleSearch(e) {
             searchTerm = e.target.value;
@@ -2230,6 +2542,11 @@
                                     title="${isComparing ? 'Quitar de comparación' : 'Agregar a comparación'}">
                                 <i class="fas fa-balance-scale"></i>
                             </button>
+                            <button class="action-btn info-btn" 
+                                    onclick="searchPhoneInfo(${JSON.stringify(row).replace(/"/g, '&quot;')})"
+                                    title="Ver información del teléfono">
+                                <i class="fas fa-search"></i>
+                            </button>
                         </div>
                     </td>
                 `;
@@ -2400,7 +2717,7 @@
         }
 
         function generateWhatsappMessage(row) {
-            return `📱 *PRECIO DE PANTALLA* ${row.marca} ${row.modelo} es:  ${formatCurrency(row.precio_venta)} Bs.`;
+            return `📱 *PRECIO DE PANTALLA* ${row.marca} ${row.modelo} - Bs. ${formatCurrency(row.precio_venta)}`;
         }
 
         function handleWhatsappShare() {
