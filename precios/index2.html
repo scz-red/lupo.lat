@@ -418,6 +418,15 @@
         .price-venta {
             color: var(--success);
             font-weight: 600;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .price-venta:hover {
+            background-color: var(--accent);
+            color: white;
         }
 
         .tipo-oled {
@@ -1191,8 +1200,8 @@
                     <option value="OLED">OLED</option>
                     <option value="LCD">LCD</option>
                 </select>
-                <input type="number" id="precioMin" placeholder="Precio mínimo">
-                <input type="number" id="precioMax" placeholder="Precio máximo">
+                <input type="number" id="precioMin" placeholder="Precio mínimo" step="1">
+                <input type="number" id="precioMax" placeholder="Precio máximo" step="1">
             </div>
         </section>
 
@@ -1914,8 +1923,8 @@
         }
 
         function formatCurrency(value) {
-            if (value === null || value === undefined || isNaN(value)) return '0.00';
-            return parseFloat(value).toFixed(2);
+            if (value === null || value === undefined || isNaN(value)) return '0';
+            return Math.round(parseFloat(value)).toString();
         }
 
         function calculateProfitMargin(compra, venta) {
@@ -1938,6 +1947,71 @@
                     statusEl.style.display = 'none';
                 }, 3000);
             }
+        }
+
+        // ========== FUNCIÓN PARA COPIAR PRECIO AL PORTAPAPELES ==========
+        function copyPriceToClipboard(row) {
+            const message = generateWhatsappMessage(row);
+            
+            // Usar la API del portapapeles moderna
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(message)
+                    .then(() => {
+                        showStatus('✅ Mensaje copiado al portapapeles', 'success');
+                        // Feedback visual
+                        highlightCopiedPrice(row);
+                    })
+                    .catch(err => {
+                        console.error('Error al copiar: ', err);
+                        fallbackCopyToClipboard(message, row);
+                    });
+            } else {
+                // Fallback para navegadores más antiguos o HTTP
+                fallbackCopyToClipboard(message, row);
+            }
+        }
+
+        // Fallback para copiar al portapapeles
+        function fallbackCopyToClipboard(text, row) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                showStatus('✅ Mensaje copiado al portapapeles', 'success');
+                highlightCopiedPrice(row);
+            } catch (err) {
+                console.error('Fallback: Error al copiar texto: ', err);
+                showStatus('❌ Error al copiar mensaje', 'error');
+            }
+            
+            document.body.removeChild(textArea);
+        }
+
+        // Efecto visual cuando se copia
+        function highlightCopiedPrice(row) {
+            const priceElements = document.querySelectorAll('.price-venta');
+            
+            priceElements.forEach(element => {
+                if (element.textContent.includes(`Bs. ${formatCurrency(row.precio_venta)}`)) {
+                    const originalBg = element.style.backgroundColor;
+                    const originalColor = element.style.color;
+                    
+                    element.style.backgroundColor = 'var(--accent)';
+                    element.style.color = 'white';
+                    
+                    setTimeout(() => {
+                        element.style.backgroundColor = originalBg;
+                        element.style.color = originalColor;
+                    }, 1000);
+                }
+            });
         }
 
         // ========== FUNCIONES EXISTENTES ==========
@@ -2116,8 +2190,8 @@
                             data-id="${generateRowId(row)}" 
                             data-field="precio_compra" 
                             value="${formatCurrency(row.precio_compra)}"
-                            placeholder="0.00">` :
-                    `<span class="price-compra">${formatCurrency(row.precio_compra)}</span>`;
+                            placeholder="0">` :
+                    `<span class="price-compra">Bs. ${formatCurrency(row.precio_compra)}</span>`;
                 
                 const ventaField = ventaEditMode ? 
                     `<input type="text" 
@@ -2125,9 +2199,13 @@
                             data-id="${generateRowId(row)}" 
                             data-field="precio_venta" 
                             value="${formatCurrency(row.precio_venta)}"
-                            placeholder="0.00">` :
+                            placeholder="0">` :
                     `<div class="price-container">
-                        <span class="price-text price-venta">${formatCurrency(row.precio_venta)}</span>
+                        <span class="price-venta" 
+                              onclick="copyPriceToClipboard(${JSON.stringify(row).replace(/"/g, '&quot;')})"
+                              title="Haz clic para copiar el precio al portapapeles">
+                            Bs. ${formatCurrency(row.precio_venta)}
+                        </span>
                         <i class="fas fa-share-alt share-icon" 
                            onclick="showWhatsappModal(${JSON.stringify(row).replace(/"/g, '&quot;')})"
                            title="Compartir por WhatsApp"></i>
@@ -2201,7 +2279,13 @@
             const input = e.target;
             const rowId = input.getAttribute('data-id');
             const field = input.getAttribute('data-field');
-            const value = input.value;
+            
+            // Convertir a número entero
+            let value = input.value;
+            if (field === 'precio_compra' || field === 'precio_venta') {
+                value = Math.round(parseFloat(value) || 0);
+                input.value = value; // Actualizar el input con el valor sin decimales
+            }
             
             saveEditToStorage(rowId, field, value);
             updateDataInMemory(rowId, field, value);
@@ -2248,7 +2332,7 @@
                     row.precio_compra == precio_compra) {
                     
                     if (field === 'precio_compra' || field === 'precio_venta') {
-                        row[field] = parseFloat(value) || 0;
+                        row[field] = Math.round(parseFloat(value) || 0);
                     }
                 }
             });
@@ -2316,7 +2400,7 @@
         }
 
         function generateWhatsappMessage(row) {
-            return `📱 *PRECIO DE PANTALLA* ${row.marca} ${row.modelo} Bs. ${formatCurrency(row.precio_venta)} Bs.`;
+            return `📱 *PRECIO DE PANTALLA* ${row.marca} ${row.modelo} - Bs. ${formatCurrency(row.precio_venta)}`;
         }
 
         function handleWhatsappShare() {
