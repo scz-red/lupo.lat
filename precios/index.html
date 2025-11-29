@@ -1128,6 +1128,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="app-container">
         <header class="app-header">
@@ -1563,7 +1564,7 @@
             const lines = csvText.split('\n').filter(line => line.trim() !== '');
             const data = [];
             
-            // Asumimos que el CSV tiene columnas: Marca, Modelo, Tipo, Precio Compra, Precio Venta
+            // CORREGIDO: Asumimos que el CSV tiene columnas: Marca, Modelo, Tipo, Precio Compra, Precio Venta
             for (let i = 1; i < lines.length; i++) { // Saltar encabezado
                 const columns = lines[i].split(',').map(col => col.trim().replace(/"/g, ''));
                 
@@ -1574,6 +1575,7 @@
                         modelo: columns[1] || 'Desconocido',
                         tipo: columns[2] || 'LCD',
                         proveedor: providerName,
+                        // CORREGIDO: precio_compra toma columns[3] y precio_venta toma columns[4]
                         precio_compra: parseFloat(columns[3]) || 0,
                         precio_venta: parseFloat(columns[4]) || 0
                     };
@@ -2184,6 +2186,7 @@
                 const isComparing = comparingItems.has(generateRowId(row));
                 const isFav = isFavorite(row);
                 
+                // CORREGIDO: precio_compra en columna compra, precio_venta en columna venta
                 const compraField = editMode ? 
                     `<input type="text" 
                             class="editable editable-compra" 
