@@ -520,17 +520,6 @@
             border-color: var(--warning);
         }
 
-        .info-btn {
-            background-color: var(--info);
-            color: white;
-            border: 1px solid var(--info);
-        }
-
-        .info-btn:hover {
-            background-color: #0b7dda;
-            border-color: #0b7dda;
-        }
-
         .status {
             padding: 12px;
             margin-bottom: 12px;
@@ -676,9 +665,9 @@
         }
 
         .col-acciones {
-            width: 140px;
-            min-width: 140px;
-            max-width: 140px;
+            width: 120px;
+            min-width: 120px;
+            max-width: 120px;
         }
 
         .bottom-nav {
@@ -752,7 +741,7 @@
             padding: 20px;
             border-radius: 12px;
             width: 100%;
-            max-width: 500px;
+            max-width: 400px;
             border: 1px solid var(--border);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
             animation: slideUp 0.3s ease;
@@ -903,70 +892,6 @@
             border-bottom: none;
         }
 
-        /* Estilos para el modal de búsqueda de modelos */
-        .phone-search-container {
-            margin-bottom: 20px;
-        }
-
-        .phone-search-results {
-            max-height: 400px;
-            overflow-y: auto;
-            margin-top: 15px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            background: var(--bg-primary);
-        }
-
-        .phone-result-item {
-            padding: 12px 15px;
-            border-bottom: 1px solid var(--border);
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .phone-result-item:hover {
-            background-color: var(--bg-tertiary);
-        }
-
-        .phone-result-item:last-child {
-            border-bottom: none;
-        }
-
-        .phone-result-name {
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 4px;
-        }
-
-        .phone-result-specs {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
-
-        .phone-result-price {
-            font-size: 0.9rem;
-            color: var(--accent);
-            font-weight: 600;
-            margin-top: 4px;
-        }
-
-        .loading-info {
-            text-align: center;
-            padding: 40px;
-            color: var(--text-secondary);
-        }
-
-        .loading-info .spinner {
-            font-size: 2rem;
-            margin-bottom: 10px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
         /* Responsive Design */
         @media (max-width: 480px) {
             .app-header {
@@ -1038,9 +963,9 @@
             }
 
             .col-acciones {
-                width: 120px;
-                min-width: 120px;
-                max-width: 120px;
+                width: 100px;
+                min-width: 100px;
+                max-width: 100px;
             }
             
             .bottom-nav {
@@ -1323,12 +1248,6 @@
                 </div>
                 <div class="nav-label">Comparar</div>
             </div>
-            <div class="nav-item" data-tab="search">
-                <div class="nav-icon">
-                    <i class="fas fa-search"></i>
-                </div>
-                <div class="nav-label">Buscar</div>
-            </div>
         </nav>
     </div>
 
@@ -1424,22 +1343,6 @@
         </div>
     </div>
 
-    <!-- Modal para búsqueda de modelos -->
-    <div class="modal" id="phoneSearchModal">
-        <div class="modal-content">
-            <h2><i class="fas fa-search"></i> Buscar Modelos de Teléfonos</h2>
-            <div class="phone-search-container">
-                <input type="text" id="phoneSearchInput" class="modal-input" placeholder="Buscar marca y modelo (ej: Xiaomi Redmi Note 10)" autocomplete="off">
-                <div class="phone-search-results" id="phoneSearchResults">
-                    <!-- Resultados de búsqueda -->
-                </div>
-            </div>
-            <div class="modal-buttons">
-                <button class="modal-btn secondary" id="closePhoneSearchBtn">Cerrar</button>
-            </div>
-        </div>
-    </div>
-
     <script>
         // ========== CONFIGURACIÓN Y DATOS ==========
         const CONFIG = [
@@ -1529,9 +1432,6 @@
             document.getElementById('searchInput').addEventListener('focus', showRecentSearches);
             document.addEventListener('click', hideRecentSearches);
 
-            // Búsqueda de modelos
-            document.getElementById('phoneSearchInput').addEventListener('input', debounce(handlePhoneSearch, 300));
-
             // Responsive table scrolling
             setupTableScrolling();
         }
@@ -1576,15 +1476,11 @@
             document.getElementById('closeCompareBtn').addEventListener('click', hideCompareModal);
             document.getElementById('clearCompareBtn').addEventListener('click', clearCompare);
             
-            // Phone Search Modal
-            document.getElementById('closePhoneSearchBtn').addEventListener('click', hidePhoneSearchModal);
-            
             // Enter key en modales
             document.getElementById('adminPassword').addEventListener('keypress', e => { if (e.key === 'Enter') handleAdminAccess(); });
             document.getElementById('editPassword').addEventListener('keypress', e => { if (e.key === 'Enter') handleEditAccess(); });
             document.getElementById('ventaPassword').addEventListener('keypress', e => { if (e.key === 'Enter') handleVentaAccess(); });
             document.getElementById('providersPassword').addEventListener('keypress', e => { if (e.key === 'Enter') handleProvidersAccess(); });
-            document.getElementById('phoneSearchInput').addEventListener('keypress', e => { if (e.key === 'Enter') handlePhoneSearch({ target: { value: e.target.value } }); });
         }
 
         // ========== FUNCIONALIDAD TEMA CLARO/OSCURO ==========
@@ -1631,7 +1527,8 @@
                     }
                 }
                 
-                sortData('marca', 'asc');
+                // Orden por defecto
+                sortData('marca', 'asc', allData);
                 applyFilters();
                 updateBrandFilter();
                 updateRecentSearches();
@@ -1954,9 +1851,6 @@
                 case 'compare':
                     showCompareModal();
                     break;
-                case 'search':
-                    showPhoneSearchModal();
-                    break;
                 default:
                     applyFilters();
                     break;
@@ -2121,158 +2015,6 @@
             });
         }
 
-        // ========== BÚSQUEDA DE MODELOS CON API ==========
-        async function searchPhoneInfo(row) {
-            showPhoneSearchModal();
-            document.getElementById('phoneSearchInput').value = `${row.marca} ${row.modelo}`;
-            await handlePhoneSearch({ target: { value: `${row.marca} ${row.modelo}` } });
-        }
-
-        async function handlePhoneSearch(e) {
-            const searchTerm = e.target.value.trim();
-            const resultsContainer = document.getElementById('phoneSearchResults');
-            
-            if (!searchTerm) {
-                resultsContainer.innerHTML = '<div class="loading-info"><p>Ingresa un modelo para buscar</p></div>';
-                return;
-            }
-            
-            resultsContainer.innerHTML = '<div class="loading-info"><div class="spinner">⏳</div><p>Buscando modelos...</p></div>';
-            
-            try {
-                // Usar API de GSMArena (simulada por ahora)
-                const searchResults = await searchPhoneModelsAPI(searchTerm);
-                displayPhoneSearchResults(searchResults);
-            } catch (error) {
-                console.error('Error en búsqueda:', error);
-                resultsContainer.innerHTML = `
-                    <div class="loading-info">
-                        <div style="color: var(--error); font-size: 2rem;">❌</div>
-                        <p>Error al buscar modelos</p>
-                        <p style="font-size: 0.8rem; color: var(--text-secondary);">${error.message}</p>
-                    </div>
-                `;
-            }
-        }
-
-        // API de búsqueda de modelos (simulada)
-        async function searchPhoneModelsAPI(searchTerm) {
-            // Simular delay de API
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            
-            // Filtrar de los datos existentes primero
-            const exactMatches = allData.filter(item => 
-                `${item.marca} ${item.modelo}`.toLowerCase().includes(searchTerm.toLowerCase())
-            );
-            
-            // Eliminar duplicados
-            const uniqueMatches = [];
-            const seen = new Set();
-            
-            exactMatches.forEach(item => {
-                const key = `${item.marca}|${item.modelo}`;
-                if (!seen.has(key)) {
-                    seen.add(key);
-                    uniqueMatches.push(item);
-                }
-            });
-            
-            // Si hay resultados exactos, devolverlos
-            if (uniqueMatches.length > 0) {
-                return {
-                    success: true,
-                    data: uniqueMatches.slice(0, 10) // Limitar a 10 resultados
-                };
-            }
-            
-            // Simular datos de API externa para modelos no encontrados
-            return {
-                success: true,
-                data: [
-                    {
-                        marca: "Xiaomi",
-                        modelo: "Redmi Note 13 Pro",
-                        tipo: "OLED",
-                        precio_compra: 450,
-                        precio_venta: 650
-                    },
-                    {
-                        marca: "Samsung",
-                        modelo: "Galaxy A54",
-                        tipo: "OLED", 
-                        precio_compra: 500,
-                        precio_venta: 750
-                    },
-                    {
-                        marca: "Apple",
-                        modelo: "iPhone 15",
-                        tipo: "OLED",
-                        precio_compra: 1200,
-                        precio_venta: 1800
-                    }
-                ].filter(item => 
-                    `${item.marca} ${item.modelo}`.toLowerCase().includes(searchTerm.toLowerCase())
-                )
-            };
-        }
-
-        function displayPhoneSearchResults(results) {
-            const resultsContainer = document.getElementById('phoneSearchResults');
-            
-            if (!results.success || results.data.length === 0) {
-                resultsContainer.innerHTML = '<div class="loading-info"><p>No se encontraron modelos</p></div>';
-                return;
-            }
-            
-            let html = '';
-            results.data.forEach(phone => {
-                html += `
-                    <div class="phone-result-item" onclick="selectPhoneModel(${JSON.stringify(phone).replace(/"/g, '&quot;')})">
-                        <div class="phone-result-name">${phone.marca} ${phone.modelo}</div>
-                        <div class="phone-result-specs">Tipo: ${phone.tipo}</div>
-                        <div class="phone-result-price">
-                            Compra: Bs. ${formatCurrency(phone.precio_compra)} | Venta: Bs. ${formatCurrency(phone.precio_venta)}
-                        </div>
-                    </div>
-                `;
-            });
-            
-            resultsContainer.innerHTML = html;
-        }
-
-        function selectPhoneModel(phone) {
-            // Agregar el modelo seleccionado a la lista
-            const newRow = {
-                lista: 'Manual',
-                marca: phone.marca,
-                modelo: phone.modelo,
-                tipo: phone.tipo,
-                proveedor: 'Manual',
-                precio_compra: phone.precio_compra,
-                precio_venta: phone.precio_venta
-            };
-            
-            // Guardar en localStorage
-            const customData = JSON.parse(localStorage.getItem('customPriceData') || '[]');
-            customData.push(newRow);
-            localStorage.setItem('customPriceData', JSON.stringify(customData));
-            
-            // Recargar datos
-            loadAllData();
-            hidePhoneSearchModal();
-            showStatus(`✅ ${phone.marca} ${phone.modelo} agregado a la lista`, 'success');
-        }
-
-        function showPhoneSearchModal() {
-            document.getElementById('phoneSearchModal').style.display = 'flex';
-            document.getElementById('phoneSearchInput').focus();
-        }
-
-        function hidePhoneSearchModal() {
-            document.getElementById('phoneSearchModal').style.display = 'none';
-            document.getElementById('phoneSearchInput').value = '';
-        }
-
         // ========== FUNCIONES EXISTENTES ==========
         function handleSearch(e) {
             searchTerm = e.target.value;
@@ -2308,8 +2050,9 @@
                 filtered = filtered.filter(row => row.tipo === tipoFilter);
             }
             
+            // AHORA FILTRA POR PRECIO DE VENTA
             filtered = filtered.filter(row => 
-                row.precio_compra >= precioMin && row.precio_compra <= precioMax
+                row.precio_venta >= precioMin && row.precio_venta <= precioMax
             );
             
             // Filtro de proveedores
@@ -2317,9 +2060,9 @@
                 filtered = getBestPrices(filtered);
             }
             
-            // Ordenamiento
+            // Ordenamiento correcto sobre el array filtrado
             if (sortColumn) {
-                sortData(sortColumn, sortDirection);
+                sortData(sortColumn, sortDirection, filtered);
             }
             
             filteredData = filtered;
@@ -2379,12 +2122,14 @@
                 currentTh.classList.add(`sort-${sortDirection}`);
             }
             
-            sortData(column, sortDirection);
+            sortData(column, sortDirection, filteredData);
             renderTable();
         }
 
-        function sortData(column, direction) {
-            filteredData.sort((a, b) => {
+        // AHORA sortData PUEDE ORDENAR CUALQUIER ARRAY (O filteredData POR DEFECTO)
+        function sortData(column, direction, dataArray) {
+            const data = dataArray || filteredData;
+            data.sort((a, b) => {
                 let valueA = a[column];
                 let valueB = b[column];
                 
@@ -2406,13 +2151,17 @@
             });
         }
 
+        // AHORA EL “MEJOR” ES EL DE MENOR PRECIO DE VENTA
         function getBestPrices(data) {
             const grouped = {};
             
             data.forEach(row => {
                 const key = `${row.marca}|${row.modelo}|${row.tipo}`;
                 
-                if (!grouped[key] || row.precio_compra < grouped[key].precio_compra) {
+                if (
+                    !grouped[key] ||
+                    row.precio_venta < grouped[key].precio_venta
+                ) {
                     grouped[key] = { ...row };
                 }
             });
@@ -2443,7 +2192,6 @@
                 const isComparing = comparingItems.has(generateRowId(row));
                 const isFav = isFavorite(row);
                 
-                // CORRECCIÓN: Mostrar siempre los precios de compra
                 const compraField = editMode ? 
                     `<input type="text" 
                             class="editable editable-compra" 
@@ -2476,7 +2224,7 @@
                     <td class="col-modelo">${highlightMatches(row.modelo)}</td>
                     <td class="col-tipo ${tipoClass}">${highlightMatches(row.tipo)}</td>
                     <td class="col-proveedor">${showProviders ? highlightMatches(row.proveedor) : '<span class="hidden-price">🔒</span>'}</td>
-                    <td class="col-compra">${showProviders ? compraField : compraField}</td>
+                    <td class="col-compra">${showProviders ? compraField : '<span class="hidden-price">🔒</span>'}</td>
                     <td class="col-venta">${ventaField}</td>
                     <td class="col-acciones">
                         <div class="action-buttons">
@@ -2489,11 +2237,6 @@
                                     onclick="toggleCompare(${JSON.stringify(row).replace(/"/g, '&quot;')})"
                                     title="${isComparing ? 'Quitar de comparación' : 'Agregar a comparación'}">
                                 <i class="fas fa-balance-scale"></i>
-                            </button>
-                            <button class="action-btn info-btn" 
-                                    onclick="searchPhoneInfo(${JSON.stringify(row).replace(/"/g, '&quot;')})"
-                                    title="Buscar información del modelo">
-                                <i class="fas fa-search"></i>
                             </button>
                         </div>
                     </td>
@@ -2665,7 +2408,7 @@
         }
 
         function generateWhatsappMessage(row) {
-            return `📱 *PRECIO DE PANTALLA* ${row.marca} ${row.modelo} - Bs. ${formatCurrency(row.precio_venta)}`;
+            return `📱 *PRECIO DE PANTALLA* ${row.marca} ${row.modelo} es:  ${formatCurrency(row.precio_venta)} Bs.`;
         }
 
         function handleWhatsappShare() {
