@@ -1527,8 +1527,7 @@
                     }
                 }
                 
-                // Orden por defecto
-                sortData('marca', 'asc', allData);
+                sortData('marca', 'asc');
                 applyFilters();
                 updateBrandFilter();
                 updateRecentSearches();
@@ -1564,7 +1563,7 @@
             const lines = csvText.split('\n').filter(line => line.trim() !== '');
             const data = [];
             
-            // Asumimos que el CSV tiene columnas: Marca, Modelo, Tipo, Precio Compra, Precio Venta
+            // CORREGIDO: Asumimos que el CSV tiene columnas: Marca, Modelo, Tipo, Precio Compra, Precio Venta
             for (let i = 1; i < lines.length; i++) { // Saltar encabezado
                 const columns = lines[i].split(',').map(col => col.trim().replace(/"/g, ''));
                 
@@ -1575,6 +1574,7 @@
                         modelo: columns[1] || 'Desconocido',
                         tipo: columns[2] || 'LCD',
                         proveedor: providerName,
+                        // CORREGIDO: precio_compra toma columns[3] y precio_venta toma columns[4]
                         precio_compra: parseFloat(columns[3]) || 0,
                         precio_venta: parseFloat(columns[4]) || 0
                     };
@@ -2050,9 +2050,8 @@
                 filtered = filtered.filter(row => row.tipo === tipoFilter);
             }
             
-            // AHORA FILTRA POR PRECIO DE VENTA
             filtered = filtered.filter(row => 
-                row.precio_venta >= precioMin && row.precio_venta <= precioMax
+                row.precio_compra >= precioMin && row.precio_compra <= precioMax
             );
             
             // Filtro de proveedores
@@ -2060,9 +2059,9 @@
                 filtered = getBestPrices(filtered);
             }
             
-            // Ordenamiento correcto sobre el array filtrado
+            // Ordenamiento
             if (sortColumn) {
-                sortData(sortColumn, sortDirection, filtered);
+                sortData(sortColumn, sortDirection);
             }
             
             filteredData = filtered;
@@ -2122,14 +2121,12 @@
                 currentTh.classList.add(`sort-${sortDirection}`);
             }
             
-            sortData(column, sortDirection, filteredData);
+            sortData(column, sortDirection);
             renderTable();
         }
 
-        // AHORA sortData PUEDE ORDENAR CUALQUIER ARRAY (O filteredData POR DEFECTO)
-        function sortData(column, direction, dataArray) {
-            const data = dataArray || filteredData;
-            data.sort((a, b) => {
+        function sortData(column, direction) {
+            filteredData.sort((a, b) => {
                 let valueA = a[column];
                 let valueB = b[column];
                 
@@ -2151,17 +2148,13 @@
             });
         }
 
-        // AHORA EL “MEJOR” ES EL DE MENOR PRECIO DE VENTA
         function getBestPrices(data) {
             const grouped = {};
             
             data.forEach(row => {
                 const key = `${row.marca}|${row.modelo}|${row.tipo}`;
                 
-                if (
-                    !grouped[key] ||
-                    row.precio_venta < grouped[key].precio_venta
-                ) {
+                if (!grouped[key] || row.precio_compra < grouped[key].precio_compra) {
                     grouped[key] = { ...row };
                 }
             });
@@ -2192,6 +2185,7 @@
                 const isComparing = comparingItems.has(generateRowId(row));
                 const isFav = isFavorite(row);
                 
+                // CORREGIDO: precio_compra en columna compra, precio_venta en columna venta
                 const compraField = editMode ? 
                     `<input type="text" 
                             class="editable editable-compra" 
