@@ -4,378 +4,322 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#121212">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="mobile-web-app-capable" content="yes">
     <title>Dr. Xiaomi</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --bg-primary: #121212;
-            --bg-secondary: #1a1a1a;
-            --bg-tertiary: #2d2d2d;
-            --text-primary: #ffffff;
-            --text-secondary: #b0b0b0;
-            --accent: #ff7b00;
-            --success: #4caf50;
-            --error: #f44336;
-            --warning: #ff9800;
-            --whatsapp: #25D366;
-            --favorite: #ff4081;
-            --border: #333333;
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
         }
-
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            overflow-x: hidden;
-            min-height: 100vh;
-            padding-bottom: 70px;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #121212;
+            color: white;
+            font-size: 12px;
+            line-height: 1.3;
         }
-
-        /* HEADER */
+        
+        /* HEADER COMPACT */
         .header {
-            background: var(--bg-secondary);
-            padding: 15px;
-            border-bottom: 1px solid var(--border);
+            background: #1a1a1a;
+            padding: 10px 12px;
+            border-bottom: 1px solid #333;
             position: sticky;
             top: 0;
             z-index: 100;
         }
-
-        .header-top {
+        
+        .header-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
         }
-
+        
         .app-title {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
-
-        .app-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--accent);
-            border-radius: 10px;
+        
+        .logo {
+            width: 32px;
+            height: 32px;
+            background: #ff7b00;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
+            font-size: 14px;
         }
-
+        
         h1 {
-            font-size: 1.3rem;
-            color: var(--accent);
+            font-size: 13px;
+            color: #ff7b00;
         }
-
-        .header-actions {
-            display: flex;
-            gap: 8px;
-        }
-
+        
         .header-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border);
-            color: var(--text-secondary);
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            background: #2d2d2d;
+            border: 1px solid #333;
+            color: #b0b0b0;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
+            font-size: 11px;
         }
-
-        /* SEARCH */
+        
+        /* BUSQUEDA COMPACT */
         .search-section {
-            padding: 15px;
-            background: var(--bg-secondary);
-            border-bottom: 1px solid var(--border);
+            padding: 10px 12px;
+            background: #1a1a1a;
+            border-bottom: 1px solid #333;
         }
-
-        .search-box {
-            position: relative;
-            margin-bottom: 10px;
+        
+        .search-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
         }
-
+        
         #searchInput {
-            width: 100%;
-            padding: 15px 45px 15px 15px;
-            background: var(--bg-primary);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            color: var(--text-primary);
-            font-size: 16px;
-        }
-
-        .search-icon {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-secondary);
-        }
-
-        .filter-row {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .provider-toggle {
             flex: 1;
+            padding: 10px 12px;
+            background: #121212;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: white;
+            font-size: 12px;
+        }
+        
+        .filter-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: #2d2d2d;
+            border: 1px solid #333;
+            color: #b0b0b0;
             display: flex;
             align-items: center;
-            gap: 10px;
-            background: var(--bg-primary);
-            padding: 12px 15px;
-            border-radius: 10px;
-            border: 1px solid var(--border);
+            justify-content: center;
+            font-size: 12px;
         }
-
-        .toggle-switch {
+        
+        .toggle-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px;
+            background: #121212;
+            border-radius: 8px;
+            border: 1px solid #333;
+        }
+        
+        .toggle {
             position: relative;
-            width: 44px;
-            height: 24px;
+            width: 36px;
+            height: 20px;
         }
-
-        .toggle-switch input {
+        
+        .toggle input {
             opacity: 0;
             width: 0;
             height: 0;
         }
-
+        
         .toggle-slider {
             position: absolute;
-            cursor: pointer;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: var(--bg-tertiary);
-            border-radius: 24px;
-            transition: .4s;
+            background: #2d2d2d;
+            border-radius: 20px;
+            cursor: pointer;
         }
-
+        
         .toggle-slider:before {
             position: absolute;
             content: "";
-            height: 18px;
-            width: 18px;
-            left: 3px;
-            bottom: 3px;
+            height: 16px;
+            width: 16px;
+            left: 2px;
+            bottom: 2px;
             background: white;
             border-radius: 50%;
-            transition: .4s;
+            transition: .3s;
         }
-
+        
         input:checked + .toggle-slider {
-            background: var(--accent);
+            background: #ff7b00;
         }
-
+        
         input:checked + .toggle-slider:before {
-            transform: translateX(20px);
+            transform: translateX(16px);
         }
-
-        /* TABLE */
+        
+        /* TABLA SUPER COMPACTA */
         .table-container {
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            padding: 0 15px;
+            width: 100%;
+            overflow-x: hidden;
+            padding: 0 12px;
         }
-
+        
         table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 100%;
-            margin-top: 10px;
+            table-layout: fixed;
         }
-
+        
         th {
-            background: var(--bg-tertiary);
-            padding: 12px 8px;
+            background: #2d2d2d;
+            padding: 8px 4px;
             text-align: left;
-            font-size: 0.8rem;
             font-weight: 600;
-            border-bottom: 2px solid var(--border);
+            font-size: 10px;
+            border-bottom: 2px solid #333;
             position: sticky;
             top: 0;
         }
-
+        
         td {
-            padding: 12px 8px;
-            border-bottom: 1px solid var(--border);
-            font-size: 0.85rem;
+            padding: 8px 4px;
+            border-bottom: 1px solid #333;
+            font-size: 11px;
+            vertical-align: middle;
         }
-
-        /* COLUMN WIDTHS - DEFAULT (NO PROVIDERS) */
-        .col-marca { width: 30%; min-width: 80px; }
-        .col-modelo { width: 40%; min-width: 100px; }
-        .col-tipo { width: 15%; min-width: 60px; text-align: center; }
-        .col-proveedor { display: none; }
-        .col-compra { display: none; }
-        .col-venta { width: 15%; min-width: 80px; text-align: right; }
-
-        /* WITH PROVIDERS */
+        
+        /* COLUMNAS ULTRA COMPACTAS */
+        .col-marca { width: 25%; }
+        .col-modelo { width: 30%; }
+        .col-tipo { width: 10%; text-align: center; }
+        .col-proveedor { width: 15%; display: none; }
+        .col-compra { width: 10%; display: none; text-align: right; }
+        .col-venta { width: 15%; text-align: right; }
+        
+        /* CUANDO SE MUESTRAN IMPORTADORAS */
         .show-providers .col-marca { width: 20%; }
-        .show-providers .col-modelo { width: 25%; }
-        .show-providers .col-tipo { width: 10%; }
-        .show-providers .col-proveedor { 
-            width: 15%; 
-            display: table-cell; 
-            min-width: 70px;
-            text-align: center;
-        }
-        .show-providers .col-compra { 
-            width: 15%; 
-            display: table-cell; 
-            min-width: 70px;
-            text-align: right;
-        }
-        .show-providers .col-venta { width: 15%; }
-
-        /* CELL STYLES */
+        .show-providers .col-modelo { width: 20%; }
+        .show-providers .col-tipo { width: 8%; }
+        .show-providers .col-proveedor { width: 12%; display: table-cell; }
+        .show-providers .col-compra { width: 10%; display: table-cell; }
+        .show-providers .col-venta { width: 10%; }
+        
+        /* ESTILOS DE CELDAS */
         .tipo-oled {
-            color: var(--accent);
-            font-weight: 600;
-            font-size: 0.8rem;
+            color: #ff7b00;
+            font-weight: bold;
+            font-size: 10px;
         }
-
+        
         .tipo-lcd {
-            color: var(--text-secondary);
-            font-weight: 600;
-            font-size: 0.8rem;
+            color: #b0b0b0;
+            font-size: 10px;
         }
-
-        .price-venta {
-            color: var(--success);
-            font-weight: 600;
-            font-size: 0.9rem;
-            padding: 6px 10px;
-            border-radius: 6px;
-            cursor: pointer;
+        
+        .price {
+            font-weight: bold;
+            font-size: 11px;
+            padding: 4px 6px;
+            border-radius: 4px;
             display: inline-block;
-            min-width: 60px;
+            min-width: 50px;
             text-align: center;
         }
-
+        
+        .price-venta {
+            background: rgba(76, 175, 80, 0.1);
+            color: #4caf50;
+            cursor: pointer;
+        }
+        
         .price-venta:active {
-            background: var(--accent);
+            background: #ff7b00;
             color: white;
         }
-
+        
         .price-compra {
-            color: var(--accent);
-            font-weight: 600;
-            font-size: 0.9rem;
+            background: rgba(255, 123, 0, 0.1);
+            color: #ff7b00;
         }
-
+        
+        /* ACCIONES EN UNA SOLA CELDA */
         .cell-actions {
+            margin-top: 4px;
             display: flex;
-            gap: 6px;
-            justify-content: flex-end;
-            margin-top: 5px;
+            gap: 4px;
         }
-
-        .cell-btn {
-            width: 32px;
-            height: 32px;
-            border-radius: 6px;
-            border: 1px solid var(--border);
-            background: transparent;
-            color: var(--text-secondary);
+        
+        .action-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            border: 1px solid #333;
+            background: #2d2d2d;
+            color: #b0b0b0;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.8rem;
+            font-size: 10px;
             cursor: pointer;
         }
-
-        .cell-btn.fav.active {
-            background: var(--favorite);
+        
+        .action-icon.active {
+            background: #ff4081;
             color: white;
-            border-color: var(--favorite);
+            border-color: #ff4081;
         }
-
-        .cell-btn.compare.active {
-            background: var(--warning);
-            color: white;
-            border-color: var(--warning);
-        }
-
-        .cell-btn.whatsapp {
-            background: var(--whatsapp);
-            color: white;
-            border-color: var(--whatsapp);
-        }
-
+        
         /* STATUS */
         .status {
-            padding: 12px 15px;
-            margin: 15px;
-            border-radius: 10px;
+            margin: 10px 12px;
+            padding: 8px 12px;
+            border-radius: 6px;
             text-align: center;
-            font-size: 0.9rem;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
+            font-size: 11px;
+            background: #1a1a1a;
+            border: 1px solid #333;
             display: none;
         }
-
-        .status.success { color: var(--success); }
-        .status.error { color: var(--error); }
-        .status.info { color: var(--accent); }
-
-        /* BOTTOM NAV */
+        
+        /* BOTTOM NAV COMPACTA */
         .bottom-nav {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            background: var(--bg-secondary);
-            border-top: 1px solid var(--border);
+            background: #1a1a1a;
+            border-top: 1px solid #333;
             display: flex;
-            padding: 10px;
+            padding: 8px;
             z-index: 100;
         }
-
+        
         .nav-btn {
             flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 8px;
-            color: var(--text-secondary);
+            padding: 6px 4px;
+            color: #b0b0b0;
             border: none;
             background: none;
-            cursor: pointer;
+            font-size: 10px;
         }
-
+        
         .nav-btn.active {
-            color: var(--accent);
+            color: #ff7b00;
         }
-
+        
         .nav-icon {
-            font-size: 1.2rem;
-            margin-bottom: 4px;
+            font-size: 14px;
+            margin-bottom: 2px;
         }
-
-        .nav-label {
-            font-size: 0.7rem;
-            font-weight: 500;
-        }
-
+        
         /* MODAL */
         .modal {
             display: none;
@@ -384,141 +328,119 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.95);
             z-index: 1000;
             align-items: center;
             justify-content: center;
             padding: 20px;
         }
-
+        
         .modal-content {
-            background: var(--bg-secondary);
-            border-radius: 15px;
-            padding: 25px;
+            background: #1a1a1a;
+            border-radius: 12px;
+            padding: 20px;
             width: 100%;
-            max-width: 350px;
-            border: 1px solid var(--border);
+            max-width: 300px;
+            border: 1px solid #333;
         }
-
+        
         .modal h2 {
             text-align: center;
-            color: var(--accent);
-            margin-bottom: 20px;
-            font-size: 1.3rem;
+            color: #ff7b00;
+            margin-bottom: 15px;
+            font-size: 14px;
         }
-
+        
         .modal-input {
             width: 100%;
-            padding: 16px;
-            background: var(--bg-primary);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            color: var(--text-primary);
-            font-size: 16px;
-            margin-bottom: 20px;
+            padding: 12px;
+            background: #121212;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+            margin-bottom: 15px;
         }
-
+        
         .modal-buttons {
             display: flex;
-            gap: 10px;
+            gap: 8px;
         }
-
+        
         .modal-btn {
             flex: 1;
-            padding: 14px;
-            border-radius: 10px;
+            padding: 10px;
+            border-radius: 8px;
             border: none;
             font-weight: 600;
+            font-size: 12px;
             cursor: pointer;
         }
-
+        
         .modal-btn.secondary {
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-        }
-
-        .modal-btn.primary {
-            background: var(--accent);
+            background: #2d2d2d;
             color: white;
         }
-
-        /* LOADING/EMPTY STATES */
-        .loading, .empty {
-            text-align: center;
-            padding: 50px 20px;
-            color: var(--text-secondary);
+        
+        .modal-btn.primary {
+            background: #ff7b00;
+            color: white;
         }
-
-        /* RESPONSIVE */
-        @media (max-width: 360px) {
-            .col-marca { width: 35%; }
-            .col-modelo { width: 35%; }
-            .col-tipo { width: 15%; }
-            .col-venta { width: 15%; }
+        
+        /* PARA PANTALLAS MUY PEQUEÑAS */
+        @media (max-width: 320px) {
+            body { font-size: 11px; }
+            .col-marca { width: 28%; }
+            .col-modelo { width: 32%; }
+            .col-tipo { width: 10%; }
+            .col-venta { width: 10%; }
             
-            .show-providers .col-marca { width: 18%; }
-            .show-providers .col-modelo { width: 22%; }
-            .show-providers .col-tipo { width: 12%; }
-            .show-providers .col-proveedor { width: 16%; }
-            .show-providers .col-compra { width: 16%; }
-            .show-providers .col-venta { width: 16%; }
+            .show-providers .col-marca { width: 22%; }
+            .show-providers .col-modelo { width: 18%; }
+            .show-providers .col-tipo { width: 8%; }
+            .show-providers .col-proveedor { width: 14%; }
+            .show-providers .col-compra { width: 10%; }
+            .show-providers .col-venta { width: 8%; }
+            
+            .price { min-width: 45px; font-size: 10px; padding: 3px 5px; }
+            .action-icon { width: 22px; height: 22px; }
         }
     </style>
 </head>
 <body>
     <!-- HEADER -->
     <header class="header">
-        <div class="header-top">
+        <div class="header-row">
             <div class="app-title">
-                <div class="app-icon">
-                    <i class="fas fa-mobile-alt"></i>
-                </div>
+                <div class="logo">📱</div>
                 <h1>DR. XIAOMI</h1>
             </div>
-            <div class="header-actions">
-                <button class="header-btn" id="refreshBtn" title="Actualizar">
-                    <i class="fas fa-sync-alt"></i>
-                </button>
-                <button class="header-btn" id="exportBtn" title="Exportar">
-                    <i class="fas fa-download"></i>
-                </button>
-                <button class="header-btn" id="themeToggle" title="Tema">
-                    <i class="fas fa-adjust"></i>
-                </button>
+            <div style="display: flex; gap: 4px;">
+                <button class="header-btn" id="refreshBtn">↻</button>
+                <button class="header-btn" id="themeToggle">☀</button>
             </div>
-        </div>
-        <div style="text-align: center; color: #b0b0b0; font-size: 0.85rem;">
-            Gestión de precios de pantallas
         </div>
     </header>
 
-    <!-- SEARCH SECTION -->
+    <!-- SEARCH -->
     <section class="search-section">
-        <div class="search-box">
-            <input type="text" id="searchInput" placeholder="Buscar marca o modelo...">
-            <div class="search-icon">
-                <i class="fas fa-search"></i>
-            </div>
+        <div class="search-row">
+            <input type="text" id="searchInput" placeholder="Buscar...">
+            <button class="filter-btn" id="filterBtn">⚙</button>
+        </div>
+        <div class="toggle-row">
+            <label class="toggle">
+                <input type="checkbox" id="providersToggle">
+                <span class="toggle-slider"></span>
+            </label>
+            <span id="providersLabel" style="font-size: 11px; color: #b0b0b0;">Ver Importadoras</span>
         </div>
         
-        <div class="filter-row">
-            <div class="provider-toggle">
-                <label class="toggle-switch">
-                    <input type="checkbox" id="providersToggle">
-                    <span class="toggle-slider"></span>
-                </label>
-                <span id="providersLabel">Ver Importadoras</span>
-            </div>
-            <button class="header-btn" id="filterBtn" style="width: 50px;">
-                <i class="fas fa-filter"></i>
-            </button>
-        </div>
-        
-        <div id="advancedFilters" style="display: none; margin-top: 10px;">
-            <select id="marcaFilter" style="width: 100%; margin-bottom: 8px; padding: 12px; background: var(--bg-primary); border: 1px solid var(--border); border-radius: 8px; color: var(--text-primary);">
+        <div id="filters" style="display: none; margin-top: 8px;">
+            <select id="marcaFilter" style="width: 100%; padding: 8px; margin-bottom: 6px; background: #121212; border: 1px solid #333; border-radius: 6px; color: white; font-size: 11px;">
                 <option value="">Todas las marcas</option>
             </select>
-            <select id="tipoFilter" style="width: 100%; margin-bottom: 8px; padding: 12px; background: var(--bg-primary); border: 1px solid var(--border); border-radius: 8px; color: var(--text-primary);">
+            <select id="tipoFilter" style="width: 100%; padding: 8px; background: #121212; border: 1px solid #333; border-radius: 6px; color: white; font-size: 11px;">
                 <option value="">Todos los tipos</option>
                 <option value="OLED">OLED</option>
                 <option value="LCD">LCD</option>
@@ -526,85 +448,61 @@
         </div>
     </section>
 
-    <!-- STATUS MESSAGE -->
+    <!-- STATUS -->
     <div id="statusMessage" class="status"></div>
 
-    <!-- MAIN CONTENT -->
-    <main>
-        <div class="table-container" id="tableContainer">
-            <table id="resultsTable">
-                <thead>
-                    <tr>
-                        <th class="col-marca">Marca</th>
-                        <th class="col-modelo">Modelo</th>
-                        <th class="col-tipo">Tipo</th>
-                        <th class="col-proveedor">Prov.</th>
-                        <th class="col-compra">Compra</th>
-                        <th class="col-venta">Venta</th>
-                    </tr>
-                </thead>
-                <tbody id="resultsBody">
-                    <!-- Data will load here -->
-                </tbody>
-            </table>
-        </div>
-    </main>
+    <!-- TABLE -->
+    <div class="table-container" id="tableContainer">
+        <table>
+            <thead>
+                <tr>
+                    <th class="col-marca">Marca</th>
+                    <th class="col-modelo">Modelo</th>
+                    <th class="col-tipo">Tipo</th>
+                    <th class="col-proveedor">Prov</th>
+                    <th class="col-compra">Compra</th>
+                    <th class="col-venta">Venta</th>
+                </tr>
+            </thead>
+            <tbody id="resultsBody">
+                <!-- Data will load here -->
+            </tbody>
+        </table>
+    </div>
 
-    <!-- BOTTOM NAVIGATION -->
+    <!-- BOTTOM NAV -->
     <nav class="bottom-nav">
         <button class="nav-btn active" data-tab="main">
-            <div class="nav-icon">
-                <i class="fas fa-home"></i>
-            </div>
-            <div class="nav-label">Inicio</div>
+            <div class="nav-icon">🏠</div>
+            <div>Inicio</div>
         </button>
         <button class="nav-btn" data-tab="favorites">
-            <div class="nav-icon">
-                <i class="fas fa-star"></i>
-            </div>
-            <div class="nav-label">Favoritos</div>
+            <div class="nav-icon">⭐</div>
+            <div>Favoritos</div>
         </button>
         <button class="nav-btn" data-tab="compare">
-            <div class="nav-icon">
-                <i class="fas fa-balance-scale"></i>
-            </div>
-            <div class="nav-label">Comparar</div>
+            <div class="nav-icon">⚖</div>
+            <div>Comparar</div>
         </button>
     </nav>
 
-    <!-- MODAL: PROVIDERS ACCESS -->
+    <!-- MODAL -->
     <div class="modal" id="providersModal">
         <div class="modal-content">
-            <h2><i class="fas fa-eye"></i> Ver Importadoras</h2>
-            <p style="text-align: center; color: #b0b0b0; margin-bottom: 20px; font-size: 0.9rem;">
-                Ingrese la clave para ver precios de compra
+            <h2>🔐 Ver Importadoras</h2>
+            <p style="text-align: center; color: #b0b0b0; margin-bottom: 15px; font-size: 11px;">
+                Clave para ver precios de compra
             </p>
-            <input type="password" id="providersPassword" class="modal-input" placeholder="Clave de acceso" autocomplete="off">
+            <input type="password" id="providersPassword" class="modal-input" placeholder="Clave" autocomplete="off">
             <div class="modal-buttons">
-                <button class="modal-btn secondary" id="cancelProvidersBtn">Cancelar</button>
-                <button class="modal-btn primary" id="confirmProvidersBtn">Acceder</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL: WHATSAPP SHARE -->
-    <div class="modal" id="whatsappModal">
-        <div class="modal-content">
-            <h2><i class="fab fa-whatsapp"></i> Compartir</h2>
-            <div id="whatsappMessage" style="background: var(--bg-primary); padding: 15px; border-radius: 10px; margin-bottom: 20px; font-size: 0.9rem; border: 1px solid var(--border);">
-                <!-- Message will appear here -->
-            </div>
-            <div class="modal-buttons">
-                <button class="modal-btn secondary" id="cancelWhatsappBtn">Cancelar</button>
-                <button class="modal-btn primary" id="confirmWhatsappBtn" style="background: var(--whatsapp);">
-                    <i class="fab fa-whatsapp"></i> Abrir WhatsApp
-                </button>
+                <button class="modal-btn secondary" id="cancelBtn">Cancelar</button>
+                <button class="modal-btn primary" id="confirmBtn">Acceder</button>
             </div>
         </div>
     </div>
 
     <script>
-        // ========== CONFIGURACIÓN ==========
+        // CONFIG
         const CONFIG = [
             { nombre: "J&A", archivo: "data/ja.csv" },
             { nombre: "CentralCell", archivo: "data/centralcel.csv" },
@@ -614,51 +512,43 @@
         ];
 
         const PROVIDERS_PASSWORD = "123456";
-
-        // ========== VARIABLES ==========
+        
         let allData = [];
         let filteredData = [];
         let showProviders = false;
         let providersAccess = false;
-        let comparingItems = new Set();
-        let currentTab = 'main';
+        let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+        let comparing = JSON.parse(localStorage.getItem('comparing') || '[]');
 
-        // ========== INICIALIZACIÓN ==========
-        document.addEventListener('DOMContentLoaded', function() {
-            initApp();
-        });
+        // INICIALIZAR
+        document.addEventListener('DOMContentLoaded', init);
 
-        function initApp() {
+        function init() {
             loadData();
-            setupEventListeners();
-            
-            // Cargar tema
-            if (localStorage.getItem('theme') === 'light') {
-                document.body.classList.add('light-mode');
-            }
+            setupEvents();
         }
 
-        function setupEventListeners() {
+        function setupEvents() {
             // Busqueda
             document.getElementById('searchInput').addEventListener('input', function(e) {
-                searchData(e.target.value);
+                filterData(e.target.value);
             });
             
             // Toggle importadoras
             document.getElementById('providersToggle').addEventListener('change', function(e) {
                 if (!providersAccess) {
-                    showModal('providersModal');
+                    document.getElementById('providersModal').style.display = 'flex';
                     e.target.checked = false;
                 } else {
                     showProviders = e.target.checked;
-                    updateTableColumns();
+                    updateColumns();
                     renderTable();
                 }
             });
             
             // Botón filtros
             document.getElementById('filterBtn').addEventListener('click', function() {
-                const filters = document.getElementById('advancedFilters');
+                const filters = document.getElementById('filters');
                 filters.style.display = filters.style.display === 'none' ? 'block' : 'none';
             });
             
@@ -666,9 +556,8 @@
             document.getElementById('marcaFilter').addEventListener('change', applyFilters);
             document.getElementById('tipoFilter').addEventListener('change', applyFilters);
             
-            // Botones header
+            // Botones
             document.getElementById('refreshBtn').addEventListener('click', loadData);
-            document.getElementById('exportBtn').addEventListener('click', exportData);
             document.getElementById('themeToggle').addEventListener('click', toggleTheme);
             
             // Navegación
@@ -677,30 +566,27 @@
                     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
                     this.classList.add('active');
                     
-                    currentTab = this.getAttribute('data-tab');
-                    
-                    if (currentTab === 'favorites') {
-                        showFavorites();
-                    } else if (currentTab === 'compare') {
-                        showCompare();
-                    } else {
-                        applyFilters();
-                    }
+                    const tab = this.getAttribute('data-tab');
+                    if (tab === 'favorites') showFavorites();
+                    else if (tab === 'compare') showCompare();
+                    else applyFilters();
                 });
             });
             
-            // Modales
-            document.getElementById('cancelProvidersBtn').addEventListener('click', function() {
-                hideModal('providersModal');
+            // Modal
+            document.getElementById('cancelBtn').addEventListener('click', function() {
+                document.getElementById('providersModal').style.display = 'none';
+                document.getElementById('providersPassword').value = '';
             });
             
-            document.getElementById('confirmProvidersBtn').addEventListener('click', function() {
-                const password = document.getElementById('providersPassword').value;
-                if (password === PROVIDERS_PASSWORD) {
+            document.getElementById('confirmBtn').addEventListener('click', function() {
+                const pass = document.getElementById('providersPassword').value;
+                if (pass === PROVIDERS_PASSWORD) {
                     providersAccess = true;
                     showProviders = true;
-                    hideModal('providersModal');
-                    updateTableColumns();
+                    document.getElementById('providersModal').style.display = 'none';
+                    document.getElementById('providersPassword').value = '';
+                    updateColumns();
                     applyFilters();
                     showStatus('✅ Importadoras activadas', 'success');
                 } else {
@@ -709,457 +595,293 @@
             });
             
             document.getElementById('providersPassword').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    document.getElementById('confirmProvidersBtn').click();
-                }
-            });
-            
-            // WhatsApp modal
-            document.getElementById('cancelWhatsappBtn').addEventListener('click', function() {
-                hideModal('whatsappModal');
-            });
-            
-            document.getElementById('confirmWhatsappBtn').addEventListener('click', function() {
-                const message = document.getElementById('whatsappMessage').textContent;
-                window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
-                hideModal('whatsappModal');
+                if (e.key === 'Enter') document.getElementById('confirmBtn').click();
             });
         }
 
-        // ========== FUNCIONES PRINCIPALES ==========
-        
+        // CARGA DE DATOS
         async function loadData() {
-            showStatus('🔄 Cargando datos...', 'info');
+            showStatus('🔄 Cargando...', 'info');
             
             try {
                 allData = [];
-                
                 for (const provider of CONFIG) {
                     try {
                         const data = await loadCSV(provider.archivo, provider.nombre);
-                        allData = allData.concat(data);
-                    } catch (error) {
-                        console.error(`Error cargando ${provider.nombre}:`, error);
+                        allData.push(...data);
+                    } catch(e) {
+                        console.error('Error cargando', provider.nombre, e);
                     }
                 }
                 
-                // Cargar favoritos
-                loadFavorites();
-                
-                // Actualizar filtro de marcas
                 updateMarcaFilter();
-                
-                // Mostrar datos
                 applyFilters();
-                
-                showStatus(`✅ ${allData.length} precios cargados`, 'success');
-            } catch (error) {
-                console.error('Error cargando datos:', error);
-                showStatus('❌ Error cargando datos', 'error');
+                showStatus(`✅ ${allData.length} precios`, 'success');
+            } catch(e) {
+                showStatus('❌ Error cargando', 'error');
             }
         }
 
-        async function loadCSV(filePath, providerName) {
-            try {
-                const response = await fetch(filePath);
-                const text = await response.text();
-                return parseCSV(text, providerName);
-            } catch (error) {
-                console.error(`Error cargando ${filePath}:`, error);
-                return [];
-            }
-        }
-
-        function parseCSV(csvText, providerName) {
-            const lines = csvText.split('\n').filter(line => line.trim() !== '');
+        async function loadCSV(file, provider) {
+            const response = await fetch(file);
+            const text = await response.text();
+            const lines = text.split('\n').filter(l => l.trim());
             const data = [];
             
             for (let i = 1; i < lines.length; i++) {
-                const columns = lines[i].split(',').map(col => col.trim().replace(/"/g, ''));
-                
-                if (columns.length >= 6) {
-                    const row = {
-                        marca: columns[0] || 'Desconocido',
-                        modelo: columns[1] || 'Desconocido',
-                        tipo: (columns[2] || 'LCD').toUpperCase(),
-                        proveedor: columns[3] || providerName,
-                        compra: parseFloat(columns[4]) || 0,
-                        venta: parseFloat(columns[5]) || 0,
-                        id: `${providerName}|${columns[0]}|${columns[1]}|${columns[2]}|${columns[4]}`
-                    };
-                    
-                    if (row.marca !== 'Desconocido' && row.modelo !== 'Desconocido') {
-                        data.push(row);
-                    }
+                const cols = lines[i].split(',').map(c => c.trim().replace(/"/g, ''));
+                if (cols.length >= 6) {
+                    data.push({
+                        marca: cols[0] || '',
+                        modelo: cols[1] || '',
+                        tipo: (cols[2] || 'LCD').toUpperCase(),
+                        proveedor: cols[3] || provider,
+                        compra: parseFloat(cols[4]) || 0,
+                        venta: parseFloat(cols[5]) || 0,
+                        id: `${provider}|${cols[0]}|${cols[1]}|${cols[2]}|${cols[4]}`
+                    });
                 }
             }
-            
             return data;
         }
 
-        function searchData(term) {
-            const searchTerm = term.toLowerCase().trim();
-            
-            if (!searchTerm) {
+        // FILTRADO
+        function filterData(search) {
+            const term = search.toLowerCase().trim();
+            if (!term) {
                 applyFilters();
                 return;
             }
             
             let results = [...allData];
             
-            // Aplicar filtros primero
-            const marcaFilter = document.getElementById('marcaFilter').value;
-            const tipoFilter = document.getElementById('tipoFilter').value;
+            const marca = document.getElementById('marcaFilter').value;
+            const tipo = document.getElementById('tipoFilter').value;
             
-            if (marcaFilter) {
-                results = results.filter(item => item.marca === marcaFilter);
-            }
+            if (marca) results = results.filter(r => r.marca === marca);
+            if (tipo) results = results.filter(r => r.tipo === tipo);
             
-            if (tipoFilter) {
-                results = results.filter(item => item.tipo === tipoFilter);
-            }
-            
-            // Buscar
-            filteredData = results.filter(item => 
-                item.marca.toLowerCase().includes(searchTerm) ||
-                item.modelo.toLowerCase().includes(searchTerm) ||
-                item.tipo.toLowerCase().includes(searchTerm) ||
-                item.proveedor.toLowerCase().includes(searchTerm)
+            filteredData = results.filter(r => 
+                r.marca.toLowerCase().includes(term) ||
+                r.modelo.toLowerCase().includes(term) ||
+                r.tipo.toLowerCase().includes(term)
             );
             
-            // Agrupar si no hay acceso a importadoras
-            if (!showProviders) {
-                filteredData = groupBestPrices(filteredData);
-            }
-            
+            if (!showProviders) filteredData = getBestPrices(filteredData);
             renderTable();
         }
 
         function applyFilters() {
             let results = [...allData];
             
-            const marcaFilter = document.getElementById('marcaFilter').value;
-            const tipoFilter = document.getElementById('tipoFilter').value;
+            const marca = document.getElementById('marcaFilter').value;
+            const tipo = document.getElementById('tipoFilter').value;
             
-            if (marcaFilter) {
-                results = results.filter(item => item.marca === marcaFilter);
-            }
+            if (marca) results = results.filter(r => r.marca === marca);
+            if (tipo) results = results.filter(r => r.tipo === tipo);
             
-            if (tipoFilter) {
-                results = results.filter(item => item.tipo === tipoFilter);
-            }
-            
-            // Agrupar si no hay acceso a importadoras
-            if (!showProviders) {
-                results = groupBestPrices(results);
-            }
+            if (!showProviders) results = getBestPrices(results);
             
             filteredData = results;
             renderTable();
         }
 
-        function groupBestPrices(data) {
-            const grouped = {};
-            
+        function getBestPrices(data) {
+            const map = {};
             data.forEach(item => {
                 const key = `${item.marca}|${item.modelo}|${item.tipo}`;
-                if (!grouped[key] || item.compra < grouped[key].compra) {
-                    grouped[key] = item;
+                if (!map[key] || item.compra < map[key].compra) {
+                    map[key] = item;
                 }
             });
-            
-            return Object.values(grouped);
+            return Object.values(map);
         }
 
+        // RENDER TABLA
         function renderTable() {
             const tbody = document.getElementById('resultsBody');
             
             if (filteredData.length === 0) {
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="6" style="text-align: center; padding: 40px; color: #b0b0b0;">
-                            <i class="fas fa-search" style="font-size: 2rem; margin-bottom: 10px; display: block;"></i>
-                            No se encontraron resultados
+                        <td colspan="6" style="text-align: center; padding: 30px; color: #666;">
+                            No hay datos
                         </td>
                     </tr>
                 `;
                 return;
             }
             
-            tbody.innerHTML = '';
-            
+            let html = '';
             filteredData.forEach(item => {
-                const isFavorite = isItemFavorite(item.id);
-                const isComparing = comparingItems.has(item.id);
-                
-                const row = document.createElement('tr');
+                const isFav = favorites.includes(item.id);
+                const isComparing = comparing.includes(item.id);
                 
                 if (showProviders && providersAccess) {
-                    // Mostrar todas las columnas
-                    row.innerHTML = `
-                        <td>${item.marca}</td>
-                        <td>${item.modelo}</td>
-                        <td class="${item.tipo === 'OLED' ? 'tipo-oled' : 'tipo-lcd'}">${item.tipo}</td>
-                        <td>${item.proveedor}</td>
-                        <td class="price-compra">${formatNumber(item.compra)}</td>
-                        <td>
-                            <div style="text-align: right;">
-                                <div class="price-venta" onclick="copyPrice('${item.marca}', '${item.modelo}', ${item.venta})">
-                                    ${formatNumber(item.venta)}
+                    html += `
+                        <tr>
+                            <td>${shorten(item.marca, 10)}</td>
+                            <td>${shorten(item.modelo, 12)}</td>
+                            <td class="${item.tipo === 'OLED' ? 'tipo-oled' : 'tipo-lcd'}">${item.tipo}</td>
+                            <td>${shorten(item.proveedor, 8)}</td>
+                            <td><div class="price price-compra">${format(item.compra)}</div></td>
+                            <td>
+                                <div class="price price-venta" onclick="copyPrice('${item.marca}', '${item.modelo}', ${item.venta})">
+                                    ${format(item.venta)}
                                 </div>
                                 <div class="cell-actions">
-                                    <button class="cell-btn fav ${isFavorite ? 'active' : ''}" onclick="toggleFavorite('${item.id}')" title="${isFavorite ? 'Quitar favorito' : 'Agregar favorito'}">
-                                        <i class="fas fa-star"></i>
-                                    </button>
-                                    <button class="cell-btn compare ${isComparing ? 'active' : ''}" onclick="toggleCompare('${item.id}')" title="${isComparing ? 'Quitar comparación' : 'Comparar'}">
-                                        <i class="fas fa-balance-scale"></i>
-                                    </button>
-                                    <button class="cell-btn whatsapp" onclick="shareWhatsApp('${item.marca}', '${item.modelo}', ${item.venta})" title="Compartir">
-                                        <i class="fab fa-whatsapp"></i>
-                                    </button>
+                                    <div class="action-icon ${isFav ? 'active' : ''}" onclick="toggleFav('${item.id}')" title="${isFav ? 'Quitar favorito' : 'Favorito'}">${isFav ? '★' : '☆'}</div>
+                                    <div class="action-icon ${isComparing ? 'active' : ''}" onclick="toggleCompare('${item.id}')" title="${isComparing ? 'Quitar comparar' : 'Comparar'}">⚖</div>
+                                    <div class="action-icon" onclick="shareWhatsApp('${item.marca}', '${item.modelo}', ${item.venta})" title="Compartir">📤</div>
                                 </div>
-                            </div>
-                        </td>
+                            </td>
+                        </tr>
                     `;
                 } else {
-                    // Mostrar solo columnas básicas
-                    row.innerHTML = `
-                        <td>${item.marca}</td>
-                        <td>${item.modelo}</td>
-                        <td class="${item.tipo === 'OLED' ? 'tipo-oled' : 'tipo-lcd'}">${item.tipo}</td>
-                        <td colspan="2"></td>
-                        <td>
-                            <div style="text-align: right;">
-                                <div class="price-venta" onclick="copyPrice('${item.marca}', '${item.modelo}', ${item.venta})">
-                                    ${formatNumber(item.venta)}
+                    html += `
+                        <tr>
+                            <td>${shorten(item.marca, 12)}</td>
+                            <td>${shorten(item.modelo, 15)}</td>
+                            <td class="${item.tipo === 'OLED' ? 'tipo-oled' : 'tipo-lcd'}">${item.tipo}</td>
+                            <td colspan="2"></td>
+                            <td>
+                                <div class="price price-venta" onclick="copyPrice('${item.marca}', '${item.modelo}', ${item.venta})">
+                                    ${format(item.venta)}
                                 </div>
                                 <div class="cell-actions">
-                                    <button class="cell-btn fav ${isFavorite ? 'active' : ''}" onclick="toggleFavorite('${item.id}')" title="${isFavorite ? 'Quitar favorito' : 'Agregar favorito'}">
-                                        <i class="fas fa-star"></i>
-                                    </button>
-                                    <button class="cell-btn compare ${isComparing ? 'active' : ''}" onclick="toggleCompare('${item.id}')" title="${isComparing ? 'Quitar comparación' : 'Comparar'}">
-                                        <i class="fas fa-balance-scale"></i>
-                                    </button>
-                                    <button class="cell-btn whatsapp" onclick="shareWhatsApp('${item.marca}', '${item.modelo}', ${item.venta})" title="Compartir">
-                                        <i class="fab fa-whatsapp"></i>
-                                    </button>
+                                    <div class="action-icon ${isFav ? 'active' : ''}" onclick="toggleFav('${item.id}')">${isFav ? '★' : '☆'}</div>
+                                    <div class="action-icon ${isComparing ? 'active' : ''}" onclick="toggleCompare('${item.id}')">⚖</div>
+                                    <div class="action-icon" onclick="shareWhatsApp('${item.marca}', '${item.modelo}', ${item.venta})">📤</div>
                                 </div>
-                            </div>
-                        </td>
-                    `;
-                }
-                
-                tbody.appendChild(row);
-            });
-        }
-
-        // ========== FAVORITOS ==========
-        function loadFavorites() {
-            const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-            return favorites;
-        }
-
-        function saveFavorites(favorites) {
-            localStorage.setItem('favorites', JSON.stringify(favorites));
-        }
-
-        function isItemFavorite(itemId) {
-            const favorites = loadFavorites();
-            return favorites.includes(itemId);
-        }
-
-        function toggleFavorite(itemId) {
-            let favorites = loadFavorites();
-            const index = favorites.indexOf(itemId);
-            
-            if (index === -1) {
-                favorites.push(itemId);
-                showStatus('⭐ Agregado a favoritos', 'success');
-            } else {
-                favorites.splice(index, 1);
-                showStatus('❤️ Eliminado de favoritos', 'info');
-            }
-            
-            saveFavorites(favorites);
-            renderTable();
-        }
-
-        function showFavorites() {
-            const favorites = loadFavorites();
-            filteredData = allData.filter(item => favorites.includes(item.id));
-            renderTable();
-        }
-
-        // ========== COMPARAR ==========
-        function toggleCompare(itemId) {
-            if (comparingItems.has(itemId)) {
-                comparingItems.delete(itemId);
-                showStatus('📊 Eliminado de comparación', 'info');
-            } else {
-                if (comparingItems.size >= 4) {
-                    showStatus('❌ Máximo 4 productos', 'error');
-                    return;
-                }
-                comparingItems.add(itemId);
-                showStatus('📊 Agregado a comparación', 'success');
-            }
-            renderTable();
-        }
-
-        function showCompare() {
-            const items = Array.from(comparingItems);
-            
-            if (items.length === 0) {
-                showStatus('📊 No hay productos para comparar', 'info');
-                return;
-            }
-            
-            let compareHTML = '<div style="max-height: 300px; overflow-y: auto;">';
-            
-            items.forEach(itemId => {
-                const item = allData.find(d => d.id === itemId);
-                if (item) {
-                    compareHTML += `
-                        <div style="background: var(--bg-primary); padding: 12px; margin-bottom: 8px; border-radius: 8px; border: 1px solid var(--border);">
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                                <strong style="color: var(--accent);">${item.marca} ${item.modelo}</strong>
-                                <button onclick="toggleCompare('${item.id}')" style="background: none; border: none; color: #f44336; cursor: pointer;">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.85rem;">
-                                <div>Tipo: ${item.tipo}</div>
-                                <div>Prov: ${item.proveedor}</div>
-                                <div>Compra: ${formatNumber(item.compra)}</div>
-                                <div>Venta: ${formatNumber(item.venta)}</div>
-                            </div>
-                        </div>
+                            </td>
+                        </tr>
                     `;
                 }
             });
             
-            compareHTML += '</div>';
-            
-            // Mostrar en modal simple
-            alert(`Comparando ${items.length} productos:\n\n` + 
-                  items.map(id => {
-                      const item = allData.find(d => d.id === id);
-                      return item ? `${item.marca} ${item.modelo}: ${formatNumber(item.venta)} Bs.` : '';
-                  }).join('\n'));
+            tbody.innerHTML = html;
         }
 
-        // ========== COMPARTIR ==========
-        function copyPrice(marca, modelo, precio) {
-            const text = `📱 *PRECIO DE PANTALLA* ${marca} ${modelo}: ${formatNumber(precio)} Bs.`;
-            
-            navigator.clipboard.writeText(text)
-                .then(() => showStatus('✅ Precio copiado', 'success'))
-                .catch(() => {
-                    // Fallback para navegadores antiguos
-                    const textArea = document.createElement('textarea');
-                    textArea.value = text;
-                    document.body.appendChild(textArea);
-                    textArea.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(textArea);
-                    showStatus('✅ Precio copiado', 'success');
-                });
+        // FUNCIONES UTILIDAD
+        function shorten(text, max) {
+            return text.length > max ? text.substring(0, max-1) + '…' : text;
         }
 
-        function shareWhatsApp(marca, modelo, precio) {
-            const message = `📱 *PRECIO DE PANTALLA* ${marca} ${modelo}: ${formatNumber(precio)} Bs.`;
-            document.getElementById('whatsappMessage').textContent = message;
-            showModal('whatsappModal');
-        }
-
-        // ========== UTILIDADES ==========
-        function formatNumber(num) {
+        function format(num) {
             return Math.round(num).toLocaleString('es-ES');
         }
 
-        function showStatus(message, type) {
-            const statusEl = document.getElementById('statusMessage');
-            statusEl.textContent = message;
-            statusEl.className = `status ${type}`;
-            statusEl.style.display = 'block';
-            
-            setTimeout(() => {
-                statusEl.style.display = 'none';
-            }, 3000);
-        }
-
-        function updateTableColumns() {
-            const tableContainer = document.getElementById('tableContainer');
+        function updateColumns() {
+            const container = document.getElementById('tableContainer');
             if (showProviders && providersAccess) {
-                tableContainer.classList.add('show-providers');
+                container.classList.add('show-providers');
                 document.getElementById('providersLabel').textContent = 'Ocultar Importadoras';
             } else {
-                tableContainer.classList.remove('show-providers');
+                container.classList.remove('show-providers');
                 document.getElementById('providersLabel').textContent = 'Ver Importadoras';
             }
         }
 
         function updateMarcaFilter() {
             const select = document.getElementById('marcaFilter');
-            const marcas = [...new Set(allData.map(item => item.marca))].sort();
+            const marcas = [...new Set(allData.map(d => d.marca))].sort();
             
             select.innerHTML = '<option value="">Todas las marcas</option>';
-            marcas.forEach(marca => {
-                const option = document.createElement('option');
-                option.value = marca;
-                option.textContent = marca;
-                select.appendChild(option);
+            marcas.forEach(m => {
+                const opt = document.createElement('option');
+                opt.value = m;
+                opt.textContent = m;
+                select.appendChild(opt);
             });
         }
 
+        function showStatus(msg, type) {
+            const el = document.getElementById('statusMessage');
+            el.textContent = msg;
+            el.className = `status ${type}`;
+            el.style.display = 'block';
+            setTimeout(() => el.style.display = 'none', 2000);
+        }
+
         function toggleTheme() {
-            if (document.body.classList.contains('light-mode')) {
-                document.body.classList.remove('light-mode');
-                localStorage.setItem('theme', 'dark');
+            if (document.body.style.background === '#f8f9fa') {
+                document.body.style.background = '#121212';
+                document.body.style.color = 'white';
             } else {
-                document.body.classList.add('light-mode');
-                localStorage.setItem('theme', 'light');
+                document.body.style.background = '#f8f9fa';
+                document.body.style.color = '#121212';
             }
         }
 
-        function showModal(modalId) {
-            document.getElementById(modalId).style.display = 'flex';
+        // FAVORITOS
+        function toggleFav(id) {
+            const index = favorites.indexOf(id);
+            if (index === -1) {
+                favorites.push(id);
+                showStatus('⭐ Favorito', 'success');
+            } else {
+                favorites.splice(index, 1);
+                showStatus('❤️ Quitado', 'info');
+            }
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            renderTable();
         }
 
-        function hideModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-            document.getElementById('providersPassword').value = '';
+        function showFavorites() {
+            filteredData = allData.filter(item => favorites.includes(item.id));
+            renderTable();
         }
 
-        function exportData() {
-            const dataToExport = filteredData.length > 0 ? filteredData : allData;
-            
-            const csvContent = [
-                ['Marca', 'Modelo', 'Tipo', 'Proveedor', 'Precio Compra', 'Precio Venta'].join(','),
-                ...dataToExport.map(row => [
-                    `"${row.marca}"`,
-                    `"${row.modelo}"`,
-                    `"${row.tipo}"`,
-                    `"${row.proveedor}"`,
-                    row.compra,
-                    row.venta
-                ].join(','))
-            ].join('\n');
-            
-            const blob = new Blob([csvContent], { type: 'text/csv' });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = `precios_${new Date().toISOString().slice(0, 10)}.csv`;
-            link.click();
-            
-            showStatus('📤 Datos exportados', 'success');
+        // COMPARAR
+        function toggleCompare(id) {
+            const index = comparing.indexOf(id);
+            if (index === -1) {
+                if (comparing.length >= 4) {
+                    showStatus('❌ Máximo 4', 'error');
+                    return;
+                }
+                comparing.push(id);
+                showStatus('📊 Agregado', 'success');
+            } else {
+                comparing.splice(index, 1);
+                showStatus('📊 Quitado', 'info');
+            }
+            localStorage.setItem('comparing', JSON.stringify(comparing));
+            renderTable();
         }
 
-        // ========== FUNCIONES GLOBALES ==========
+        function showCompare() {
+            const items = comparing.map(id => allData.find(d => d.id === id)).filter(d => d);
+            if (items.length === 0) {
+                showStatus('📊 No hay productos', 'info');
+                return;
+            }
+            
+            let msg = 'Comparando:\n\n';
+            items.forEach(item => {
+                msg += `${item.marca} ${item.modelo}\n`;
+                msg += `Tipo: ${item.tipo}\n`;
+                msg += `Venta: ${format(item.venta)} Bs.\n\n`;
+            });
+            alert(msg);
+        }
+
+        // COMPARTIR
+        function copyPrice(marca, modelo, precio) {
+            const text = `📱 ${marca} ${modelo}: ${format(precio)} Bs.`;
+            navigator.clipboard.writeText(text);
+            showStatus('✅ Copiado', 'success');
+        }
+
+        function shareWhatsApp(marca, modelo, precio) {
+            const text = `📱 ${marca} ${modelo}: ${format(precio)} Bs.`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+        }
+
+        // FUNCIONES GLOBALES
         window.copyPrice = copyPrice;
         window.shareWhatsApp = shareWhatsApp;
-        window.toggleFavorite = toggleFavorite;
+        window.toggleFav = toggleFav;
         window.toggleCompare = toggleCompare;
     </script>
 </body>
