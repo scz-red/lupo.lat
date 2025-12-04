@@ -8,7 +8,12 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="description" content="Dr. Xiaomi - Gestión de precios de pantallas">
     <title>Dr. Xiaomi</title>
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
         :root {
             --bg-primary: #121212;
@@ -54,42 +59,53 @@
             scroll-behavior: smooth;
         }
 
+        /* Fondo tipo app móvil centrada */
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background-color: var(--bg-primary);
+            background: radial-gradient(circle at top, #1f2933 0, #020617 45%, #000 100%);
             color: var(--text-primary);
             line-height: 1.6;
-            padding: 0;
-            min-height: 100%;
+            min-height: 100vh;
             overflow-x: hidden;
             transition: var(--transition);
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            padding: 12px;
         }
 
         .app-container {
-            max-width: 100%;
+            max-width: 430px; /* tamaño tipo móvil */
+            width: 100%;
             margin: 0 auto;
-            min-height: 100vh;
+            min-height: 100%;
             display: flex;
             flex-direction: column;
             background: var(--bg-primary);
             position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow:
+                0 20px 40px rgba(0, 0, 0, 0.6),
+                0 0 0 1px rgba(148, 163, 184, 0.2);
         }
 
         .app-header {
-            background: var(--bg-secondary);
-            padding: 16px 16px 12px;
-            border-bottom: 1px solid var(--border);
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 14px 16px 10px;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.25);
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: var(--card-shadow);
         }
 
         .header-content {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 12px;
+            margin-bottom: 4px;
         }
 
         .app-title {
@@ -120,10 +136,15 @@
 
         .subtitle {
             color: var(--text-secondary);
-            font-size: 0.85rem;
-            margin-bottom: 0;
-            text-align: center;
+            font-size: 0.75rem;
+            margin-top: 2px;
+            text-align: left;
             font-weight: 500;
+            opacity: 0.9;
+        }
+
+        .subtitle span {
+            color: var(--accent-light);
         }
 
         .admin-access {
@@ -175,7 +196,7 @@
         }
 
         .search-section {
-            padding: 16px;
+            padding: 12px 16px 10px;
             background: var(--bg-secondary);
             border-bottom: 1px solid var(--border);
         }
@@ -193,7 +214,7 @@
 
         input[type="text"], input[type="number"], select {
             width: 100%;
-            padding: 14px 16px;
+            padding: 12px 16px;
             background-color: var(--bg-primary);
             border: 1px solid var(--border);
             border-radius: 10px;
@@ -230,8 +251,8 @@
             gap: 10px;
             white-space: nowrap;
             background-color: var(--bg-primary);
-            padding: 10px 14px;
-            border-radius: 8px;
+            padding: 8px 14px;
+            border-radius: 16px;
             border: 1px solid var(--border);
             flex: 1;
             box-shadow: var(--card-shadow);
@@ -288,7 +309,7 @@
             grid-template-columns: 1fr 1fr;
             gap: 10px;
             margin-top: 10px;
-            padding: 15px;
+            padding: 12px;
             background: var(--bg-tertiary);
             border-radius: 10px;
             border: 1px solid var(--border);
@@ -306,15 +327,15 @@
 
         .main-content {
             flex: 1;
-            padding: 16px;
+            padding: 12px 12px 8px;
             overflow-y: auto;
         }
 
         .table-container {
             overflow-x: auto;
-            border-radius: 12px;
+            border-radius: 16px;
             border: 1px solid var(--border);
-            max-height: calc(100vh - 280px);
+            max-height: calc(100vh - 320px);
             position: relative;
             box-shadow: var(--card-shadow);
             background: var(--bg-secondary);
@@ -335,7 +356,7 @@
 
         th {
             background-color: var(--bg-tertiary);
-            padding: 12px 8px;
+            padding: 10px 8px;
             text-align: left;
             font-weight: 600;
             border-bottom: 1px solid var(--border);
@@ -365,7 +386,7 @@
         }
 
         td {
-            padding: 10px 8px;
+            padding: 9px 8px;
             border-bottom: 1px solid var(--border);
             background-color: var(--bg-secondary);
             transition: var(--transition);
@@ -383,7 +404,7 @@
         mark {
             background-color: var(--accent);
             color: white;
-            padding: 2px 4px;
+            padding: 1px 3px;
             border-radius: 4px;
         }
 
@@ -407,7 +428,7 @@
 
         input.editable-compra {
             border: 1px solid var(--edit);
-            background-color: rgba(255, 235, 59, 0.1);
+            background-color: rgba(255, 235, 59, 0.05);
         }
 
         .price-compra {
@@ -420,7 +441,7 @@
             font-weight: 600;
             cursor: pointer;
             padding: 4px 8px;
-            border-radius: 4px;
+            border-radius: 999px;
             transition: all 0.3s ease;
         }
 
@@ -463,35 +484,6 @@
             color: var(--text-primary);
         }
 
-        .add-btn {
-            background-color: var(--success);
-            color: white;
-            border: 1px solid var(--success);
-        }
-
-        .add-btn:hover {
-            background-color: #45a049;
-            border-color: #45a049;
-        }
-
-        .whatsapp-btn {
-            background-color: var(--whatsapp);
-            color: white;
-            border: 1px solid var(--whatsapp);
-        }
-
-        .whatsapp-btn:hover {
-            background-color: #128C7E;
-            border-color: #128C7E;
-        }
-
-        .favorite-btn {
-            background: transparent;
-            border: 1px solid var(--border);
-            color: var(--text-secondary);
-            transition: var(--transition);
-        }
-
         .favorite-btn.active {
             background-color: var(--favorite);
             color: white;
@@ -501,7 +493,6 @@
         .favorite-btn:hover {
             background-color: var(--favorite);
             color: white;
-            border-color: var(--favorite);
         }
 
         .compare-btn {
@@ -520,40 +511,40 @@
             border-color: var(--warning);
         }
 
+        /* Toast status */
         .status {
-            padding: 12px;
-            margin-bottom: 12px;
-            border-radius: 8px;
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            max-width: 360px;
+            width: calc(100% - 48px);
+            z-index: 999;
+            padding: 8px 14px;
+            border-radius: 999px;
             text-align: center;
             font-weight: 500;
-            font-size: 12px;
-            box-shadow: var(--card-shadow);
-            border-left: 3px solid var(--accent);
-            background-color: var(--bg-secondary);
-            border: 1px solid var(--border);
+            font-size: 0.75rem;
+            background: rgba(15, 23, 42, 0.96);
+            border: 1px solid rgba(148, 163, 184, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            display: none;
         }
 
         .status.success {
-            color: var(--success);
+            color: #bbf7d0;
         }
 
         .status.error {
-            color: var(--error);
+            color: #fecaca;
         }
 
         .status.info {
-            color: var(--info);
+            color: #bfdbfe;
         }
 
         .status.warning {
-            color: var(--warning);
-        }
-
-        .loading {
-            text-align: center;
-            padding: 30px;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
+            color: #fed7aa;
         }
 
         .empty {
@@ -570,14 +561,11 @@
         }
 
         .results-count {
-            text-align: center;
+            text-align: left;
             color: var(--text-secondary);
-            margin-bottom: 12px;
-            font-size: 0.8rem;
-            padding: 8px;
-            background: var(--bg-secondary);
-            border-radius: 8px;
-            border: 1px solid var(--border);
+            margin-bottom: 8px;
+            font-size: 0.75rem;
+            padding: 4px 2px;
             display: none;
         }
 
@@ -586,7 +574,7 @@
             font-style: italic;
             background-color: var(--bg-tertiary);
             padding: 4px 8px;
-            border-radius: 4px;
+            border-radius: 999px;
             font-size: 11px;
         }
 
@@ -597,19 +585,14 @@
             justify-content: flex-start;
         }
 
-        .price-text {
-            flex: 0 0 auto;
-        }
-
         .share-icon {
             color: var(--accent);
             font-size: 14px;
             cursor: pointer;
             padding: 4px;
-            border-radius: 4px;
+            border-radius: 999px;
             transition: var(--transition);
             opacity: 0.7;
-            flex: 0 0 auto;
         }
 
         .share-icon:hover {
@@ -627,203 +610,67 @@
             display: none;
         }
 
-        .col-marca {
-            width: 40px;
-            min-width: 40px;
-            max-width: 40px;
+        .col-marca { width: 40px; min-width: 40px; max-width: 40px; }
+        .col-modelo { width: 50px; min-width: 50px; max-width: 50px; word-wrap: break-word; }
+        .col-tipo { width: 40px; min-width: 40px; max-width: 40px; }
+        .col-proveedor { width: 40px; min-width: 40px; max-width: 40px; }
+        .col-compra { width: 40px; min-width: 40px; max-width: 40px; }
+        .col-venta { width: 40px; min-width: 40px; max-width: 40px; }
+        .col-acciones { width: 120px; min-width: 120px; max-width: 120px; }
+
+        /* Quick filters chips */
+        .quick-filters {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+            overflow-x: auto;
+            padding-bottom: 4px;
         }
 
-        .col-modelo {
-            width: 50px;
-            min-width: 50px;
-            max-width: 50px;
-            word-wrap: break-word;
+        .quick-filters::-webkit-scrollbar {
+            height: 4px;
         }
 
-        .col-tipo {
-            width: 40px;
-            min-width: 40px;
-            max-width: 40px;
+        .quick-filters::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 999px;
         }
 
-        .col-proveedor {
-            width: 40px;
-            min-width: 40px;
-            max-width: 40px;
-        }
-
-        .col-compra {
-            width: 40px;
-            min-width: 40px;
-            max-width: 40px;
-        }
-
-        .col-venta {
-            width: 40px;
-            min-width: 40px;
-            max-width: 40px;
-        }
-
-        .col-acciones {
-            width: 120px;
-            min-width: 120px;
-            max-width: 120px;
-        }
-
-        .bottom-nav {
-            position: sticky;
-            bottom: 0;
-            left: 0;
-            right: 0;
+        .chip {
+            border: 1px solid var(--border);
             background: var(--bg-secondary);
-            border-top: 1px solid var(--border);
-            display: flex;
-            padding: 8px 16px;
-            z-index: 100;
-        }
-
-        .nav-item {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 6px;
             color: var(--text-secondary);
-            transition: var(--transition);
-            border-radius: 8px;
+            padding: 5px 10px;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            white-space: nowrap;
             cursor: pointer;
-        }
-
-        .nav-item.active {
-            color: var(--accent);
-            background: var(--bg-tertiary);
-        }
-
-        .nav-item:hover {
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-        }
-
-        .nav-icon {
-            font-size: 1rem;
-            margin-bottom: 2px;
-        }
-
-        .nav-label {
-            font-size: 0.65rem;
-            font-weight: 500;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
+            transition: var(--transition);
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(5px);
-            padding: 16px;
-            animation: fadeIn 0.3s ease;
+            gap: 4px;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .modal-content {
-            background-color: var(--bg-secondary);
-            padding: 20px;
-            border-radius: 12px;
-            width: 100%;
-            max-width: 400px;
-            border: 1px solid var(--border);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-            animation: slideUp 0.3s ease;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .modal h2 {
-            margin-bottom: 16px;
-            color: var(--accent);
-            text-align: center;
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-
-        .modal-input {
-            width: 100%;
-            padding: 14px;
-            margin-bottom: 16px;
-            background-color: var(--bg-primary);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text-primary);
-            font-size: 16px;
-            transition: var(--transition);
-        }
-
-        .modal-input:focus {
-            outline: none;
+        .chip:hover {
             border-color: var(--accent);
-            box-shadow: 0 0 0 2px rgba(255, 123, 0, 0.1);
+            color: var(--accent);
         }
 
-        .modal-buttons {
-            display: flex;
-            gap: 10px;
-            justify-content: flex-end;
-        }
-
-        .modal-btn {
-            padding: 12px 20px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: var(--transition);
-            font-size: 14px;
-        }
-
-        .modal-btn.primary {
+        .chip-active {
             background: var(--accent);
-            color: white;
-        }
-
-        .modal-btn.primary:hover {
-            background: var(--accent-dark);
-        }
-
-        .modal-btn.secondary {
-            background-color: var(--bg-tertiary);
-            color: var(--text-primary);
-            border: 1px solid var(--border);
-        }
-
-        .modal-btn.secondary:hover {
-            background-color: var(--border);
+            color: #fff;
+            border-color: var(--accent);
         }
 
         .edit-notice {
             text-align: center;
-            padding: 10px;
+            padding: 8px 10px;
             background: var(--bg-tertiary);
             border: 1px solid var(--edit);
-            border-radius: 8px;
-            margin-bottom: 12px;
+            border-radius: 10px;
+            margin-bottom: 10px;
             color: var(--edit);
-            font-size: 12px;
+            font-size: 11px;
             box-shadow: var(--card-shadow);
         }
 
@@ -836,7 +683,7 @@
             border-radius: 50%;
             transition: var(--transition);
             position: absolute;
-            right: 50px;
+            right: 46px;
             top: 50%;
             transform: translateY(-50%);
         }
@@ -877,10 +724,11 @@
         }
 
         .search-item {
-            padding: 10px 15px;
+            padding: 8px 12px;
             cursor: pointer;
             transition: var(--transition);
             border-bottom: 1px solid var(--border);
+            font-size: 0.8rem;
         }
 
         .search-item:hover {
@@ -892,74 +740,185 @@
             border-bottom: none;
         }
 
-        /* Responsive Design */
+        .bottom-nav {
+            position: sticky;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(15, 23, 42, 0.98);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-top: 1px solid rgba(148, 163, 184, 0.3);
+            display: flex;
+            padding: 6px 14px;
+            z-index: 100;
+        }
+
+        .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+            color: var(--text-secondary);
+            transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+            border-radius: 12px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .nav-item.active::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            height: 3px;
+            width: 60%;
+            border-radius: 999px;
+            background: var(--accent);
+        }
+
+        .nav-item.active {
+            color: var(--accent);
+            transform: translateY(-1px);
+            background: rgba(15, 23, 42, 0.6);
+        }
+
+        .nav-item:hover {
+            background: rgba(15, 23, 42, 0.6);
+            color: var(--text-primary);
+        }
+
+        .nav-icon {
+            font-size: 1rem;
+            margin-bottom: 2px;
+        }
+
+        .nav-label {
+            font-size: 0.65rem;
+            font-weight: 500;
+        }
+
+        /* Modales */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+            padding: 16px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background-color: var(--bg-secondary);
+            padding: 20px;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal h2 {
+            margin-bottom: 16px;
+            color: var(--accent);
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 14px;
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 15px;
+            transition: var(--transition);
+        }
+
+        .modal-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(255, 123, 0, 0.1);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .modal-btn {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 999px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            font-size: 13px;
+        }
+
+        .modal-btn.primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .modal-btn.primary:hover {
+            background: var(--accent-dark);
+        }
+
+        .modal-btn.secondary {
+            background-color: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .modal-btn.secondary:hover {
+            background-color: var(--border);
+        }
+
+        /* Responsive */
         @media (max-width: 480px) {
-            .app-header {
-                padding: 12px 12px 8px;
+            .app-container {
+                border-radius: 0;
+                max-width: 100%;
+                box-shadow: none;
             }
-            
-            h1 {
-                font-size: 1.2rem;
-            }
-            
-            .app-icon {
-                width: 36px;
-                height: 36px;
-                font-size: 1rem;
-            }
-            
+
             .table-container {
-                max-height: calc(100vh - 280px);
+                max-height: calc(100vh - 320px);
             }
-            
+
             table {
                 min-width: 500px;
             }
-            
+
             th, td {
                 padding: 8px 6px;
                 font-size: 11px;
-            }
-            
-            .action-btn {
-                padding: 4px 6px;
-                font-size: 9px;
-            }
-
-            .col-marca {
-                width: 40px;
-                min-width: 40px;
-                max-width: 40px;
-            }
-
-            .col-modelo {
-                width: 50px;
-                min-width: 50px;
-                max-width: 50px;
-            }
-
-            .col-tipo {
-                width: 40px;
-                min-width: 40px;
-                max-width: 50px;
-            }
-
-            .col-proveedor {
-                width: 50px;
-                min-width: 50px;
-                max-width: 50px;
-            }
-
-            .col-compra {
-                width: 40px;
-                min-width: 40px;
-                max-width: 40px;
-            }
-
-            .col-venta {
-                width: 40px;
-                min-width: 40px;
-                max-width: 40px;
             }
 
             .col-acciones {
@@ -967,163 +926,28 @@
                 min-width: 90px;
                 max-width: 90px;
             }
-            
-            .bottom-nav {
-                padding: 6px 12px;
-            }
-            
-            .nav-item {
-                padding: 4px;
-            }
-            
-            .nav-icon {
-                font-size: 0.9rem;
-            }
-            
-            .nav-label {
-                font-size: 0.6rem;
-            }
-
-            .share-icon {
-                font-size: 12px;
-                padding: 3px;
-            }
-
-            .advanced-filters {
-                grid-template-columns: 1fr;
-            }
 
             .voice-search-btn {
-                right: 45px;
-            }
-
-            .price-container {
-                gap: 5px;
-            }
-        }
-
-        @media (max-width: 360px) {
-            .admin-access {
-                gap: 4px;
-            }
-            
-            .admin-btn, .theme-toggle {
-                padding: 6px 8px;
-                font-size: 10px;
-            }
-            
-            .app-title {
-                gap: 8px;
-            }
-            
-            h1 {
-                font-size: 1.1rem;
-            }
-            
-            .app-icon {
-                width: 32px;
-                height: 32px;
-                font-size: 0.9rem;
+                right: 42px;
             }
         }
 
         @media (min-width: 768px) {
             .app-container {
-                max-width: 768px;
-                margin: 0 auto;
-                min-height: 100vh;
-            }
-
-            .search-controls {
-                flex-direction: row;
-                align-items: center;
-            }
-            
-            .search-box {
-                min-width: 250px;
-            }
-
-            h1 {
-                font-size: 1.6rem;
-            }
-
-            .subtitle {
-                font-size: 0.9rem;
-            }
-
-            .admin-access {
-                position: static;
-            }
-
-            th, td {
-                padding: 12px 10px;
-                font-size: 13px;
-            }
-
-            input.editable {
-                font-size: 12px;
-            }
-
-            .action-btn {
-                font-size: 11px;
-                padding: 6px 10px;
-            }
-            
-            .table-container {
-                max-height: calc(100vh - 280px);
-            }
-
-            .advanced-filters {
-                grid-template-columns: 1fr 1fr 1fr 1fr;
+                max-width: 430px;
             }
         }
 
-        @media (min-width: 1024px) {
-            .app-container {
-                max-width: 1024px;
-            }
-            
-            th, td {
-                padding: 14px 12px;
-                font-size: 14px;
-            }
-            
-            .action-btn {
-                font-size: 12px;
-                padding: 8px 12px;
-            }
-        }
-
-        /* Touch-friendly improvements */
         @media (hover: none) and (pointer: coarse) {
             .action-btn, .admin-btn, .nav-item {
-                min-height: 44px;
-                min-width: 44px;
+                min-height: 40px;
+                min-width: 40px;
             }
-            
             input, select {
                 font-size: 16px;
             }
-            
             .table-container {
                 -webkit-overflow-scrolling: touch;
-            }
-        }
-
-        /* High contrast mode support */
-        @media (prefers-contrast: high) {
-            :root {
-                --border: #000000;
-                --text-secondary: #000000;
-            }
-        }
-
-        /* Reduced motion support */
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
             }
         }
     </style>
@@ -1149,16 +973,18 @@
                         <i class="fas fa-edit"></i>
                     </button>
                     <button class="theme-toggle" id="themeToggle" title="Cambiar tema">
-                        <i class="fas fa-adjust"></i>
+                        <i class="fas fa-sun"></i>
                     </button>
                 </div>
             </div>
-            <div class="subtitle">Sistema completo de gestión de precios de pantallas</div>
+            <div class="subtitle">
+                Sistema de gestión de precios · <span id="lastUpdate">—</span>
+            </div>
         </header>
 
         <section class="search-section">
             <div id="editNotice" class="edit-notice" style="display: none;">
-                <i class="fas fa-edit"></i> <strong>Modo Edición Activado</strong> - Puedes editar todos los precios directamente en la tabla
+                <i class="fas fa-edit"></i> <strong>Modo Edición Activado</strong> - Puedes editar precios directamente en la tabla
             </div>
 
             <div class="search-controls">
@@ -1202,8 +1028,18 @@
         </section>
 
         <main class="main-content">
-            <div id="statusMessage" class="status" style="display: none;"></div>
+            <div id="statusMessage" class="status"></div>
             <div id="resultsCount" class="results-count"></div>
+
+            <!-- Quick filters chips -->
+            <div class="quick-filters" id="quickFilters">
+                <button data-filter="all" class="chip chip-active">Todos</button>
+                <button data-filter="OLED" class="chip">OLED</button>
+                <button data-filter="LCD" class="chip">LCD</button>
+                <button data-filter="favorites" class="chip">
+                    <i class="fas fa-star"></i> Favoritos
+                </button>
+            </div>
 
             <div class="table-container">
                 <table id="resultsTable">
@@ -1219,12 +1055,12 @@
                         </tr>
                     </thead>
                     <tbody id="resultsBody">
-                        <!-- Los resultados se cargarán aquí -->
+                        <!-- Resultados -->
                     </tbody>
                 </table>
             </div>
 
-            <div style="margin-top: 10px; text-align: right;">
+            <div style="margin-top: 8px; text-align: right;">
                 <button class="admin-btn" id="exportBtn" title="Exportar a CSV">
                     <i class="fas fa-file-export"></i> Exportar
                 </button>
@@ -1253,7 +1089,8 @@
         </nav>
     </div>
 
-    <!-- Modal para acceso administrativo -->
+    <!-- Modales -->
+
     <div class="modal" id="adminModal">
         <div class="modal-content">
             <h2><i class="fas fa-lock"></i> Acceso Administrativo</h2>
@@ -1265,11 +1102,10 @@
         </div>
     </div>
 
-    <!-- Modal para modo edición -->
     <div class="modal" id="editModal">
         <div class="modal-content">
             <h2><i class="fas fa-edit"></i> Modo Edición</h2>
-            <p style="margin-bottom: 15px; color: var(--text-secondary); text-align: center; font-size: 13px;">
+            <p style="margin-bottom: 12px; color: var(--text-secondary); text-align: center; font-size: 13px;">
                 Ingrese la clave para editar precios de compra y toda la lista
             </p>
             <input type="password" id="editPassword" class="modal-input" placeholder="Clave de edición" autocomplete="off">
@@ -1280,11 +1116,10 @@
         </div>
     </div>
 
-    <!-- Modal para mostrar proveedores -->
     <div class="modal" id="providersModal">
         <div class="modal-content">
             <h2><i class="fas fa-eye"></i> Ver Importadoras</h2>
-            <p style="margin-bottom: 15px; color: var(--text-secondary); text-align: center; font-size: 13px;">
+            <p style="margin-bottom: 12px; color: var(--text-secondary); text-align: center; font-size: 13px;">
                 Ingrese la clave para ver las importadoras y precios de compra
             </p>
             <input type="password" id="providersPassword" class="modal-input" placeholder="Clave para ver importadoras" autocomplete="off">
@@ -1295,11 +1130,10 @@
         </div>
     </div>
 
-    <!-- Modal para editar precio de venta -->
     <div class="modal" id="ventaModal">
         <div class="modal-content">
             <h2><i class="fas fa-edit"></i> Editar Precio de Venta</h2>
-            <p style="margin-bottom: 15px; color: var(--text-secondary); text-align: center; font-size: 13px;">
+            <p style="margin-bottom: 12px; color: var(--text-secondary); text-align: center; font-size: 13px;">
                 Ingrese la clave para editar el precio de venta
             </p>
             <input type="password" id="ventaPassword" class="modal-input" placeholder="Clave para editar venta" autocomplete="off">
@@ -1310,13 +1144,11 @@
         </div>
     </div>
 
-    <!-- Modal para compartir por WhatsApp -->
     <div class="modal" id="whatsappModal">
         <div class="modal-content">
             <h2><i class="fab fa-whatsapp"></i> Compartir por WhatsApp</h2>
-            <div id="whatsappMessage" style="margin-bottom: 15px; color: var(--text-primary); text-align: center; font-size: 14px; padding: 15px; background: var(--bg-primary); border-radius: 8px; border: 1px solid var(--border);">
-            </div>
-            <p style="margin-bottom: 15px; color: var(--text-secondary); text-align: center; font-size: 13px;">
+            <div id="whatsappMessage" style="margin-bottom: 12px; color: var(--text-primary); text-align: center; font-size: 14px; padding: 12px; background: var(--bg-primary); border-radius: 10px; border: 1px solid var(--border);"></div>
+            <p style="margin-bottom: 12px; color: var(--text-secondary); text-align: center; font-size: 13px;">
                 El mensaje se abrirá en WhatsApp. ¿Desea continuar?
             </p>
             <div class="modal-buttons">
@@ -1328,7 +1160,6 @@
         </div>
     </div>
 
-    <!-- Modal para comparar productos -->
     <div class="modal" id="compareModal">
         <div class="modal-content">
             <h2><i class="fas fa-balance-scale"></i> Comparar Productos</h2>
@@ -1357,7 +1188,6 @@
         const VENTA_PASSWORD = "123456";
         const PROVIDERS_PASSWORD = "123456";
 
-        // ========== VARIABLES GLOBALES ==========
         let allData = [];
         let filteredData = [];
         let sortColumn = 'marca';
@@ -1374,7 +1204,6 @@
         let voiceRecognition = null;
         let isLightMode = false;
 
-        // ========== INICIALIZACIÓN ==========
         document.addEventListener('DOMContentLoaded', function() {
             initializeApp();
         });
@@ -1386,15 +1215,35 @@
             updateProvidersUI();
             updateTableColumns();
             checkOnlineStatus();
-            
+            updateLastUpdateLabel();
+            registerServiceWorker();
+
             const savedTheme = localStorage.getItem('themePreference');
             if (savedTheme === 'light') {
                 toggleTheme();
             }
         }
 
+        function updateLastUpdateLabel() {
+            const el = document.getElementById('lastUpdate');
+            if (!el) return;
+            const hoy = new Date();
+            el.textContent = hoy.toLocaleDateString('es-BO', {
+                day: '2-digit',
+                month: '2-digit',
+                year: '2-digit'
+            });
+        }
+
+        function registerServiceWorker() {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('./sw.js').catch(err => {
+                    console.log('Service Worker error:', err);
+                });
+            }
+        }
+
         function setupEventListeners() {
-            // Búsqueda y Filtros
             document.getElementById('searchInput').addEventListener('input', debounce(handleSearch, 300));
             document.getElementById('showProvidersToggle').addEventListener('click', handleProvidersToggle);
 
@@ -1406,48 +1255,61 @@
             document.getElementById('voiceSearchBtn').addEventListener('click', startVoiceSearch);
             document.getElementById('refreshBtn').addEventListener('click', loadAllData);
             document.getElementById('themeToggle').addEventListener('click', toggleTheme);
-            
-            // Filtros avanzados
+
             document.getElementById('marcaFilter').addEventListener('change', applyFilters);
             document.getElementById('tipoFilter').addEventListener('change', applyFilters);
             document.getElementById('precioMin').addEventListener('input', debounce(applyFilters, 500));
             document.getElementById('precioMax').addEventListener('input', debounce(applyFilters, 500));
-            
-            // Modales
+
             setupModalEvents();
-            
-            // Navegación
+
             document.querySelectorAll('.nav-item').forEach(item => {
                 item.addEventListener('click', handleNavigation);
             });
-            
-            // Exportación
+
             const exportBtn = document.getElementById('exportBtn');
             if (exportBtn) {
                 exportBtn.addEventListener('click', exportToCSV);
             }
-            
-            // Teclado
+
             document.addEventListener('keydown', handleKeyboardShortcuts);
-            
-            // Conexión
+
             window.addEventListener('online', handleOnlineStatus);
             window.addEventListener('offline', handleOnlineStatus);
 
-            // Búsquedas recientes
             document.getElementById('searchInput').addEventListener('focus', showRecentSearches);
             document.addEventListener('click', hideRecentSearches);
 
-            // Responsive table scrolling
             setupTableScrolling();
-            
-            // Sorting de columnas
+
             document.querySelectorAll('th[data-column]').forEach(th => {
                 th.addEventListener('click', () => {
                     const column = th.getAttribute('data-column');
                     sortTable(column);
                 });
             });
+
+            const quickFilters = document.getElementById('quickFilters');
+            if (quickFilters) {
+                quickFilters.addEventListener('click', (e) => {
+                    const btn = e.target.closest('.chip');
+                    if (!btn) return;
+                    
+                    quickFilters.querySelectorAll('.chip').forEach(c => c.classList.remove('chip-active'));
+                    btn.classList.add('chip-active');
+
+                    const type = btn.getAttribute('data-filter');
+
+                    if (type === 'favorites') {
+                        const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+                        filteredData = allData.filter(row => favorites.includes(generateRowId(row)));
+                        renderTable();
+                    } else {
+                        document.getElementById('tipoFilter').value = (type === 'all') ? '' : type;
+                        applyFilters();
+                    }
+                });
+            }
         }
 
         function setupTableScrolling() {
@@ -1464,12 +1326,10 @@
         }
 
         function setupModalEvents() {
-            // Admin Modal
             document.getElementById('adminBtn').addEventListener('click', showAdminModal);
             document.getElementById('cancelAdminBtn').addEventListener('click', hideAdminModal);
             document.getElementById('confirmAdminBtn').addEventListener('click', handleAdminAccess);
             
-            // Edit Modal
             const editModeBtn = document.getElementById('editModeBtn');
             if (editModeBtn) {
                 editModeBtn.addEventListener('click', showEditModal);
@@ -1477,30 +1337,24 @@
             document.getElementById('cancelEditBtn').addEventListener('click', hideEditModal);
             document.getElementById('confirmEditBtn').addEventListener('click', handleEditAccess);
             
-            // Providers Modal
             document.getElementById('cancelProvidersBtn').addEventListener('click', hideProvidersModal);
             document.getElementById('confirmProvidersBtn').addEventListener('click', handleProvidersAccess);
             
-            // Venta Modal
             document.getElementById('cancelVentaBtn').addEventListener('click', hideVentaModal);
             document.getElementById('confirmVentaBtn').addEventListener('click', handleVentaAccess);
             
-            // WhatsApp Modal
             document.getElementById('cancelWhatsappBtn').addEventListener('click', hideWhatsappModal);
             document.getElementById('confirmWhatsappBtn').addEventListener('click', handleWhatsappShare);
             
-            // Compare Modal
             document.getElementById('closeCompareBtn').addEventListener('click', hideCompareModal);
             document.getElementById('clearCompareBtn').addEventListener('click', clearCompare);
             
-            // Enter key en modales
             document.getElementById('adminPassword').addEventListener('keypress', e => { if (e.key === 'Enter') handleAdminAccess(); });
             document.getElementById('editPassword').addEventListener('keypress', e => { if (e.key === 'Enter') handleEditAccess(); });
             document.getElementById('ventaPassword').addEventListener('keypress', e => { if (e.key === 'Enter') handleVentaAccess(); });
             document.getElementById('providersPassword').addEventListener('keypress', e => { if (e.key === 'Enter') handleProvidersAccess(); });
         }
 
-        // ========== FUNCIONALIDAD TEMA CLARO/OSCURO ==========
         function toggleTheme() {
             isLightMode = !isLightMode;
             const toggleIcon = document.querySelector('#themeToggle i');
@@ -1515,7 +1369,7 @@
             }
         }
 
-        // ========== CARGA DE DATOS EXTERNOS ==========
+        // ========== CARGA DE DATOS ==========
         async function loadAllData() {
             showStatus('🔄 Cargando datos desde archivos CSV...', 'info');
             
@@ -1524,29 +1378,12 @@
                 let loadedCount = 0;
                 let totalRecords = 0;
                 
-                console.log("=== INICIO CARGA DATOS ===");
-                
                 for (const provider of CONFIG) {
                     try {
-                        console.log(`\n📂 Cargando: ${provider.nombre} desde ${provider.archivo}`);
                         const data = await loadCSVData(provider.archivo, provider.nombre);
-                        
-                        console.log(`📦 ${provider.nombre}: ${data.length} registros cargados`);
                         allData = [...allData, ...data];
                         loadedCount++;
                         totalRecords += data.length;
-                        
-                        if (data.length > 0) {
-                            const first = data[0];
-                            console.log(`📝 Ejemplo ${provider.nombre}:`, {
-                                marca: first.marca,
-                                modelo: first.modelo,
-                                compra: first.precio_compra,
-                                venta: first.precio_venta,
-                                proveedor: first.proveedor
-                            });
-                        }
-                        
                     } catch (error) {
                         console.error(`❌ Error cargando datos de ${provider.nombre}:`, error);
                     }
@@ -1556,16 +1393,11 @@
                 if (storedData) {
                     try {
                         const customData = JSON.parse(storedData);
-                        console.log(`📁 Datos personalizados: ${customData.length} registros`);
                         allData = [...allData, ...customData];
                     } catch (e) {
                         console.error('Error cargando datos personalizados:', e);
                     }
                 }
-                
-                console.log("\n=== RESUMEN FINAL ===");
-                console.log(`✅ Total proveedores cargados: ${loadedCount}/${CONFIG.length}`);
-                console.log(`✅ Total registros en memoria: ${allData.length}`);
                 
                 verifyDataIntegrity();
                 
@@ -1588,18 +1420,8 @@
                 if (!response.ok) throw new Error(`Error ${response.status}`);
                 
                 const csvText = await response.text();
-                console.log(`📥 ${providerName}: Primeras líneas del CSV:`, csvText.split('\n').slice(0, 3).join(' | '));
-                
                 const data = parseCSVCorregido(csvText, providerName);
-                
-                console.log(`✅ ${providerName}: ${data.length} registros procesados`);
-                
-                if (data.length > 0) {
-                    console.log(`📋 ${providerName} - Ejemplos:`, data.slice(0, 2));
-                }
-                
                 localStorage.setItem(`backup_${providerName}`, JSON.stringify(data));
-                
                 return data;
                 
             } catch (error) {
@@ -1607,7 +1429,6 @@
                 
                 const backupData = localStorage.getItem(`backup_${providerName}`);
                 if (backupData) {
-                    console.log(`🔄 ${providerName}: Usando datos de respaldo`);
                     return JSON.parse(backupData);
                 }
                 
@@ -1619,25 +1440,13 @@
             const lines = csvText.split('\n').filter(line => line.trim() !== '');
             const data = [];
             
-            if (lines.length === 0) {
-                console.error(`CSV vacío para ${providerName}`);
-                return [];
-            }
-            
-            console.log(`📊 ${providerName}: Procesando CSV con ${lines.length} líneas`);
-            
-            const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
-            console.log(`📋 ${providerName} - Encabezados:`, headers);
+            if (lines.length === 0) return [];
             
             for (let i = 1; i < lines.length; i++) {
                 const line = lines[i];
                 if (!line.trim()) continue;
                 
                 const columns = parseCSVLine(line);
-                
-                if (i <= 2 && columns.length >= 6) {
-                    console.log(`🔍 ${providerName} - Línea ${i} (RAW):`, columns);
-                }
                 
                 if (columns.length >= 6) {
                     const marca = columns[0] || 'Desconocido';
@@ -1647,29 +1456,20 @@
                     const precio_compra = parsePrice(columns[4]);
                     const precio_venta = parsePrice(columns[5]);
                     
-                    if (i <= 3) {
-                        console.log(`✅ ${providerName} - Registro ${i}:`, {
-                            marca, modelo, tipo, proveedor, 
-                            compra: precio_compra, 
-                            venta: precio_venta
-                        });
-                    }
-                    
                     const row = {
                         lista: providerName,
                         marca: marca.trim(),
                         modelo: modelo.trim(),
                         tipo: tipo.trim(),
                         proveedor: proveedor.trim(),
-                        precio_compra: precio_compra,
-                        precio_venta: precio_venta
+                        precio_compra,
+                        precio_venta
                     };
                     
                     if (row.marca !== 'Desconocido' && row.modelo !== 'Desconocido') {
                         data.push(row);
                     }
                 } else if (columns.length === 5) {
-                    console.log(`ℹ️ ${providerName}: Línea con 5 columnas, usando proveedor=${providerName}`);
                     const marca = columns[0] || 'Desconocido';
                     const modelo = columns[1] || 'Desconocido';
                     const tipo = (columns[2] || 'LCD').toUpperCase();
@@ -1682,17 +1482,12 @@
                         modelo: modelo.trim(),
                         tipo: tipo.trim(),
                         proveedor: providerName,
-                        precio_compra: precio_compra,
-                        precio_venta: precio_venta
+                        precio_compra,
+                        precio_venta
                     };
-                    
                     data.push(row);
-                } else if (columns.length > 0) {
-                    console.warn(`⚠️ ${providerName}: Línea ${i} ignorada - ${columns.length} columnas (se esperaban 6):`, columns);
                 }
             }
-            
-            console.log(`✅ ${providerName}: ${data.length} registros procesados correctamente`);
             return data;
         }
 
@@ -1718,45 +1513,29 @@
         }
 
         function parsePrice(priceStr) {
-            if (!priceStr || priceStr.trim() === '') {
-                return 0;
-            }
-            
+            if (!priceStr || priceStr.trim() === '') return 0;
             let str = priceStr.toString().trim();
             str = str.replace(/[^\d.,-]/g, '');
-            
             const isNegative = str.startsWith('-');
-            if (isNegative) {
-                str = str.substring(1);
-            }
-            
+            if (isNegative) str = str.substring(1);
             const lastComma = str.lastIndexOf(',');
             const lastDot = str.lastIndexOf('.');
-            
             let cleaned;
             if (lastComma > lastDot) {
                 cleaned = str.replace(/\./g, '').replace(',', '.');
             } else {
                 cleaned = str.replace(/,/g, '');
             }
-            
             const num = parseFloat(cleaned);
-            
-            if (isNaN(num)) {
-                console.warn(`⚠️ No se pudo parsear precio: "${priceStr}" -> "${cleaned}"`);
-                return 0;
-            }
-            
+            if (isNaN(num)) return 0;
             const rounded = Math.round(num);
             return isNegative ? -rounded : rounded;
         }
 
-        // ========== FUNCIONALIDADES PRINCIPALES ==========
-
+        // ========== LÓGICA PRINCIPAL ==========
         function toggleFavorite(row) {
             const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
             const itemId = generateRowId(row);
-            
             if (favorites.includes(itemId)) {
                 favorites.splice(favorites.indexOf(itemId), 1);
                 showStatus('❤️ Eliminado de favoritos', 'info');
@@ -1764,7 +1543,6 @@
                 favorites.push(itemId);
                 showStatus('⭐ Agregado a favoritos', 'success');
             }
-            
             localStorage.setItem('favorites', JSON.stringify(favorites));
             renderTable();
         }
@@ -1776,7 +1554,6 @@
 
         function toggleCompare(row) {
             const itemId = generateRowId(row);
-            
             if (comparingItems.has(itemId)) {
                 comparingItems.delete(itemId);
                 showStatus('📊 Eliminado de comparación', 'info');
@@ -1788,7 +1565,6 @@
                 comparingItems.add(itemId);
                 showStatus('📊 Agregado a comparación', 'success');
             }
-            
             renderTable();
         }
 
@@ -1800,25 +1576,21 @@
                 compareResults.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">No hay productos para comparar</p>';
             } else {
                 const itemsToCompare = allData.filter(row => comparingItems.has(generateRowId(row)));
-                
-                let compareHTML = '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">';
-                
+                let compareHTML = '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">';
                 itemsToCompare.forEach(item => {
                     compareHTML += `
-                        <div style="background: var(--bg-primary); padding: 15px; border-radius: 8px; border: 1px solid var(--border);">
-                            <h4 style="color: var(--accent); margin-bottom: 10px;">${item.marca} ${item.modelo}</h4>
-                            <p><strong>Tipo:</strong> ${item.tipo}</p>
-                            <p><strong>Proveedor:</strong> ${item.proveedor}</p>
-                            <p><strong>Compra:</strong> Bs. ${formatCurrency(item.precio_compra)}</p>
-                            <p><strong>Venta:</strong> Bs. ${formatCurrency(item.precio_venta)}</p>
+                        <div style="background: var(--bg-primary); padding: 12px; border-radius: 10px; border: 1px solid var(--border);">
+                            <h4 style="color: var(--accent); margin-bottom: 6px; font-size: 0.9rem;">${item.marca} ${item.modelo}</h4>
+                            <p style="font-size: 0.8rem;"><strong>Tipo:</strong> ${item.tipo}</p>
+                            <p style="font-size: 0.8rem;"><strong>Proveedor:</strong> ${item.proveedor}</p>
+                            <p style="font-size: 0.8rem;"><strong>Compra:</strong> Bs. ${formatCurrency(item.precio_compra)}</p>
+                            <p style="font-size: 0.8rem;"><strong>Venta:</strong> Bs. ${formatCurrency(item.precio_venta)}</p>
                         </div>
                     `;
                 });
-                
                 compareHTML += '</div>';
                 compareResults.innerHTML = compareHTML;
             }
-            
             document.getElementById('compareModal').style.display = 'flex';
         }
 
@@ -1834,7 +1606,6 @@
                 showStatus('❌ Tu navegador no soporta búsqueda por voz', 'error');
                 return;
             }
-
             const voiceBtn = document.getElementById('voiceSearchBtn');
             voiceRecognition = new webkitSpeechRecognition();
             voiceRecognition.continuous = false;
@@ -1854,7 +1625,7 @@
                 saveSearch(transcript);
             };
 
-            voiceRecognition.onerror = function(event) {
+            voiceRecognition.onerror = function() {
                 showStatus('❌ Error en reconocimiento de voz', 'error');
                 voiceBtn.classList.remove('listening');
             };
@@ -1866,17 +1637,12 @@
             voiceRecognition.start();
         }
 
-        function saveSearch(searchTerm) {
-            if (!searchTerm.trim()) return;
-            
+        function saveSearch(term) {
+            if (!term.trim()) return;
             const searches = JSON.parse(localStorage.getItem('recentSearches') || '[]');
-            const existingIndex = searches.indexOf(searchTerm);
-            
-            if (existingIndex !== -1) {
-                searches.splice(existingIndex, 1);
-            }
-            
-            searches.unshift(searchTerm);
+            const existingIndex = searches.indexOf(term);
+            if (existingIndex !== -1) searches.splice(existingIndex, 1);
+            searches.unshift(term);
             localStorage.setItem('recentSearches', JSON.stringify(searches.slice(0, 5)));
             updateRecentSearches();
         }
@@ -1884,7 +1650,6 @@
         function updateRecentSearches() {
             const searches = JSON.parse(localStorage.getItem('recentSearches') || '[]');
             const container = document.getElementById('recentSearches');
-            
             container.innerHTML = '';
             searches.forEach(search => {
                 const item = document.createElement('div');
@@ -1902,7 +1667,6 @@
         function showRecentSearches() {
             const container = document.getElementById('recentSearches');
             const searches = JSON.parse(localStorage.getItem('recentSearches') || '[]');
-            
             if (searches.length > 0) {
                 container.classList.add('active');
             }
@@ -1911,12 +1675,10 @@
         function hideRecentSearches(event) {
             const container = document.getElementById('recentSearches');
             const searchInput = document.getElementById('searchInput');
-            
             if (!event) {
                 container.classList.remove('active');
                 return;
             }
-
             if (event.target !== searchInput && !container.contains(event.target)) {
                 container.classList.remove('active');
             }
@@ -1931,17 +1693,14 @@
         function updateBrandFilter() {
             const marcaFilter = document.getElementById('marcaFilter');
             const marcas = [...new Set(allData.map(item => item.marca))].sort();
-            
             const currentValue = marcaFilter.value;
             marcaFilter.innerHTML = '<option value="">Todas las marcas</option>';
-            
             marcas.forEach(marca => {
                 const option = document.createElement('option');
                 option.value = marca;
                 option.textContent = marca;
                 marcaFilter.appendChild(option);
             });
-            
             if (marcas.includes(currentValue)) {
                 marcaFilter.value = currentValue;
             }
@@ -1951,7 +1710,6 @@
             const headers = ['Marca', 'Modelo', 'Tipo', 'Proveedor', 'Precio Compra', 'Precio Venta'];
             const csvContent = [
                 headers.join(','),
-
                 ...filteredData.map(row => [
                     `"${row.marca}"`,
                     `"${row.modelo}"`,
@@ -1965,13 +1723,11 @@
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
-            link.setAttribute('href', url);
-            link.setAttribute('download', `precios_pantallas_${new Date().toISOString().split('T')[0]}.csv`);
-            link.style.visibility = 'hidden';
+            link.href = url;
+            link.download = `precios_pantallas_${new Date().toISOString().split('T')[0]}.csv`;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-            
             showStatus('📤 Datos exportados correctamente', 'success');
         }
 
@@ -1984,7 +1740,6 @@
         function handleOnlineStatus() {
             if (navigator.onLine) {
                 showStatus('✅ Conexión restaurada', 'success');
-                setTimeout(() => document.getElementById('statusMessage').style.display = 'none', 2000);
             } else {
                 showStatus('⚠️ Modo offline activado', 'warning');
             }
@@ -1992,12 +1747,9 @@
 
         function handleNavigation(event) {
             const tab = event.currentTarget.getAttribute('data-tab');
-            
             document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
             event.currentTarget.classList.add('active');
-            
             currentTab = tab;
-            
             switch(tab) {
                 case 'favorites':
                     showFavorites();
@@ -2042,7 +1794,6 @@
                         break;
                 }
             }
-            
             if (event.key === 'Escape') {
                 closeAllModals();
                 hideRecentSearches();
@@ -2080,11 +1831,6 @@
             return Math.round(parseFloat(value)).toString();
         }
 
-        function calculateProfitMargin(compra, venta) {
-            if (!compra || !venta) return 0;
-            return ((venta - compra) / compra * 100).toFixed(1);
-        }
-
         function generateRowId(row) {
             return `${row.lista}|${row.marca}|${row.modelo}|${row.tipo}|${row.proveedor}|${row.precio_compra}`;
         }
@@ -2094,25 +1840,20 @@
             statusEl.textContent = message;
             statusEl.className = `status ${type}`;
             statusEl.style.display = 'block';
-            
-            if (type !== 'error') {
-                setTimeout(() => {
-                    statusEl.style.display = 'none';
-                }, 3000);
-            }
+            setTimeout(() => {
+                statusEl.style.display = 'none';
+            }, type === 'error' ? 4000 : 2500);
         }
 
         function copyPriceToClipboard(row) {
             const message = generateWhatsappMessage(row);
-            
             if (navigator.clipboard && window.isSecureContext) {
                 navigator.clipboard.writeText(message)
                     .then(() => {
                         showStatus('✅ Mensaje copiado al portapapeles', 'success');
                         highlightCopiedPrice(row);
                     })
-                    .catch(err => {
-                        console.error('Error al copiar: ', err);
+                    .catch(() => {
                         fallbackCopyToClipboard(message, row);
                     });
             } else {
@@ -2125,38 +1866,31 @@
             textArea.value = text;
             textArea.style.position = 'fixed';
             textArea.style.left = '-999999px';
-            textArea.style.top = '-999999px';
             document.body.appendChild(textArea);
             textArea.focus();
             textArea.select();
-            
             try {
                 document.execCommand('copy');
                 showStatus('✅ Mensaje copiado al portapapeles', 'success');
                 highlightCopiedPrice(row);
-            } catch (err) {
-                console.error('Fallback: Error al copiar texto: ', err);
+            } catch {
                 showStatus('❌ Error al copiar mensaje', 'error');
             }
-            
             document.body.removeChild(textArea);
         }
 
         function highlightCopiedPrice(row) {
             const priceElements = document.querySelectorAll('.price-venta');
-            
             priceElements.forEach(element => {
                 if (element.textContent.includes(`Bs. ${formatCurrency(row.precio_venta)}`)) {
                     const originalBg = element.style.backgroundColor;
                     const originalColor = element.style.color;
-                    
                     element.style.backgroundColor = 'var(--accent)';
                     element.style.color = 'white';
-                    
                     setTimeout(() => {
                         element.style.backgroundColor = originalBg;
                         element.style.color = originalColor;
-                    }, 1000);
+                    }, 800);
                 }
             });
         }
@@ -2169,7 +1903,6 @@
 
         function applyFilters() {
             let filtered = [...allData];
-            
             if (searchTerm) {
                 const normalizedSearch = normalizeText(searchTerm);
                 filtered = filtered.filter(row => 
@@ -2179,32 +1912,19 @@
                     )
                 );
             }
-            
             const marcaFilter = document.getElementById('marcaFilter').value;
             const tipoFilter = document.getElementById('tipoFilter').value;
             const precioMin = parseFloat(document.getElementById('precioMin').value) || 0;
             const precioMax = parseFloat(document.getElementById('precioMax').value) || Infinity;
-            
-            if (marcaFilter) {
-                filtered = filtered.filter(row => row.marca === marcaFilter);
-            }
-            
-            if (tipoFilter) {
-                filtered = filtered.filter(row => row.tipo === tipoFilter);
-            }
-            
-            filtered = filtered.filter(row => 
-                row.precio_compra >= precioMin && row.precio_compra <= precioMax
-            );
-            
+            if (marcaFilter) filtered = filtered.filter(row => row.marca === marcaFilter);
+            if (tipoFilter) filtered = filtered.filter(row => row.tipo === tipoFilter);
+            filtered = filtered.filter(row => row.precio_compra >= precioMin && row.precio_compra <= precioMax);
             if (!showProviders) {
                 filtered = getBestPrices(filtered);
             }
-            
             if (sortColumn) {
                 sortData(sortColumn, sortDirection);
             }
-            
             filteredData = filtered;
             renderTable();
             updateResultsCount();
@@ -2216,7 +1936,6 @@
                 if (e && e.target) e.target.checked = false;
                 return;
             }
-            
             showProviders = e.target.checked;
             applyFilters();
             updateProvidersUI();
@@ -2226,7 +1945,6 @@
             const toggle = document.getElementById('showProvidersToggle');
             const label = document.getElementById('providersLabel');
             if (!toggle || !label) return;
-
             if (!providersAccess) {
                 toggle.checked = false;
                 label.textContent = '🔒 Importadoras';
@@ -2241,7 +1959,6 @@
         function updateTableColumns() {
             const tableContainer = document.querySelector('.table-container');
             if (!tableContainer) return;
-            
             if (!providersAccess) {
                 tableContainer.classList.add('hide-columns');
             } else {
@@ -2256,16 +1973,9 @@
                 sortColumn = column;
                 sortDirection = 'asc';
             }
-            
-            document.querySelectorAll('th').forEach(th => {
-                th.classList.remove('sort-asc', 'sort-desc');
-            });
-            
+            document.querySelectorAll('th').forEach(th => th.classList.remove('sort-asc', 'sort-desc'));
             const currentTh = document.querySelector(`th[data-column="${column}"]`);
-            if (currentTh) {
-                currentTh.classList.add(`sort-${sortDirection}`);
-            }
-            
+            if (currentTh) currentTh.classList.add(`sort-${sortDirection}`);
             sortData(column, sortDirection);
             renderTable();
         }
@@ -2274,19 +1984,15 @@
             filteredData.sort((a, b) => {
                 let valueA = a[column];
                 let valueB = b[column];
-                
                 if (valueA === null || valueA === undefined) valueA = '';
                 if (valueB === null || valueB === undefined) valueB = '';
-                
                 if (column === 'precio_compra' || column === 'precio_venta') {
                     valueA = valueA || 0;
                     valueB = valueB || 0;
                     return direction === 'asc' ? valueA - valueB : valueB - valueA;
                 }
-                
                 valueA = valueA.toString().toLowerCase();
                 valueB = valueB.toString().toLowerCase();
-                
                 if (valueA < valueB) return direction === 'asc' ? -1 : 1;
                 if (valueA > valueB) return direction === 'asc' ? 1 : -1;
                 return 0;
@@ -2295,15 +2001,12 @@
 
         function getBestPrices(data) {
             const grouped = {};
-            
             data.forEach(row => {
                 const key = `${row.marca}|${row.modelo}|${row.tipo}`;
-                
                 if (!grouped[key] || row.precio_compra < grouped[key].precio_compra) {
                     grouped[key] = { ...row };
                 }
             });
-            
             return Object.values(grouped);
         }
 
@@ -2313,7 +2016,6 @@
 
         function highlightMatches(text) {
             if (!searchTerm || !text) return text || '';
-            
             const escaped = escapeRegExp(searchTerm);
             const regex = new RegExp(escaped, 'gi');
             return text.toString().replace(regex, match => `<mark>${match}</mark>`);
@@ -2321,7 +2023,6 @@
 
         function renderTable() {
             const tbody = document.getElementById('resultsBody');
-            
             if (filteredData.length === 0) {
                 tbody.innerHTML = `
                     <tr>
@@ -2333,15 +2034,12 @@
                 `;
                 return;
             }
-            
             tbody.innerHTML = '';
-            
             filteredData.forEach(row => {
                 const tr = document.createElement('tr');
                 const tipoClass = row.tipo === 'OLED' ? 'tipo-oled' : 'tipo-lcd';
                 const isComparing = comparingItems.has(generateRowId(row));
                 const isFav = isFavorite(row);
-                
                 const compraField = editMode ? 
                     `<input type="text" 
                             class="editable editable-compra" 
@@ -2350,7 +2048,6 @@
                             value="${formatCurrency(row.precio_compra)}"
                             placeholder="0">` :
                     `<span class="price-compra">Bs. ${formatCurrency(row.precio_compra)}</span>`;
-                
                 const ventaField = ventaEditMode ? 
                     `<input type="text" 
                             class="editable" 
@@ -2368,7 +2065,6 @@
                            onclick="showWhatsappModal(${JSON.stringify(row).replace(/"/g, '&quot;')})"
                            title="Compartir por WhatsApp"></i>
                     </div>`;
-                
                 tr.innerHTML = `
                     <td class="col-marca">${highlightMatches(row.marca)}</td>
                     <td class="col-modelo">${highlightMatches(row.modelo)}</td>
@@ -2413,26 +2109,23 @@
                 `;
                 tbody.appendChild(tr);
             });
-            
             if (editMode) {
                 document.querySelectorAll('.editable[data-field="precio_compra"]').forEach(input => {
                     input.addEventListener('change', handleEdit);
                 });
             }
-            
             if (ventaEditMode) {
                 document.querySelectorAll('.editable[data-field="precio_venta"]').forEach(input => {
                     input.addEventListener('change', handleEdit);
                 });
             }
-            
             updateResultsCount();
         }
 
         function updateResultsCount() {
             const countEl = document.getElementById('resultsCount');
             if (filteredData.length > 0) {
-                countEl.textContent = `${filteredData.length} resultado${filteredData.length !== 1 ? 's' : ''} encontrado${filteredData.length !== 1 ? 's' : ''}`;
+                countEl.textContent = `${filteredData.length} resultado${filteredData.length !== 1 ? 's' : ''}`;
                 countEl.style.display = 'block';
             } else {
                 countEl.style.display = 'none';
@@ -2443,33 +2136,25 @@
             const input = e.target;
             const rowId = input.getAttribute('data-id');
             const field = input.getAttribute('data-field');
-            
             let value = input.value;
             if (field === 'precio_compra' || field === 'precio_venta') {
                 value = Math.round(parseFloat(value) || 0);
                 input.value = value;
             }
-            
             saveEditToStorage(rowId, field, value);
             updateDataInMemory(rowId, field, value);
         }
 
         function saveEditToStorage(rowId, field, value) {
             const edits = JSON.parse(localStorage.getItem('priceListEdits') || '{}');
-            
-            if (!edits[rowId]) {
-                edits[rowId] = {};
-            }
-            
+            if (!edits[rowId]) edits[rowId] = {};
             edits[rowId][field] = value;
             localStorage.setItem('priceListEdits', JSON.stringify(edits));
-            
             showStatus('✅ Precio actualizado correctamente', 'success');
         }
 
         function loadEditsFromStorage() {
             const edits = JSON.parse(localStorage.getItem('priceListEdits') || '{}');
-            
             allData.forEach(row => {
                 const rowId = generateRowId(row);
                 if (edits[rowId]) {
@@ -2485,7 +2170,6 @@
 
         function updateDataInMemory(rowId, field, value) {
             const [lista, marca, modelo, tipo, proveedor, precio_compra] = rowId.split('|');
-            
             allData.forEach(row => {
                 if (row.lista === lista && 
                     row.marca === marca && 
@@ -2493,13 +2177,11 @@
                     row.tipo === tipo && 
                     row.proveedor === proveedor &&
                     row.precio_compra == precio_compra) {
-                    
                     if (field === 'precio_compra' || field === 'precio_venta') {
                         row[field] = Math.round(parseFloat(value) || 0);
                     }
                 }
             });
-            
             applyFilters();
         }
 
@@ -2567,11 +2249,9 @@
 
         function handleWhatsappShare() {
             if (!currentWhatsappRow) return;
-            
             const message = generateWhatsappMessage(currentWhatsappRow);
             const encodedMessage = encodeURIComponent(message);
             const whatsappUrl = `https://wa.me/?text=${encodedMessage}`;
-            
             window.open(whatsappUrl, '_blank');
             hideWhatsappModal();
             showStatus('✅ Mensaje preparado para WhatsApp', 'success');
@@ -2579,7 +2259,6 @@
 
         function handleAdminAccess() {
             const password = document.getElementById('adminPassword').value;
-            
             if (password === ADMIN_PASSWORD) {
                 showStatus('✅ Acceso administrativo concedido', 'success');
                 hideAdminModal();
@@ -2592,7 +2271,6 @@
 
         function handleEditAccess() {
             const password = document.getElementById('editPassword').value;
-            
             if (password === EDIT_PASSWORD) {
                 editMode = true;
                 hideEditModal();
@@ -2607,7 +2285,6 @@
 
         function handleProvidersAccess() {
             const password = document.getElementById('providersPassword').value;
-            
             if (password === PROVIDERS_PASSWORD) {
                 providersAccess = true;
                 showProviders = false;
@@ -2625,12 +2302,11 @@
 
         function handleVentaAccess() {
             const password = document.getElementById('ventaPassword').value;
-            
             if (password === VENTA_PASSWORD) {
                 ventaEditMode = true;
                 hideVentaModal();
                 showStatus('✅ Puede editar el precio de venta', 'success');
-                renderTable(); // para que aparezcan los inputs en la columna venta
+                renderTable();
             } else {
                 showStatus('❌ Clave incorrecta. Intente nuevamente.', 'error');
                 document.getElementById('ventaPassword').value = '';
@@ -2641,57 +2317,28 @@
         function updateEditModeUI() {
             const editNotice = document.getElementById('editNotice');
             const editBtn = document.getElementById('editModeBtn');
-            
             if (editMode) {
                 editNotice.style.display = 'block';
-                if (editBtn) {
-                    editBtn.innerHTML = '<i class="fas fa-toggle-on"></i>';
-                }
+                if (editBtn) editBtn.innerHTML = '<i class="fas fa-toggle-on"></i>';
             } else {
                 editNotice.style.display = 'none';
-                if (editBtn) {
-                    editBtn.innerHTML = '<i class="fas fa-edit"></i>';
-                }
+                if (editBtn) editBtn.innerHTML = '<i class="fas fa-edit"></i>';
             }
-            
             renderTable();
         }
 
-        // ========== FUNCIÓN DE DIAGNÓSTICO BÁSICO ==========
+        // Diagnóstico simple
         function verifyDataIntegrity() {
-            console.log("\n=== VERIFICACIÓN DE INTEGRIDAD ===");
-            
             const issues = [];
-            
             const ventaMenor = allData.filter(item => item.precio_venta < item.precio_compra);
-            if (ventaMenor.length > 0) {
-                console.warn(`⚠️ ${ventaMenor.length} registros con venta < compra`);
-                ventaMenor.slice(0, 3).forEach(item => {
-                    console.log(`   - ${item.marca} ${item.modelo}: Compra=${item.precio_compra}, Venta=${item.precio_venta}`);
-                });
-                issues.push(`${ventaMenor.length} registros con precio invertido`);
-            }
-            
+            if (ventaMenor.length > 0) issues.push(`${ventaMenor.length} con venta < compra`);
             const precioCero = allData.filter(item => item.precio_venta === 0 || item.precio_compra === 0);
-            if (precioCero.length > 0) {
-                console.warn(`⚠️ ${precioCero.length} registros con precios cero`);
-                issues.push(`${precioCero.length} registros con precios cero`);
+            if (precioCero.length > 0) issues.push(`${precioCero.length} con precios cero`);
+            const desconocidos = allData.filter(item => item.marca.includes('Desconocido') || item.modelo.includes('Desconocido'));
+            if (desconocidos.length > 0) issues.push(`${desconocidos.length} con datos incompletos`);
+            if (issues.length) {
+                console.log('Problemas de datos:', issues.join(' | '));
             }
-            
-            const desconocidos = allData.filter(item => 
-                item.marca.includes('Desconocido') || item.modelo.includes('Desconocido')
-            );
-            if (desconocidos.length > 0) {
-                console.warn(`⚠️ ${desconocidos.length} registros con marca/modelo desconocido`);
-                issues.push(`${desconocidos.length} registros con datos incompletos`);
-            }
-            
-            if (issues.length === 0) {
-                console.log("✅ Todos los datos están correctamente formateados");
-            } else {
-                console.log(`📋 Problemas encontrados: ${issues.join(', ')}`);
-            }
-            
             return issues;
         }
     </script>
