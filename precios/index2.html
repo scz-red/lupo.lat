@@ -278,6 +278,7 @@
             position: relative;
             transition: var(--transition);
             font-size: 12px;
+
             white-space: nowrap;
             color: var(--text-primary);
         }
@@ -728,9 +729,6 @@
                 </div>
                 <div class="admin-access">
                     <!-- engrane 1: config general -->
-                    <button class="admin-btn" id="adminBtn" title="Configuración general">
-                        <i class="fas fa-cog"></i>
-                    </button>
                     <!-- engrane 2: importadoras con clave -->
                     <button class="admin-btn" id="providersBtn" title="Habilitar importadoras (clave)">
                         <i class="fas fa-cog"></i>
@@ -738,9 +736,7 @@
                     <button class="admin-btn" id="refreshBtn" title="Actualizar Datos">
                         <i class="fas fa-sync-alt"></i>
                     </button>
-                    <button class="admin-btn edit-mode-btn" id="editModeBtn" title="Modo edición">
-                        <i class="fas fa-edit"></i>
-                    </button>
+
                     <button class="theme-toggle" id="themeToggle" title="Cambiar tema">
                         <i class="fas fa-sun"></i>
                     </button>
@@ -791,9 +787,7 @@
             </div>
 
             <div style="margin-top: 8px; text-align: right;">
-                <button class="admin-btn" id="exportBtn" title="Exportar a CSV">
-                    <i class="fas fa-file-export"></i> Exportar
-                </button>
+
             </div>
         </main>
 
