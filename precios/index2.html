@@ -319,7 +319,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* MAIN CONTENT - TABLA RESPONSIVE */
+        /* MAIN CONTENT */
         .main-content {
             flex: 1;
             padding: 16px;
@@ -327,7 +327,7 @@
             -webkit-overflow-scrolling: touch;
         }
 
-        /* CONTENEDOR DE TABLA COMPLETAMENTE RESPONSIVE */
+        /* TABLA RESPONSIVE - COLUMNAS DINÁMICAS */
         .table-container {
             width: 100%;
             overflow-x: auto;
@@ -337,19 +337,18 @@
             box-shadow: var(--card-shadow);
             background: var(--bg-secondary);
             -webkit-overflow-scrolling: touch;
-            scrollbar-width: none; /* Firefox */
+            scrollbar-width: none;
         }
 
         .table-container::-webkit-scrollbar {
-            display: none; /* Chrome, Safari, Edge */
+            display: none;
         }
 
-        /* TABLA OPTIMIZADA PARA MÓVIL */
+        /* TABLA CON COLUMNAS DINÁMICAS */
         table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 100%; /* Forza a que use el 100% del ancho */
-            table-layout: fixed; /* Distribuye el espacio equitativamente */
+            table-layout: fixed;
         }
 
         thead {
@@ -406,40 +405,70 @@
             background-color: var(--bg-tertiary);
         }
 
-        /* ANCHOS DE COLUMNAS OPTIMIZADOS PARA MÓVIL */
+        /* ANCHOS DE COLUMNAS - SIN PROVEEDOR Y COMPRA POR DEFECTO */
         .col-marca {
-            width: 20%;
-            min-width: 70px;
-            max-width: 100px;
+            width: 25%;
+            min-width: 80px;
         }
 
         .col-modelo {
-            width: 25%;
+            width: 35%;
             min-width: 100px;
         }
 
         .col-tipo {
-            width: 10%;
-            min-width: 50px;
-            text-align: center;
-        }
-
-        .col-proveedor {
             width: 15%;
             min-width: 60px;
             text-align: center;
         }
 
+        .col-proveedor {
+            width: 0;
+            display: none;
+            min-width: 0;
+        }
+
         .col-compra {
+            width: 0;
+            display: none;
+            min-width: 0;
+        }
+
+        .col-venta {
+            width: 25%;
+            min-width: 90px;
+            text-align: right;
+        }
+
+        /* CUANDO SE ACTIVAN LAS IMPORTADORAS */
+        .show-providers .col-marca {
+            width: 20%;
+        }
+
+        .show-providers .col-modelo {
+            width: 25%;
+        }
+
+        .show-providers .col-tipo {
+            width: 10%;
+        }
+
+        .show-providers .col-proveedor {
             width: 15%;
+            display: table-cell;
+            min-width: 70px;
+            text-align: center;
+        }
+
+        .show-providers .col-compra {
+            width: 15%;
+            display: table-cell;
             min-width: 70px;
             text-align: right;
         }
 
-        .col-venta {
+        .show-providers .col-venta {
             width: 15%;
-            min-width: 80px;
-            text-align: right;
         }
 
         /* ESTILOS PARA CONTENIDO */
@@ -489,11 +518,11 @@
             font-size: 0.8rem;
         }
 
-        /* ACCIONES - BOTONES MÁS GRANDES PARA TACTO */
+        /* ACCIONES */
         .action-buttons {
             display: flex;
             gap: 6px;
-            justify-content: center;
+            justify-content: flex-end;
             align-items: center;
             height: 100%;
         }
@@ -502,7 +531,7 @@
             background: transparent;
             border: 1px solid var(--border);
             color: var(--text-secondary);
-            padding: 8px 10px;
+            padding: 8px;
             border-radius: 8px;
             cursor: pointer;
             font-size: 0.9rem;
@@ -510,8 +539,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            min-width: 44px;
-            min-height: 44px;
+            min-width: 36px;
+            min-height: 36px;
         }
 
         .action-btn:hover, .action-btn:active {
@@ -547,15 +576,15 @@
             border-color: var(--warning);
         }
 
-        .hidden-price {
-            color: var(--text-secondary);
-            font-style: italic;
-            background-color: var(--bg-tertiary);
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            display: inline-block;
-            text-align: center;
+        .whatsapp-btn {
+            background-color: var(--whatsapp);
+            color: white;
+            border: 1px solid var(--whatsapp);
+        }
+
+        .whatsapp-btn:hover, .whatsapp-btn:active {
+            background-color: #128C7E;
+            border-color: #128C7E;
         }
 
         /* STATUS MESSAGES */
@@ -604,7 +633,7 @@
             display: none;
         }
 
-        /* BOTTOM NAV - FIXED */
+        /* BOTTOM NAV */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -770,7 +799,7 @@
             box-shadow: var(--card-shadow);
         }
 
-        /* MEJORAS ESPECÍFICAS PARA MÓVIL */
+        /* RESPONSIVE */
         @media (max-width: 480px) {
             .app-header {
                 padding: 10px 12px;
@@ -797,40 +826,60 @@
                 font-size: 0.8rem;
             }
             
+            /* SIN IMPORTADORAS */
             .col-marca {
-                width: 22%;
-                min-width: 60px;
+                width: 30%;
+                min-width: 70px;
             }
             
             .col-modelo {
-                width: 28%;
+                width: 45%;
                 min-width: 90px;
             }
             
             .col-tipo {
-                width: 12%;
-                min-width: 40px;
+                width: 25%;
+                min-width: 50px;
             }
             
-            .col-proveedor {
+            .col-venta {
+                width: 0;
+                display: none;
+            }
+            
+            /* CON IMPORTADORAS */
+            .show-providers .col-marca {
+                width: 20%;
+            }
+            
+            .show-providers .col-modelo {
+                width: 25%;
+            }
+            
+            .show-providers .col-tipo {
+                width: 12%;
+            }
+            
+            .show-providers .col-proveedor {
                 width: 16%;
                 min-width: 50px;
             }
             
-            .col-compra {
-                width: 11%;
+            .show-providers .col-compra {
+                width: 13%;
                 min-width: 60px;
             }
             
-            .col-venta {
-                width: 11%;
+            .show-providers .col-venta {
+                width: 14%;
                 min-width: 70px;
+                display: table-cell;
             }
             
             .action-btn {
-                padding: 6px 8px;
-                min-width: 40px;
-                min-height: 40px;
+                padding: 6px;
+                min-width: 32px;
+                min-height: 32px;
                 font-size: 0.8rem;
             }
             
@@ -856,32 +905,53 @@
                 justify-content: space-between;
             }
             
+            /* SIN IMPORTADORAS - VERSIÓN MUY PEQUEÑA */
             .col-modelo {
-                display: none; /* Ocultar modelo en pantallas muy pequeñas */
+                display: none;
             }
             
             .col-marca {
-                width: 30%;
+                width: 40%;
             }
             
             .col-tipo {
-                width: 20%;
-            }
-            
-            .col-proveedor {
-                width: 20%;
-            }
-            
-            .col-compra {
-                width: 15%;
+                width: 30%;
             }
             
             .col-venta {
-                width: 15%;
+                width: 30%;
+                display: table-cell;
+                text-align: right;
+            }
+            
+            /* CON IMPORTADORAS - VERSIÓN MUY PEQUEÑA */
+            .show-providers .col-modelo {
+                display: table-cell;
+                width: 22%;
+            }
+            
+            .show-providers .col-marca {
+                width: 18%;
+            }
+            
+            .show-providers .col-tipo {
+                width: 12%;
+            }
+            
+            .show-providers .col-proveedor {
+                width: 16%;
+            }
+            
+            .show-providers .col-compra {
+                width: 16%;
+            }
+            
+            .show-providers .col-venta {
+                width: 16%;
             }
         }
 
-        /* SUPPORT PARA TACTO */
+        /* MEJORAS PARA TACTO */
         @media (hover: none) and (pointer: coarse) {
             .action-btn, .admin-btn, .nav-item, .modal-btn {
                 min-height: 44px;
@@ -897,14 +967,13 @@
                 -webkit-overflow-scrolling: touch;
             }
             
-            /* Mejorar feedback táctil */
             .action-btn:active, .nav-item:active, .admin-btn:active {
                 transform: scale(0.95);
                 opacity: 0.8;
             }
         }
 
-        /* Soportar PWA */
+        /* SOPORTE PWA */
         @media all and (display-mode: standalone) {
             .app-header {
                 padding-top: max(12px, env(safe-area-inset-top));
@@ -966,7 +1035,7 @@
                             <input type="checkbox" id="showProvidersToggle">
                             <span class="slider"></span>
                         </label>
-                        <span id="providersLabel">Tecnico</span>
+                        <span id="providersLabel">Ver Importadoras</span>
                     </div>
                     <button class="admin-btn" id="advancedFiltersBtn">
                         <i class="fas fa-filter"></i>
@@ -992,7 +1061,7 @@
             <div id="statusMessage" class="status" style="display: none;"></div>
             <div id="resultsCount" class="results-count"></div>
 
-            <div class="table-container">
+            <div class="table-container" id="tableContainer">
                 <table id="resultsTable">
                     <thead>
                         <tr>
@@ -1033,33 +1102,6 @@
         </nav>
     </div>
 
-    <!-- Modal para acceso administrativo -->
-    <div class="modal" id="adminModal">
-        <div class="modal-content">
-            <h2><i class="fas fa-lock"></i> Acceso Administrativo</h2>
-            <input type="password" id="adminPassword" class="modal-input" placeholder="Ingrese la clave de acceso" autocomplete="off">
-            <div class="modal-buttons">
-                <button class="modal-btn secondary" id="cancelAdminBtn">Cancelar</button>
-                <button class="modal-btn primary" id="confirmAdminBtn">Acceder</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal para modo edición -->
-    <div class="modal" id="editModal">
-        <div class="modal-content">
-            <h2><i class="fas fa-edit"></i> Modo Edición</h2>
-            <p style="margin-bottom: 15px; color: var(--text-secondary); text-align: center; font-size: 0.9rem;">
-                Ingrese la clave para editar precios de compra y toda la lista
-            </p>
-            <input type="password" id="editPassword" class="modal-input" placeholder="Clave de edición" autocomplete="off">
-            <div class="modal-buttons">
-                <button class="modal-btn secondary" id="cancelEditBtn">Cancelar</button>
-                <button class="modal-btn primary" id="confirmEditBtn">Activar Edición</button>
-            </div>
-        </div>
-    </div>
-
     <!-- Modal para mostrar proveedores -->
     <div class="modal" id="providersModal">
         <div class="modal-content">
@@ -1071,21 +1113,6 @@
             <div class="modal-buttons">
                 <button class="modal-btn secondary" id="cancelProvidersBtn">Cancelar</button>
                 <button class="modal-btn primary" id="confirmProvidersBtn">Ver Importadoras</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal para editar precio de venta -->
-    <div class="modal" id="ventaModal">
-        <div class="modal-content">
-            <h2><i class="fas fa-edit"></i> Editar Precio de Venta</h2>
-            <p style="margin-bottom: 15px; color: var(--text-secondary); text-align: center; font-size: 0.9rem;">
-                Ingrese la clave para editar el precio de venta
-            </p>
-            <input type="password" id="ventaPassword" class="modal-input" placeholder="Clave para editar venta" autocomplete="off">
-            <div class="modal-buttons">
-                <button class="modal-btn secondary" id="cancelVentaBtn">Cancelar</button>
-                <button class="modal-btn primary" id="confirmVentaBtn">Editar Precio</button>
             </div>
         </div>
     </div>
@@ -1135,9 +1162,6 @@
             { nombre: "BITE", archivo: "data/boe.csv" }
         ];
 
-        const ADMIN_PASSWORD = "123456";
-        const EDIT_PASSWORD = "123456";
-        const VENTA_PASSWORD = "123456";
         const PROVIDERS_PASSWORD = "123456";
 
         // ========== VARIABLES GLOBALES ==========
@@ -1147,8 +1171,6 @@
         let sortDirection = 'asc';
         let searchTerm = '';
         let showProviders = false;
-        let editMode = false;
-        let ventaEditMode = false;
         let providersAccess = false;
         let comparingItems = new Set();
         let currentTab = 'main';
@@ -1162,7 +1184,6 @@
         function initializeApp() {
             loadAllData();
             setupEventListeners();
-            loadEditsFromStorage();
             updateProvidersUI();
             updateTableColumns();
             
@@ -1172,7 +1193,6 @@
                 toggleTheme();
             }
             
-            // Ajustar altura del contenido para el bottom-nav
             adjustContentHeight();
         }
 
@@ -1217,22 +1237,11 @@
                 });
             });
             
-            // Ajustar altura al cambiar orientación
             window.addEventListener('resize', adjustContentHeight);
             window.addEventListener('orientationchange', adjustContentHeight);
         }
 
         function setupModalEvents() {
-            // Admin Modal
-            document.getElementById('adminBtn').addEventListener('click', showAdminModal);
-            document.getElementById('cancelAdminBtn').addEventListener('click', hideAdminModal);
-            document.getElementById('confirmAdminBtn').addEventListener('click', handleAdminAccess);
-            
-            // Edit Modal
-            document.getElementById('editModeBtn').addEventListener('click', showEditModal);
-            document.getElementById('cancelEditBtn').addEventListener('click', hideEditModal);
-            document.getElementById('confirmEditBtn').addEventListener('click', handleEditAccess);
-            
             // Providers Modal
             document.getElementById('cancelProvidersBtn').addEventListener('click', hideProvidersModal);
             document.getElementById('confirmProvidersBtn').addEventListener('click', handleProvidersAccess);
@@ -1245,10 +1254,10 @@
             document.getElementById('closeCompareBtn').addEventListener('click', hideCompareModal);
             document.getElementById('clearCompareBtn').addEventListener('click', clearCompare);
             
-            // Enter key en modales
-            document.getElementById('adminPassword').addEventListener('keypress', e => { if (e.key === 'Enter') handleAdminAccess(); });
-            document.getElementById('editPassword').addEventListener('keypress', e => { if (e.key === 'Enter') handleEditAccess(); });
-            document.getElementById('providersPassword').addEventListener('keypress', e => { if (e.key === 'Enter') handleProvidersAccess(); });
+            // Enter key en modal
+            document.getElementById('providersPassword').addEventListener('keypress', e => { 
+                if (e.key === 'Enter') handleProvidersAccess(); 
+            });
         }
 
         // ========== TEMA CLARO/OSCURO ==========
@@ -1280,17 +1289,6 @@
                         loadedCount++;
                     } catch (error) {
                         console.error(`Error cargando ${provider.nombre}:`, error);
-                    }
-                }
-                
-                // Cargar datos personalizados
-                const storedData = localStorage.getItem('customPriceData');
-                if (storedData) {
-                    try {
-                        const customData = JSON.parse(storedData);
-                        allData = [...allData, ...customData];
-                    } catch (e) {
-                        console.error('Error cargando datos personalizados:', e);
                     }
                 }
                 
@@ -1336,7 +1334,6 @@
                 const columns = parseCSVLine(line);
                 
                 if (columns.length >= 6) {
-                    // Estructura: marca, modelo, tipo, proveedor, precio_compra, precio_venta
                     const marca = columns[0] || 'Desconocido';
                     const modelo = columns[1] || 'Desconocido';
                     const tipo = (columns[2] || 'LCD').toUpperCase();
@@ -1361,9 +1358,7 @@
                 }
             }
             
-            // Guardar backup
             localStorage.setItem(`backup_${providerName}`, JSON.stringify(data));
-            
             return data;
         }
 
@@ -1418,7 +1413,6 @@
         function applyFilters() {
             let filtered = [...allData];
             
-            // Filtro de búsqueda
             if (searchTerm) {
                 const normalizedSearch = normalizeText(searchTerm);
                 filtered = filtered.filter(row => 
@@ -1429,7 +1423,6 @@
                 );
             }
             
-            // Filtros avanzados
             const marcaFilter = document.getElementById('marcaFilter').value;
             const tipoFilter = document.getElementById('tipoFilter').value;
             const precioMin = parseFloat(document.getElementById('precioMin').value) || 0;
@@ -1439,12 +1432,10 @@
             if (tipoFilter) filtered = filtered.filter(row => row.tipo === tipoFilter);
             filtered = filtered.filter(row => row.precio_compra >= precioMin && row.precio_compra <= precioMax);
             
-            // Filtro de proveedores
             if (!showProviders) {
                 filtered = getBestPrices(filtered);
             }
             
-            // Ordenamiento
             if (sortColumn) {
                 sortData(sortColumn, sortDirection);
             }
@@ -1469,14 +1460,24 @@
 
         function updateProvidersUI() {
             const label = document.getElementById('providersLabel');
-            label.textContent = showProviders ? 'Mostrando importadoras' : 'Modo técnico';
+            const toggle = document.getElementById('showProvidersToggle');
+            
+            if (providersAccess) {
+                label.textContent = showProviders ? 'Ocultar importadoras' : 'Ver importadoras';
+                toggle.disabled = false;
+            } else {
+                label.textContent = 'Ver importadoras';
+                toggle.disabled = false;
+            }
         }
 
         function updateTableColumns() {
-            const proveedorCol = document.querySelectorAll('.col-proveedor, .col-compra');
-            proveedorCol.forEach(col => {
-                col.style.display = showProviders ? 'table-cell' : 'none';
-            });
+            const tableContainer = document.getElementById('tableContainer');
+            if (showProviders && providersAccess) {
+                tableContainer.classList.add('show-providers');
+            } else {
+                tableContainer.classList.remove('show-providers');
+            }
         }
 
         function sortTable(column) {
@@ -1539,11 +1540,12 @@
 
         function renderTable() {
             const tbody = document.getElementById('resultsBody');
+            const showProvidersMode = showProviders && providersAccess;
             
             if (filteredData.length === 0) {
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="6" style="text-align: center; padding: 40px 15px; color: var(--text-secondary);">
+                        <td colspan="${showProvidersMode ? '6' : '4'}" style="text-align: center; padding: 40px 15px; color: var(--text-secondary);">
                             <div style="font-size: 2rem; margin-bottom: 12px; opacity: 0.5;">🔍</div>
                             ${searchTerm ? 'No se encontraron resultados' : 'No hay datos para mostrar'}
                         </td>
@@ -1560,42 +1562,79 @@
                 const isFavorite = isFavoriteItem(row.id);
                 const isComparing = comparingItems.has(row.id);
                 
-                tr.innerHTML = `
-                    <td class="col-marca">${highlightMatches(row.marca)}</td>
-                    <td class="col-modelo">${highlightMatches(row.modelo)}</td>
-                    <td class="col-tipo ${tipoClass}">${row.tipo}</td>
-                    <td class="col-proveedor">${showProviders ? row.proveedor : '<span class="hidden-price">🔒</span>'}</td>
-                    <td class="col-compra">${showProviders ? formatCurrency(row.precio_compra) : '<span class="hidden-price">🔒</span>'}</td>
-                    <td class="col-venta">
-                        <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px;">
-                            <span class="price-venta" 
-                                  onclick="copyPriceToClipboard(${JSON.stringify(row).replace(/"/g, '&quot;')})"
-                                  title="Copiar precio">
-                                ${formatCurrency(row.precio_venta)} Bs
-                            </span>
-                            <div style="display: flex; gap: 4px;">
-                                <button class="action-btn favorite-btn ${isFavorite ? 'active' : ''}" 
-                                        onclick="toggleFavorite('${row.id}')"
-                                        title="${isFavorite ? 'Quitar favorito' : 'Agregar favorito'}"
-                                        style="padding: 4px 6px; min-width: 32px; min-height: 32px; font-size: 0.8rem;">
-                                    <i class="fas fa-star"></i>
-                                </button>
-                                <button class="action-btn compare-btn ${isComparing ? 'active' : ''}" 
-                                        onclick="toggleCompare('${row.id}')"
-                                        title="${isComparing ? 'Quitar comparación' : 'Comparar'}"
-                                        style="padding: 4px 6px; min-width: 32px; min-height: 32px; font-size: 0.8rem;">
-                                    <i class="fas fa-balance-scale"></i>
-                                </button>
-                                <button class="action-btn" 
-                                        onclick="showWhatsappModal(${JSON.stringify(row).replace(/"/g, '&quot;')})"
-                                        title="Compartir"
-                                        style="padding: 4px 6px; min-width: 32px; min-height: 32px; font-size: 0.8rem; background-color: var(--whatsapp); color: white; border-color: var(--whatsapp);">
-                                    <i class="fab fa-whatsapp"></i>
-                                </button>
+                let rowHTML = '';
+                
+                if (showProvidersMode) {
+                    // CON COLUMNAS DE IMPORTADORAS
+                    rowHTML = `
+                        <td class="col-marca">${highlightMatches(row.marca)}</td>
+                        <td class="col-modelo">${highlightMatches(row.modelo)}</td>
+                        <td class="col-tipo ${tipoClass}">${row.tipo}</td>
+                        <td class="col-proveedor">${row.proveedor}</td>
+                        <td class="col-compra">${formatCurrency(row.precio_compra)}</td>
+                        <td class="col-venta">
+                            <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px;">
+                                <span class="price-venta" 
+                                      onclick="copyPriceToClipboard(${JSON.stringify(row).replace(/"/g, '&quot;')})"
+                                      title="Copiar precio">
+                                    ${formatCurrency(row.precio_venta)} Bs
+                                </span>
+                                <div style="display: flex; gap: 4px;">
+                                    <button class="action-btn favorite-btn ${isFavorite ? 'active' : ''}" 
+                                            onclick="toggleFavorite('${row.id}')"
+                                            title="${isFavorite ? 'Quitar favorito' : 'Agregar favorito'}">
+                                        <i class="fas fa-star"></i>
+                                    </button>
+                                    <button class="action-btn compare-btn ${isComparing ? 'active' : ''}" 
+                                            onclick="toggleCompare('${row.id}')"
+                                            title="${isComparing ? 'Quitar comparación' : 'Comparar'}">
+                                        <i class="fas fa-balance-scale"></i>
+                                    </button>
+                                    <button class="action-btn whatsapp-btn" 
+                                            onclick="showWhatsappModal(${JSON.stringify(row).replace(/"/g, '&quot;')})"
+                                            title="Compartir">
+                                        <i class="fab fa-whatsapp"></i>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    </td>
-                `;
+                        </td>
+                    `;
+                } else {
+                    // SIN COLUMNAS DE IMPORTADORAS (SOLO MARCAS VISIBLES)
+                    rowHTML = `
+                        <td class="col-marca">${highlightMatches(row.marca)}</td>
+                        <td class="col-modelo">${highlightMatches(row.modelo)}</td>
+                        <td class="col-tipo ${tipoClass}">${row.tipo}</td>
+                        <td class="col-venta">
+                            <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px;">
+                                <span class="price-venta" 
+                                      onclick="copyPriceToClipboard(${JSON.stringify(row).replace(/"/g, '&quot;')})"
+                                      title="Copiar precio">
+                                    ${formatCurrency(row.precio_venta)} Bs
+                                </span>
+                                <div style="display: flex; gap: 4px;">
+                                    <button class="action-btn favorite-btn ${isFavorite ? 'active' : ''}" 
+                                            onclick="toggleFavorite('${row.id}')"
+                                            title="${isFavorite ? 'Quitar favorito' : 'Agregar favorito'}">
+                                        <i class="fas fa-star"></i>
+                                    </button>
+                                    <button class="action-btn compare-btn ${isComparing ? 'active' : ''}" 
+                                            onclick="toggleCompare('${row.id}')"
+                                            title="${isComparing ? 'Quitar comparación' : 'Comparar'}">
+                                        <i class="fas fa-balance-scale"></i>
+                                    </button>
+                                    <button class="action-btn whatsapp-btn" 
+                                            onclick="showWhatsappModal(${JSON.stringify(row).replace(/"/g, '&quot;')})"
+                                            title="Compartir">
+                                        <i class="fab fa-whatsapp"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </td>
+                    `;
+                }
+                
+                tr.innerHTML = rowHTML;
                 tbody.appendChild(tr);
             });
         }
@@ -1805,26 +1844,6 @@
         }
 
         // ========== MODALES ==========
-        function showAdminModal() {
-            document.getElementById('adminModal').style.display = 'flex';
-            document.getElementById('adminPassword').focus();
-        }
-
-        function hideAdminModal() {
-            document.getElementById('adminModal').style.display = 'none';
-            document.getElementById('adminPassword').value = '';
-        }
-
-        function showEditModal() {
-            document.getElementById('editModal').style.display = 'flex';
-            document.getElementById('editPassword').focus();
-        }
-
-        function hideEditModal() {
-            document.getElementById('editModal').style.display = 'none';
-            document.getElementById('editPassword').value = '';
-        }
-
         function showProvidersModal() {
             document.getElementById('providersModal').style.display = 'flex';
             document.getElementById('providersPassword').focus();
@@ -1847,31 +1866,6 @@
 
         function hideCompareModal() {
             document.getElementById('compareModal').style.display = 'none';
-        }
-
-        function handleAdminAccess() {
-            const password = document.getElementById('adminPassword').value;
-            
-            if (password === ADMIN_PASSWORD) {
-                showStatus('✅ Acceso concedido', 'success');
-                hideAdminModal();
-            } else {
-                showStatus('❌ Clave incorrecta', 'error');
-                document.getElementById('adminPassword').value = '';
-            }
-        }
-
-        function handleEditAccess() {
-            const password = document.getElementById('editPassword').value;
-            
-            if (password === EDIT_PASSWORD) {
-                editMode = true;
-                hideEditModal();
-                showStatus('✅ Modo edición activado', 'success');
-            } else {
-                showStatus('❌ Clave incorrecta', 'error');
-                document.getElementById('editPassword').value = '';
-            }
         }
 
         function handleProvidersAccess() {
@@ -1952,23 +1946,6 @@
             if (marcas.includes(currentValue)) {
                 marcaFilter.value = currentValue;
             }
-        }
-
-        // ========== EDICIÓN ==========
-        function loadEditsFromStorage() {
-            const edits = JSON.parse(localStorage.getItem('priceListEdits') || '{}');
-            
-            allData.forEach(row => {
-                const rowId = row.id;
-                if (edits[rowId]) {
-                    if (edits[rowId].precio_venta !== undefined) {
-                        row.precio_venta = edits[rowId].precio_venta;
-                    }
-                    if (edits[rowId].precio_compra !== undefined) {
-                        row.precio_compra = edits[rowId].precio_compra;
-                    }
-                }
-            });
         }
     </script>
 </body>
