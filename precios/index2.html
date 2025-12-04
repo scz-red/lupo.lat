@@ -628,40 +628,40 @@
         }
 
         .col-marca {
-            width: 90px;
-            min-width: 90px;
-            max-width: 90px;
+            width: 40px;
+            min-width: 40px;
+            max-width: 40px;
         }
 
         .col-modelo {
-            width: 130px;
-            min-width: 130px;
-            max-width: 130px;
+            width: 50px;
+            min-width: 50px;
+            max-width: 50px;
             word-wrap: break-word;
         }
 
         .col-tipo {
-            width: 60px;
-            min-width: 60px;
-            max-width: 60px;
+            width: 40px;
+            min-width: 40px;
+            max-width: 40px;
         }
 
         .col-proveedor {
-            width: 90px;
-            min-width: 90px;
-            max-width: 90px;
+            width: 40px;
+            min-width: 40px;
+            max-width: 40px;
         }
 
         .col-compra {
-            width: 80px;
-            min-width: 80px;
-            max-width: 80px;
+            width: 40px;
+            min-width: 40px;
+            max-width: 40px;
         }
 
         .col-venta {
-            width: 100px;
-            min-width: 100px;
-            max-width: 100px;
+            width: 40px;
+            min-width: 40px;
+            max-width: 40px;
         }
 
         .col-acciones {
@@ -927,45 +927,45 @@
             }
 
             .col-marca {
-                width: 80px;
-                min-width: 80px;
-                max-width: 80px;
+                width: 40px;
+                min-width: 40px;
+                max-width: 40px;
             }
 
             .col-modelo {
-                width: 110px;
-                min-width: 110px;
-                max-width: 110px;
-            }
-
-            .col-tipo {
                 width: 50px;
                 min-width: 50px;
                 max-width: 50px;
             }
 
+            .col-tipo {
+                width: 40px;
+                min-width: 40px;
+                max-width: 50px;
+            }
+
             .col-proveedor {
-                width: 70px;
-                min-width: 70px;
-                max-width: 70px;
+                width: 50px;
+                min-width: 50px;
+                max-width: 50px;
             }
 
             .col-compra {
-                width: 60px;
-                min-width: 60px;
-                max-width: 60px;
+                width: 40px;
+                min-width: 40px;
+                max-width: 40px;
             }
 
             .col-venta {
-                width: 80px;
-                min-width: 80px;
-                max-width: 80px;
+                width: 40px;
+                min-width: 40px;
+                max-width: 40px;
             }
 
             .col-acciones {
-                width: 100px;
-                min-width: 100px;
-                max-width: 100px;
+                width: 90px;
+                min-width: 90px;
+                max-width: 90px;
             }
             
             .bottom-nav {
@@ -1102,7 +1102,7 @@
             }
             
             input, select {
-                font-size: 16px; /* Prevents zoom on iOS */
+                font-size: 16px;
             }
             
             .table-container {
@@ -1142,14 +1142,11 @@
                     <button class="admin-btn" id="adminBtn" title="Configuración">
                         <i class="fas fa-cog"></i>
                     </button>
-                    <button class="admin-btn edit-mode-btn" id="editModeBtn" title="Modo Edición">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                    <button class="admin-btn" id="exportBtn" title="Exportar Datos">
-                        <i class="fas fa-download"></i>
-                    </button>
                     <button class="admin-btn" id="refreshBtn" title="Actualizar Datos">
                         <i class="fas fa-sync-alt"></i>
+                    </button>
+                    <button class="admin-btn edit-mode-btn" id="editModeBtn" title="Modo edición">
+                        <i class="fas fa-edit"></i>
                     </button>
                     <button class="theme-toggle" id="themeToggle" title="Cambiar tema">
                         <i class="fas fa-adjust"></i>
@@ -1173,9 +1170,7 @@
                     <button class="voice-search-btn" id="voiceSearchBtn" title="Búsqueda por voz">
                         <i class="fas fa-microphone"></i>
                     </button>
-                    <div class="recent-searches" id="recentSearches">
-                        <!-- Búsquedas recientes -->
-                    </div>
+                    <div class="recent-searches" id="recentSearches"></div>
                 </div>
                 <div class="filter-controls">
                     <div class="switch-container">
@@ -1183,10 +1178,11 @@
                             <input type="checkbox" id="showProvidersToggle">
                             <span class="slider"></span>
                         </label>
-                        <span id="providersLabel">Tecnico</span>
+                        <span id="providersLabel">🔒 Importadoras</span>
                     </div>
-                    <button class="admin-btn" id="advancedFiltersBtn">
-                        <i class="fas fa-filter"></i> Filtros
+
+                    <button class="admin-btn" id="advancedFiltersBtn" title="Filtros avanzados">
+                        <i class="fas fa-filter"></i>
                     </button>
                 </div>
             </div>
@@ -1227,6 +1223,12 @@
                     </tbody>
                 </table>
             </div>
+
+            <div style="margin-top: 10px; text-align: right;">
+                <button class="admin-btn" id="exportBtn" title="Exportar a CSV">
+                    <i class="fas fa-file-export"></i> Exportar
+                </button>
+            </div>
         </main>
 
         <nav class="bottom-nav">
@@ -1240,13 +1242,13 @@
                 <div class="nav-icon">
                     <i class="fas fa-star"></i>
                 </div>
-                <div class="nav-label">Favoritos</div>
+                <div class="nav-label">TIKTOK</div>
             </div>
             <div class="nav-item" data-tab="compare">
                 <div class="nav-icon">
                     <i class="fas fa-balance-scale"></i>
                 </div>
-                <div class="nav-label">Comparar</div>
+                <div class="nav-label">Recibo</div>
             </div>
         </nav>
     </div>
@@ -1313,7 +1315,6 @@
         <div class="modal-content">
             <h2><i class="fab fa-whatsapp"></i> Compartir por WhatsApp</h2>
             <div id="whatsappMessage" style="margin-bottom: 15px; color: var(--text-primary); text-align: center; font-size: 14px; padding: 15px; background: var(--bg-primary); border-radius: 8px; border: 1px solid var(--border);">
-                <!-- El mensaje se generará aquí -->
             </div>
             <p style="margin-bottom: 15px; color: var(--text-secondary); text-align: center; font-size: 13px;">
                 El mensaje se abrirá en WhatsApp. ¿Desea continuar?
@@ -1331,9 +1332,7 @@
     <div class="modal" id="compareModal">
         <div class="modal-content">
             <h2><i class="fas fa-balance-scale"></i> Comparar Productos</h2>
-            <div id="compareResults" style="max-height: 400px; overflow-y: auto;">
-                <!-- Resultados de comparación -->
-            </div>
+            <div id="compareResults" style="max-height: 400px; overflow-y: auto;"></div>
             <div class="modal-buttons">
                 <button class="modal-btn secondary" id="closeCompareBtn">Cerrar</button>
                 <button class="modal-btn primary" id="clearCompareBtn">
@@ -1388,22 +1387,22 @@
             updateTableColumns();
             checkOnlineStatus();
             
-            // Cargar preferencia de tema
             const savedTheme = localStorage.getItem('themePreference');
             if (savedTheme === 'light') {
                 toggleTheme();
             }
-            
-            // Agregar botones de utilidad
-            addDiagnosticButton();
-            addEmergencyButton();
         }
 
         function setupEventListeners() {
             // Búsqueda y Filtros
             document.getElementById('searchInput').addEventListener('input', debounce(handleSearch, 300));
             document.getElementById('showProvidersToggle').addEventListener('click', handleProvidersToggle);
-            document.getElementById('advancedFiltersBtn').addEventListener('click', toggleAdvancedFilters);
+
+            const advancedFiltersBtn = document.getElementById('advancedFiltersBtn');
+            if (advancedFiltersBtn) {
+                advancedFiltersBtn.addEventListener('click', toggleAdvancedFilters);
+            }
+
             document.getElementById('voiceSearchBtn').addEventListener('click', startVoiceSearch);
             document.getElementById('refreshBtn').addEventListener('click', loadAllData);
             document.getElementById('themeToggle').addEventListener('click', toggleTheme);
@@ -1423,7 +1422,10 @@
             });
             
             // Exportación
-            document.getElementById('exportBtn').addEventListener('click', exportToCSV);
+            const exportBtn = document.getElementById('exportBtn');
+            if (exportBtn) {
+                exportBtn.addEventListener('click', exportToCSV);
+            }
             
             // Teclado
             document.addEventListener('keydown', handleKeyboardShortcuts);
@@ -1468,7 +1470,10 @@
             document.getElementById('confirmAdminBtn').addEventListener('click', handleAdminAccess);
             
             // Edit Modal
-            document.getElementById('editModeBtn').addEventListener('click', showEditModal);
+            const editModeBtn = document.getElementById('editModeBtn');
+            if (editModeBtn) {
+                editModeBtn.addEventListener('click', showEditModal);
+            }
             document.getElementById('cancelEditBtn').addEventListener('click', hideEditModal);
             document.getElementById('confirmEditBtn').addEventListener('click', handleEditAccess);
             
@@ -1498,13 +1503,14 @@
         // ========== FUNCIONALIDAD TEMA CLARO/OSCURO ==========
         function toggleTheme() {
             isLightMode = !isLightMode;
+            const toggleIcon = document.querySelector('#themeToggle i');
             if (isLightMode) {
                 document.body.classList.add('light-mode');
-                document.getElementById('themeToggle').innerHTML = '<i class="fas fa-moon"></i>';
+                if (toggleIcon) toggleIcon.className = 'fas fa-moon';
                 localStorage.setItem('themePreference', 'light');
             } else {
                 document.body.classList.remove('light-mode');
-                document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i>';
+                if (toggleIcon) toggleIcon.className = 'fas fa-sun';
                 localStorage.setItem('themePreference', 'dark');
             }
         }
@@ -1520,7 +1526,6 @@
                 
                 console.log("=== INICIO CARGA DATOS ===");
                 
-                // Cargar datos de cada proveedor
                 for (const provider of CONFIG) {
                     try {
                         console.log(`\n📂 Cargando: ${provider.nombre} desde ${provider.archivo}`);
@@ -1531,7 +1536,6 @@
                         loadedCount++;
                         totalRecords += data.length;
                         
-                        // Mostrar ejemplo del primer registro
                         if (data.length > 0) {
                             const first = data[0];
                             console.log(`📝 Ejemplo ${provider.nombre}:`, {
@@ -1548,7 +1552,6 @@
                     }
                 }
                 
-                // Cargar datos personalizados
                 const storedData = localStorage.getItem('customPriceData');
                 if (storedData) {
                     try {
@@ -1564,7 +1567,6 @@
                 console.log(`✅ Total proveedores cargados: ${loadedCount}/${CONFIG.length}`);
                 console.log(`✅ Total registros en memoria: ${allData.length}`);
                 
-                // Verificar integridad de datos
                 verifyDataIntegrity();
                 
                 sortData('marca', 'asc');
@@ -1588,17 +1590,14 @@
                 const csvText = await response.text();
                 console.log(`📥 ${providerName}: Primeras líneas del CSV:`, csvText.split('\n').slice(0, 3).join(' | '));
                 
-                // Usar el parser CORREGIDO para 6 columnas
                 const data = parseCSVCorregido(csvText, providerName);
                 
                 console.log(`✅ ${providerName}: ${data.length} registros procesados`);
                 
-                // Mostrar ejemplo de los primeros 2 registros
                 if (data.length > 0) {
                     console.log(`📋 ${providerName} - Ejemplos:`, data.slice(0, 2));
                 }
                 
-                // Guardar copia de respaldo
                 localStorage.setItem(`backup_${providerName}`, JSON.stringify(data));
                 
                 return data;
@@ -1606,7 +1605,6 @@
             } catch (error) {
                 console.error(`Error cargando ${filePath}:`, error);
                 
-                // Intentar cargar datos de respaldo
                 const backupData = localStorage.getItem(`backup_${providerName}`);
                 if (backupData) {
                     console.log(`🔄 ${providerName}: Usando datos de respaldo`);
@@ -1617,7 +1615,6 @@
             }
         }
 
-        // FUNCIÓN CORREGIDA PARA PARSEAR CSV CON 6 COLUMNAS
         function parseCSVCorregido(csvText, providerName) {
             const lines = csvText.split('\n').filter(line => line.trim() !== '');
             const data = [];
@@ -1629,27 +1626,20 @@
             
             console.log(`📊 ${providerName}: Procesando CSV con ${lines.length} líneas`);
             
-            // Mostrar encabezados para verificar
             const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
             console.log(`📋 ${providerName} - Encabezados:`, headers);
             
-            // Procesar cada línea (empezando desde la línea 1 para saltar encabezados)
             for (let i = 1; i < lines.length; i++) {
                 const line = lines[i];
                 if (!line.trim()) continue;
                 
-                // Parsear la línea
                 const columns = parseCSVLine(line);
                 
-                // PARA DEBUG: Mostrar las primeras 2 líneas
                 if (i <= 2 && columns.length >= 6) {
                     console.log(`🔍 ${providerName} - Línea ${i} (RAW):`, columns);
                 }
                 
-                // Ahora esperamos 6 columnas basado en tu ejemplo
                 if (columns.length >= 6) {
-                    // COLUMNAS CORREGIDAS según tu estructura:
-                    // 0: marca, 1: modelo, 2: tipo, 3: proveedor, 4: precio_compra, 5: precio_venta
                     const marca = columns[0] || 'Desconocido';
                     const modelo = columns[1] || 'Desconocido';
                     const tipo = (columns[2] || 'LCD').toUpperCase();
@@ -1657,7 +1647,6 @@
                     const precio_compra = parsePrice(columns[4]);
                     const precio_venta = parsePrice(columns[5]);
                     
-                    // Debug de los primeros registros
                     if (i <= 3) {
                         console.log(`✅ ${providerName} - Registro ${i}:`, {
                             marca, modelo, tipo, proveedor, 
@@ -1676,12 +1665,10 @@
                         precio_venta: precio_venta
                     };
                     
-                    // Solo agregar si tiene datos mínimos válidos
                     if (row.marca !== 'Desconocido' && row.modelo !== 'Desconocido') {
                         data.push(row);
                     }
                 } else if (columns.length === 5) {
-                    // Manejar caso de 5 columnas (sin columna de proveedor)
                     console.log(`ℹ️ ${providerName}: Línea con 5 columnas, usando proveedor=${providerName}`);
                     const marca = columns[0] || 'Desconocido';
                     const modelo = columns[1] || 'Desconocido';
@@ -1709,7 +1696,6 @@
             return data;
         }
 
-        // Función para parsear líneas CSV
         function parseCSVLine(line) {
             const result = [];
             let current = '';
@@ -1727,46 +1713,33 @@
                     current += char;
                 }
             }
-            
-            // Añadir el último campo
             result.push(current.trim());
-            
-            // Eliminar comillas dobles de cada campo
             return result.map(field => field.replace(/^"|"$/g, ''));
         }
 
-        // Función robusta para parsear precios
         function parsePrice(priceStr) {
             if (!priceStr || priceStr.trim() === '') {
                 return 0;
             }
             
-            // Convertir a string y limpiar
             let str = priceStr.toString().trim();
-            
-            // Eliminar símbolos de moneda y espacios
             str = str.replace(/[^\d.,-]/g, '');
             
-            // Manejar números negativos
             const isNegative = str.startsWith('-');
             if (isNegative) {
                 str = str.substring(1);
             }
             
-            // Determinar el separador decimal
             const lastComma = str.lastIndexOf(',');
             const lastDot = str.lastIndexOf('.');
             
             let cleaned;
             if (lastComma > lastDot) {
-                // Coma como separador decimal, punto como separador de miles
                 cleaned = str.replace(/\./g, '').replace(',', '.');
             } else {
-                // Punto como separador decimal, coma como separador de miles
                 cleaned = str.replace(/,/g, '');
             }
             
-            // Convertir a número
             const num = parseFloat(cleaned);
             
             if (isNaN(num)) {
@@ -1774,16 +1747,12 @@
                 return 0;
             }
             
-            // Redondear a número entero (sin decimales)
             const rounded = Math.round(num);
-            
-            // Aplicar signo negativo si era necesario
             return isNegative ? -rounded : rounded;
         }
 
         // ========== FUNCIONALIDADES PRINCIPALES ==========
 
-        // 1. Sistema de Favoritos
         function toggleFavorite(row) {
             const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
             const itemId = generateRowId(row);
@@ -1805,7 +1774,6 @@
             return favorites.includes(generateRowId(row));
         }
 
-        // 2. Comparador de Productos
         function toggleCompare(row) {
             const itemId = generateRowId(row);
             
@@ -1836,7 +1804,6 @@
                 let compareHTML = '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">';
                 
                 itemsToCompare.forEach(item => {
-                    const margin = calculateProfitMargin(item.precio_compra, item.precio_venta);
                     compareHTML += `
                         <div style="background: var(--bg-primary); padding: 15px; border-radius: 8px; border: 1px solid var(--border);">
                             <h4 style="color: var(--accent); margin-bottom: 10px;">${item.marca} ${item.modelo}</h4>
@@ -1862,7 +1829,6 @@
             showStatus('🗑️ Comparación limpiada', 'success');
         }
 
-        // 3. Búsqueda por Voz
         function startVoiceSearch() {
             if (!('webkitSpeechRecognition' in window)) {
                 showStatus('❌ Tu navegador no soporta búsqueda por voz', 'error');
@@ -1900,7 +1866,6 @@
             voiceRecognition.start();
         }
 
-        // 4. Historial de Búsquedas
         function saveSearch(searchTerm) {
             if (!searchTerm.trim()) return;
             
@@ -1947,12 +1912,16 @@
             const container = document.getElementById('recentSearches');
             const searchInput = document.getElementById('searchInput');
             
-            if (event && event.target !== searchInput && !container.contains(event.target)) {
+            if (!event) {
+                container.classList.remove('active');
+                return;
+            }
+
+            if (event.target !== searchInput && !container.contains(event.target)) {
                 container.classList.remove('active');
             }
         }
 
-        // 5. Filtros Avanzados
         function toggleAdvancedFilters() {
             const filters = document.getElementById('advancedFilters');
             filters.classList.toggle('active');
@@ -1963,7 +1932,6 @@
             const marcaFilter = document.getElementById('marcaFilter');
             const marcas = [...new Set(allData.map(item => item.marca))].sort();
             
-            // Mantener opciones existentes y agregar nuevas
             const currentValue = marcaFilter.value;
             marcaFilter.innerHTML = '<option value="">Todas las marcas</option>';
             
@@ -1974,17 +1942,16 @@
                 marcaFilter.appendChild(option);
             });
             
-            // Restaurar valor anterior si existe
             if (marcas.includes(currentValue)) {
                 marcaFilter.value = currentValue;
             }
         }
 
-        // 6. Exportación de Datos
         function exportToCSV() {
             const headers = ['Marca', 'Modelo', 'Tipo', 'Proveedor', 'Precio Compra', 'Precio Venta'];
             const csvContent = [
                 headers.join(','),
+
                 ...filteredData.map(row => [
                     `"${row.marca}"`,
                     `"${row.modelo}"`,
@@ -2008,7 +1975,6 @@
             showStatus('📤 Datos exportados correctamente', 'success');
         }
 
-        // 7. Modo Offline
         function checkOnlineStatus() {
             if (!navigator.onLine) {
                 showStatus('⚠️ Estás trabajando en modo offline', 'warning');
@@ -2024,7 +1990,6 @@
             }
         }
 
-        // 8. Navegación por Pestañas
         function handleNavigation(event) {
             const tab = event.currentTarget.getAttribute('data-tab');
             
@@ -2052,7 +2017,6 @@
             renderTable();
         }
 
-        // 9. Atajos de Teclado
         function handleKeyboardShortcuts(event) {
             if (event.ctrlKey || event.metaKey) {
                 switch(event.key) {
@@ -2091,7 +2055,6 @@
             });
         }
 
-        // ========== FUNCIONES DE UTILIDAD ==========
         function debounce(func, wait) {
             let timeout;
             return function executedFunction(...args) {
@@ -2139,16 +2102,13 @@
             }
         }
 
-        // ========== FUNCIÓN PARA COPIAR PRECIO AL PORTAPAPELES ==========
         function copyPriceToClipboard(row) {
             const message = generateWhatsappMessage(row);
             
-            // Usar la API del portapapeles moderna
             if (navigator.clipboard && window.isSecureContext) {
                 navigator.clipboard.writeText(message)
                     .then(() => {
                         showStatus('✅ Mensaje copiado al portapapeles', 'success');
-                        // Feedback visual
                         highlightCopiedPrice(row);
                     })
                     .catch(err => {
@@ -2156,12 +2116,10 @@
                         fallbackCopyToClipboard(message, row);
                     });
             } else {
-                // Fallback para navegadores más antiguos o HTTP
                 fallbackCopyToClipboard(message, row);
             }
         }
 
-        // Fallback para copiar al portapapeles
         function fallbackCopyToClipboard(text, row) {
             const textArea = document.createElement('textarea');
             textArea.value = text;
@@ -2184,7 +2142,6 @@
             document.body.removeChild(textArea);
         }
 
-        // Efecto visual cuando se copia
         function highlightCopiedPrice(row) {
             const priceElements = document.querySelectorAll('.price-venta');
             
@@ -2204,7 +2161,6 @@
             });
         }
 
-        // ========== FUNCIONES EXISTENTES ==========
         function handleSearch(e) {
             searchTerm = e.target.value;
             saveSearch(searchTerm);
@@ -2214,7 +2170,6 @@
         function applyFilters() {
             let filtered = [...allData];
             
-            // Filtro de búsqueda
             if (searchTerm) {
                 const normalizedSearch = normalizeText(searchTerm);
                 filtered = filtered.filter(row => 
@@ -2225,7 +2180,6 @@
                 );
             }
             
-            // Filtros avanzados
             const marcaFilter = document.getElementById('marcaFilter').value;
             const tipoFilter = document.getElementById('tipoFilter').value;
             const precioMin = parseFloat(document.getElementById('precioMin').value) || 0;
@@ -2243,12 +2197,10 @@
                 row.precio_compra >= precioMin && row.precio_compra <= precioMax
             );
             
-            // Filtro de proveedores
             if (!showProviders) {
                 filtered = getBestPrices(filtered);
             }
             
-            // Ordenamiento
             if (sortColumn) {
                 sortData(sortColumn, sortDirection);
             }
@@ -2261,12 +2213,11 @@
         function handleProvidersToggle(e) {
             if (!providersAccess) {
                 showProvidersModal();
-                e.target.checked = false;
+                if (e && e.target) e.target.checked = false;
                 return;
             }
             
             showProviders = e.target.checked;
-            updateTableColumns();
             applyFilters();
             updateProvidersUI();
         }
@@ -2274,22 +2225,27 @@
         function updateProvidersUI() {
             const toggle = document.getElementById('showProvidersToggle');
             const label = document.getElementById('providersLabel');
-            
-            if (providersAccess) {
-                toggle.checked = showProviders;
-                label.textContent = showProviders ? 'Ocultar importadoras' : 'Mostrar importadoras';
-            } else {
+            if (!toggle || !label) return;
+
+            if (!providersAccess) {
                 toggle.checked = false;
-                label.textContent = 'Importadoras';
+                label.textContent = '🔒 Importadoras';
+            } else {
+                toggle.checked = showProviders;
+                label.textContent = showProviders
+                    ? 'Ocultar importadoras'
+                    : 'Mostrar importadoras';
             }
         }
 
         function updateTableColumns() {
             const tableContainer = document.querySelector('.table-container');
-            if (showProviders) {
-                tableContainer.classList.remove('hide-columns');
-            } else {
+            if (!tableContainer) return;
+            
+            if (!providersAccess) {
                 tableContainer.classList.add('hide-columns');
+            } else {
+                tableContainer.classList.remove('hide-columns');
             }
         }
 
@@ -2351,6 +2307,18 @@
             return Object.values(grouped);
         }
 
+        function escapeRegExp(string) {
+            return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+
+        function highlightMatches(text) {
+            if (!searchTerm || !text) return text || '';
+            
+            const escaped = escapeRegExp(searchTerm);
+            const regex = new RegExp(escaped, 'gi');
+            return text.toString().replace(regex, match => `<mark>${match}</mark>`);
+        }
+
         function renderTable() {
             const tbody = document.getElementById('resultsBody');
             
@@ -2374,7 +2342,6 @@
                 const isComparing = comparingItems.has(generateRowId(row));
                 const isFav = isFavorite(row);
                 
-                // COLUMNAS CORREGIDAS: precio_compra en columna compra, precio_venta en columna venta
                 const compraField = editMode ? 
                     `<input type="text" 
                             class="editable editable-compra" 
@@ -2406,28 +2373,47 @@
                     <td class="col-marca">${highlightMatches(row.marca)}</td>
                     <td class="col-modelo">${highlightMatches(row.modelo)}</td>
                     <td class="col-tipo ${tipoClass}">${highlightMatches(row.tipo)}</td>
-                    <td class="col-proveedor">${showProviders ? highlightMatches(row.proveedor) : '<span class="hidden-price">🔒</span>'}</td>
-                    <td class="col-compra">${showProviders ? compraField : '<span class="hidden-price">🔒</span>'}</td>
+                    <td class="col-proveedor">
+                        ${
+                            providersAccess
+                                ? (showProviders 
+                                    ? highlightMatches(row.proveedor) 
+                                    : '<span class="hidden-price">🔒</span>')
+                                : ''
+                        }
+                    </td>
+                    <td class="col-compra">
+                        ${
+                            providersAccess
+                                ? (showProviders 
+                                    ? compraField 
+                                    : '<span class="hidden-price">🔒</span>')
+                                : ''
+                        }
+                    </td>
                     <td class="col-venta">${ventaField}</td>
                     <td class="col-acciones">
-                        <div class="action-buttons">
-                            <button class="action-btn favorite-btn ${isFav ? 'active' : ''}" 
-                                    onclick="toggleFavorite(${JSON.stringify(row).replace(/"/g, '&quot;')})"
-                                    title="${isFav ? 'Quitar de favoritos' : 'Agregar a favoritos'}">
-                                <i class="fas fa-star"></i>
-                            </button>
-                            <button class="action-btn compare-btn ${isComparing ? 'active' : ''}" 
-                                    onclick="toggleCompare(${JSON.stringify(row).replace(/"/g, '&quot;')})"
-                                    title="${isComparing ? 'Quitar de comparación' : 'Agregar a comparación'}">
-                                <i class="fas fa-balance-scale"></i>
-                            </button>
-                        </div>
+                        ${
+                            providersAccess
+                                ? `<div class="action-buttons">
+                                    <button class="action-btn favorite-btn ${isFav ? 'active' : ''}" 
+                                            onclick="toggleFavorite(${JSON.stringify(row).replace(/"/g, '&quot;')})"
+                                            title="${isFav ? 'Quitar de favoritos' : 'Agregar a favoritos'}">
+                                        <i class="fas fa-star"></i>
+                                    </button>
+                                    <button class="action-btn compare-btn ${isComparing ? 'active' : ''}" 
+                                            onclick="toggleCompare(${JSON.stringify(row).replace(/"/g, '&quot;')})"
+                                            title="${isComparing ? 'Quitar de comparación' : 'Agregar a comparación'}">
+                                        <i class="fas fa-balance-scale"></i>
+                                    </button>
+                                </div>`
+                                : ''
+                        }
                     </td>
                 `;
                 tbody.appendChild(tr);
             });
             
-            // Event listeners para edición
             if (editMode) {
                 document.querySelectorAll('.editable[data-field="precio_compra"]').forEach(input => {
                     input.addEventListener('change', handleEdit);
@@ -2440,22 +2426,7 @@
                 });
             }
             
-            // Actualizar el contador de resultados
             updateResultsCount();
-        }
-
-        function highlightMatches(text) {
-            if (!searchTerm || !text) return text || '';
-            
-            const normalizedText = normalizeText(text.toString());
-            const normalizedSearch = normalizeText(searchTerm);
-            
-            if (!normalizedText.includes(normalizedSearch)) {
-                return text;
-            }
-            
-            const regex = new RegExp(searchTerm, 'gi');
-            return text.toString().replace(regex, match => `<mark>${match}</mark>`);
         }
 
         function updateResultsCount() {
@@ -2468,17 +2439,15 @@
             }
         }
 
-        // ========== FUNCIONES DE EDICIÓN ==========
         function handleEdit(e) {
             const input = e.target;
             const rowId = input.getAttribute('data-id');
             const field = input.getAttribute('data-field');
             
-            // Convertir a número entero
             let value = input.value;
             if (field === 'precio_compra' || field === 'precio_venta') {
                 value = Math.round(parseFloat(value) || 0);
-                input.value = value; // Actualizar el input con el valor sin decimales
+                input.value = value;
             }
             
             saveEditToStorage(rowId, field, value);
@@ -2534,7 +2503,6 @@
             applyFilters();
         }
 
-        // ========== FUNCIONES DE MODALES ==========
         function showAdminModal() {
             document.getElementById('adminModal').style.display = 'flex';
             document.getElementById('adminPassword').focus();
@@ -2642,7 +2610,7 @@
             
             if (password === PROVIDERS_PASSWORD) {
                 providersAccess = true;
-                showProviders = true;
+                showProviders = false;
                 hideProvidersModal();
                 updateProvidersUI();
                 updateTableColumns();
@@ -2662,29 +2630,12 @@
                 ventaEditMode = true;
                 hideVentaModal();
                 showStatus('✅ Puede editar el precio de venta', 'success');
-                enableVentaEditing();
+                renderTable(); // para que aparezcan los inputs en la columna venta
             } else {
                 showStatus('❌ Clave incorrecta. Intente nuevamente.', 'error');
                 document.getElementById('ventaPassword').value = '';
                 document.getElementById('ventaPassword').focus();
             }
-        }
-
-        function enableVentaEditing() {
-            const ventaInputs = document.querySelectorAll('input[data-field="precio_venta"]');
-            ventaInputs.forEach(input => {
-                input.removeAttribute('readonly');
-                input.style.border = '1px solid var(--accent)';
-                input.style.backgroundColor = 'rgba(255, 123, 0, 0.05)';
-                input.focus();
-                
-                input.addEventListener('blur', function() {
-                    this.setAttribute('readonly', 'true');
-                    this.style.border = '1px solid transparent';
-                    this.style.backgroundColor = 'transparent';
-                    ventaEditMode = false;
-                });
-            });
         }
 
         function updateEditModeUI() {
@@ -2693,27 +2644,25 @@
             
             if (editMode) {
                 editNotice.style.display = 'block';
-                editBtn.textContent = '✏️ Edición Activada';
-                editBtn.style.backgroundColor = '#4caf50';
-                editBtn.style.borderColor = '#4caf50';
+                if (editBtn) {
+                    editBtn.innerHTML = '<i class="fas fa-toggle-on"></i>';
+                }
             } else {
                 editNotice.style.display = 'none';
-                editBtn.textContent = '✏️ Modo Edición';
-                editBtn.style.backgroundColor = '';
-                editBtn.style.borderColor = '';
+                if (editBtn) {
+                    editBtn.innerHTML = '<i class="fas fa-edit"></i>';
+                }
             }
             
             renderTable();
         }
 
-        // ========== FUNCIONES DE DIAGNÓSTICO Y EMERGENCIA ==========
-        
+        // ========== FUNCIÓN DE DIAGNÓSTICO BÁSICO ==========
         function verifyDataIntegrity() {
             console.log("\n=== VERIFICACIÓN DE INTEGRIDAD ===");
             
             const issues = [];
             
-            // 1. Verificar que los precios de venta sean mayores que los de compra
             const ventaMenor = allData.filter(item => item.precio_venta < item.precio_compra);
             if (ventaMenor.length > 0) {
                 console.warn(`⚠️ ${ventaMenor.length} registros con venta < compra`);
@@ -2723,14 +2672,12 @@
                 issues.push(`${ventaMenor.length} registros con precio invertido`);
             }
             
-            // 2. Verificar precios cero
             const precioCero = allData.filter(item => item.precio_venta === 0 || item.precio_compra === 0);
             if (precioCero.length > 0) {
                 console.warn(`⚠️ ${precioCero.length} registros con precios cero`);
                 issues.push(`${precioCero.length} registros con precios cero`);
             }
             
-            // 3. Verificar marcas/modelos desconocidos
             const desconocidos = allData.filter(item => 
                 item.marca.includes('Desconocido') || item.modelo.includes('Desconocido')
             );
@@ -2746,98 +2693,6 @@
             }
             
             return issues;
-        }
-
-        function addDiagnosticButton() {
-            const diagBtn = document.createElement('button');
-            diagBtn.id = 'diagnosticBtn';
-            diagBtn.innerHTML = '🔍 DIAGNÓSTICO';
-            diagBtn.style.cssText = `
-                position: fixed;
-                bottom: 110px;
-                right: 10px;
-                background: #2196F3;
-                color: white;
-                border: none;
-                padding: 10px 15px;
-                border-radius: 20px;
-                font-weight: bold;
-                z-index: 1000;
-                cursor: pointer;
-                box-shadow: 0 4px 10px rgba(33, 150, 243, 0.3);
-                font-size: 12px;
-            `;
-            diagBtn.onclick = showDataDiagnostic;
-            document.body.appendChild(diagBtn);
-        }
-
-        function showDataDiagnostic() {
-            console.clear();
-            console.log("=== DIAGNÓSTICO COMPLETO DE DATOS ===");
-            
-            console.log(`📊 Total registros en allData: ${allData.length}`);
-            console.log(`📊 Total registros en filteredData: ${filteredData.length}`);
-            
-            console.log("\n🔍 Primeros 5 registros de allData:");
-            allData.slice(0, 5).forEach((item, i) => {
-                console.log(`  ${i+1}. ${item.marca} ${item.modelo} - ${item.tipo}`);
-                console.log(`     Proveedor: ${item.proveedor}`);
-                console.log(`     Compra: Bs. ${item.precio_compra}`);
-                console.log(`     Venta: Bs. ${item.precio_venta}`);
-                console.log(`     Margen: ${item.precio_venta - item.precio_compra} Bs.`);
-            });
-            
-            console.log("\n🔍 Muestra de proveedores únicos:");
-            const proveedores = [...new Set(allData.map(item => item.proveedor))];
-            console.log(proveedores);
-            
-            // Mostrar en UI también
-            alert(`Diagnóstico:\n- Total registros: ${allData.length}\n- Registros filtrados: ${filteredData.length}\n- Proveedores: ${proveedores.length}\n\nRevisa la consola para más detalles.`);
-        }
-
-        function addEmergencyButton() {
-            const emergencyBtn = document.createElement('button');
-            emergencyBtn.id = 'emergencyFixBtn';
-            emergencyBtn.innerHTML = '⚠️ FIX EMERGENCIA';
-            emergencyBtn.style.cssText = `
-                position: fixed;
-                bottom: 70px;
-                right: 10px;
-                background: #ff4444;
-                color: white;
-                border: none;
-                padding: 10px 15px;
-                border-radius: 20px;
-                font-weight: bold;
-                z-index: 1000;
-                cursor: pointer;
-                box-shadow: 0 4px 10px rgba(255, 0, 0, 0.3);
-                font-size: 12px;
-            `;
-            emergencyBtn.onclick = emergencyFixPrices;
-            document.body.appendChild(emergencyBtn);
-        }
-
-        function emergencyFixPrices() {
-            console.log("🔄 Aplicando corrección de emergencia: intercambiando compra/venta");
-            
-            // Intercambiar TODOS los precios
-            allData.forEach(item => {
-                const temp = item.precio_compra;
-                item.precio_compra = item.precio_venta;
-                item.precio_venta = temp;
-            });
-            
-            // También intercambiar en filteredData
-            filteredData.forEach(item => {
-                const temp = item.precio_compra;
-                item.precio_compra = item.precio_venta;
-                item.precio_venta = temp;
-            });
-            
-            // Actualizar la tabla
-            renderTable();
-            showStatus('✅ Precios corregidos (compra↔venta intercambiados)', 'success');
         }
     </script>
 </body>
