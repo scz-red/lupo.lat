@@ -628,40 +628,40 @@
         }
 
         .col-marca {
-            width: 40px;
-            min-width: 40px;
-            max-width: 40px;
+            width: 90px;
+            min-width: 90px;
+            max-width: 90px;
         }
 
         .col-modelo {
-            width: 50px;
-            min-width: 50px;
-            max-width: 50px;
+            width: 130px;
+            min-width: 130px;
+            max-width: 130px;
             word-wrap: break-word;
         }
 
         .col-tipo {
-            width: 40px;
-            min-width: 40px;
-            max-width: 40px;
+            width: 60px;
+            min-width: 60px;
+            max-width: 60px;
         }
 
         .col-proveedor {
-            width: 40px;
-            min-width: 40px;
-            max-width: 40px;
+            width: 90px;
+            min-width: 90px;
+            max-width: 90px;
         }
 
         .col-compra {
-            width: 40px;
-            min-width: 40px;
-            max-width: 40px;
+            width: 80px;
+            min-width: 80px;
+            max-width: 80px;
         }
 
         .col-venta {
-            width: 40px;
-            min-width: 40px;
-            max-width: 40px;
+            width: 100px;
+            min-width: 100px;
+            max-width: 100px;
         }
 
         .col-acciones {
@@ -927,45 +927,45 @@
             }
 
             .col-marca {
-                width: 40px;
-                min-width: 40px;
-                max-width: 40px;
+                width: 80px;
+                min-width: 80px;
+                max-width: 80px;
             }
 
             .col-modelo {
-                width: 50px;
-                min-width: 50px;
-                max-width: 50px;
+                width: 110px;
+                min-width: 110px;
+                max-width: 110px;
             }
 
             .col-tipo {
-                width: 40px;
-                min-width: 40px;
+                width: 50px;
+                min-width: 50px;
                 max-width: 50px;
             }
 
             .col-proveedor {
-                width: 50px;
-                min-width: 50px;
-                max-width: 50px;
+                width: 70px;
+                min-width: 70px;
+                max-width: 70px;
             }
 
             .col-compra {
-                width: 40px;
-                min-width: 40px;
-                max-width: 40px;
+                width: 60px;
+                min-width: 60px;
+                max-width: 60px;
             }
 
             .col-venta {
-                width: 40px;
-                min-width: 40px;
-                max-width: 40px;
+                width: 80px;
+                min-width: 80px;
+                max-width: 80px;
             }
 
             .col-acciones {
-                width: 90px;
-                min-width: 90px;
-                max-width: 90px;
+                width: 100px;
+                min-width: 100px;
+                max-width: 100px;
             }
             
             .bottom-nav {
@@ -1142,8 +1142,12 @@
                     <button class="admin-btn" id="adminBtn" title="Configuración">
                         <i class="fas fa-cog"></i>
                     </button>
-
-
+                    <button class="admin-btn edit-mode-btn" id="editModeBtn" title="Modo Edición">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="admin-btn" id="exportBtn" title="Exportar Datos">
+                        <i class="fas fa-download"></i>
+                    </button>
                     <button class="admin-btn" id="refreshBtn" title="Actualizar Datos">
                         <i class="fas fa-sync-alt"></i>
                     </button>
@@ -1179,9 +1183,11 @@
                             <input type="checkbox" id="showProvidersToggle">
                             <span class="slider"></span>
                         </label>
-                        <span id="providersLabel">Tecnico?</span>
+                        <span id="providersLabel">Tecnico</span>
                     </div>
-
+                    <button class="admin-btn" id="advancedFiltersBtn">
+                        <i class="fas fa-filter"></i> Filtros
+                    </button>
                 </div>
             </div>
 
@@ -1234,13 +1240,13 @@
                 <div class="nav-icon">
                     <i class="fas fa-star"></i>
                 </div>
-                <div class="nav-label">TIKTOK</div>
+                <div class="nav-label">Favoritos</div>
             </div>
             <div class="nav-item" data-tab="compare">
                 <div class="nav-icon">
                     <i class="fas fa-balance-scale"></i>
                 </div>
-                <div class="nav-label">Recibo</div>
+                <div class="nav-label">Comparar</div>
             </div>
         </nav>
     </div>
