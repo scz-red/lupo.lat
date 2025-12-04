@@ -59,7 +59,6 @@
             scroll-behavior: smooth;
         }
 
-        /* Fondo tipo app centrada */
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             background: radial-gradient(circle at top, #1f2933 0, #020617 45%, #000 100%);
@@ -167,6 +166,11 @@
             color: var(--text-primary);
         }
 
+        .admin-btn.active-providers {
+            border-color: var(--accent);
+            color: var(--accent-light);
+        }
+
         .edit-mode-btn {
             background-color: var(--edit);
             color: var(--bg-primary);
@@ -237,80 +241,13 @@
             color: var(--text-secondary);
         }
 
-        .filter-controls {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .switch-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            white-space: nowrap;
-            background-color: var(--bg-primary);
-            padding: 8px 14px;
-            border-radius: 16px;
-            border: 1px solid var(--border);
-            flex: 1;
-            box-shadow: var(--card-shadow);
-            transition: var(--transition);
-        }
-
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 44px;
-            height: 24px;
-        }
-
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: var(--bg-tertiary);
-            transition: var(--transition);
-            border-radius: 24px;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 18px;
-            width: 18px;
-            left: 3px;
-            bottom: 3px;
-            background-color: white;
-            transition: var(--transition);
-            border-radius: 50%;
-        }
-
-        input:checked + .slider {
-            background-color: var(--accent);
-        }
-
-        input:checked + .slider:before {
-            transform: translateX(20px);
-        }
-
         .main-content {
             flex: 1;
             padding: 12px 12px 8px;
-            /* sin overflow: el scroll ahora es de toda la página */
         }
 
         .table-container {
-            overflow-x: auto;  /* solo horizontal si hace falta */
+            overflow-x: auto;
             border-radius: 16px;
             border: 1px solid var(--border);
             position: relative;
@@ -322,7 +259,6 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            /* sin min-width gigante para que se vea bien en móvil */
         }
 
         thead {
@@ -433,58 +369,6 @@
             font-weight: 600;
         }
 
-        .action-buttons {
-            display: flex;
-            gap: 4px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .action-btn {
-            background: transparent;
-            border: 1px solid var(--border);
-            color: var(--text-secondary);
-            padding: 4px 6px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 10px;
-            transition: var(--transition);
-            white-space: nowrap;
-        }
-
-        .action-btn:hover {
-            background-color: var(--border);
-            color: var(--text-primary);
-        }
-
-        .favorite-btn.active {
-            background-color: var(--favorite);
-            color: white;
-            border-color: var(--favorite);
-        }
-
-        .favorite-btn:hover {
-            background-color: var(--favorite);
-            color: white;
-        }
-
-        .compare-btn {
-            background-color: var(--accent);
-            color: white;
-            border: 1px solid var(--accent);
-        }
-
-        .compare-btn:hover {
-            background-color: var(--accent-dark);
-            border-color: var(--accent-dark);
-        }
-
-        .compare-btn.active {
-            background-color: var(--warning);
-            border-color: var(--warning);
-        }
-
-        /* Toast status */
         .status {
             position: fixed;
             bottom: 80px;
@@ -505,8 +389,8 @@
         }
 
         .status.success { color: #bbf7d0; }
-        .status.error { color: #fecaca; }
-        .status.info { color: #bfdbfe; }
+        .status.error   { color: #fecaca; }
+        .status.info    { color: #bfdbfe; }
         .status.warning { color: #fed7aa; }
 
         .empty {
@@ -562,7 +446,7 @@
             background-color: rgba(255, 123, 0, 0.1);
         }
 
-        /* Ocultar columnas con candado cuando no hay acceso (solo proveedor/compra) */
+        /* Ocultar columnas proveedor/compra cuando no hay acceso */
         .hide-columns .col-proveedor,
         .hide-columns .col-compra {
             display: none;
@@ -701,7 +585,6 @@
             font-weight: 500;
         }
 
-        /* Modales */
         .modal {
             display: none;
             position: fixed;
@@ -802,14 +685,12 @@
             background-color: var(--border);
         }
 
-        /* Responsive */
         @media (max-width: 480px) {
             .app-container {
                 border-radius: 0;
                 max-width: 100%;
                 box-shadow: none;
             }
-
             .voice-search-btn {
                 right: 42px;
             }
@@ -822,7 +703,7 @@
         }
 
         @media (hover: none) and (pointer: coarse) {
-            .action-btn, .admin-btn, .nav-item {
+            .admin-btn, .nav-item {
                 min-height: 40px;
                 min-width: 40px;
             }
@@ -846,7 +727,12 @@
                     <h1>DR. XIAOMI</h1>
                 </div>
                 <div class="admin-access">
-                    <button class="admin-btn" id="adminBtn" title="Configuración">
+                    <!-- engrane 1: config general -->
+                    <button class="admin-btn" id="adminBtn" title="Configuración general">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                    <!-- engrane 2: importadoras con clave -->
+                    <button class="admin-btn" id="providersBtn" title="Habilitar importadoras (clave)">
                         <i class="fas fa-cog"></i>
                     </button>
                     <button class="admin-btn" id="refreshBtn" title="Actualizar Datos">
@@ -881,15 +767,6 @@
                     </button>
                     <div class="recent-searches" id="recentSearches"></div>
                 </div>
-                <div class="filter-controls">
-                    <div class="switch-container">
-                        <label class="switch">
-                            <input type="checkbox" id="showProvidersToggle">
-                            <span class="slider"></span>
-                        </label>
-                        <span id="providersLabel">🔒 Importadoras</span>
-                    </div>
-                </div>
             </div>
         </section>
 
@@ -907,12 +784,9 @@
                             <th data-column="proveedor" class="col-proveedor">Prov.</th>
                             <th data-column="precio_compra" class="col-compra">Compra</th>
                             <th data-column="precio_venta" class="col-venta">Venta</th>
-                            <th class="col-acciones">Acciones</th>
                         </tr>
                     </thead>
-                    <tbody id="resultsBody">
-                        <!-- Resultados -->
-                    </tbody>
+                    <tbody id="resultsBody"></tbody>
                 </table>
             </div>
 
@@ -923,6 +797,7 @@
             </div>
         </main>
 
+        <!-- barra inferior: se mantiene Inicio / TIKTOK / Recibo -->
         <nav class="bottom-nav">
             <div class="nav-item active" data-tab="main">
                 <div class="nav-icon">
@@ -946,7 +821,6 @@
     </div>
 
     <!-- Modales -->
-
     <div class="modal" id="adminModal">
         <div class="modal-content">
             <h2><i class="fas fa-lock"></i> Acceso Administrativo</h2>
@@ -1030,7 +904,6 @@
     </div>
 
     <script>
-        // ========== CONFIGURACIÓN Y DATOS ==========
         const CONFIG = [
             { nombre: "J&A", archivo: "data/ja.csv" },
             { nombre: "CentralCell", archivo: "data/centralcel.csv" },
@@ -1049,10 +922,10 @@
         let sortColumn = 'marca';
         let sortDirection = 'asc';
         let searchTerm = '';
-        let showProviders = false;
+        let showProviders = false;      // ver todas las importadoras o solo mejor precio
         let editMode = false;
         let ventaEditMode = false;
-        let providersAccess = false;
+        let providersAccess = false;    // clave de importadoras
         let currentWhatsappRow = null;
         let comparingItems = new Set();
         let currentTab = 'main';
@@ -1100,7 +973,11 @@
 
         function setupEventListeners() {
             document.getElementById('searchInput').addEventListener('input', debounce(handleSearch, 300));
-            document.getElementById('showProvidersToggle').addEventListener('click', handleProvidersToggle);
+
+            const providersBtn = document.getElementById('providersBtn');
+            if (providersBtn) {
+                providersBtn.addEventListener('click', handleProvidersButtonClick);
+            }
 
             document.getElementById('voiceSearchBtn').addEventListener('click', startVoiceSearch);
             document.getElementById('refreshBtn').addEventListener('click', loadAllData);
@@ -1137,26 +1014,26 @@
             document.getElementById('adminBtn').addEventListener('click', showAdminModal);
             document.getElementById('cancelAdminBtn').addEventListener('click', hideAdminModal);
             document.getElementById('confirmAdminBtn').addEventListener('click', handleAdminAccess);
-            
+
             const editModeBtn = document.getElementById('editModeBtn');
             if (editModeBtn) {
                 editModeBtn.addEventListener('click', showEditModal);
             }
             document.getElementById('cancelEditBtn').addEventListener('click', hideEditModal);
             document.getElementById('confirmEditBtn').addEventListener('click', handleEditAccess);
-            
+
             document.getElementById('cancelProvidersBtn').addEventListener('click', hideProvidersModal);
             document.getElementById('confirmProvidersBtn').addEventListener('click', handleProvidersAccess);
-            
+
             document.getElementById('cancelVentaBtn').addEventListener('click', hideVentaModal);
             document.getElementById('confirmVentaBtn').addEventListener('click', handleVentaAccess);
-            
+
             document.getElementById('cancelWhatsappBtn').addEventListener('click', hideWhatsappModal);
             document.getElementById('confirmWhatsappBtn').addEventListener('click', handleWhatsappShare);
-            
+
             document.getElementById('closeCompareBtn').addEventListener('click', hideCompareModal);
             document.getElementById('clearCompareBtn').addEventListener('click', clearCompare);
-            
+
             document.getElementById('adminPassword').addEventListener('keypress', e => { if (e.key === 'Enter') handleAdminAccess(); });
             document.getElementById('editPassword').addEventListener('keypress', e => { if (e.key === 'Enter') handleEditAccess(); });
             document.getElementById('ventaPassword').addEventListener('keypress', e => { if (e.key === 'Enter') handleVentaAccess(); });
@@ -1177,15 +1054,13 @@
             }
         }
 
-        // ========== CARGA DE DATOS ==========
         async function loadAllData() {
             showStatus('🔄 Cargando datos desde archivos CSV...', 'info');
-            
             try {
                 allData = [];
                 let loadedCount = 0;
                 let totalRecords = 0;
-                
+
                 for (const provider of CONFIG) {
                     try {
                         const data = await loadCSVData(provider.archivo, provider.nombre);
@@ -1196,7 +1071,7 @@
                         console.error(`❌ Error cargando datos de ${provider.nombre}:`, error);
                     }
                 }
-                
+
                 const storedData = localStorage.getItem('customPriceData');
                 if (storedData) {
                     try {
@@ -1206,15 +1081,14 @@
                         console.error('Error cargando datos personalizados:', e);
                     }
                 }
-                
+
                 verifyDataIntegrity();
-                
+
                 sortData('marca', 'asc');
                 applyFilters();
                 updateRecentSearches();
-                
+
                 showStatus(`✅ ${totalRecords} precios cargados de ${loadedCount} proveedores`, 'success');
-                
             } catch (error) {
                 console.error('Error cargando datos:', error);
                 showStatus('❌ Error cargando datos. Verifique la conexión.', 'error');
@@ -1225,20 +1099,17 @@
             try {
                 const response = await fetch(filePath);
                 if (!response.ok) throw new Error(`Error ${response.status}`);
-                
+
                 const csvText = await response.text();
                 const data = parseCSVCorregido(csvText, providerName);
                 localStorage.setItem(`backup_${providerName}`, JSON.stringify(data));
                 return data;
-                
             } catch (error) {
                 console.error(`Error cargando ${filePath}:`, error);
-                
                 const backupData = localStorage.getItem(`backup_${providerName}`);
                 if (backupData) {
                     return JSON.parse(backupData);
                 }
-                
                 return [];
             }
         }
@@ -1247,13 +1118,13 @@
             const lines = csvText.split('\n').filter(line => line.trim() !== '');
             const data = [];
             if (lines.length === 0) return [];
-            
+
             for (let i = 1; i < lines.length; i++) {
                 const line = lines[i];
                 if (!line.trim()) continue;
-                
+
                 const columns = parseCSVLine(line);
-                
+
                 if (columns.length >= 6) {
                     const marca = columns[0] || 'Desconocido';
                     const modelo = columns[1] || 'Desconocido';
@@ -1261,7 +1132,7 @@
                     const proveedor = columns[3] || providerName;
                     const precio_compra = parsePrice(columns[4]);
                     const precio_venta = parsePrice(columns[5]);
-                    
+
                     const row = {
                         lista: providerName,
                         marca: marca.trim(),
@@ -1271,7 +1142,7 @@
                         precio_compra,
                         precio_venta
                     };
-                    
+
                     if (row.marca !== 'Desconocido' && row.modelo !== 'Desconocido') {
                         data.push(row);
                     }
@@ -1281,7 +1152,7 @@
                     const tipo = (columns[2] || 'LCD').toUpperCase();
                     const precio_compra = parsePrice(columns[3]);
                     const precio_venta = parsePrice(columns[4]);
-                    
+
                     const row = {
                         lista: providerName,
                         marca: marca.trim(),
@@ -1301,10 +1172,8 @@
             const result = [];
             let current = '';
             let inQuotes = false;
-            
             for (let i = 0; i < line.length; i++) {
                 const char = line[i];
-                
                 if (char === '"') {
                     inQuotes = !inQuotes;
                 } else if (char === ',' && !inQuotes) {
@@ -1338,7 +1207,48 @@
             return isNegative ? -rounded : rounded;
         }
 
-        // ========== LÓGICA PRINCIPAL ==========
+        // ===== PROVEEDORES (botón arriba) =====
+        function handleProvidersButtonClick() {
+            if (!providersAccess) {
+                showProvidersModal();
+                return;
+            }
+            showProviders = !showProviders;     // agrupar o mostrar todas las importadoras
+            applyFilters();
+            updateProvidersUI();
+        }
+
+        function updateProvidersUI() {
+            const btn = document.getElementById('providersBtn');
+            if (!btn) return;
+
+            if (!providersAccess) {
+                btn.classList.remove('active-providers');
+                btn.innerHTML = '<i class="fas fa-cog"></i>';
+                btn.title = 'Habilitar importadoras (clave)';
+            } else {
+                if (showProviders) {
+                    btn.classList.add('active-providers');
+                    btn.innerHTML = '<i class="fas fa-unlock"></i>';
+                    btn.title = 'Ocultar importadoras';
+                } else {
+                    btn.classList.remove('active-providers');
+                    btn.innerHTML = '<i class="fas fa-lock-open"></i>';
+                    btn.title = 'Mostrar importadoras';
+                }
+            }
+        }
+
+        function updateTableColumns() {
+            const tableContainer = document.querySelector('.table-container');
+            if (!tableContainer) return;
+            if (!providersAccess) {
+                tableContainer.classList.add('hide-columns');
+            } else {
+                tableContainer.classList.remove('hide-columns');
+            }
+        }
+
         function toggleFavorite(row) {
             const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
             const itemId = generateRowId(row);
@@ -1350,7 +1260,6 @@
                 showStatus('⭐ Agregado a favoritos', 'success');
             }
             localStorage.setItem('favorites', JSON.stringify(favorites));
-            renderTable();
         }
 
         function isFavorite(row) {
@@ -1371,13 +1280,11 @@
                 comparingItems.add(itemId);
                 showStatus('📊 Agregado a comparación', 'success');
             }
-            renderTable();
         }
 
         function showCompareModal() {
             const compareResults = document.getElementById('compareResults');
             compareResults.innerHTML = '';
-            
             if (comparingItems.size === 0) {
                 compareResults.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">No hay productos para comparar</p>';
             } else {
@@ -1402,7 +1309,6 @@
 
         function clearCompare() {
             comparingItems.clear();
-            renderTable();
             hideCompareModal();
             showStatus('🗑️ Comparación limpiada', 'success');
         }
@@ -1503,7 +1409,7 @@
                     row.precio_venta
                 ].join(','))
             ].join('\n');
-            
+
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
@@ -1689,58 +1595,24 @@
             let filtered = [...allData];
             if (searchTerm) {
                 const normalizedSearch = normalizeText(searchTerm);
-                filtered = filtered.filter(row => 
-                    Object.values(row).some(value => 
-                        value !== null && 
+                filtered = filtered.filter(row =>
+                    Object.values(row).some(value =>
+                        value !== null &&
                         normalizeText(value.toString()).includes(normalizedSearch)
                     )
                 );
             }
+
             if (!showProviders) {
                 filtered = getBestPrices(filtered);
             }
+
             if (sortColumn) {
                 sortData(sortColumn, sortDirection);
             }
             filteredData = filtered;
             renderTable();
             updateResultsCount();
-        }
-
-        function handleProvidersToggle(e) {
-            if (!providersAccess) {
-                showProvidersModal();
-                if (e && e.target) e.target.checked = false;
-                return;
-            }
-            showProviders = e.target.checked;
-            applyFilters();
-            updateProvidersUI();
-        }
-
-        function updateProvidersUI() {
-            const toggle = document.getElementById('showProvidersToggle');
-            const label = document.getElementById('providersLabel');
-            if (!toggle || !label) return;
-            if (!providersAccess) {
-                toggle.checked = false;
-                label.textContent = '🔒 Importadoras';
-            } else {
-                toggle.checked = showProviders;
-                label.textContent = showProviders
-                    ? 'Ocultar importadoras'
-                    : 'Mostrar importadoras';
-            }
-        }
-
-        function updateTableColumns() {
-            const tableContainer = document.querySelector('.table-container');
-            if (!tableContainer) return;
-            if (!providersAccess) {
-                tableContainer.classList.add('hide-columns');
-            } else {
-                tableContainer.classList.remove('hide-columns');
-            }
         }
 
         function sortTable(column) {
@@ -1803,7 +1675,7 @@
             if (filteredData.length === 0) {
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="7" class="empty">
+                        <td colspan="6" class="empty">
                             <div class="icon">🔍</div>
                             ${searchTerm ? 'No se encontraron resultados' : 'No hay datos para mostrar'}
                         </td>
@@ -1811,21 +1683,22 @@
                 `;
                 return;
             }
+
             tbody.innerHTML = '';
             filteredData.forEach(row => {
                 const tr = document.createElement('tr');
                 const tipoClass = row.tipo === 'OLED' ? 'tipo-oled' : 'tipo-lcd';
-                const isComparing = comparingItems.has(generateRowId(row));
-                const isFav = isFavorite(row);
-                const compraField = editMode ? 
+
+                const compraField = editMode && providersAccess ?
                     `<input type="text" 
                             class="editable editable-compra" 
                             data-id="${generateRowId(row)}" 
                             data-field="precio_compra" 
                             value="${formatCurrency(row.precio_compra)}"
                             placeholder="0">` :
-                    `<span class="price-compra">Bs. ${formatCurrency(row.precio_compra)}</span>`;
-                const ventaField = ventaEditMode ? 
+                    (providersAccess ? `<span class="price-compra">Bs. ${formatCurrency(row.precio_compra)}</span>` : '');
+
+                const ventaField = ventaEditMode ?
                     `<input type="text" 
                             class="editable" 
                             data-id="${generateRowId(row)}" 
@@ -1842,47 +1715,23 @@
                            onclick="showWhatsappModal(${JSON.stringify(row).replace(/"/g, '&quot;')})"
                            title="Compartir por WhatsApp"></i>
                     </div>`;
+
                 tr.innerHTML = `
                     <td class="col-marca">${highlightMatches(row.marca)}</td>
                     <td class="col-modelo">${highlightMatches(row.modelo)}</td>
                     <td class="col-tipo ${tipoClass}">${highlightMatches(row.tipo)}</td>
                     <td class="col-proveedor">
-                        ${
-                            providersAccess
-                                ? (showProviders 
-                                    ? highlightMatches(row.proveedor) 
-                                    : '<span class="hidden-price">🔒</span>')
-                                : ''
-                        }
+                        ${providersAccess ? highlightMatches(row.proveedor) : ''}
                     </td>
                     <td class="col-compra">
-                        ${
-                            providersAccess
-                                ? (showProviders 
-                                    ? compraField 
-                                    : '<span class="hidden-price">🔒</span>')
-                                : ''
-                        }
+                        ${providersAccess ? compraField : ''}
                     </td>
                     <td class="col-venta">${ventaField}</td>
-                    <td class="col-acciones">
-                        <div class="action-buttons">
-                            <button class="action-btn favorite-btn ${isFav ? 'active' : ''}" 
-                                    onclick="toggleFavorite(${JSON.stringify(row).replace(/"/g, '&quot;')})"
-                                    title="${isFav ? 'Quitar de favoritos' : 'Agregar a favoritos'}">
-                                <i class="fas fa-star"></i>
-                            </button>
-                            <button class="action-btn compare-btn ${isComparing ? 'active' : ''}" 
-                                    onclick="toggleCompare(${JSON.stringify(row).replace(/"/g, '&quot;')})"
-                                    title="${isComparing ? 'Quitar de comparación' : 'Agregar a comparación'}">
-                                <i class="fas fa-balance-scale"></i>
-                            </button>
-                        </div>
-                    </td>
                 `;
                 tbody.appendChild(tr);
             });
-            if (editMode) {
+
+            if (editMode && providersAccess) {
                 document.querySelectorAll('.editable[data-field="precio_compra"]').forEach(input => {
                     input.addEventListener('change', handleEdit);
                 });
@@ -1892,6 +1741,7 @@
                     input.addEventListener('change', handleEdit);
                 });
             }
+
             updateResultsCount();
         }
 
@@ -1944,10 +1794,10 @@
         function updateDataInMemory(rowId, field, value) {
             const [lista, marca, modelo, tipo, proveedor, precio_compra] = rowId.split('|');
             allData.forEach(row => {
-                if (row.lista === lista && 
-                    row.marca === marca && 
-                    row.modelo === modelo && 
-                    row.tipo === tipo && 
+                if (row.lista === lista &&
+                    row.marca === marca &&
+                    row.modelo === modelo &&
+                    row.tipo === tipo &&
                     row.proveedor === proveedor &&
                     row.precio_compra == precio_compra) {
                     if (field === 'precio_compra' || field === 'precio_venta') {
@@ -2058,7 +1908,7 @@
             const password = document.getElementById('providersPassword').value;
             if (password === PROVIDERS_PASSWORD) {
                 providersAccess = true;
-                showProviders = false;
+                showProviders = true;   // al habilitar, mostrar todas las importadoras
                 hideProvidersModal();
                 updateProvidersUI();
                 updateTableColumns();
