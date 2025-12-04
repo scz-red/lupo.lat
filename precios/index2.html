@@ -1393,6 +1393,10 @@
             if (savedTheme === 'light') {
                 toggleTheme();
             }
+            
+            // Agregar botones de utilidad
+            addDiagnosticButton();
+            addEmergencyButton();
         }
 
         function setupEventListeners() {
@@ -1434,6 +1438,14 @@
 
             // Responsive table scrolling
             setupTableScrolling();
+            
+            // Sorting de columnas
+            document.querySelectorAll('th[data-column]').forEach(th => {
+                th.addEventListener('click', () => {
+                    const column = th.getAttribute('data-column');
+                    sortTable(column);
+                });
+            });
         }
 
         function setupTableScrolling() {
@@ -1504,15 +1516,35 @@
             try {
                 allData = [];
                 let loadedCount = 0;
+                let totalRecords = 0;
+                
+                console.log("=== INICIO CARGA DATOS ===");
                 
                 // Cargar datos de cada proveedor
                 for (const provider of CONFIG) {
                     try {
+                        console.log(`\n📂 Cargando: ${provider.nombre} desde ${provider.archivo}`);
                         const data = await loadCSVData(provider.archivo, provider.nombre);
+                        
+                        console.log(`📦 ${provider.nombre}: ${data.length} registros cargados`);
                         allData = [...allData, ...data];
                         loadedCount++;
+                        totalRecords += data.length;
+                        
+                        // Mostrar ejemplo del primer registro
+                        if (data.length > 0) {
+                            const first = data[0];
+                            console.log(`📝 Ejemplo ${provider.nombre}:`, {
+                                marca: first.marca,
+                                modelo: first.modelo,
+                                compra: first.precio_compra,
+                                venta: first.precio_venta,
+                                proveedor: first.proveedor
+                            });
+                        }
+                        
                     } catch (error) {
-                        console.error(`Error cargando datos de ${provider.nombre}:`, error);
+                        console.error(`❌ Error cargando datos de ${provider.nombre}:`, error);
                     }
                 }
                 
@@ -1521,18 +1553,27 @@
                 if (storedData) {
                     try {
                         const customData = JSON.parse(storedData);
+                        console.log(`📁 Datos personalizados: ${customData.length} registros`);
                         allData = [...allData, ...customData];
                     } catch (e) {
                         console.error('Error cargando datos personalizados:', e);
                     }
                 }
                 
+                console.log("\n=== RESUMEN FINAL ===");
+                console.log(`✅ Total proveedores cargados: ${loadedCount}/${CONFIG.length}`);
+                console.log(`✅ Total registros en memoria: ${allData.length}`);
+                
+                // Verificar integridad de datos
+                verifyDataIntegrity();
+                
                 sortData('marca', 'asc');
                 applyFilters();
                 updateBrandFilter();
                 updateRecentSearches();
                 
-                showStatus(`✅ Datos cargados correctamente (${loadedCount}/${CONFIG.length} proveedores)`, 'success');
+                showStatus(`✅ ${totalRecords} precios cargados de ${loadedCount} proveedores`, 'success');
+                
             } catch (error) {
                 console.error('Error cargando datos:', error);
                 showStatus('❌ Error cargando datos. Verifique la conexión.', 'error');
@@ -1542,54 +1583,202 @@
         async function loadCSVData(filePath, providerName) {
             try {
                 const response = await fetch(filePath);
-                if (!response.ok) {
-                    throw new Error(`Error ${response.status}: ${response.statusText}`);
-                }
+                if (!response.ok) throw new Error(`Error ${response.status}`);
                 
                 const csvText = await response.text();
-                return parseCSV(csvText, providerName);
+                console.log(`📥 ${providerName}: Primeras líneas del CSV:`, csvText.split('\n').slice(0, 3).join(' | '));
+                
+                // Usar el parser CORREGIDO para 6 columnas
+                const data = parseCSVCorregido(csvText, providerName);
+                
+                console.log(`✅ ${providerName}: ${data.length} registros procesados`);
+                
+                // Mostrar ejemplo de los primeros 2 registros
+                if (data.length > 0) {
+                    console.log(`📋 ${providerName} - Ejemplos:`, data.slice(0, 2));
+                }
+                
+                // Guardar copia de respaldo
+                localStorage.setItem(`backup_${providerName}`, JSON.stringify(data));
+                
+                return data;
+                
             } catch (error) {
                 console.error(`Error cargando ${filePath}:`, error);
-                // En caso de error, cargar datos de respaldo si existen
+                
+                // Intentar cargar datos de respaldo
                 const backupData = localStorage.getItem(`backup_${providerName}`);
                 if (backupData) {
+                    console.log(`🔄 ${providerName}: Usando datos de respaldo`);
                     return JSON.parse(backupData);
                 }
+                
                 return [];
             }
         }
 
-        function parseCSV(csvText, providerName) {
+        // FUNCIÓN CORREGIDA PARA PARSEAR CSV CON 6 COLUMNAS
+        function parseCSVCorregido(csvText, providerName) {
             const lines = csvText.split('\n').filter(line => line.trim() !== '');
             const data = [];
             
-            // CORREGIDO: Asumimos que el CSV tiene columnas: Marca, Modelo, Tipo, Precio Compra, Precio Venta
-            for (let i = 1; i < lines.length; i++) { // Saltar encabezado
-                const columns = lines[i].split(',').map(col => col.trim().replace(/"/g, ''));
+            if (lines.length === 0) {
+                console.error(`CSV vacío para ${providerName}`);
+                return [];
+            }
+            
+            console.log(`📊 ${providerName}: Procesando CSV con ${lines.length} líneas`);
+            
+            // Mostrar encabezados para verificar
+            const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+            console.log(`📋 ${providerName} - Encabezados:`, headers);
+            
+            // Procesar cada línea (empezando desde la línea 1 para saltar encabezados)
+            for (let i = 1; i < lines.length; i++) {
+                const line = lines[i];
+                if (!line.trim()) continue;
                 
-                if (columns.length >= 5) {
+                // Parsear la línea
+                const columns = parseCSVLine(line);
+                
+                // PARA DEBUG: Mostrar las primeras 2 líneas
+                if (i <= 2 && columns.length >= 6) {
+                    console.log(`🔍 ${providerName} - Línea ${i} (RAW):`, columns);
+                }
+                
+                // Ahora esperamos 6 columnas basado en tu ejemplo
+                if (columns.length >= 6) {
+                    // COLUMNAS CORREGIDAS según tu estructura:
+                    // 0: marca, 1: modelo, 2: tipo, 3: proveedor, 4: precio_compra, 5: precio_venta
+                    const marca = columns[0] || 'Desconocido';
+                    const modelo = columns[1] || 'Desconocido';
+                    const tipo = (columns[2] || 'LCD').toUpperCase();
+                    const proveedor = columns[3] || providerName;
+                    const precio_compra = parsePrice(columns[4]);
+                    const precio_venta = parsePrice(columns[5]);
+                    
+                    // Debug de los primeros registros
+                    if (i <= 3) {
+                        console.log(`✅ ${providerName} - Registro ${i}:`, {
+                            marca, modelo, tipo, proveedor, 
+                            compra: precio_compra, 
+                            venta: precio_venta
+                        });
+                    }
+                    
                     const row = {
                         lista: providerName,
-                        marca: columns[0] || 'Desconocido',
-                        modelo: columns[1] || 'Desconocido',
-                        tipo: columns[2] || 'LCD',
-                        proveedor: providerName,
-                        // CORREGIDO: precio_compra toma columns[3] y precio_venta toma columns[4]
-                        precio_compra: parseFloat(columns[3]) || 0,
-                        precio_venta: parseFloat(columns[4]) || 0
+                        marca: marca.trim(),
+                        modelo: modelo.trim(),
+                        tipo: tipo.trim(),
+                        proveedor: proveedor.trim(),
+                        precio_compra: precio_compra,
+                        precio_venta: precio_venta
                     };
                     
-                    // Validar que tenga datos mínimos
+                    // Solo agregar si tiene datos mínimos válidos
                     if (row.marca !== 'Desconocido' && row.modelo !== 'Desconocido') {
                         data.push(row);
                     }
+                } else if (columns.length === 5) {
+                    // Manejar caso de 5 columnas (sin columna de proveedor)
+                    console.log(`ℹ️ ${providerName}: Línea con 5 columnas, usando proveedor=${providerName}`);
+                    const marca = columns[0] || 'Desconocido';
+                    const modelo = columns[1] || 'Desconocido';
+                    const tipo = (columns[2] || 'LCD').toUpperCase();
+                    const precio_compra = parsePrice(columns[3]);
+                    const precio_venta = parsePrice(columns[4]);
+                    
+                    const row = {
+                        lista: providerName,
+                        marca: marca.trim(),
+                        modelo: modelo.trim(),
+                        tipo: tipo.trim(),
+                        proveedor: providerName,
+                        precio_compra: precio_compra,
+                        precio_venta: precio_venta
+                    };
+                    
+                    data.push(row);
+                } else if (columns.length > 0) {
+                    console.warn(`⚠️ ${providerName}: Línea ${i} ignorada - ${columns.length} columnas (se esperaban 6):`, columns);
                 }
             }
             
-            // Guardar copia de respaldo en localStorage
-            localStorage.setItem(`backup_${providerName}`, JSON.stringify(data));
-            
+            console.log(`✅ ${providerName}: ${data.length} registros procesados correctamente`);
             return data;
+        }
+
+        // Función para parsear líneas CSV
+        function parseCSVLine(line) {
+            const result = [];
+            let current = '';
+            let inQuotes = false;
+            
+            for (let i = 0; i < line.length; i++) {
+                const char = line[i];
+                
+                if (char === '"') {
+                    inQuotes = !inQuotes;
+                } else if (char === ',' && !inQuotes) {
+                    result.push(current.trim());
+                    current = '';
+                } else {
+                    current += char;
+                }
+            }
+            
+            // Añadir el último campo
+            result.push(current.trim());
+            
+            // Eliminar comillas dobles de cada campo
+            return result.map(field => field.replace(/^"|"$/g, ''));
+        }
+
+        // Función robusta para parsear precios
+        function parsePrice(priceStr) {
+            if (!priceStr || priceStr.trim() === '') {
+                return 0;
+            }
+            
+            // Convertir a string y limpiar
+            let str = priceStr.toString().trim();
+            
+            // Eliminar símbolos de moneda y espacios
+            str = str.replace(/[^\d.,-]/g, '');
+            
+            // Manejar números negativos
+            const isNegative = str.startsWith('-');
+            if (isNegative) {
+                str = str.substring(1);
+            }
+            
+            // Determinar el separador decimal
+            const lastComma = str.lastIndexOf(',');
+            const lastDot = str.lastIndexOf('.');
+            
+            let cleaned;
+            if (lastComma > lastDot) {
+                // Coma como separador decimal, punto como separador de miles
+                cleaned = str.replace(/\./g, '').replace(',', '.');
+            } else {
+                // Punto como separador decimal, coma como separador de miles
+                cleaned = str.replace(/,/g, '');
+            }
+            
+            // Convertir a número
+            const num = parseFloat(cleaned);
+            
+            if (isNaN(num)) {
+                console.warn(`⚠️ No se pudo parsear precio: "${priceStr}" -> "${cleaned}"`);
+                return 0;
+            }
+            
+            // Redondear a número entero (sin decimales)
+            const rounded = Math.round(num);
+            
+            // Aplicar signo negativo si era necesario
+            return isNegative ? -rounded : rounded;
         }
 
         // ========== FUNCIONALIDADES PRINCIPALES ==========
@@ -2185,7 +2374,7 @@
                 const isComparing = comparingItems.has(generateRowId(row));
                 const isFav = isFavorite(row);
                 
-                // CORREGIDO: precio_compra en columna compra, precio_venta en columna venta
+                // COLUMNAS CORREGIDAS: precio_compra en columna compra, precio_venta en columna venta
                 const compraField = editMode ? 
                     `<input type="text" 
                             class="editable editable-compra" 
@@ -2250,6 +2439,9 @@
                     input.addEventListener('change', handleEdit);
                 });
             }
+            
+            // Actualizar el contador de resultados
+            updateResultsCount();
         }
 
         function highlightMatches(text) {
@@ -2268,7 +2460,7 @@
 
         function updateResultsCount() {
             const countEl = document.getElementById('resultsCount');
-            if (providersAccess && filteredData.length > 0) {
+            if (filteredData.length > 0) {
                 countEl.textContent = `${filteredData.length} resultado${filteredData.length !== 1 ? 's' : ''} encontrado${filteredData.length !== 1 ? 's' : ''}`;
                 countEl.style.display = 'block';
             } else {
@@ -2512,6 +2704,140 @@
             }
             
             renderTable();
+        }
+
+        // ========== FUNCIONES DE DIAGNÓSTICO Y EMERGENCIA ==========
+        
+        function verifyDataIntegrity() {
+            console.log("\n=== VERIFICACIÓN DE INTEGRIDAD ===");
+            
+            const issues = [];
+            
+            // 1. Verificar que los precios de venta sean mayores que los de compra
+            const ventaMenor = allData.filter(item => item.precio_venta < item.precio_compra);
+            if (ventaMenor.length > 0) {
+                console.warn(`⚠️ ${ventaMenor.length} registros con venta < compra`);
+                ventaMenor.slice(0, 3).forEach(item => {
+                    console.log(`   - ${item.marca} ${item.modelo}: Compra=${item.precio_compra}, Venta=${item.precio_venta}`);
+                });
+                issues.push(`${ventaMenor.length} registros con precio invertido`);
+            }
+            
+            // 2. Verificar precios cero
+            const precioCero = allData.filter(item => item.precio_venta === 0 || item.precio_compra === 0);
+            if (precioCero.length > 0) {
+                console.warn(`⚠️ ${precioCero.length} registros con precios cero`);
+                issues.push(`${precioCero.length} registros con precios cero`);
+            }
+            
+            // 3. Verificar marcas/modelos desconocidos
+            const desconocidos = allData.filter(item => 
+                item.marca.includes('Desconocido') || item.modelo.includes('Desconocido')
+            );
+            if (desconocidos.length > 0) {
+                console.warn(`⚠️ ${desconocidos.length} registros con marca/modelo desconocido`);
+                issues.push(`${desconocidos.length} registros con datos incompletos`);
+            }
+            
+            if (issues.length === 0) {
+                console.log("✅ Todos los datos están correctamente formateados");
+            } else {
+                console.log(`📋 Problemas encontrados: ${issues.join(', ')}`);
+            }
+            
+            return issues;
+        }
+
+        function addDiagnosticButton() {
+            const diagBtn = document.createElement('button');
+            diagBtn.id = 'diagnosticBtn';
+            diagBtn.innerHTML = '🔍 DIAGNÓSTICO';
+            diagBtn.style.cssText = `
+                position: fixed;
+                bottom: 110px;
+                right: 10px;
+                background: #2196F3;
+                color: white;
+                border: none;
+                padding: 10px 15px;
+                border-radius: 20px;
+                font-weight: bold;
+                z-index: 1000;
+                cursor: pointer;
+                box-shadow: 0 4px 10px rgba(33, 150, 243, 0.3);
+                font-size: 12px;
+            `;
+            diagBtn.onclick = showDataDiagnostic;
+            document.body.appendChild(diagBtn);
+        }
+
+        function showDataDiagnostic() {
+            console.clear();
+            console.log("=== DIAGNÓSTICO COMPLETO DE DATOS ===");
+            
+            console.log(`📊 Total registros en allData: ${allData.length}`);
+            console.log(`📊 Total registros en filteredData: ${filteredData.length}`);
+            
+            console.log("\n🔍 Primeros 5 registros de allData:");
+            allData.slice(0, 5).forEach((item, i) => {
+                console.log(`  ${i+1}. ${item.marca} ${item.modelo} - ${item.tipo}`);
+                console.log(`     Proveedor: ${item.proveedor}`);
+                console.log(`     Compra: Bs. ${item.precio_compra}`);
+                console.log(`     Venta: Bs. ${item.precio_venta}`);
+                console.log(`     Margen: ${item.precio_venta - item.precio_compra} Bs.`);
+            });
+            
+            console.log("\n🔍 Muestra de proveedores únicos:");
+            const proveedores = [...new Set(allData.map(item => item.proveedor))];
+            console.log(proveedores);
+            
+            // Mostrar en UI también
+            alert(`Diagnóstico:\n- Total registros: ${allData.length}\n- Registros filtrados: ${filteredData.length}\n- Proveedores: ${proveedores.length}\n\nRevisa la consola para más detalles.`);
+        }
+
+        function addEmergencyButton() {
+            const emergencyBtn = document.createElement('button');
+            emergencyBtn.id = 'emergencyFixBtn';
+            emergencyBtn.innerHTML = '⚠️ FIX EMERGENCIA';
+            emergencyBtn.style.cssText = `
+                position: fixed;
+                bottom: 70px;
+                right: 10px;
+                background: #ff4444;
+                color: white;
+                border: none;
+                padding: 10px 15px;
+                border-radius: 20px;
+                font-weight: bold;
+                z-index: 1000;
+                cursor: pointer;
+                box-shadow: 0 4px 10px rgba(255, 0, 0, 0.3);
+                font-size: 12px;
+            `;
+            emergencyBtn.onclick = emergencyFixPrices;
+            document.body.appendChild(emergencyBtn);
+        }
+
+        function emergencyFixPrices() {
+            console.log("🔄 Aplicando corrección de emergencia: intercambiando compra/venta");
+            
+            // Intercambiar TODOS los precios
+            allData.forEach(item => {
+                const temp = item.precio_compra;
+                item.precio_compra = item.precio_venta;
+                item.precio_venta = temp;
+            });
+            
+            // También intercambiar en filteredData
+            filteredData.forEach(item => {
+                const temp = item.precio_compra;
+                item.precio_compra = item.precio_venta;
+                item.precio_venta = temp;
+            });
+            
+            // Actualizar la tabla
+            renderTable();
+            showStatus('✅ Precios corregidos (compra↔venta intercambiados)', 'success');
         }
     </script>
 </body>
