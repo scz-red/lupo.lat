@@ -59,7 +59,7 @@
             scroll-behavior: smooth;
         }
 
-        /* Fondo tipo app móvil centrada */
+        /* Fondo tipo app centrada */
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             background: radial-gradient(circle at top, #1f2933 0, #020617 45%, #000 100%);
@@ -70,12 +70,11 @@
             transition: var(--transition);
             display: flex;
             justify-content: center;
-            align-items: stretch;
             padding: 12px;
         }
 
         .app-container {
-            max-width: 430px; /* tamaño tipo móvil */
+            max-width: 430px;
             width: 100%;
             margin: 0 auto;
             min-height: 100%;
@@ -156,7 +155,7 @@
             background: var(--bg-tertiary);
             color: var(--text-secondary);
             border: 1px solid var(--border);
-            padding: 8px 12px;
+            padding: 8px 10px;
             font-size: 12px;
             border-radius: 8px;
             cursor: pointer;
@@ -183,7 +182,7 @@
             background: var(--bg-tertiary);
             color: var(--text-secondary);
             border: 1px solid var(--border);
-            padding: 8px 12px;
+            padding: 8px 10px;
             font-size: 12px;
             border-radius: 8px;
             cursor: pointer;
@@ -212,7 +211,7 @@
             position: relative;
         }
 
-        input[type="text"], input[type="number"], select {
+        input[type="text"] {
             width: 100%;
             padding: 12px 16px;
             background-color: var(--bg-primary);
@@ -224,7 +223,7 @@
             box-shadow: var(--card-shadow);
         }
 
-        input[type="text"]:focus, input[type="number"]:focus, select:focus {
+        input[type="text"]:focus {
             outline: none;
             border-color: var(--accent);
             box-shadow: 0 0 0 2px rgba(255, 123, 0, 0.1);
@@ -304,38 +303,16 @@
             transform: translateX(20px);
         }
 
-        .advanced-filters {
-            display: none;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 10px;
-            padding: 12px;
-            background: var(--bg-tertiary);
-            border-radius: 10px;
-            border: 1px solid var(--border);
-        }
-
-        .advanced-filters.active {
-            display: grid;
-            animation: slideDown 0.3s ease;
-        }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
         .main-content {
             flex: 1;
             padding: 12px 12px 8px;
-            overflow-y: auto;
+            /* sin overflow: el scroll ahora es de toda la página */
         }
 
         .table-container {
-            overflow-x: auto;
+            overflow-x: auto;  /* solo horizontal si hace falta */
             border-radius: 16px;
             border: 1px solid var(--border);
-            max-height: calc(100vh - 320px);
             position: relative;
             box-shadow: var(--card-shadow);
             background: var(--bg-secondary);
@@ -345,7 +322,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 400px;
+            /* sin min-width gigante para que se vea bien en móvil */
         }
 
         thead {
@@ -356,7 +333,7 @@
 
         th {
             background-color: var(--bg-tertiary);
-            padding: 10px 8px;
+            padding: 10px 6px;
             text-align: left;
             font-weight: 600;
             border-bottom: 1px solid var(--border);
@@ -386,15 +363,11 @@
         }
 
         td {
-            padding: 9px 8px;
+            padding: 8px 6px;
             border-bottom: 1px solid var(--border);
             background-color: var(--bg-secondary);
             transition: var(--transition);
             font-size: 12px;
-        }
-
-        tbody tr {
-            transition: var(--transition);
         }
 
         tbody tr:hover td {
@@ -471,7 +444,7 @@
             background: transparent;
             border: 1px solid var(--border);
             color: var(--text-secondary);
-            padding: 6px 8px;
+            padding: 4px 6px;
             border-radius: 6px;
             cursor: pointer;
             font-size: 10px;
@@ -531,21 +504,10 @@
             display: none;
         }
 
-        .status.success {
-            color: #bbf7d0;
-        }
-
-        .status.error {
-            color: #fecaca;
-        }
-
-        .status.info {
-            color: #bfdbfe;
-        }
-
-        .status.warning {
-            color: #fed7aa;
-        }
+        .status.success { color: #bbf7d0; }
+        .status.error { color: #fecaca; }
+        .status.info { color: #bfdbfe; }
+        .status.warning { color: #fed7aa; }
 
         .empty {
             text-align: center;
@@ -563,7 +525,7 @@
         .results-count {
             text-align: left;
             color: var(--text-secondary);
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             font-size: 0.75rem;
             padding: 4px 2px;
             display: none;
@@ -581,7 +543,7 @@
         .price-container {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             justify-content: flex-start;
         }
 
@@ -600,66 +562,10 @@
             background-color: rgba(255, 123, 0, 0.1);
         }
 
-        .col-proveedor, .col-compra, .col-acciones {
-            display: table-cell;
-        }
-
+        /* Ocultar columnas con candado cuando no hay acceso (solo proveedor/compra) */
         .hide-columns .col-proveedor,
-        .hide-columns .col-compra,
-        .hide-columns .col-acciones {
+        .hide-columns .col-compra {
             display: none;
-        }
-
-        .col-marca { width: 40px; min-width: 40px; max-width: 40px; }
-        .col-modelo { width: 50px; min-width: 50px; max-width: 50px; word-wrap: break-word; }
-        .col-tipo { width: 40px; min-width: 40px; max-width: 40px; }
-        .col-proveedor { width: 40px; min-width: 40px; max-width: 40px; }
-        .col-compra { width: 40px; min-width: 40px; max-width: 40px; }
-        .col-venta { width: 40px; min-width: 40px; max-width: 40px; }
-        .col-acciones { width: 120px; min-width: 120px; max-width: 120px; }
-
-        /* Quick filters chips */
-        .quick-filters {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 8px;
-            overflow-x: auto;
-            padding-bottom: 4px;
-        }
-
-        .quick-filters::-webkit-scrollbar {
-            height: 4px;
-        }
-
-        .quick-filters::-webkit-scrollbar-thumb {
-            background: var(--border);
-            border-radius: 999px;
-        }
-
-        .chip {
-            border: 1px solid var(--border);
-            background: var(--bg-secondary);
-            color: var(--text-secondary);
-            padding: 5px 10px;
-            border-radius: 999px;
-            font-size: 0.7rem;
-            white-space: nowrap;
-            cursor: pointer;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .chip:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-
-        .chip-active {
-            background: var(--accent);
-            color: #fff;
-            border-color: var(--accent);
         }
 
         .edit-notice {
@@ -734,10 +640,6 @@
         .search-item:hover {
             background-color: var(--bg-tertiary);
             color: var(--accent);
-        }
-
-        .search-item:last-child {
-            border-bottom: none;
         }
 
         .bottom-nav {
@@ -908,25 +810,6 @@
                 box-shadow: none;
             }
 
-            .table-container {
-                max-height: calc(100vh - 320px);
-            }
-
-            table {
-                min-width: 500px;
-            }
-
-            th, td {
-                padding: 8px 6px;
-                font-size: 11px;
-            }
-
-            .col-acciones {
-                width: 90px;
-                min-width: 90px;
-                max-width: 90px;
-            }
-
             .voice-search-btn {
                 right: 42px;
             }
@@ -943,7 +826,7 @@
                 min-height: 40px;
                 min-width: 40px;
             }
-            input, select {
+            input {
                 font-size: 16px;
             }
             .table-container {
@@ -1006,40 +889,13 @@
                         </label>
                         <span id="providersLabel">🔒 Importadoras</span>
                     </div>
-
-                    <button class="admin-btn" id="advancedFiltersBtn" title="Filtros avanzados">
-                        <i class="fas fa-filter"></i>
-                    </button>
                 </div>
-            </div>
-
-            <div class="advanced-filters" id="advancedFilters">
-                <select id="marcaFilter">
-                    <option value="">Todas las marcas</option>
-                </select>
-                <select id="tipoFilter">
-                    <option value="">Todos los tipos</option>
-                    <option value="OLED">OLED</option>
-                    <option value="LCD">LCD</option>
-                </select>
-                <input type="number" id="precioMin" placeholder="Precio mínimo" step="1">
-                <input type="number" id="precioMax" placeholder="Precio máximo" step="1">
             </div>
         </section>
 
         <main class="main-content">
             <div id="statusMessage" class="status"></div>
             <div id="resultsCount" class="results-count"></div>
-
-            <!-- Quick filters chips -->
-            <div class="quick-filters" id="quickFilters">
-                <button data-filter="all" class="chip chip-active">Todos</button>
-                <button data-filter="OLED" class="chip">OLED</button>
-                <button data-filter="LCD" class="chip">LCD</button>
-                <button data-filter="favorites" class="chip">
-                    <i class="fas fa-star"></i> Favoritos
-                </button>
-            </div>
 
             <div class="table-container">
                 <table id="resultsTable">
@@ -1196,7 +1052,6 @@
         let showProviders = false;
         let editMode = false;
         let ventaEditMode = false;
-        let currentEditRow = null;
         let providersAccess = false;
         let currentWhatsappRow = null;
         let comparingItems = new Set();
@@ -1247,19 +1102,9 @@
             document.getElementById('searchInput').addEventListener('input', debounce(handleSearch, 300));
             document.getElementById('showProvidersToggle').addEventListener('click', handleProvidersToggle);
 
-            const advancedFiltersBtn = document.getElementById('advancedFiltersBtn');
-            if (advancedFiltersBtn) {
-                advancedFiltersBtn.addEventListener('click', toggleAdvancedFilters);
-            }
-
             document.getElementById('voiceSearchBtn').addEventListener('click', startVoiceSearch);
             document.getElementById('refreshBtn').addEventListener('click', loadAllData);
             document.getElementById('themeToggle').addEventListener('click', toggleTheme);
-
-            document.getElementById('marcaFilter').addEventListener('change', applyFilters);
-            document.getElementById('tipoFilter').addEventListener('change', applyFilters);
-            document.getElementById('precioMin').addEventListener('input', debounce(applyFilters, 500));
-            document.getElementById('precioMax').addEventListener('input', debounce(applyFilters, 500));
 
             setupModalEvents();
 
@@ -1280,49 +1125,12 @@
             document.getElementById('searchInput').addEventListener('focus', showRecentSearches);
             document.addEventListener('click', hideRecentSearches);
 
-            setupTableScrolling();
-
             document.querySelectorAll('th[data-column]').forEach(th => {
                 th.addEventListener('click', () => {
                     const column = th.getAttribute('data-column');
                     sortTable(column);
                 });
             });
-
-            const quickFilters = document.getElementById('quickFilters');
-            if (quickFilters) {
-                quickFilters.addEventListener('click', (e) => {
-                    const btn = e.target.closest('.chip');
-                    if (!btn) return;
-                    
-                    quickFilters.querySelectorAll('.chip').forEach(c => c.classList.remove('chip-active'));
-                    btn.classList.add('chip-active');
-
-                    const type = btn.getAttribute('data-filter');
-
-                    if (type === 'favorites') {
-                        const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-                        filteredData = allData.filter(row => favorites.includes(generateRowId(row)));
-                        renderTable();
-                    } else {
-                        document.getElementById('tipoFilter').value = (type === 'all') ? '' : type;
-                        applyFilters();
-                    }
-                });
-            }
-        }
-
-        function setupTableScrolling() {
-            const tableContainer = document.querySelector('.table-container');
-            if (tableContainer) {
-                tableContainer.addEventListener('touchstart', function() {
-                    this.style.cursor = 'grabbing';
-                });
-                
-                tableContainer.addEventListener('touchend', function() {
-                    this.style.cursor = 'grab';
-                });
-            }
         }
 
         function setupModalEvents() {
@@ -1403,7 +1211,6 @@
                 
                 sortData('marca', 'asc');
                 applyFilters();
-                updateBrandFilter();
                 updateRecentSearches();
                 
                 showStatus(`✅ ${totalRecords} precios cargados de ${loadedCount} proveedores`, 'success');
@@ -1439,7 +1246,6 @@
         function parseCSVCorregido(csvText, providerName) {
             const lines = csvText.split('\n').filter(line => line.trim() !== '');
             const data = [];
-            
             if (lines.length === 0) return [];
             
             for (let i = 1; i < lines.length; i++) {
@@ -1684,28 +1490,6 @@
             }
         }
 
-        function toggleAdvancedFilters() {
-            const filters = document.getElementById('advancedFilters');
-            filters.classList.toggle('active');
-            updateBrandFilter();
-        }
-
-        function updateBrandFilter() {
-            const marcaFilter = document.getElementById('marcaFilter');
-            const marcas = [...new Set(allData.map(item => item.marca))].sort();
-            const currentValue = marcaFilter.value;
-            marcaFilter.innerHTML = '<option value="">Todas las marcas</option>';
-            marcas.forEach(marca => {
-                const option = document.createElement('option');
-                option.value = marca;
-                option.textContent = marca;
-                marcaFilter.appendChild(option);
-            });
-            if (marcas.includes(currentValue)) {
-                marcaFilter.value = currentValue;
-            }
-        }
-
         function exportToCSV() {
             const headers = ['Marca', 'Modelo', 'Tipo', 'Proveedor', 'Precio Compra', 'Precio Venta'];
             const csvContent = [
@@ -1912,13 +1696,6 @@
                     )
                 );
             }
-            const marcaFilter = document.getElementById('marcaFilter').value;
-            const tipoFilter = document.getElementById('tipoFilter').value;
-            const precioMin = parseFloat(document.getElementById('precioMin').value) || 0;
-            const precioMax = parseFloat(document.getElementById('precioMax').value) || Infinity;
-            if (marcaFilter) filtered = filtered.filter(row => row.marca === marcaFilter);
-            if (tipoFilter) filtered = filtered.filter(row => row.tipo === tipoFilter);
-            filtered = filtered.filter(row => row.precio_compra >= precioMin && row.precio_compra <= precioMax);
             if (!showProviders) {
                 filtered = getBestPrices(filtered);
             }
@@ -2089,22 +1866,18 @@
                     </td>
                     <td class="col-venta">${ventaField}</td>
                     <td class="col-acciones">
-                        ${
-                            providersAccess
-                                ? `<div class="action-buttons">
-                                    <button class="action-btn favorite-btn ${isFav ? 'active' : ''}" 
-                                            onclick="toggleFavorite(${JSON.stringify(row).replace(/"/g, '&quot;')})"
-                                            title="${isFav ? 'Quitar de favoritos' : 'Agregar a favoritos'}">
-                                        <i class="fas fa-star"></i>
-                                    </button>
-                                    <button class="action-btn compare-btn ${isComparing ? 'active' : ''}" 
-                                            onclick="toggleCompare(${JSON.stringify(row).replace(/"/g, '&quot;')})"
-                                            title="${isComparing ? 'Quitar de comparación' : 'Agregar a comparación'}">
-                                        <i class="fas fa-balance-scale"></i>
-                                    </button>
-                                </div>`
-                                : ''
-                        }
+                        <div class="action-buttons">
+                            <button class="action-btn favorite-btn ${isFav ? 'active' : ''}" 
+                                    onclick="toggleFavorite(${JSON.stringify(row).replace(/"/g, '&quot;')})"
+                                    title="${isFav ? 'Quitar de favoritos' : 'Agregar a favoritos'}">
+                                <i class="fas fa-star"></i>
+                            </button>
+                            <button class="action-btn compare-btn ${isComparing ? 'active' : ''}" 
+                                    onclick="toggleCompare(${JSON.stringify(row).replace(/"/g, '&quot;')})"
+                                    title="${isComparing ? 'Quitar de comparación' : 'Agregar a comparación'}">
+                                <i class="fas fa-balance-scale"></i>
+                            </button>
+                        </div>
                     </td>
                 `;
                 tbody.appendChild(tr);
@@ -2215,8 +1988,7 @@
             document.getElementById('providersPassword').value = '';
         }
 
-        function showVentaModal(rowId) {
-            currentEditRow = rowId;
+        function showVentaModal() {
             document.getElementById('ventaModal').style.display = 'flex';
             document.getElementById('ventaPassword').focus();
         }
@@ -2224,7 +1996,6 @@
         function hideVentaModal() {
             document.getElementById('ventaModal').style.display = 'none';
             document.getElementById('ventaPassword').value = '';
-            currentEditRow = null;
         }
 
         function showWhatsappModal(row) {
@@ -2327,7 +2098,6 @@
             renderTable();
         }
 
-        // Diagnóstico simple
         function verifyDataIntegrity() {
             const issues = [];
             const ventaMenor = allData.filter(item => item.precio_venta < item.precio_compra);
