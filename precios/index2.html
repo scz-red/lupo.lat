@@ -146,6 +146,7 @@
         .admin-access {
             display: flex;
             gap: 8px;
+            align-items: center;
         }
 
         .admin-btn {
@@ -164,25 +165,65 @@
             color: var(--text-primary);
         }
 
-        .admin-btn.active-providers {
-            border-color: var(--accent);
-            color: var(--accent-light);
-        }
-
-        .theme-toggle {
-            background: var(--bg-tertiary);
-            color: var(--text-secondary);
-            border: 1px solid var(--border);
-            padding: 8px 10px;
-            font-size: 12px;
-            border-radius: 8px;
+        /* Interruptor modo técnico */
+        .admin-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: transparent;
+            border: none;
+            padding: 4px 6px;
+            border-radius: 999px;
             cursor: pointer;
             transition: var(--transition);
         }
 
-        .theme-toggle:hover {
-            background-color: var(--border);
-            color: var(--text-primary);
+        .admin-toggle:hover {
+            background: rgba(148, 163, 184, 0.1);
+        }
+
+        .toggle-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+
+        .toggle-pill {
+            width: 34px;
+            height: 18px;
+            border-radius: 999px;
+            background: var(--bg-tertiary);
+            border: 1px solid #dc2626; /* borde rojo apagado */
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .toggle-circle {
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            border-radius: 999px;
+            background: #dc2626; /* círculo rojo apagado */
+            top: 1px;
+            left: 2px;
+            transition: var(--transition);
+        }
+
+        /* Estado ON (modo técnico activo) */
+        .admin-toggle.on .toggle-pill {
+            background: rgba(34, 197, 94, 0.15); /* verde suave */
+            border-color: #22c55e;
+        }
+
+        .admin-toggle.on .toggle-circle {
+            transform: translateX(14px);
+            background: #22c55e; /* círculo verde */
+        }
+
+        .admin-toggle.on .toggle-label {
+            color: #22c55e;
         }
 
         .search-section {
@@ -754,10 +795,14 @@
                 <h1>DR. XIAOMI</h1>
             </div>
             <div class="admin-access">
-                <!-- engrane 2: importadoras con clave -->
-                <button class="admin-btn" id="providersBtn" title="Habilitar importadoras (clave)">
-                    <i class="fas fa-cog"></i>
+                <!-- Interruptor modo técnico -->
+                <button class="admin-toggle" id="providersBtn" title="Modo técnico (ver datos bloqueados)">
+                    <span class="toggle-label">Técnico</span>
+                    <span class="toggle-pill">
+                        <span class="toggle-circle"></span>
+                    </span>
                 </button>
+
                 <button class="admin-btn" id="refreshBtn" title="Actualizar Datos">
                     <i class="fas fa-sync-alt"></i>
                 </button>
@@ -811,7 +856,7 @@
         </div>
 
         <div style="margin-top: 8px; text-align: right;">
-            <!-- espacio por si luego quieres algo, sin botones nuevos -->
+            <!-- espacio por si luego quieres algo, sin nuevos botones -->
         </div>
     </main>
 
@@ -1242,7 +1287,7 @@
         return isNegative ? -rounded : rounded;
     }
 
-    // ===== PROVEEDORES (botón arriba) =====
+    // ===== PROVEEDORES (interruptor modo técnico) =====
     function handleProvidersButtonClick() {
         if (!providersAccess) {
             showProvidersModal();
@@ -1258,19 +1303,15 @@
         if (!btn) return;
 
         if (!providersAccess) {
-            btn.classList.remove("active-providers");
-            btn.innerHTML = '<i class="fas fa-cog"></i>';
-            btn.title = "Habilitar importadoras (clave)";
+            // Sin clave todavía: interruptor apagado en rojo
+            btn.classList.remove("on");
+            btn.title = "Modo técnico bloqueado (requiere clave)";
         } else {
-            if (showProviders) {
-                btn.classList.add("active-providers");
-                btn.innerHTML = '<i class="fas fa-unlock"></i>';
-                btn.title = "Ocultar importadoras";
-            } else {
-                btn.classList.remove("active-providers");
-                btn.innerHTML = '<i class="fas fa-lock-open"></i>';
-                btn.title = "Mostrar importadoras";
-            }
+            // Con clave: el interruptor se prende/apaga según showProviders
+            btn.classList.toggle("on", showProviders);
+            btn.title = showProviders
+                ? "Modo técnico activo: mostrando importadoras y precios de compra"
+                : "Modo técnico desactivado: solo mejor precio";
         }
     }
 
