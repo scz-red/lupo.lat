@@ -2,9 +2,8 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#050816">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#121212">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="description" content="Dr. Xiaomi - Gestión de precios de pantallas">
@@ -13,523 +12,386 @@
     <!-- PWA -->
     <link rel="manifest" href="manifest.json">
 
-    <!-- Iconos -->
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- ICONOS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
-            --bg-primary: #050816;
-            --bg-secondary: #0b1220;
-            --bg-tertiary: #111827;
-            --text-primary: #e5e7eb;
-            --text-secondary: #9ca3af;
-            --accent: #f97316;
-            --accent-hover: #fb923c;
-            --accent-soft: rgba(249,115,22,0.14);
-            --border: #1f2933;
-            --success: #22c55e;
-            --error: #f97373;
-            --warning: #facc15;
-            --info: #38bdf8;
-            --edit: #ffeb3b;
-            --whatsapp: #25D366;
-            --favorite: #f97316;
-            --card-shadow: 0 18px 45px rgba(0,0,0,0.65);
-            --transition: all 0.25s ease-out;
-        }
+            --bg-primary: #050608;
+            --bg-secondary: #101117;
+            --bg-tertiary: #181924;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --accent: #ff7b00;
+            --accent-soft: rgba(255, 123, 0, 0.15);
+            --border-soft: rgba(255, 255, 255, 0.06);
+            --danger: #ff4b4b;
+            --success: #26d782;
 
-        .light-mode {
-            --bg-primary: #f4f4f5;
-            --bg-secondary: #ffffff;
-            --bg-tertiary: #f1f5f9;
-            --text-primary: #020617;
-            --text-secondary: #6b7280;
-            --border: #e5e7eb;
-            --card-shadow: 0 14px 30px rgba(15,23,42,0.08);
+            --radius-lg: 18px;
+            --radius-full: 999px;
+
+            --top-bar-height: 56px;
+            --bottom-nav-height: 64px;
         }
 
         * {
-            margin: 0;
-            padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
         }
 
         html, body {
+            margin: 0;
+            padding: 0;
             height: 100%;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+            background: radial-gradient(circle at top, #1b1b2f 0, #050608 52%, #020308 100%);
+            color: var(--text-primary);
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-            "Segoe UI", sans-serif;
-            background: radial-gradient(circle at top, #020617 0, #020617 40%, #000 100%);
-            color: var(--text-primary);
-            -webkit-font-smoothing: antialiased;
             display: flex;
             justify-content: center;
-            align-items: stretch;
-            padding: env(safe-area-inset-top, 8px)
-                     env(safe-area-inset-right, 8px)
-                     env(safe-area-inset-bottom, 8px)
-                     env(safe-area-inset-left, 8px);
         }
 
-        .app-container {
-            max-width: 430px;
+        .app {
             width: 100%;
-            background: var(--bg-primary);
-            border-radius: 22px;
-            overflow: hidden;
+            max-width: 480px;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            min-height: 100%;
-            box-shadow: var(--card-shadow);
-            border: 1px solid rgba(148,163,184,0.15);
+            background: linear-gradient(160deg, #050608 0%, #070712 55%, #050608 100%);
             position: relative;
         }
 
-        @media (max-width: 480px) {
-            body {
-                padding: 0;
-            }
-            .app-container {
-                border-radius: 0;
-                max-width: 100%;
-                box-shadow: none;
-                border: none;
-            }
-        }
-
-        /* HEADER */
-        .app-header {
-            background: rgba(15,23,42,0.96);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-            padding: 12px 16px 10px;
-            border-bottom: 1px solid rgba(148,163,184,0.18);
+        /* BARRA SUPERIOR */
+        .top-bar {
             position: sticky;
             top: 0;
             z-index: 20;
-        }
-
-        .header-content {
+            height: var(--top-bar-height);
+            padding: 10px 14px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 10px;
-            margin-bottom: 4px;
+            background: linear-gradient(to bottom, rgba(5, 6, 8, 0.96), rgba(5, 6, 8, 0.8), transparent);
+            backdrop-filter: blur(16px);
         }
 
-        .app-title {
+        .top-title {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
-        .app-icon {
-            width: 38px;
-            height: 38px;
+        .logo-circle {
+            width: 28px;
+            height: 28px;
             border-radius: 12px;
-            background: radial-gradient(circle at 0 0, #f97316, #fb923c);
+            background: radial-gradient(circle at 20% 0%, #ff9b40 0, #ff7b00 45%, #ff4800 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.25rem;
-            color: #f9fafb;
-            box-shadow: 0 10px 25px rgba(249,115,22,0.45);
+            box-shadow: 0 0 18px rgba(255, 123, 0, 0.55);
+            font-size: 16px;
+            font-weight: 800;
         }
 
-        h1 {
-            margin: 0;
-            font-size: 1.2rem;
-            letter-spacing: 0.08em;
-            color: #f9fafb;
-        }
-
-        .subtitle {
-            margin-top: 2px;
-            font-size: 0.7rem;
-            color: var(--text-secondary);
-        }
-
-        .subtitle span {
-            color: var(--accent-hover);
-        }
-
-        .admin-access {
-            display: flex;
-            gap: 6px;
-        }
-
-        .admin-btn,
-        .theme-toggle {
-            background: rgba(15,23,42,0.8);
-            border-radius: 999px;
-            border: 1px solid rgba(148,163,184,0.25);
-            color: var(--text-secondary);
-            width: 32px;
-            height: 32px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .admin-btn:hover,
-        .theme-toggle:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-            background: rgba(15,23,42,0.95);
-        }
-
-        .admin-btn.active-providers {
-            border-color: var(--accent);
-            color: var(--accent-hover);
-        }
-
-        /* BUSCADOR */
-        .search-section {
-            padding: 10px 16px 8px;
-            background: rgba(15,23,42,0.9);
-            border-bottom: 1px solid rgba(148,163,184,0.18);
-        }
-
-        .search-controls {
+        .top-text {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 2px;
         }
 
-        .search-box {
-            position: relative;
-            width: 100%;
+        .top-text .app-name {
+            font-size: 15px;
+            font-weight: 650;
+            letter-spacing: 0.02em;
         }
 
-        input[type="text"] {
-            width: 100%;
-            padding: 10px 40px 10px 14px;
+        .top-text .subtitle {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chip-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
             border-radius: 999px;
-            border: 1px solid rgba(148,163,184,0.35);
-            background: rgba(15,23,42,0.9);
-            color: var(--text-primary);
-            font-size: 0.9rem;
-            outline: none;
-            transition: var(--transition);
-        }
-
-        input[type="text"]::placeholder {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            font-size: 11px;
             color: var(--text-secondary);
-            font-size: 0.8rem;
         }
 
-        input[type="text"]:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 1px var(--accent-soft);
-            background: rgba(15,23,42,1);
+        .chip-pill i {
+            font-size: 10px;
+            color: var(--accent);
         }
 
-        .search-icon {
-            position: absolute;
-            right: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-        }
-
-        .voice-search-btn {
-            position: absolute;
-            right: 32px;
-            top: 50%;
-            transform: translateY(-50%);
-            border: none;
-            background: transparent;
-            color: var(--text-secondary);
-            cursor: pointer;
-            font-size: 0.85rem;
-            padding: 0;
+        .icon-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(11, 11, 18, 0.9);
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        .voice-search-btn.listening {
-            color: var(--accent);
-            animation: pulse 1s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: translateY(-50%) scale(1); }
-            50% { transform: translateY(-50%) scale(1.05); }
-            100% { transform: translateY(-50%) scale(1); }
-        }
-
-        .recent-searches {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 0 0 8px 8px;
-            max-height: 200px;
-            overflow-y: auto;
-            z-index: 100;
-        }
-
-        .recent-searches.active {
-            display: block;
-        }
-
-        .search-item {
-            padding: 8px 12px;
+            font-size: 14px;
+            color: var(--text-primary);
             cursor: pointer;
-            transition: var(--transition);
-            border-bottom: 1px solid var(--border);
-            font-size: 0.8rem;
         }
 
-        .search-item:hover {
-            background-color: var(--bg-tertiary);
-            color: var(--accent);
+        .icon-btn:active {
+            transform: scale(0.96);
         }
 
-        .edit-notice {
-            text-align: center;
-            padding: 8px 10px;
-            background: var(--bg-tertiary);
-            border: 1px solid var(--edit);
-            border-radius: 10px;
+        /* CONTENIDO SCROLLEABLE */
+        .content {
+            flex: 1 1 auto;
+            padding: 8px 10px 12px;
+            padding-bottom: calc(12px + var(--bottom-nav-height));
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        /* TARJETA DE BUSQUEDA / FILTROS */
+        .search-card {
+            background: radial-gradient(circle at top left, #1f1f30 0, #101117 45%, #050608 100%);
+            border-radius: 20px;
+            padding: 10px 12px 8px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
             margin-bottom: 10px;
-            color: var(--edit);
-            font-size: 11px;
-            box-shadow: var(--card-shadow);
         }
 
-        /* CONTENIDO PRINCIPAL + TABLA */
-        .main-content {
+        .search-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .search-input-wrap {
             flex: 1;
-            padding: 10px 10px 78px; /* espacio para barra inferior */
+            position: relative;
         }
 
-        .table-container {
-            border-radius: 18px;
-            border: 1px solid rgba(148,163,184,0.18);
-            background: radial-gradient(circle at top, #020617 0, var(--bg-secondary) 55%);
+        .search-input-wrap i {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 8px 10px 8px 28px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(4, 5, 10, 0.95);
+            color: var(--text-primary);
+            font-size: 12px;
+            outline: none;
+        }
+
+        .search-input::placeholder {
+            color: rgba(176, 176, 176, 0.75);
+        }
+
+        .btn-small {
+            border-radius: 14px;
+            border: none;
+            padding: 8px 10px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        .btn-accent {
+            background: linear-gradient(135deg, #ff7b00, #ff4800);
+            color: white;
+            box-shadow: 0 0 18px rgba(255, 123, 0, 0.45);
+        }
+
+        .btn-ghost {
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* TABLA */
+        .table-card {
+            margin-top: 6px;
+            background: rgba(5, 6, 12, 0.9);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
             overflow: hidden;
-            box-shadow: 0 18px 40px rgba(15,23,42,0.85);
+        }
+
+        .table-header {
+            padding: 8px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to right, rgba(255, 123, 0, 0.18), transparent);
+        }
+
+        .table-title {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-secondary);
+        }
+
+        .locked-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 8px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.04);
+            font-size: 10px;
+            color: var(--text-secondary);
+        }
+
+        .locked-badge i {
+            font-size: 10px;
+            color: #ffcf52;
+        }
+
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-        }
-
-        thead {
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-
-        th {
-            background: rgba(15,23,42,0.96);
-            padding: 8px 6px;
-            font-size: 0.7rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            color: var(--text-secondary);
-            border-bottom: 1px solid rgba(148,163,184,0.18);
-            cursor: pointer;
-            user-select: none;
-            white-space: nowrap;
-        }
-
-        th.sort-asc::after {
-            content: " ▲";
-            font-size: 10px;
-            color: var(--accent);
-        }
-
-        th.sort-desc::after {
-            content: " ▼";
-            font-size: 10px;
-            color: var(--accent);
-        }
-
-        td {
-            padding: 8px 6px;
-            font-size: 0.8rem;
-            border-bottom: 1px solid rgba(15,23,42,0.9);
-            background: transparent;
-        }
-
-        tbody tr:nth-child(even) td {
-            background: rgba(15,23,42,0.6);
-        }
-
-        tbody tr:hover td {
-            background: rgba(15,23,42,0.95);
-        }
-
-        mark {
-            background-color: var(--accent);
-            color: #0b1120;
-            padding: 1px 3px;
-            border-radius: 4px;
-        }
-
-        input.editable {
-            width: 100%;
-            padding: 6px;
-            background-color: transparent;
-            border: 1px solid transparent;
-            color: var(--text-primary);
-            border-radius: 6px;
-            transition: var(--transition);
             font-size: 11px;
         }
 
-        input.editable:focus {
-            outline: none;
-            border-color: var(--accent);
-            background-color: var(--bg-primary);
-            box-shadow: 0 0 0 1px rgba(255, 123, 0, 0.2);
+        thead {
+            background: rgba(19, 20, 28, 0.95);
         }
 
-        input.editable-compra {
-            border: 1px solid var(--edit);
-            background-color: rgba(255, 235, 59, 0.05);
+        th, td {
+            padding: 7px 8px;
+            text-align: left;
         }
 
-        .tipo-oled {
-            color: var(--accent-hover);
+        th {
             font-weight: 600;
-        }
-
-        .tipo-lcd {
             color: var(--text-secondary);
-            font-weight: 600;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            white-space: nowrap;
         }
 
-        .price-compra {
-            color: var(--accent);
-            font-weight: 600;
+        tbody tr {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
         }
 
-        .price-container {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            justify-content: flex-start;
+        tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        tbody tr:nth-child(even) {
+            background: rgba(9, 10, 16, 0.85);
+        }
+
+        tbody tr:nth-child(odd) {
+            background: rgba(5, 6, 12, 0.85);
+        }
+
+        td {
+            color: var(--text-primary);
+        }
+
+        .pill-model {
+            padding: 3px 8px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.04);
+            font-size: 11px;
+        }
+
+        .price {
+            font-variant-numeric: tabular-nums;
+            font-weight: 600;
         }
 
         .price-venta {
-            display: inline-flex;
+            color: var(--success);
+        }
+
+        .price-compra {
+            color: #ffb347;
+        }
+
+        /* COLUMNAS SECRETAS (COMPRA / PROVEEDOR) */
+        .col-secreta {
+            display: none;
+        }
+
+        body.secret-visible .col-secreta {
+            display: table-cell;
+        }
+
+        .secret-hint {
+            padding: 6px 12px 10px;
+            font-size: 10px;
+            color: var(--text-secondary);
+            display: flex;
             align-items: center;
-            justify-content: center;
-            min-width: 72px;
-            padding: 4px 10px;
-            border-radius: 999px;
-            background: rgba(34,197,94,0.12);
-            color: #4ade80;
-            font-weight: 600;
-            font-size: 0.78rem;
-            cursor: pointer;
-            transition: var(--transition);
+            gap: 6px;
+            border-top: 1px dashed rgba(255, 255, 255, 0.08);
+            background: radial-gradient(circle at top, rgba(255, 123, 0, 0.13), rgba(5, 6, 12, 0.9));
         }
 
-        .price-venta:hover {
-            background: #22c55e;
-            color: #022c22;
+        .secret-hint i {
+            color: #ffcf52;
         }
 
-        .share-icon {
-            color: var(--accent);
-            font-size: 0.75rem;
-            cursor: pointer;
-            padding: 4px;
-            border-radius: 999px;
-            opacity: 0.8;
-            transition: var(--transition);
-        }
-
-        .share-icon:hover {
-            opacity: 1;
-            background-color: rgba(249,115,22,0.18);
-        }
-
-        /* Ocultar columnas proveedor/compra si no hay acceso */
-        .hide-columns .col-proveedor,
-        .hide-columns .col-compra {
-            display: none;
-        }
-
-        .status {
-            position: fixed;
-            bottom: 74px;
-            left: 50%;
-            transform: translateX(-50%);
-            max-width: 360px;
-            width: calc(100% - 48px);
-            z-index: 999;
-            padding: 8px 14px;
-            border-radius: 999px;
-            text-align: center;
-            font-weight: 500;
-            font-size: 0.7rem;
-            background: rgba(15, 23, 42, 0.96);
-            border: 1px solid rgba(148, 163, 184, 0.5);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-            display: none;
-        }
-
-        .status.success { color: #bbf7d0; }
-        .status.error   { color: #fecaca; }
-        .status.info    { color: #bfdbfe; }
-        .status.warning { color: #fed7aa; }
-
-        .empty {
-            text-align: center;
-            padding: 40px 15px;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .empty .icon {
-            font-size: 2rem;
-            margin-bottom: 12px;
-            opacity: 0.5;
-        }
-
-        .results-count {
-            text-align: left;
-            color: var(--text-secondary);
-            margin-bottom: 6px;
-            font-size: 0.75rem;
-            padding: 4px 2px;
-            display: none;
-        }
-
-        /* BOTTOM NAV APP */
+        /* BARRA INFERIOR FIJA */
         .bottom-nav {
             position: fixed;
-            bottom: env(safe-area-inset-bottom, 0);
             left: 50%;
             transform: translateX(-50%);
+            bottom: 10px;
             width: 100%;
-            max-width: 430px;
-            background: rgba(15,23,42,0.98);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-            border-top: 1px solid rgba(148,163,184,0.24);
+            max-width: 480px;
+            z-index: 40;
+            padding: 0 12px;
+            pointer-events: none; /* truco para que nada raro bloquee el scroll */
+        }
+
+        .bottom-nav-inner {
+            pointer-events: auto;
+            height: var(--bottom-nav-height);
+            border-radius: 999px;
+            background: rgba(8, 9, 14, 0.96);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            box-shadow:
+                0 18px 45px rgba(0, 0, 0, 0.85),
+                0 0 32px rgba(255, 123, 0, 0.25);
             display: flex;
-            padding: 6px 14px 8px;
-            z-index: 50;
+            align-items: center;
+            justify-content: space-around;
         }
 
         .nav-item {
@@ -537,1404 +399,378 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            gap: 2px;
-            padding: 6px 4px;
+            gap: 3px;
+            font-size: 9px;
             color: var(--text-secondary);
-            border-radius: 12px;
-            cursor: pointer;
-            transition: var(--transition);
-            position: relative;
         }
 
-        .nav-icon {
-            font-size: 1.1rem;
+        .nav-item i {
+            font-size: 16px;
         }
 
-        .nav-label {
-            font-size: 0.65rem;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
+        .nav-item.active span {
+            color: #ffffff;
         }
 
-        .nav-item.active {
+        .nav-item.active i {
             color: var(--accent);
-            background: rgba(15,23,42,0.9);
         }
 
-        .nav-item.active::before {
-            content: "";
-            position: absolute;
-            top: 2px;
-            width: 36%;
-            height: 3px;
-            border-radius: 999px;
-            background: var(--accent);
-        }
-
-        /* MODALES */
-        .modal {
-            display: none;
+        /* MODAL CLAVE */
+        .modal-backdrop {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            display: none;
             align-items: center;
             justify-content: center;
-            backdrop-filter: blur(5px);
-            padding: 16px;
-            animation: fadeIn 0.3s ease;
+            z-index: 50;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .modal-backdrop.show {
+            display: flex;
         }
 
-        .modal-content {
-            background-color: var(--bg-secondary);
-            padding: 20px;
-            border-radius: 16px;
-            width: 100%;
-            max-width: 400px;
-            border: 1px solid var(--border);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-            animation: slideUp 0.3s ease;
-            max-height: 90vh;
-            overflow-y: auto;
+        .modal {
+            width: 88%;
+            max-width: 360px;
+            background: radial-gradient(circle at top left, #27263c 0, #10101b 40%, #050608 100%);
+            border-radius: 24px;
+            padding: 16px 16px 14px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 28px 80px rgba(0, 0, 0, 0.9);
         }
 
-        @keyframes slideUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
         }
 
-        .modal h2 {
-            margin-bottom: 12px;
-            color: var(--accent);
-            text-align: center;
-            font-size: 1.1rem;
+        .modal-title {
+            font-size: 14px;
             font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .modal-subtitle {
-            margin-bottom: 12px;
+        .modal-title i {
+            color: #ffcf52;
+        }
+
+        .modal-sub {
+            font-size: 11px;
             color: var(--text-secondary);
-            text-align: center;
-            font-size: 13px;
+            margin-bottom: 10px;
         }
 
-        .modal-input {
+        .modal form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .pin-input {
             width: 100%;
-            padding: 12px;
-            background-color: var(--bg-primary);
-            border: 1px solid var(--border);
-            border-radius: 10px;
+            padding: 8px 10px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            background: rgba(4, 5, 10, 0.98);
             color: var(--text-primary);
-            font-size: 15px;
-            transition: var(--transition);
+            font-size: 14px;
+            text-align: center;
+            letter-spacing: 0.4em;
         }
 
-        .modal-input:focus {
+        .pin-input:focus {
             outline: none;
             border-color: var(--accent);
-            box-shadow: 0 0 0 2px rgba(255, 123, 0, 0.1);
+            box-shadow: 0 0 0 1px rgba(255, 123, 0, 0.6);
         }
 
-        .password-wrapper {
-            position: relative;
-            margin-bottom: 6px;
-        }
-
-        .password-toggle {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            color: var(--text-secondary);
-            font-size: 14px;
-        }
-
-        .password-toggle:hover {
-            color: var(--accent-hover);
-        }
-
-        .modal-buttons {
+        .modal-actions {
             display: flex;
-            gap: 10px;
-            justify-content: flex-end;
-            margin-top: 8px;
+            gap: 8px;
+            margin-top: 4px;
         }
 
-        .modal-btn {
-            padding: 10px 18px;
-            border: none;
-            border-radius: 999px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: var(--transition);
-            font-size: 13px;
+        .modal-actions .btn-small {
+            flex: 1;
+            justify-content: center;
         }
 
-        .modal-btn.primary {
-            background: var(--accent);
-            color: white;
-        }
-
-        .modal-btn.primary:hover {
-            background: #ea580c;
-        }
-
-        .modal-btn.secondary {
-            background-color: var(--bg-tertiary);
-            color: var(--text-primary);
-            border: 1px solid var(--border);
-        }
-
-        .modal-btn.secondary:hover {
-            background-color: var(--border);
-        }
-
-        @media (hover: none) and (pointer: coarse) {
-            .admin-btn, .theme-toggle, .nav-item {
-                min-height: 40px;
-                min-width: 40px;
-            }
-            input {
-                font-size: 16px;
-            }
+        .error-text {
+            font-size: 11px;
+            color: var(--danger);
+            min-height: 14px;
         }
     </style>
 </head>
 <body>
-<div class="app-container">
-    <header class="app-header">
-        <div class="header-content">
-            <div class="app-title">
-                <div class="app-icon">
-                    <i class="fas fa-mobile-alt"></i>
-                </div>
-                <h1>DR. XIAOMI</h1>
-            </div>
-            <div class="admin-access">
-                <!-- engrane: desbloqueo columnas compra/proveedor -->
-                <button class="admin-btn" id="providersBtn"
-                        title="Desbloquear importadoras">
-                    <i class="fas fa-lock"></i>
-                </button>
-                <button class="admin-btn" id="refreshBtn"
-                        title="Actualizar datos">
-                    <i class="fas fa-sync-alt"></i>
-                </button>
-                <button class="theme-toggle" id="themeToggle"
-                        title="Cambiar tema">
-                    <i class="fas fa-sun"></i>
-                </button>
+<div class="app">
+
+    <!-- BARRA SUPERIOR -->
+    <header class="top-bar">
+        <div class="top-title">
+            <div class="logo-circle">DX</div>
+            <div class="top-text">
+                <span class="app-name">Dr. Xiaomi</span>
+                <span class="subtitle">Pantallas & precios en tiempo real</span>
             </div>
         </div>
-        <div class="subtitle">
-            Sistema de gestión de precios · <span id="lastUpdate">—</span>
+
+        <div class="top-actions">
+            <div class="chip-pill">
+                <i class="fa-solid fa-circle-check"></i>
+                <span>Online</span>
+            </div>
+            <button class="icon-btn" id="openUnlock">
+                <i class="fa-solid fa-lock"></i>
+            </button>
         </div>
     </header>
 
-    <section class="search-section">
-        <div id="editNotice" class="edit-notice" style="display: none;">
-            <i class="fas fa-edit"></i>
-            <strong>Modo Edición Activado</strong> · Puedes editar precios directamente en la tabla
-        </div>
-
-        <div class="search-controls">
-            <div class="search-box">
-                <input type="text" id="searchInput"
-                       placeholder="Buscar marca, modelo, tipo o proveedor...">
-                <div class="search-icon">
-                    <i class="fas fa-search"></i>
+    <!-- CONTENIDO SCROLLEABLE -->
+    <main class="content">
+        <section class="search-card">
+            <div class="search-row">
+                <div class="search-input-wrap">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input id="searchInput" type="text" class="search-input"
+                           placeholder="Busca por modelo, serie, tamaño...">
                 </div>
-                <button class="voice-search-btn" id="voiceSearchBtn"
-                        title="Búsqueda por voz">
-                    <i class="fas fa-microphone"></i>
+                <button class="btn-small btn-accent" id="clearSearch">
+                    <i class="fa-solid fa-rotate-left"></i>
+                    Limpiar
                 </button>
-                <div class="recent-searches" id="recentSearches"></div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <main class="main-content">
-        <div id="statusMessage" class="status"></div>
-        <div id="resultsCount" class="results-count"></div>
+        <section class="table-card">
+            <div class="table-header">
+                <div class="table-title">Listado de pantallas</div>
+                <div class="locked-badge" id="lockStatus">
+                    <i class="fa-solid fa-lock"></i>
+                    Costos ocultos
+                </div>
+            </div>
 
-        <div class="table-container">
-            <table id="resultsTable">
-                <thead>
-                <tr>
-                    <th data-column="marca" class="col-marca">Marca</th>
-                    <th data-column="modelo" class="col-modelo">Modelo</th>
-                    <th data-column="tipo" class="col-tipo">Tipo</th>
-                    <th data-column="proveedor" class="col-proveedor">Prov.</th>
-                    <th data-column="precio_compra" class="col-compra">Compra</th>
-                    <th data-column="precio_venta" class="col-venta">Venta</th>
-                </tr>
-                </thead>
-                <tbody id="resultsBody"></tbody>
-            </table>
-        </div>
+            <div class="table-wrapper">
+                <table id="pantallasTable">
+                    <thead>
+                    <tr>
+                        <th>Modelo</th>
+                        <th>Serie</th>
+                        <th>Venta</th>
+                        <th class="col-secreta">Compra</th>
+                        <th class="col-secreta">Proveedor</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- EJEMPLOS: añade todas las filas que quieras, ahora sí har&aacute; scroll -->
+                    <tr>
+                        <td><span class="pill-model">Redmi Note 8</span></td>
+                        <td>RN8-001</td>
+                        <td class="price price-venta">Bs 280</td>
+                        <td class="price price-compra col-secreta">Bs 160</td>
+                        <td class="col-secreta">Proveedor A</td>
+                    </tr>
+                    <tr>
+                        <td><span class="pill-model">Redmi Note 8 Pro</span></td>
+                        <td>RN8P-002</td>
+                        <td class="price price-venta">Bs 320</td>
+                        <td class="price price-compra col-secreta">Bs 190</td>
+                        <td class="col-secreta">Proveedor B</td>
+                    </tr>
+                    <tr>
+                        <td><span class="pill-model">Redmi 9C</span></td>
+                        <td>R9C-003</td>
+                        <td class="price price-venta">Bs 260</td>
+                        <td class="price price-compra col-secreta">Bs 150</td>
+                        <td class="col-secreta">Proveedor C</td>
+                    </tr>
+
+                    <!-- Copia/pega bloques como este para llenar y probar el scroll -->
+                    <tr>
+                        <td><span class="pill-model">Poco X3 Pro</span></td>
+                        <td>PX3P-004</td>
+                        <td class="price price-venta">Bs 380</td>
+                        <td class="price price-compra col-secreta">Bs 230</td>
+                        <td class="col-secreta">Proveedor D</td>
+                    </tr>
+                    <tr>
+                        <td><span class="pill-model">Mi 11 Lite</span></td>
+                        <td>M11L-005</td>
+                        <td class="price price-venta">Bs 420</td>
+                        <td class="price price-compra col-secreta">Bs 260</td>
+                        <td class="col-secreta">Proveedor E</td>
+                    </tr>
+                    <tr>
+                        <td><span class="pill-model">Redmi 10</span></td>
+                        <td>R10-006</td>
+                        <td class="price price-venta">Bs 300</td>
+                        <td class="price price-compra col-secreta">Bs 185</td>
+                        <td class="col-secreta">Proveedor F</td>
+                    </tr>
+                    <tr>
+                        <td><span class="pill-model">Redmi Note 11</span></td>
+                        <td>RN11-007</td>
+                        <td class="price price-venta">Bs 350</td>
+                        <td class="price price-compra col-secreta">Bs 210</td>
+                        <td class="col-secreta">Proveedor G</td>
+                    </tr>
+                    <tr>
+                        <td><span class="pill-model">Redmi Note 12</span></td>
+                        <td>RN12-008</td>
+                        <td class="price price-venta">Bs 390</td>
+                        <td class="price price-compra col-secreta">Bs 240</td>
+                        <td class="col-secreta">Proveedor H</td>
+                    </tr>
+                    <!-- FIN EJEMPLOS -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="secret-hint">
+                <i class="fa-solid fa-shield-keyhole"></i>
+                <span>
+                    Columnas <b>COMPRA</b> y <b>PROVEEDOR</b> solo aparecen cuando desbloqueas con tu PIN.
+                </span>
+            </div>
+        </section>
     </main>
 
-    <!-- BARRA INFERIOR -->
+    <!-- BARRA INFERIOR SIEMPRE VISIBLE -->
     <nav class="bottom-nav">
-        <div class="nav-item active" data-tab="main">
-            <div class="nav-icon">
-                <i class="fas fa-home"></i>
-            </div>
-            <div class="nav-label">Inicio</div>
-        </div>
-        <div class="nav-item" data-tab="favorites">
-            <div class="nav-icon">
-                <i class="fas fa-star"></i>
-            </div>
-            <div class="nav-label">TikTok</div>
-        </div>
-        <div class="nav-item" data-tab="compare">
-            <div class="nav-icon">
-                <i class="fas fa-balance-scale"></i>
-            </div>
-            <div class="nav-label">Recibo</div>
+        <div class="bottom-nav-inner">
+            <button class="nav-item active">
+                <i class="fa-solid fa-tablet-screen-button"></i>
+                <span>Pantallas</span>
+            </button>
+            <button class="nav-item">
+                <i class="fa-solid fa-layer-group"></i>
+                <span>Stock</span>
+            </button>
+            <button class="nav-item" id="openUnlockBottom">
+                <i class="fa-solid fa-lock-keyhole"></i>
+                <span>Costos</span>
+            </button>
+            <button class="nav-item">
+                <i class="fa-solid fa-gear"></i>
+                <span>Ajustes</span>
+            </button>
         </div>
     </nav>
-</div>
 
-<!-- MODALES -->
-<div class="modal" id="editModal">
-    <div class="modal-content">
-        <h2><i class="fas fa-edit"></i> Modo Edición</h2>
-        <p class="modal-subtitle">
-            Ingrese la clave para editar precios de compra y toda la lista.
-        </p>
-        <div class="password-wrapper">
-            <input type="password" id="editPassword" class="modal-input"
-                   placeholder="Clave de edición" autocomplete="off">
-            <button type="button" class="password-toggle"
-                    data-target="editPassword">
-                <i class="fas fa-eye"></i>
-            </button>
-        </div>
-        <div class="modal-buttons">
-            <button class="modal-btn secondary" id="cancelEditBtn">Cancelar</button>
-            <button class="modal-btn primary" id="confirmEditBtn">Activar edición</button>
+    <!-- MODAL CLAVE -->
+    <div class="modal-backdrop" id="unlockModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <i class="fa-solid fa-lock-keyhole"></i>
+                    Desbloquear costos
+                </div>
+                <button class="icon-btn" id="closeModal" style="width:26px;height:26px;font-size:12px;">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="modal-sub">
+                Ingresa tu PIN para ver las columnas de <b>compra</b> y <b>proveedor</b>. 
+                Este PIN funciona desde cualquier dispositivo.
+            </div>
+            <form id="unlockForm">
+                <input type="password" maxlength="6" inputmode="numeric" class="pin-input" id="pinInput"
+                       placeholder="••••" autocomplete="off">
+
+                <div class="error-text" id="errorText"></div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-small btn-ghost" id="cancelUnlock">Cancelar</button>
+                    <button type="submit" class="btn-small btn-accent">
+                        <i class="fa-solid fa-unlock-keyhole"></i>
+                        Desbloquear
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
-</div>
 
-<div class="modal" id="providersModal">
-    <div class="modal-content">
-        <h2><i class="fas fa-key"></i> Desbloquear Importadoras</h2>
-        <p class="modal-subtitle">
-            Con esta clave se mostrarán las columnas de <strong>Proveedor</strong> y
-            <strong>Compra</strong>.
-        </p>
-        <div class="password-wrapper">
-            <input type="password" id="providersPassword" class="modal-input"
-                   placeholder="Clave para ver importadoras" autocomplete="off">
-            <button type="button" class="password-toggle"
-                    data-target="providersPassword">
-                <i class="fas fa-eye"></i>
-            </button>
-        </div>
-        <div class="modal-buttons">
-            <button class="modal-btn secondary" id="cancelProvidersBtn">Cancelar</button>
-            <button class="modal-btn primary" id="confirmProvidersBtn">Desbloquear</button>
-        </div>
-    </div>
-</div>
-
-<div class="modal" id="ventaModal">
-    <div class="modal-content">
-        <h2><i class="fas fa-tag"></i> Editar precio de venta</h2>
-        <p class="modal-subtitle">
-            Ingrese la clave para editar el precio de venta.
-        </p>
-        <div class="password-wrapper">
-            <input type="password" id="ventaPassword" class="modal-input"
-                   placeholder="Clave para editar venta" autocomplete="off">
-            <button type="button" class="password-toggle"
-                    data-target="ventaPassword">
-                <i class="fas fa-eye"></i>
-            </button>
-        </div>
-        <div class="modal-buttons">
-            <button class="modal-btn secondary" id="cancelVentaBtn">Cancelar</button>
-            <button class="modal-btn primary" id="confirmVentaBtn">Editar precio</button>
-        </div>
-    </div>
-</div>
-
-<div class="modal" id="whatsappModal">
-    <div class="modal-content">
-        <h2><i class="fab fa-whatsapp"></i> Compartir por WhatsApp</h2>
-        <div id="whatsappMessage"
-             style="margin-bottom: 12px; color: var(--text-primary); text-align: center; font-size: 14px; padding: 12px; background: var(--bg-primary); border-radius: 10px; border: 1px solid var(--border);"></div>
-        <p class="modal-subtitle">
-            El mensaje se abrirá en WhatsApp. ¿Desea continuar?
-        </p>
-        <div class="modal-buttons">
-            <button class="modal-btn secondary" id="cancelWhatsappBtn">Cancelar</button>
-            <button class="modal-btn primary" id="confirmWhatsappBtn"
-                    style="background-color: var(--whatsapp);">
-                <i class="fab fa-whatsapp"></i> Abrir WhatsApp
-            </button>
-        </div>
-    </div>
-</div>
-
-<div class="modal" id="compareModal">
-    <div class="modal-content">
-        <h2><i class="fas fa-balance-scale"></i> Comparar productos</h2>
-        <div id="compareResults" style="max-height: 400px; overflow-y: auto;"></div>
-        <div class="modal-buttons">
-            <button class="modal-btn secondary" id="closeCompareBtn">Cerrar</button>
-            <button class="modal-btn primary" id="clearCompareBtn">
-                <i class="fas fa-trash"></i> Limpiar
-            </button>
-        </div>
-    </div>
 </div>
 
 <script>
-    const CONFIG = [
-        { nombre: "J&A", archivo: "data/ja.csv" },
-        { nombre: "CentralCell", archivo: "data/centralcel.csv" },
-        { nombre: "Osmobil", archivo: "data/osmobil.csv" },
-        { nombre: "CFH LP", archivo: "data/CFH.csv" },
-        { nombre: "BITE", archivo: "data/boe.csv" }
-    ];
+    // 🔐 CAMBIA AQUÍ TU CLAVE MAESTRA
+    const MASTER_PIN = "1234";
 
-    // CLAVES (cámbialas a lo que quieras)
-    const EDIT_PASSWORD      = "123456";
-    const VENTA_PASSWORD     = "123456";
-    const PROVIDERS_PASSWORD = "123456";
+    const unlockModal = document.getElementById("unlockModal");
+    const openUnlock = document.getElementById("openUnlock");
+    const openUnlockBottom = document.getElementById("openUnlockBottom");
+    const closeModal = document.getElementById("closeModal");
+    const cancelUnlock = document.getElementById("cancelUnlock");
+    const unlockForm = document.getElementById("unlockForm");
+    const pinInput = document.getElementById("pinInput");
+    const errorText = document.getElementById("errorText");
+    const lockStatus = document.getElementById("lockStatus");
 
-    let allData = [];
-    let filteredData = [];
-    let sortColumn = 'marca';
-    let sortDirection = 'asc';
-    let searchTerm = '';
-    let showProviders = false;
-    let editMode = false;
-    let ventaEditMode = false;
-    let providersAccess = false;
-    let currentWhatsappRow = null;
-    let comparingItems = new Set();
-    let currentTab = 'main';
-    let voiceRecognition = null;
-    let isLightMode = false;
+    function showModal() {
+        unlockModal.classList.add("show");
+        pinInput.value = "";
+        errorText.textContent = "";
+        setTimeout(() => pinInput.focus(), 80);
+    }
 
-    document.addEventListener('DOMContentLoaded', () => {
-        initializeApp();
+    function hideModal() {
+        unlockModal.classList.remove("show");
+    }
+
+    openUnlock.addEventListener("click", showModal);
+    openUnlockBottom.addEventListener("click", showModal);
+    closeModal.addEventListener("click", hideModal);
+    cancelUnlock.addEventListener("click", hideModal);
+
+    unlockModal.addEventListener("click", (e) => {
+        if (e.target === unlockModal) hideModal();
     });
 
-    function initializeApp() {
-        // recordar si ya se desbloqueó proveedores en este dispositivo
-        const storedProvidersAccess = localStorage.getItem('providersAccess') === 'true';
-        if (storedProvidersAccess) {
-            providersAccess = true;
-            showProviders = true;
+    unlockForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const pin = pinInput.value.trim();
+
+        if (pin === MASTER_PIN) {
+            document.body.classList.add("secret-visible");
+            lockStatus.innerHTML = '<i class="fa-solid fa-unlock-keyhole"></i> Costos visibles';
+            errorText.textContent = "";
+            hideModal();
+        } else {
+            errorText.textContent = "PIN incorrecto. Intenta de nuevo.";
         }
+    });
 
-        loadAllData();
-        setupEventListeners();
-        loadEditsFromStorage();
-        updateProvidersUI();
-        updateTableColumns();
-        checkOnlineStatus();
-        updateLastUpdateLabel();
-        registerServiceWorker();
-        setupPasswordToggles();
+    // 🔎 BUSCADOR
+    const searchInput = document.getElementById("searchInput");
+    const clearSearch = document.getElementById("clearSearch");
+    const table = document.getElementById("pantallasTable");
+    const rows = Array.from(table.querySelectorAll("tbody tr"));
 
-        const savedTheme = localStorage.getItem('themePreference');
-        if (savedTheme === 'light') {
-            toggleTheme();
-        }
-    }
+    function filtrarTabla() {
+        const term = searchInput.value.toLowerCase();
 
-    function updateLastUpdateLabel() {
-        const el = document.getElementById('lastUpdate');
-        if (!el) return;
-        const hoy = new Date();
-        el.textContent = hoy.toLocaleDateString('es-BO', {
-            day: '2-digit',
-            month: '2-digit',
-            year: '2-digit'
+        rows.forEach(row => {
+            const text = row.innerText.toLowerCase();
+            row.style.display = text.includes(term) ? "" : "none";
         });
     }
 
-    function registerServiceWorker() {
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('./sw.js').catch(err => {
-                console.log('Service Worker error:', err);
-            });
-        }
-    }
-
-    function setupEventListeners() {
-        document.getElementById('searchInput')
-            .addEventListener('input', debounce(handleSearch, 300));
-
-        const providersBtn = document.getElementById('providersBtn');
-        if (providersBtn) {
-            providersBtn.addEventListener('click', handleProvidersButtonClick);
-        }
-
-        document.getElementById('voiceSearchBtn')
-            .addEventListener('click', startVoiceSearch);
-        document.getElementById('refreshBtn')
-            .addEventListener('click', loadAllData);
-        document.getElementById('themeToggle')
-            .addEventListener('click', toggleTheme);
-
-        setupModalEvents();
-
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', handleNavigation);
-        });
-
-        document.addEventListener('keydown', handleKeyboardShortcuts);
-
-        window.addEventListener('online', handleOnlineStatus);
-        window.addEventListener('offline', handleOnlineStatus);
-
-        document.getElementById('searchInput')
-            .addEventListener('focus', showRecentSearches);
-        document.addEventListener('click', hideRecentSearches);
-
-        document.querySelectorAll('th[data-column]').forEach(th => {
-            th.addEventListener('click', () => {
-                const column = th.getAttribute('data-column');
-                sortTable(column);
-            });
-        });
-    }
-
-    function setupModalEvents() {
-        const editModeBtn = document.getElementById('editModeBtn');
-        if (editModeBtn) {
-            editModeBtn.addEventListener('click', showEditModal);
-        }
-        document.getElementById('cancelEditBtn')
-            .addEventListener('click', hideEditModal);
-        document.getElementById('confirmEditBtn')
-            .addEventListener('click', handleEditAccess);
-
-        document.getElementById('cancelProvidersBtn')
-            .addEventListener('click', hideProvidersModal);
-        document.getElementById('confirmProvidersBtn')
-            .addEventListener('click', handleProvidersAccess);
-
-        document.getElementById('cancelVentaBtn')
-            .addEventListener('click', hideVentaModal);
-        document.getElementById('confirmVentaBtn')
-            .addEventListener('click', handleVentaAccess);
-
-        document.getElementById('cancelWhatsappBtn')
-            .addEventListener('click', hideWhatsappModal);
-        document.getElementById('confirmWhatsappBtn')
-            .addEventListener('click', handleWhatsappShare);
-
-        document.getElementById('closeCompareBtn')
-            .addEventListener('click', hideCompareModal);
-        document.getElementById('clearCompareBtn')
-            .addEventListener('click', clearCompare);
-
-        document.getElementById('editPassword')
-            .addEventListener('keypress', e => { if (e.key === 'Enter') handleEditAccess(); });
-        document.getElementById('ventaPassword')
-            .addEventListener('keypress', e => { if (e.key === 'Enter') handleVentaAccess(); });
-        document.getElementById('providersPassword')
-            .addEventListener('keypress', e => { if (e.key === 'Enter') handleProvidersAccess(); });
-    }
-
-    function setupPasswordToggles() {
-        document.querySelectorAll('.password-toggle').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const targetId = btn.dataset.target;
-                const input = document.getElementById(targetId);
-                if (!input) return;
-                const isPassword = input.type === 'password';
-                input.type = isPassword ? 'text' : 'password';
-                const icon = btn.querySelector('i');
-                if (icon) {
-                    icon.className = isPassword ? 'fas fa-eye-slash' : 'fas fa-eye';
-                }
-            });
-        });
-    }
-
-    function toggleTheme() {
-        isLightMode = !isLightMode;
-        const toggleIcon = document.querySelector('#themeToggle i');
-        if (isLightMode) {
-            document.body.classList.add('light-mode');
-            if (toggleIcon) toggleIcon.className = 'fas fa-moon';
-            localStorage.setItem('themePreference', 'light');
-        } else {
-            document.body.classList.remove('light-mode');
-            if (toggleIcon) toggleIcon.className = 'fas fa-sun';
-            localStorage.setItem('themePreference', 'dark');
-        }
-    }
-
-    async function loadAllData() {
-        showStatus('🔄 Cargando datos desde archivos CSV...', 'info');
-        try {
-            allData = [];
-            let loadedCount = 0;
-            let totalRecords = 0;
-
-            for (const provider of CONFIG) {
-                try {
-                    const data = await loadCSVData(provider.archivo, provider.nombre);
-                    allData = [...allData, ...data];
-                    loadedCount++;
-                    totalRecords += data.length;
-                } catch (error) {
-                    console.error(`❌ Error cargando datos de ${provider.nombre}:`, error);
-                }
-            }
-
-            const storedData = localStorage.getItem('customPriceData');
-            if (storedData) {
-                try {
-                    const customData = JSON.parse(storedData);
-                    allData = [...allData, ...customData];
-                } catch (e) {
-                    console.error('Error cargando datos personalizados:', e);
-                }
-            }
-
-            verifyDataIntegrity();
-
-            sortData('marca', 'asc');
-            applyFilters();
-            updateRecentSearches();
-
-            showStatus(`✅ ${totalRecords} precios cargados de ${loadedCount} proveedores`, 'success');
-        } catch (error) {
-            console.error('Error cargando datos:', error);
-            showStatus('❌ Error cargando datos. Verifique la conexión.', 'error');
-        }
-    }
-
-    async function loadCSVData(filePath, providerName) {
-        try {
-            const response = await fetch(filePath);
-            if (!response.ok) throw new Error(`Error ${response.status}`);
-
-            const csvText = await response.text();
-            const data = parseCSVCorregido(csvText, providerName);
-            localStorage.setItem(`backup_${providerName}`, JSON.stringify(data));
-            return data;
-        } catch (error) {
-            console.error(`Error cargando ${filePath}:`, error);
-            const backupData = localStorage.getItem(`backup_${providerName}`);
-            if (backupData) {
-                return JSON.parse(backupData);
-            }
-            return [];
-        }
-    }
-
-    function parseCSVCorregido(csvText, providerName) {
-        const lines = csvText.split('\n').filter(line => line.trim() !== '');
-        const data = [];
-        if (lines.length === 0) return [];
-
-        for (let i = 1; i < lines.length; i++) {
-            const line = lines[i];
-            if (!line.trim()) continue;
-
-            const columns = parseCSVLine(line);
-
-            if (columns.length >= 6) {
-                const marca = columns[0] || 'Desconocido';
-                const modelo = columns[1] || 'Desconocido';
-                const tipo = (columns[2] || 'LCD').toUpperCase();
-                const proveedor = columns[3] || providerName;
-                const precio_compra = parsePrice(columns[4]);
-                const precio_venta = parsePrice(columns[5]);
-
-                const row = {
-                    lista: providerName,
-                    marca: marca.trim(),
-                    modelo: modelo.trim(),
-                    tipo: tipo.trim(),
-                    proveedor: proveedor.trim(),
-                    precio_compra,
-                    precio_venta
-                };
-
-                if (row.marca !== 'Desconocido' && row.modelo !== 'Desconocido') {
-                    data.push(row);
-                }
-            } else if (columns.length === 5) {
-                const marca = columns[0] || 'Desconocido';
-                const modelo = columns[1] || 'Desconocido';
-                const tipo = (columns[2] || 'LCD').toUpperCase();
-                const precio_compra = parsePrice(columns[3]);
-                const precio_venta = parsePrice(columns[4]);
-
-                const row = {
-                    lista: providerName,
-                    marca: marca.trim(),
-                    modelo: modelo.trim(),
-                    tipo: tipo.trim(),
-                    proveedor: providerName,
-                    precio_compra,
-                    precio_venta
-                };
-                data.push(row);
-            }
-        }
-        return data;
-    }
-
-    function parseCSVLine(line) {
-        const result = [];
-        let current = '';
-        let inQuotes = false;
-        for (let i = 0; i < line.length; i++) {
-            const char = line[i];
-            if (char === '"') {
-                inQuotes = !inQuotes;
-            } else if (char === ',' && !inQuotes) {
-                result.push(current.trim());
-                current = '';
-            } else {
-                current += char;
-            }
-        }
-        result.push(current.trim());
-        return result.map(field => field.replace(/^"|"$/g, ''));
-    }
-
-    function parsePrice(priceStr) {
-        if (!priceStr || priceStr.trim() === '') return 0;
-        let str = priceStr.toString().trim();
-        str = str.replace(/[^\d.,-]/g, '');
-        const isNegative = str.startsWith('-');
-        if (isNegative) str = str.substring(1);
-        const lastComma = str.lastIndexOf(',');
-        const lastDot = str.lastIndexOf('.');
-        let cleaned;
-        if (lastComma > lastDot) {
-            cleaned = str.replace(/\./g, '').replace(',', '.');
-        } else {
-            cleaned = str.replace(/,/g, '');
-        }
-        const num = parseFloat(cleaned);
-        if (isNaN(num)) return 0;
-        const rounded = Math.round(num);
-        return isNegative ? -rounded : rounded;
-    }
-
-    // BOTÓN PROVEEDORES (clave para ver columnas)
-    function handleProvidersButtonClick() {
-        if (!providersAccess) {
-            showProvidersModal();
-            return;
-        }
-        // si ya está desbloqueado, alterna mejor precio vs todas las listas
-        showProviders = !showProviders;
-        applyFilters();
-        updateProvidersUI();
-    }
-
-    function updateProvidersUI() {
-        const btn = document.getElementById('providersBtn');
-        if (!btn) return;
-
-        if (!providersAccess) {
-            btn.classList.remove('active-providers');
-            btn.innerHTML = '<i class="fas fa-lock"></i>';
-            btn.title = 'Desbloquear importadoras';
-        } else {
-            if (showProviders) {
-                btn.classList.add('active-providers');
-                btn.innerHTML = '<i class="fas fa-unlock"></i>';
-                btn.title = 'Mostrar solo mejor precio';
-            } else {
-                btn.classList.remove('active-providers');
-                btn.innerHTML = '<i class="fas fa-lock-open"></i>';
-                btn.title = 'Mostrar todas las importadoras';
-            }
-        }
-    }
-
-    function updateTableColumns() {
-        const tableContainer = document.querySelector('.table-container');
-        if (!tableContainer) return;
-        if (!providersAccess) {
-            tableContainer.classList.add('hide-columns');
-        } else {
-            tableContainer.classList.remove('hide-columns');
-        }
-    }
-
-    function startVoiceSearch() {
-        if (!('webkitSpeechRecognition' in window)) {
-            showStatus('❌ Tu navegador no soporta búsqueda por voz', 'error');
-            return;
-        }
-        const voiceBtn = document.getElementById('voiceSearchBtn');
-        voiceRecognition = new webkitSpeechRecognition();
-        voiceRecognition.continuous = false;
-        voiceRecognition.interimResults = false;
-        voiceRecognition.lang = 'es-ES';
-
-        voiceBtn.classList.add('listening');
-
-        voiceRecognition.onstart = function() {
-            showStatus('🎤 Escuchando... Habla ahora', 'info');
-        };
-
-        voiceRecognition.onresult = function(event) {
-            const transcript = event.results[0][0].transcript;
-            document.getElementById('searchInput').value = transcript;
-            handleSearch({ target: { value: transcript } });
-            saveSearch(transcript);
-        };
-
-        voiceRecognition.onerror = function() {
-            showStatus('❌ Error en reconocimiento de voz', 'error');
-            voiceBtn.classList.remove('listening');
-        };
-
-        voiceRecognition.onend = function() {
-            voiceBtn.classList.remove('listening');
-        };
-
-        voiceRecognition.start();
-    }
-
-    function saveSearch(term) {
-        if (!term.trim()) return;
-        const searches = JSON.parse(localStorage.getItem('recentSearches') || '[]');
-        const existingIndex = searches.indexOf(term);
-        if (existingIndex !== -1) searches.splice(existingIndex, 1);
-        searches.unshift(term);
-        localStorage.setItem('recentSearches', JSON.stringify(searches.slice(0, 5)));
-        updateRecentSearches();
-    }
-
-    function updateRecentSearches() {
-        const searches = JSON.parse(localStorage.getItem('recentSearches') || '[]');
-        const container = document.getElementById('recentSearches');
-        container.innerHTML = '';
-        searches.forEach(search => {
-            const item = document.createElement('div');
-            item.className = 'search-item';
-            item.textContent = search;
-            item.addEventListener('click', () => {
-                document.getElementById('searchInput').value = search;
-                handleSearch({ target: { value: search } });
-                hideRecentSearches();
-            });
-            container.appendChild(item);
-        });
-    }
-
-    function showRecentSearches() {
-        const container = document.getElementById('recentSearches');
-        const searches = JSON.parse(localStorage.getItem('recentSearches') || '[]');
-        if (searches.length > 0) {
-            container.classList.add('active');
-        }
-    }
-
-    function hideRecentSearches(event) {
-        const container = document.getElementById('recentSearches');
-        const searchInput = document.getElementById('searchInput');
-        if (!event) {
-            container.classList.remove('active');
-            return;
-        }
-        if (event.target !== searchInput && !container.contains(event.target)) {
-            container.classList.remove('active');
-        }
-    }
-
-    function checkOnlineStatus() {
-        if (!navigator.onLine) {
-            showStatus('⚠️ Estás trabajando en modo offline', 'warning');
-        }
-    }
-
-    function handleOnlineStatus() {
-        if (navigator.onLine) {
-            showStatus('✅ Conexión restaurada', 'success');
-        } else {
-            showStatus('⚠️ Modo offline activado', 'warning');
-        }
-    }
-
-    function handleNavigation(event) {
-        const tab = event.currentTarget.getAttribute('data-tab');
-        document.querySelectorAll('.nav-item')
-            .forEach(item => item.classList.remove('active'));
-        event.currentTarget.classList.add('active');
-        currentTab = tab;
-        switch(tab) {
-            case 'favorites':
-                showFavorites();
-                break;
-            case 'compare':
-                showCompareModal();
-                break;
-            default:
-                applyFilters();
-                break;
-        }
-    }
-
-    function showFavorites() {
-        const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-        filteredData = allData.filter(row => favorites.includes(generateRowId(row)));
-        renderTable();
-    }
-
-    function handleKeyboardShortcuts(event) {
-        if (event.ctrlKey || event.metaKey) {
-            switch(event.key) {
-                case 'k':
-                    event.preventDefault();
-                    document.getElementById('searchInput').focus();
-                    break;
-                case 'e':
-                    event.preventDefault();
-                    showEditModal();
-                    break;
-                case 'r':
-                    event.preventDefault();
-                    loadAllData();
-                    break;
-                case 't':
-                    event.preventDefault();
-                    toggleTheme();
-                    break;
-            }
-        }
-        if (event.key === 'Escape') {
-            closeAllModals();
-            hideRecentSearches();
-        }
-    }
-
-    function closeAllModals() {
-        document.querySelectorAll('.modal').forEach(modal => {
-            modal.style.display = 'none';
-        });
-    }
-
-    function debounce(func, wait) {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
-            };
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-        };
-    }
-
-    function normalizeText(text) {
-        return text
-            .toLowerCase()
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '')
-            .replace(/[^a-z0-9]/g, '');
-    }
-
-    function formatCurrency(value) {
-        if (value === null || value === undefined || isNaN(value)) return '0';
-        return Math.round(parseFloat(value)).toString();
-    }
-
-    function generateRowId(row) {
-        return `${row.lista}|${row.marca}|${row.modelo}|${row.tipo}|${row.proveedor}|${row.precio_compra}`;
-    }
-
-    function showStatus(message, type) {
-        const statusEl = document.getElementById('statusMessage');
-        statusEl.textContent = message;
-        statusEl.className = `status ${type}`;
-        statusEl.style.display = 'block';
-        setTimeout(() => {
-            statusEl.style.display = 'none';
-        }, type === 'error' ? 4000 : 2500);
-    }
-
-    function copyPriceToClipboard(row) {
-        const message = generateWhatsappMessage(row);
-        if (navigator.clipboard && window.isSecureContext) {
-            navigator.clipboard.writeText(message)
-                .then(() => {
-                    showStatus('✅ Mensaje copiado al portapapeles', 'success');
-                    highlightCopiedPrice(row);
-                })
-                .catch(() => {
-                    fallbackCopyToClipboard(message, row);
-                });
-        } else {
-            fallbackCopyToClipboard(message, row);
-        }
-    }
-
-    function fallbackCopyToClipboard(text, row) {
-        const textArea = document.createElement('textarea');
-        textArea.value = text;
-        textArea.style.position = 'fixed';
-        textArea.style.left = '-999999px';
-        document.body.appendChild(textArea);
-        textArea.focus();
-        textArea.select();
-        try {
-            document.execCommand('copy');
-            showStatus('✅ Mensaje copiado al portapapeles', 'success');
-            highlightCopiedPrice(row);
-        } catch {
-            showStatus('❌ Error al copiar mensaje', 'error');
-        }
-        document.body.removeChild(textArea);
-    }
-
-    function highlightCopiedPrice(row) {
-        const priceElements = document.querySelectorAll('.price-venta');
-        priceElements.forEach(element => {
-            if (element.textContent.includes(`Bs. ${formatCurrency(row.precio_venta)}`)) {
-                const originalBg = element.style.backgroundColor;
-                const originalColor = element.style.color;
-                element.style.backgroundColor = 'var(--accent)';
-                element.style.color = 'white';
-                setTimeout(() => {
-                    element.style.backgroundColor = originalBg;
-                    element.style.color = originalColor;
-                }, 800);
-            }
-        });
-    }
-
-    function handleSearch(e) {
-        searchTerm = e.target.value;
-        saveSearch(searchTerm);
-        applyFilters();
-    }
-
-    function applyFilters() {
-        let filtered = [...allData];
-        if (searchTerm) {
-            const normalizedSearch = normalizeText(searchTerm);
-            filtered = filtered.filter(row =>
-                Object.values(row).some(value =>
-                    value !== null &&
-                    normalizeText(value.toString()).includes(normalizedSearch)
-                )
-            );
-        }
-
-        if (!showProviders) {
-            filtered = getBestPrices(filtered);
-        }
-
-        if (sortColumn) {
-            sortData(sortColumn, sortDirection);
-        }
-        filteredData = filtered;
-        renderTable();
-        updateResultsCount();
-    }
-
-    function sortTable(column) {
-        if (sortColumn === column) {
-            sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
-        } else {
-            sortColumn = column;
-            sortDirection = 'asc';
-        }
-        document.querySelectorAll('th')
-            .forEach(th => th.classList.remove('sort-asc', 'sort-desc'));
-        const currentTh = document.querySelector(`th[data-column="${column}"]`);
-        if (currentTh) currentTh.classList.add(`sort-${sortDirection}`);
-        sortData(column, sortDirection);
-        renderTable();
-    }
-
-    function sortData(column, direction) {
-        filteredData.sort((a, b) => {
-            let valueA = a[column];
-            let valueB = b[column];
-            if (valueA === null || valueA === undefined) valueA = '';
-            if (valueB === null || valueB === undefined) valueB = '';
-            if (column === 'precio_compra' || column === 'precio_venta') {
-                valueA = valueA || 0;
-                valueB = valueB || 0;
-                return direction === 'asc' ? valueA - valueB : valueB - valueA;
-            }
-            valueA = valueA.toString().toLowerCase();
-            valueB = valueB.toString().toLowerCase();
-            if (valueA < valueB) return direction === 'asc' ? -1 : 1;
-            if (valueA > valueB) return direction === 'asc' ? 1 : -1;
-            return 0;
-        });
-    }
-
-    function getBestPrices(data) {
-        const grouped = {};
-        data.forEach(row => {
-            const key = `${row.marca}|${row.modelo}|${row.tipo}`;
-            if (!grouped[key] || row.precio_compra < grouped[key].precio_compra) {
-                grouped[key] = { ...row };
-            }
-        });
-        return Object.values(grouped);
-    }
-
-    function escapeRegExp(string) {
-        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    }
-
-    function highlightMatches(text) {
-        if (!searchTerm || !text) return text || '';
-        const escaped = escapeRegExp(searchTerm);
-        const regex = new RegExp(escaped, 'gi');
-        return text.toString().replace(regex, match => `<mark>${match}</mark>`);
-    }
-
-    function renderTable() {
-        const tbody = document.getElementById('resultsBody');
-        if (filteredData.length === 0) {
-            tbody.innerHTML = `
-                <tr>
-                    <td colspan="6" class="empty">
-                        <div class="icon">🔍</div>
-                        ${searchTerm ? 'No se encontraron resultados' : 'No hay datos para mostrar'}
-                    </td>
-                </tr>
-            `;
-            return;
-        }
-
-        tbody.innerHTML = '';
-        filteredData.forEach(row => {
-            const tr = document.createElement('tr');
-            const tipoClass = row.tipo === 'OLED' ? 'tipo-oled' : 'tipo-lcd';
-
-            const compraField = editMode && providersAccess ?
-                `<input type="text"
-                        class="editable editable-compra"
-                        data-id="${generateRowId(row)}"
-                        data-field="precio_compra"
-                        value="${formatCurrency(row.precio_compra)}"
-                        placeholder="0">` :
-                (providersAccess ? `<span class="price-compra">Bs. ${formatCurrency(row.precio_compra)}</span>` : '');
-
-            const ventaField = ventaEditMode ?
-                `<input type="text"
-                        class="editable"
-                        data-id="${generateRowId(row)}"
-                        data-field="precio_venta"
-                        value="${formatCurrency(row.precio_venta)}"
-                        placeholder="0">` :
-                `<div class="price-container">
-                    <span class="price-venta"
-                          onclick='copyPriceToClipboard(${JSON.stringify(row).replace(/"/g, "&quot;")})'
-                          title="Haz clic para copiar el precio al portapapeles">
-                        Bs. ${formatCurrency(row.precio_venta)}
-                    </span>
-                    <i class="fas fa-share-alt share-icon"
-                       onclick='showWhatsappModal(${JSON.stringify(row).replace(/"/g, "&quot;")})'
-                       title="Compartir por WhatsApp"></i>
-                </div>`;
-
-            tr.innerHTML = `
-                <td class="col-marca">${highlightMatches(row.marca)}</td>
-                <td class="col-modelo">${highlightMatches(row.modelo)}</td>
-                <td class="col-tipo ${tipoClass}">${highlightMatches(row.tipo)}</td>
-                <td class="col-proveedor">
-                    ${providersAccess ? highlightMatches(row.proveedor) : ''}
-                </td>
-                <td class="col-compra">
-                    ${providersAccess ? compraField : ''}
-                </td>
-                <td class="col-venta">${ventaField}</td>
-            `;
-            tbody.appendChild(tr);
-        });
-
-        if (editMode && providersAccess) {
-            document.querySelectorAll('.editable[data-field="precio_compra"]')
-                .forEach(input => input.addEventListener('change', handleEdit));
-        }
-        if (ventaEditMode) {
-            document.querySelectorAll('.editable[data-field="precio_venta"]')
-                .forEach(input => input.addEventListener('change', handleEdit));
-        }
-
-        updateResultsCount();
-    }
-
-    function updateResultsCount() {
-        const countEl = document.getElementById('resultsCount');
-        if (filteredData.length > 0) {
-            countEl.textContent = `${filteredData.length} resultado${filteredData.length !== 1 ? 's' : ''}`;
-            countEl.style.display = 'block';
-        } else {
-            countEl.style.display = 'none';
-        }
-    }
-
-    function handleEdit(e) {
-        const input = e.target;
-        const rowId = input.getAttribute('data-id');
-        const field = input.getAttribute('data-field');
-        let value = input.value;
-        if (field === 'precio_compra' || field === 'precio_venta') {
-            value = Math.round(parseFloat(value) || 0);
-            input.value = value;
-        }
-        saveEditToStorage(rowId, field, value);
-        updateDataInMemory(rowId, field, value);
-    }
-
-    function saveEditToStorage(rowId, field, value) {
-        const edits = JSON.parse(localStorage.getItem('priceListEdits') || '{}');
-        if (!edits[rowId]) edits[rowId] = {};
-        edits[rowId][field] = value;
-        localStorage.setItem('priceListEdits', JSON.stringify(edits));
-        showStatus('✅ Precio actualizado correctamente', 'success');
-    }
-
-    function loadEditsFromStorage() {
-        const edits = JSON.parse(localStorage.getItem('priceListEdits') || '{}');
-        allData.forEach(row => {
-            const rowId = generateRowId(row);
-            if (edits[rowId]) {
-                if (edits[rowId].precio_venta !== undefined) {
-                    row.precio_venta = edits[rowId].precio_venta;
-                }
-                if (edits[rowId].precio_compra !== undefined) {
-                    row.precio_compra = edits[rowId].precio_compra;
-                }
-            }
-        });
-    }
-
-    function updateDataInMemory(rowId, field, value) {
-        const [lista, marca, modelo, tipo, proveedor, precio_compra] = rowId.split('|');
-        allData.forEach(row => {
-            if (row.lista === lista &&
-                row.marca === marca &&
-                row.modelo === modelo &&
-                row.tipo === tipo &&
-                row.proveedor === proveedor &&
-                row.precio_compra == precio_compra) {
-                if (field === 'precio_compra' || field === 'precio_venta') {
-                    row[field] = Math.round(parseFloat(value) || 0);
-                }
-            }
-        });
-        applyFilters();
-    }
-
-    function showEditModal() {
-        document.getElementById('editModal').style.display = 'flex';
-        document.getElementById('editPassword').focus();
-    }
-
-    function hideEditModal() {
-        document.getElementById('editModal').style.display = 'none';
-        document.getElementById('editPassword').value = '';
-    }
-
-    function showProvidersModal() {
-        document.getElementById('providersModal').style.display = 'flex';
-        document.getElementById('providersPassword').focus();
-    }
-
-    function hideProvidersModal() {
-        document.getElementById('providersModal').style.display = 'none';
-        document.getElementById('providersPassword').value = '';
-    }
-
-    function showVentaModal() {
-        document.getElementById('ventaModal').style.display = 'flex';
-        document.getElementById('ventaPassword').focus();
-    }
-
-    function hideVentaModal() {
-        document.getElementById('ventaModal').style.display = 'none';
-        document.getElementById('ventaPassword').value = '';
-    }
-
-    function showWhatsappModal(row) {
-        currentWhatsappRow = row;
-        const message = generateWhatsappMessage(row);
-        document.getElementById('whatsappMessage').textContent = message;
-        document.getElementById('whatsappModal').style.display = 'flex';
-    }
-
-    function hideWhatsappModal() {
-        document.getElementById('whatsappModal').style.display = 'none';
-        currentWhatsappRow = null;
-    }
-
-    function hideCompareModal() {
-        document.getElementById('compareModal').style.display = 'none';
-    }
-
-    function generateWhatsappMessage(row) {
-        return `📱 *PRECIO DE PANTALLA* ${row.marca} ${row.modelo} es:  ${formatCurrency(row.precio_venta)} Bs.`;
-    }
-
-    function handleWhatsappShare() {
-        if (!currentWhatsappRow) return;
-        const message = generateWhatsappMessage(currentWhatsappRow);
-        const encodedMessage = encodeURIComponent(message);
-        const whatsappUrl = `https://wa.me/?text=${encodedMessage}`;
-        window.open(whatsappUrl, '_blank');
-        hideWhatsappModal();
-        showStatus('✅ Mensaje preparado para WhatsApp', 'success');
-    }
-
-    function handleEditAccess() {
-        const password = document.getElementById('editPassword').value;
-        if (password === EDIT_PASSWORD) {
-            editMode = true;
-            hideEditModal();
-            updateEditModeUI();
-            showStatus('✅ Modo edición activado', 'success');
-        } else {
-            showStatus('❌ Clave incorrecta. Intente nuevamente.', 'error');
-            document.getElementById('editPassword').value = '';
-            document.getElementById('editPassword').focus();
-        }
-    }
-
-    function handleProvidersAccess() {
-        const password = document.getElementById('providersPassword').value;
-        if (password === PROVIDERS_PASSWORD) {
-            providersAccess = true;
-            showProviders = true;   // al habilitar, mostrar todas las importadoras
-            localStorage.setItem('providersAccess', 'true');
-            hideProvidersModal();
-            updateProvidersUI();
-            updateTableColumns();
-            applyFilters();
-            showStatus('✅ Columnas Compra y Proveedor desbloqueadas', 'success');
-        } else {
-            showStatus('❌ Clave incorrecta. Intente nuevamente.', 'error');
-            document.getElementById('providersPassword').value = '';
-            document.getElementById('providersPassword').focus();
-        }
-    }
-
-    function handleVentaAccess() {
-        const password = document.getElementById('ventaPassword').value;
-        if (password === VENTA_PASSWORD) {
-            ventaEditMode = true;
-            hideVentaModal();
-            showStatus('✅ Puede editar el precio de venta', 'success');
-            renderTable();
-        } else {
-            showStatus('❌ Clave incorrecta. Intente nuevamente.', 'error');
-            document.getElementById('ventaPassword').value = '';
-            document.getElementById('ventaPassword').focus();
-        }
-    }
-
-    function updateEditModeUI() {
-        const editNotice = document.getElementById('editNotice');
-        const editBtn = document.getElementById('editModeBtn');
-        if (editMode) {
-            editNotice.style.display = 'block';
-            if (editBtn) editBtn.innerHTML = '<i class="fas fa-toggle-on"></i>';
-        } else {
-            editNotice.style.display = 'none';
-            if (editBtn) editBtn.innerHTML = '<i class="fas fa-edit"></i>';
-        }
-        renderTable();
-    }
-
-    function showCompareModal() {
-        const compareResults = document.getElementById('compareResults');
-        compareResults.innerHTML = '';
-        if (comparingItems.size === 0) {
-            compareResults.innerHTML =
-                '<p style="text-align: center; color: var(--text-secondary);">No hay productos para comparar</p>';
-        } else {
-            const itemsToCompare = allData.filter(row =>
-                comparingItems.has(generateRowId(row))
-            );
-            let compareHTML =
-                '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">';
-            itemsToCompare.forEach(item => {
-                compareHTML += `
-                    <div style="background: var(--bg-primary); padding: 12px; border-radius: 10px; border: 1px solid var(--border);">
-                        <h4 style="color: var(--accent); margin-bottom: 6px; font-size: 0.9rem;">${item.marca} ${item.modelo}</h4>
-                        <p style="font-size: 0.8rem;"><strong>Tipo:</strong> ${item.tipo}</p>
-                        <p style="font-size: 0.8rem;"><strong>Proveedor:</strong> ${item.proveedor}</p>
-                        <p style="font-size: 0.8rem;"><strong>Compra:</strong> Bs. ${formatCurrency(item.precio_compra)}</p>
-                        <p style="font-size: 0.8rem;"><strong>Venta:</strong> Bs. ${formatCurrency(item.precio_venta)}</p>
-                    </div>
-                `;
-            });
-            compareHTML += '</div>';
-            compareResults.innerHTML = compareHTML;
-        }
-        document.getElementById('compareModal').style.display = 'flex';
-    }
-
-    function clearCompare() {
-        comparingItems.clear();
-        hideCompareModal();
-        showStatus('🗑️ Comparación limpiada', 'success');
-    }
-
-    function toggleFavorite(row) {
-        const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-        const itemId = generateRowId(row);
-        if (favorites.includes(itemId)) {
-            favorites.splice(favorites.indexOf(itemId), 1);
-            showStatus('❤️ Eliminado de favoritos', 'info');
-        } else {
-            favorites.push(itemId);
-            showStatus('⭐ Agregado a favoritos', 'success');
-        }
-        localStorage.setItem('favorites', JSON.stringify(favorites));
-    }
-
-    function verifyDataIntegrity() {
-        const issues = [];
-        const ventaMenor =
-            allData.filter(item => item.precio_venta < item.precio_compra);
-        if (ventaMenor.length > 0) issues.push(`${ventaMenor.length} con venta < compra`);
-        const precioCero =
-            allData.filter(item => item.precio_venta === 0 || item.precio_compra === 0);
-        if (precioCero.length > 0) issues.push(`${precioCero.length} con precios cero`);
-        const desconocidos =
-            allData.filter(item =>
-                item.marca.includes('Desconocido') || item.modelo.includes('Desconocido')
-            );
-        if (desconocidos.length > 0) issues.push(`${desconocidos.length} con datos incompletos`);
-        if (issues.length) {
-            console.log('Problemas de datos:', issues.join(' | '));
-        }
-        return issues;
-    }
+    searchInput.addEventListener("input", filtrarTabla);
+
+    clearSearch.addEventListener("click", () => {
+        searchInput.value = "";
+        filtrarTabla();
+        searchInput.blur();
+    });
 </script>
+
 </body>
 </html>
