@@ -171,17 +171,6 @@
             color: var(--accent-light);
         }
 
-        .edit-mode-btn {
-            background-color: var(--edit);
-            color: var(--bg-primary);
-            border: 1px solid var(--edit);
-        }
-
-        .edit-mode-btn:hover {
-            background-color: #ffd600;
-            border-color: #ffd600;
-        }
-
         .theme-toggle {
             background: var(--bg-tertiary);
             color: var(--text-secondary);
@@ -243,7 +232,7 @@
 
         .main-content {
             flex: 1;
-            padding: 12px 12px 8px;
+            padding: 12px 12px 80px; /* espacio para que no lo tape la barra inferior */
         }
 
         .table-container {
@@ -278,7 +267,6 @@
             position: relative;
             transition: var(--transition);
             font-size: 12px;
-
             white-space: nowrap;
             color: var(--text-primary);
         }
@@ -527,18 +515,21 @@
             color: var(--accent);
         }
 
+        /* BARRA INFERIOR SIEMPRE VISIBLE */
         .bottom-nav {
-            position: sticky;
+            position: fixed;
             bottom: 0;
-            left: 0;
-            right: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 430px;
             background: rgba(15, 23, 42, 0.98);
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
             border-top: 1px solid rgba(148, 163, 184, 0.3);
             display: flex;
             padding: 6px 14px;
-            z-index: 100;
+            z-index: 1000;
         }
 
         .nav-item {
@@ -586,6 +577,7 @@
             font-weight: 500;
         }
 
+        /* MODALES */
         .modal {
             display: none;
             position: fixed;
@@ -626,17 +618,23 @@
         }
 
         .modal h2 {
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             color: var(--accent);
             text-align: center;
             font-size: 1.1rem;
             font-weight: 600;
         }
 
+        .modal-subtitle {
+            margin-bottom: 12px;
+            color: var(--text-secondary);
+            text-align: center;
+            font-size: 13px;
+        }
+
         .modal-input {
             width: 100%;
             padding: 12px;
-            margin-bottom: 14px;
             background-color: var(--bg-primary);
             border: 1px solid var(--border);
             border-radius: 10px;
@@ -655,6 +653,7 @@
             display: flex;
             gap: 10px;
             justify-content: flex-end;
+            margin-top: 8px;
         }
 
         .modal-btn {
@@ -684,6 +683,28 @@
 
         .modal-btn.secondary:hover {
             background-color: var(--border);
+        }
+
+        /* WRAPPER MODERNO PARA PASSWORD */
+        .password-wrapper {
+            position: relative;
+            margin-bottom: 6px;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .password-toggle:hover {
+            color: var(--accent-light);
         }
 
         @media (max-width: 480px) {
@@ -728,10 +749,9 @@
                     <h1>DR. XIAOMI</h1>
                 </div>
                 <div class="admin-access">
-                    <!-- engrane 1: config general -->
-                    <!-- engrane 2: importadoras con clave -->
-                    <button class="admin-btn" id="providersBtn" title="Habilitar importadoras (clave)">
-                        <i class="fas fa-cog"></i>
+                    <!-- engrane: importadoras con clave / ver compra-proveedor -->
+                    <button class="admin-btn" id="providersBtn" title="Desbloquear importadoras">
+                        <i class="fas fa-lock"></i>
                     </button>
                     <button class="admin-btn" id="refreshBtn" title="Actualizar Datos">
                         <i class="fas fa-sync-alt"></i>
@@ -785,13 +805,9 @@
                     <tbody id="resultsBody"></tbody>
                 </table>
             </div>
-
-            <div style="margin-top: 8px; text-align: right;">
-
-            </div>
         </main>
 
-        <!-- barra inferior: se mantiene Inicio / TIKTOK / Recibo -->
+        <!-- barra inferior: Inicio / TIKTOK / Recibo -->
         <nav class="bottom-nav">
             <div class="nav-item active" data-tab="main">
                 <div class="nav-icon">
@@ -815,24 +831,18 @@
     </div>
 
     <!-- Modales -->
-    <div class="modal" id="adminModal">
-        <div class="modal-content">
-            <h2><i class="fas fa-lock"></i> Acceso Administrativo</h2>
-            <input type="password" id="adminPassword" class="modal-input" placeholder="Ingrese la clave de acceso" autocomplete="off">
-            <div class="modal-buttons">
-                <button class="modal-btn secondary" id="cancelAdminBtn">Cancelar</button>
-                <button class="modal-btn primary" id="confirmAdminBtn">Acceder</button>
-            </div>
-        </div>
-    </div>
-
     <div class="modal" id="editModal">
         <div class="modal-content">
             <h2><i class="fas fa-edit"></i> Modo Edición</h2>
-            <p style="margin-bottom: 12px; color: var(--text-secondary); text-align: center; font-size: 13px;">
+            <p class="modal-subtitle">
                 Ingrese la clave para editar precios de compra y toda la lista
             </p>
-            <input type="password" id="editPassword" class="modal-input" placeholder="Clave de edición" autocomplete="off">
+            <div class="password-wrapper">
+                <input type="password" id="editPassword" class="modal-input" placeholder="Clave de edición" autocomplete="off">
+                <button type="button" class="password-toggle" data-target="editPassword">
+                    <i class="fas fa-eye"></i>
+                </button>
+            </div>
             <div class="modal-buttons">
                 <button class="modal-btn secondary" id="cancelEditBtn">Cancelar</button>
                 <button class="modal-btn primary" id="confirmEditBtn">Activar Edición</button>
@@ -842,25 +852,35 @@
 
     <div class="modal" id="providersModal">
         <div class="modal-content">
-            <h2><i class="fas fa-eye"></i> Ver Importadoras</h2>
-            <p style="margin-bottom: 12px; color: var(--text-secondary); text-align: center; font-size: 13px;">
-                Ingrese la clave para ver las importadoras y precios de compra
+            <h2><i class="fas fa-key"></i> Desbloquear Importadoras</h2>
+            <p class="modal-subtitle">
+                Con esta clave se mostrarán las columnas de <strong>Proveedor</strong> y <strong>Compra</strong>.
             </p>
-            <input type="password" id="providersPassword" class="modal-input" placeholder="Clave para ver importadoras" autocomplete="off">
+            <div class="password-wrapper">
+                <input type="password" id="providersPassword" class="modal-input" placeholder="Clave para ver importadoras" autocomplete="off">
+                <button type="button" class="password-toggle" data-target="providersPassword">
+                    <i class="fas fa-eye"></i>
+                </button>
+            </div>
             <div class="modal-buttons">
                 <button class="modal-btn secondary" id="cancelProvidersBtn">Cancelar</button>
-                <button class="modal-btn primary" id="confirmProvidersBtn">Ver Importadoras</button>
+                <button class="modal-btn primary" id="confirmProvidersBtn">Desbloquear</button>
             </div>
         </div>
     </div>
 
     <div class="modal" id="ventaModal">
         <div class="modal-content">
-            <h2><i class="fas fa-edit"></i> Editar Precio de Venta</h2>
-            <p style="margin-bottom: 12px; color: var(--text-secondary); text-align: center; font-size: 13px;">
+            <h2><i class="fas fa-tag"></i> Editar Precio de Venta</h2>
+            <p class="modal-subtitle">
                 Ingrese la clave para editar el precio de venta
             </p>
-            <input type="password" id="ventaPassword" class="modal-input" placeholder="Clave para editar venta" autocomplete="off">
+            <div class="password-wrapper">
+                <input type="password" id="ventaPassword" class="modal-input" placeholder="Clave para editar venta" autocomplete="off">
+                <button type="button" class="password-toggle" data-target="ventaPassword">
+                    <i class="fas fa-eye"></i>
+                </button>
+            </div>
             <div class="modal-buttons">
                 <button class="modal-btn secondary" id="cancelVentaBtn">Cancelar</button>
                 <button class="modal-btn primary" id="confirmVentaBtn">Editar Precio</button>
@@ -872,7 +892,7 @@
         <div class="modal-content">
             <h2><i class="fab fa-whatsapp"></i> Compartir por WhatsApp</h2>
             <div id="whatsappMessage" style="margin-bottom: 12px; color: var(--text-primary); text-align: center; font-size: 14px; padding: 12px; background: var(--bg-primary); border-radius: 10px; border: 1px solid var(--border);"></div>
-            <p style="margin-bottom: 12px; color: var(--text-secondary); text-align: center; font-size: 13px;">
+            <p class="modal-subtitle">
                 El mensaje se abrirá en WhatsApp. ¿Desea continuar?
             </p>
             <div class="modal-buttons">
@@ -906,7 +926,6 @@
             { nombre: "BITE", archivo: "data/boe.csv" }
         ];
 
-        const ADMIN_PASSWORD = "123456";
         const EDIT_PASSWORD = "123456";
         const VENTA_PASSWORD = "123456";
         const PROVIDERS_PASSWORD = "123456";
@@ -931,6 +950,13 @@
         });
 
         function initializeApp() {
+            // Recuperar si ya se desbloqueó proveedores antes
+            const storedProvidersAccess = localStorage.getItem('providersAccess') === 'true';
+            if (storedProvidersAccess) {
+                providersAccess = true;
+                showProviders = true;
+            }
+
             loadAllData();
             setupEventListeners();
             loadEditsFromStorage();
@@ -939,6 +965,7 @@
             checkOnlineStatus();
             updateLastUpdateLabel();
             registerServiceWorker();
+            setupPasswordToggles();
 
             const savedTheme = localStorage.getItem('themePreference');
             if (savedTheme === 'light') {
@@ -1005,10 +1032,6 @@
         }
 
         function setupModalEvents() {
-            document.getElementById('adminBtn').addEventListener('click', showAdminModal);
-            document.getElementById('cancelAdminBtn').addEventListener('click', hideAdminModal);
-            document.getElementById('confirmAdminBtn').addEventListener('click', handleAdminAccess);
-
             const editModeBtn = document.getElementById('editModeBtn');
             if (editModeBtn) {
                 editModeBtn.addEventListener('click', showEditModal);
@@ -1028,10 +1051,25 @@
             document.getElementById('closeCompareBtn').addEventListener('click', hideCompareModal);
             document.getElementById('clearCompareBtn').addEventListener('click', clearCompare);
 
-            document.getElementById('adminPassword').addEventListener('keypress', e => { if (e.key === 'Enter') handleAdminAccess(); });
             document.getElementById('editPassword').addEventListener('keypress', e => { if (e.key === 'Enter') handleEditAccess(); });
             document.getElementById('ventaPassword').addEventListener('keypress', e => { if (e.key === 'Enter') handleVentaAccess(); });
             document.getElementById('providersPassword').addEventListener('keypress', e => { if (e.key === 'Enter') handleProvidersAccess(); });
+        }
+
+        function setupPasswordToggles() {
+            document.querySelectorAll('.password-toggle').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const targetId = btn.dataset.target;
+                    const input = document.getElementById(targetId);
+                    if (!input) return;
+                    const isPassword = input.type === 'password';
+                    input.type = isPassword ? 'text' : 'password';
+                    const icon = btn.querySelector('i');
+                    if (icon) {
+                        icon.className = isPassword ? 'fas fa-eye-slash' : 'fas fa-eye';
+                    }
+                });
+            });
         }
 
         function toggleTheme() {
@@ -1207,7 +1245,8 @@
                 showProvidersModal();
                 return;
             }
-            showProviders = !showProviders;     // agrupar o mostrar todas las importadoras
+            // Si ya está desbloqueado, solo alterna entre mejor precio vs todas las listas
+            showProviders = !showProviders;
             applyFilters();
             updateProvidersUI();
         }
@@ -1218,17 +1257,17 @@
 
             if (!providersAccess) {
                 btn.classList.remove('active-providers');
-                btn.innerHTML = '<i class="fas fa-cog"></i>';
-                btn.title = 'Habilitar importadoras (clave)';
+                btn.innerHTML = '<i class="fas fa-lock"></i>';
+                btn.title = 'Desbloquear importadoras';
             } else {
                 if (showProviders) {
                     btn.classList.add('active-providers');
                     btn.innerHTML = '<i class="fas fa-unlock"></i>';
-                    btn.title = 'Ocultar importadoras';
+                    btn.title = 'Mostrar solo mejor precio';
                 } else {
                     btn.classList.remove('active-providers');
                     btn.innerHTML = '<i class="fas fa-lock-open"></i>';
-                    btn.title = 'Mostrar importadoras';
+                    btn.title = 'Mostrar todas las importadoras';
                 }
             }
         }
@@ -1675,7 +1714,7 @@
                         </td>
                     </tr>
                 `;
-                return;
+            return;
             }
 
             tbody.innerHTML = '';
@@ -1701,12 +1740,12 @@
                             placeholder="0">` :
                     `<div class="price-container">
                         <span class="price-venta" 
-                              onclick="copyPriceToClipboard(${JSON.stringify(row).replace(/"/g, '&quot;')})"
+                              onclick='copyPriceToClipboard(${JSON.stringify(row).replace(/"/g, "&quot;")})'
                               title="Haz clic para copiar el precio al portapapeles">
                             Bs. ${formatCurrency(row.precio_venta)}
                         </span>
                         <i class="fas fa-share-alt share-icon" 
-                           onclick="showWhatsappModal(${JSON.stringify(row).replace(/"/g, '&quot;')})"
+                           onclick='showWhatsappModal(${JSON.stringify(row).replace(/"/g, "&quot;")})'
                            title="Compartir por WhatsApp"></i>
                     </div>`;
 
@@ -1802,16 +1841,6 @@
             applyFilters();
         }
 
-        function showAdminModal() {
-            document.getElementById('adminModal').style.display = 'flex';
-            document.getElementById('adminPassword').focus();
-        }
-
-        function hideAdminModal() {
-            document.getElementById('adminModal').style.display = 'none';
-            document.getElementById('adminPassword').value = '';
-        }
-
         function showEditModal() {
             document.getElementById('editModal').style.display = 'flex';
             document.getElementById('editPassword').focus();
@@ -1872,18 +1901,6 @@
             showStatus('✅ Mensaje preparado para WhatsApp', 'success');
         }
 
-        function handleAdminAccess() {
-            const password = document.getElementById('adminPassword').value;
-            if (password === ADMIN_PASSWORD) {
-                showStatus('✅ Acceso administrativo concedido', 'success');
-                hideAdminModal();
-            } else {
-                showStatus('❌ Clave incorrecta. Intente nuevamente.', 'error');
-                document.getElementById('adminPassword').value = '';
-                document.getElementById('adminPassword').focus();
-            }
-        }
-
         function handleEditAccess() {
             const password = document.getElementById('editPassword').value;
             if (password === EDIT_PASSWORD) {
@@ -1903,11 +1920,12 @@
             if (password === PROVIDERS_PASSWORD) {
                 providersAccess = true;
                 showProviders = true;   // al habilitar, mostrar todas las importadoras
+                localStorage.setItem('providersAccess', 'true');
                 hideProvidersModal();
                 updateProvidersUI();
                 updateTableColumns();
                 applyFilters();
-                showStatus('✅ Acceso a importadoras activado', 'success');
+                showStatus('✅ Columnas Compra y Proveedor desbloqueadas', 'success');
             } else {
                 showStatus('❌ Clave incorrecta. Intente nuevamente.', 'error');
                 document.getElementById('providersPassword').value = '';
