@@ -27,6 +27,7 @@ Samsung,A54,incel,CentralCel,170.0,300.0,
 Samsung,Note 9,OLED,CentralCel,1780.0,2100.0,
 Samsung,Note 20 ultra,OLED,CentralCel,2200.0,2550.0,
 samsung,S20 Ultra,OLED,CentralCel,2300.0,2600.0,
+samsung,S22 Ultra,OLED,CentralCel,2450.0,2750.0,
 Samsung,Tab S6 lite,OLED,CentralCel,460.0,680.0,
 
 Tecno,Camon 20 Pro,OLED,CentralCel,410.0,620.0,
@@ -37,6 +38,7 @@ Tecno,Spark 30 pro,oled,CentralCel,600.0,850.0,
 
 XIAOMI ,MI 13T PRO,OLED,CentralCel,850.0,1150.0,
 XIAOMI,MI 11t Pro,OLED,CentralCel,420.0,750.0,
+XIAOMI,MI 10t Pro,LCD,CentralCel,120.0,300.0,
 XIAOMI,MI PAD 6 ,OLED,CentralCel,750.0,1050.0,
 XIAOMI,Poco F4,OLED,CentralCel,380.0,560.0,
 
