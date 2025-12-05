@@ -4,37 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#121212">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="description" content="Dr. Xiaomi - Gestión de precios de pantallas">
     <title>Dr. Xiaomi</title>
 
-    <!-- PWA -->
-    <link rel="manifest" href="manifest.json">
-
-    <!-- ICONOS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
+        /* -------------------- VARIABLES -------------------- */
         :root {
-            --bg-primary: #050608;
-            --bg-secondary: #101117;
-            --bg-tertiary: #181924;
-            --text-primary: #ffffff;
-            --text-secondary: #b0b0b0;
+            --bg-main: #07090d;
+            --bg-card: #0e1017;
+            --bg-soft: rgba(255,255,255,0.05);
+            --text-main: #ffffff;
+            --text-sec: #b8b8b8;
+
             --accent: #ff7b00;
-            --accent-soft: rgba(255, 123, 0, 0.15);
-            --border-soft: rgba(255, 255, 255, 0.06);
-            --danger: #ff4b4b;
-            --success: #26d782;
+            --success: #28d67f;
 
-            --radius-lg: 18px;
-            --radius-full: 999px;
+            --radius: 14px;
+            --radius-lg: 20px;
 
-            --top-bar-height: 56px;
-            --bottom-nav-height: 64px;
+            --bottom-height: 70px;
         }
 
+        /* -------------------- GLOBAL -------------------- */
         * {
             box-sizing: border-box;
         }
@@ -42,136 +34,90 @@
         html, body {
             margin: 0;
             padding: 0;
-            height: 100%;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
-            background: radial-gradient(circle at top, #1b1b2f 0, #050608 52%, #020308 100%);
-            color: var(--text-primary);
-            -webkit-tap-highlight-color: transparent;
+            background: linear-gradient(180deg, #0a0b10 0%, #04050a 100%);
+            color: var(--text-main);
+            font-family: system-ui, sans-serif;
+            min-height: 100vh;
+            overflow-y: auto; /* ← SCROLL FUNCIONANDO */
         }
 
         body {
-            display: flex;
-            justify-content: center;
+            display: block;
         }
 
         .app {
-            width: 100%;
             max-width: 480px;
+            margin: 0 auto;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            background: linear-gradient(160deg, #050608 0%, #070712 55%, #050608 100%);
+            padding-bottom: calc(var(--bottom-height) + 20px); /* ESPACIO SCROLL */
             position: relative;
         }
 
-        /* BARRA SUPERIOR */
-        .top-bar {
+        /* -------------------- TOP BAR -------------------- */
+        .top {
             position: sticky;
             top: 0;
-            z-index: 20;
-            height: var(--top-bar-height);
-            padding: 10px 14px;
+            background: rgba(7, 9, 13, 0.9);
+            backdrop-filter: blur(12px);
+            padding: 12px 14px;
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            background: linear-gradient(to bottom, rgba(5, 6, 8, 0.96), rgba(5, 6, 8, 0.8), transparent);
-            backdrop-filter: blur(16px);
+            align-items: center;
+            z-index: 20;
         }
 
         .top-title {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
-        .logo-circle {
-            width: 28px;
-            height: 28px;
-            border-radius: 12px;
-            background: radial-gradient(circle at 20% 0%, #ff9b40 0, #ff7b00 45%, #ff4800 100%);
+        .logo {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #ff8a00, #ff4d00);
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 18px rgba(255, 123, 0, 0.55);
-            font-size: 16px;
-            font-weight: 800;
+            font-weight: 700;
         }
 
-        .top-text {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .top-text .app-name {
-            font-size: 15px;
-            font-weight: 650;
-            letter-spacing: 0.02em;
-        }
-
-        .top-text .subtitle {
+        .top-text small {
+            display: block;
             font-size: 11px;
-            color: var(--text-secondary);
+            color: var(--text-sec);
         }
 
-        .top-actions {
+        .chip {
+            background: var(--bg-soft);
+            padding: 5px 10px;
+            border-radius: 999px;
+            font-size: 12px;
             display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .chip-pill {
-            display: inline-flex;
             align-items: center;
             gap: 6px;
-            padding: 4px 10px;
-            border-radius: 999px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            font-size: 11px;
-            color: var(--text-secondary);
-        }
-
-        .chip-pill i {
-            font-size: 10px;
-            color: var(--accent);
         }
 
         .icon-btn {
-            width: 30px;
-            height: 30px;
+            width: 32px;
+            height: 32px;
+            border: 1px solid var(--bg-soft);
+            background: rgba(255,255,255,0.03);
             border-radius: 999px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            background: rgba(11, 11, 18, 0.9);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
-            color: var(--text-primary);
             cursor: pointer;
         }
 
-        .icon-btn:active {
-            transform: scale(0.96);
-        }
-
-        /* CONTENIDO SCROLLEABLE */
-        .content {
-            flex: 1 1 auto;
-            padding: 8px 10px 12px;
-            padding-bottom: calc(12px + var(--bottom-nav-height));
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-
-        /* TARJETA DE BUSQUEDA / FILTROS */
-        .search-card {
-            background: radial-gradient(circle at top left, #1f1f30 0, #101117 45%, #050608 100%);
-            border-radius: 20px;
-            padding: 10px 12px 8px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
-            margin-bottom: 10px;
+        /* -------------------- SEARCH CARD -------------------- */
+        .search {
+            margin: 12px;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 12px;
+            border: 1px solid rgba(255,255,255,0.05);
         }
 
         .search-row {
@@ -180,596 +126,410 @@
             align-items: center;
         }
 
-        .search-input-wrap {
-            flex: 1;
+        .search-wrap {
             position: relative;
+            flex: 1;
         }
 
-        .search-input-wrap i {
+        .search-wrap i {
             position: absolute;
-            left: 10px;
+            left: 12px;
             top: 50%;
             transform: translateY(-50%);
+            color: var(--text-sec);
             font-size: 13px;
-            color: var(--text-secondary);
         }
 
         .search-input {
             width: 100%;
-            padding: 8px 10px 8px 28px;
-            border-radius: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            background: rgba(4, 5, 10, 0.95);
-            color: var(--text-primary);
-            font-size: 12px;
-            outline: none;
+            padding: 10px 12px 10px 34px;
+            border-radius: var(--radius);
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(0,0,0,0.35);
+            color: var(--text-main);
         }
 
-        .search-input::placeholder {
-            color: rgba(176, 176, 176, 0.75);
-        }
-
-        .btn-small {
-            border-radius: 14px;
+        .btn-clean {
+            background: linear-gradient(135deg, #ff7b00, #ff4d00);
+            border-radius: var(--radius);
             border: none;
-            padding: 8px 10px;
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 0.02em;
+            padding: 10px 12px;
+            color: #fff;
             cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            white-space: nowrap;
+            font-size: 12px;
+            font-weight: 600;
         }
 
-        .btn-accent {
-            background: linear-gradient(135deg, #ff7b00, #ff4800);
-            color: white;
-            box-shadow: 0 0 18px rgba(255, 123, 0, 0.45);
-        }
-
-        .btn-ghost {
-            background: rgba(255, 255, 255, 0.03);
-            color: var(--text-secondary);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        /* TABLA */
+        /* -------------------- TABLE -------------------- */
         .table-card {
-            margin-top: 6px;
-            background: rgba(5, 6, 12, 0.9);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            margin: 12px;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255,255,255,0.05);
             overflow: hidden;
         }
 
         .table-header {
-            padding: 8px 12px;
+            padding: 10px 14px;
+            font-size: 12px;
+            letter-spacing: 0.06em;
+            color: var(--text-sec);
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            background: linear-gradient(to right, rgba(255, 123, 0, 0.18), transparent);
         }
 
-        .table-title {
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--text-secondary);
-        }
-
-        .locked-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
+        .lock-badge {
+            background: rgba(255,255,255,0.05);
             padding: 4px 8px;
             border-radius: 999px;
-            background: rgba(255, 255, 255, 0.04);
+            display: flex;
             font-size: 10px;
-            color: var(--text-secondary);
-        }
-
-        .locked-badge i {
-            font-size: 10px;
-            color: #ffcf52;
-        }
-
-        .table-wrapper {
-            width: 100%;
-            overflow-x: auto;
+            gap: 4px;
+            align-items: center;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 11px;
+            font-size: 12px;
         }
 
         thead {
-            background: rgba(19, 20, 28, 0.95);
+            background: rgba(255,255,255,0.03);
         }
 
         th, td {
-            padding: 7px 8px;
+            padding: 10px 12px;
             text-align: left;
         }
 
-        th {
-            font-weight: 600;
-            color: var(--text-secondary);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-            white-space: nowrap;
-        }
-
-        tbody tr {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-        }
-
-        tbody tr:last-child {
-            border-bottom: none;
-        }
-
         tbody tr:nth-child(even) {
-            background: rgba(9, 10, 16, 0.85);
-        }
-
-        tbody tr:nth-child(odd) {
-            background: rgba(5, 6, 12, 0.85);
-        }
-
-        td {
-            color: var(--text-primary);
-        }
-
-        .pill-model {
-            padding: 3px 8px;
-            border-radius: 999px;
-            background: rgba(255, 255, 255, 0.04);
-            font-size: 11px;
+            background: rgba(255,255,255,0.03);
         }
 
         .price {
-            font-variant-numeric: tabular-nums;
             font-weight: 600;
         }
 
-        .price-venta {
+        .venta {
             color: var(--success);
         }
 
-        .price-compra {
-            color: #ffb347;
+        .compra {
+            color: #ffbb55;
         }
 
-        /* COLUMNAS SECRETAS (COMPRA / PROVEEDOR) */
-        .col-secreta {
+        /* columnas secretas */
+        .secret {
             display: none;
         }
 
-        body.secret-visible .col-secreta {
+        body.show-secret .secret {
             display: table-cell;
         }
 
-        .secret-hint {
-            padding: 6px 12px 10px;
-            font-size: 10px;
-            color: var(--text-secondary);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            border-top: 1px dashed rgba(255, 255, 255, 0.08);
-            background: radial-gradient(circle at top, rgba(255, 123, 0, 0.13), rgba(5, 6, 12, 0.9));
-        }
-
-        .secret-hint i {
-            color: #ffcf52;
-        }
-
-        /* BARRA INFERIOR FIJA */
-        .bottom-nav {
+        /* -------------------- FOOTER BAR -------------------- */
+        .footer {
             position: fixed;
+            bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            bottom: 10px;
             width: 100%;
             max-width: 480px;
-            z-index: 40;
-            padding: 0 12px;
-            pointer-events: none; /* truco para que nada raro bloquee el scroll */
-        }
-
-        .bottom-nav-inner {
-            pointer-events: auto;
-            height: var(--bottom-nav-height);
-            border-radius: 999px;
-            background: rgba(8, 9, 14, 0.96);
-            border: 1px solid rgba(255, 255, 255, 0.09);
-            box-shadow:
-                0 18px 45px rgba(0, 0, 0, 0.85),
-                0 0 32px rgba(255, 123, 0, 0.25);
+            height: var(--bottom-height);
+            background: rgba(10,10,15,0.95);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(255,255,255,0.06);
             display: flex;
             align-items: center;
             justify-content: space-around;
-        }
-
-        .nav-item {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 3px;
-            font-size: 9px;
-            color: var(--text-secondary);
-        }
-
-        .nav-item i {
-            font-size: 16px;
-        }
-
-        .nav-item.active span {
-            color: #ffffff;
-        }
-
-        .nav-item.active i {
-            color: var(--accent);
-        }
-
-        /* MODAL CLAVE */
-        .modal-backdrop {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(8px);
-            display: none;
-            align-items: center;
-            justify-content: center;
             z-index: 50;
         }
 
-        .modal-backdrop.show {
+        .footer-btn {
+            background: none;
+            border: none;
+            color: var(--text-sec);
+            font-size: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .footer-btn i {
+            font-size: 18px;
+        }
+
+        .footer-btn.active {
+            color: var(--accent);
+        }
+
+        /* -------------------- MODAL -------------------- */
+        .modal-bg {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.65);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            backdrop-filter: blur(6px);
+        }
+
+        .modal-bg.show {
             display: flex;
         }
 
         .modal {
-            width: 88%;
-            max-width: 360px;
-            background: radial-gradient(circle at top left, #27263c 0, #10101b 40%, #050608 100%);
-            border-radius: 24px;
-            padding: 16px 16px 14px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 28px 80px rgba(0, 0, 0, 0.9);
-        }
-
-        .modal-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 8px;
+            width: 85%;
+            max-width: 340px;
+            padding: 18px;
+            border-radius: var(--radius-lg);
+            background: var(--bg-card);
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .modal-title {
-            font-size: 14px;
+            font-size: 15px;
+            margin-bottom: 6px;
             font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
-        .modal-title i {
-            color: #ffcf52;
+        .modal p {
+            font-size: 12px;
+            color: var(--text-sec);
         }
 
-        .modal-sub {
-            font-size: 11px;
-            color: var(--text-secondary);
-            margin-bottom: 10px;
-        }
-
-        .modal form {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .pin-input {
+        .pin {
             width: 100%;
-            padding: 8px 10px;
-            border-radius: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            background: rgba(4, 5, 10, 0.98);
-            color: var(--text-primary);
-            font-size: 14px;
+            padding: 10px;
+            border-radius: var(--radius);
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.15);
             text-align: center;
-            letter-spacing: 0.4em;
-        }
-
-        .pin-input:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 1px rgba(255, 123, 0, 0.6);
+            color: #fff;
+            margin-top: 10px;
+            font-size: 16px;
+            letter-spacing: 4px;
         }
 
         .modal-actions {
             display: flex;
-            gap: 8px;
-            margin-top: 4px;
+            gap: 10px;
+            margin-top: 14px;
         }
 
-        .modal-actions .btn-small {
+        .btn {
             flex: 1;
-            justify-content: center;
+            padding: 10px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            border: none;
+            font-size: 12px;
         }
 
-        .error-text {
-            font-size: 11px;
-            color: var(--danger);
-            min-height: 14px;
+        .btn-cancel {
+            background: rgba(255,255,255,0.07);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .btn-ok {
+            background: linear-gradient(135deg, #ff7b00, #ff4d00);
+            color: #fff;
+        }
+
+        .error {
+            color: #ff5f5f;
+            font-size: 12px;
+            margin-top: 4px;
+            text-align: center;
         }
     </style>
 </head>
+
+
 <body>
 <div class="app">
 
-    <!-- BARRA SUPERIOR -->
-    <header class="top-bar">
+    <!-- TOP BAR -->
+    <div class="top">
         <div class="top-title">
-            <div class="logo-circle">DX</div>
+            <div class="logo">DX</div>
             <div class="top-text">
-                <span class="app-name">Dr. Xiaomi</span>
-                <span class="subtitle">Pantallas & precios en tiempo real</span>
+                <strong>Dr. Xiaomi</strong>
+                <small>Pantallas y precios</small>
             </div>
         </div>
 
-        <div class="top-actions">
-            <div class="chip-pill">
-                <i class="fa-solid fa-circle-check"></i>
-                <span>Online</span>
-            </div>
-            <button class="icon-btn" id="openUnlock">
-                <i class="fa-solid fa-lock"></i>
-            </button>
+        <div style="display:flex;gap:8px;">
+            <div class="chip"><i class="fa fa-circle-check"></i> Online</div>
+            <button class="icon-btn" id="openPin"><i class="fa fa-lock"></i></button>
         </div>
-    </header>
+    </div>
 
-    <!-- CONTENIDO SCROLLEABLE -->
-    <main class="content">
-        <section class="search-card">
-            <div class="search-row">
-                <div class="search-input-wrap">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input id="searchInput" type="text" class="search-input"
-                           placeholder="Busca por modelo, serie, tamaño...">
-                </div>
-                <button class="btn-small btn-accent" id="clearSearch">
-                    <i class="fa-solid fa-rotate-left"></i>
-                    Limpiar
-                </button>
+    <!-- BUSCADOR -->
+    <div class="search">
+        <div class="search-row">
+            <div class="search-wrap">
+                <i class="fa fa-search"></i>
+                <input type="text" id="searchInput" class="search-input" placeholder="Buscar modelo…">
             </div>
-        </section>
-
-        <section class="table-card">
-            <div class="table-header">
-                <div class="table-title">Listado de pantallas</div>
-                <div class="locked-badge" id="lockStatus">
-                    <i class="fa-solid fa-lock"></i>
-                    Costos ocultos
-                </div>
-            </div>
-
-            <div class="table-wrapper">
-                <table id="pantallasTable">
-                    <thead>
-                    <tr>
-                        <th>Modelo</th>
-                        <th>Serie</th>
-                        <th>Venta</th>
-                        <th class="col-secreta">Compra</th>
-                        <th class="col-secreta">Proveedor</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <!-- EJEMPLOS: añade todas las filas que quieras, ahora sí har&aacute; scroll -->
-                    <tr>
-                        <td><span class="pill-model">Redmi Note 8</span></td>
-                        <td>RN8-001</td>
-                        <td class="price price-venta">Bs 280</td>
-                        <td class="price price-compra col-secreta">Bs 160</td>
-                        <td class="col-secreta">Proveedor A</td>
-                    </tr>
-                    <tr>
-                        <td><span class="pill-model">Redmi Note 8 Pro</span></td>
-                        <td>RN8P-002</td>
-                        <td class="price price-venta">Bs 320</td>
-                        <td class="price price-compra col-secreta">Bs 190</td>
-                        <td class="col-secreta">Proveedor B</td>
-                    </tr>
-                    <tr>
-                        <td><span class="pill-model">Redmi 9C</span></td>
-                        <td>R9C-003</td>
-                        <td class="price price-venta">Bs 260</td>
-                        <td class="price price-compra col-secreta">Bs 150</td>
-                        <td class="col-secreta">Proveedor C</td>
-                    </tr>
-
-                    <!-- Copia/pega bloques como este para llenar y probar el scroll -->
-                    <tr>
-                        <td><span class="pill-model">Poco X3 Pro</span></td>
-                        <td>PX3P-004</td>
-                        <td class="price price-venta">Bs 380</td>
-                        <td class="price price-compra col-secreta">Bs 230</td>
-                        <td class="col-secreta">Proveedor D</td>
-                    </tr>
-                    <tr>
-                        <td><span class="pill-model">Mi 11 Lite</span></td>
-                        <td>M11L-005</td>
-                        <td class="price price-venta">Bs 420</td>
-                        <td class="price price-compra col-secreta">Bs 260</td>
-                        <td class="col-secreta">Proveedor E</td>
-                    </tr>
-                    <tr>
-                        <td><span class="pill-model">Redmi 10</span></td>
-                        <td>R10-006</td>
-                        <td class="price price-venta">Bs 300</td>
-                        <td class="price price-compra col-secreta">Bs 185</td>
-                        <td class="col-secreta">Proveedor F</td>
-                    </tr>
-                    <tr>
-                        <td><span class="pill-model">Redmi Note 11</span></td>
-                        <td>RN11-007</td>
-                        <td class="price price-venta">Bs 350</td>
-                        <td class="price price-compra col-secreta">Bs 210</td>
-                        <td class="col-secreta">Proveedor G</td>
-                    </tr>
-                    <tr>
-                        <td><span class="pill-model">Redmi Note 12</span></td>
-                        <td>RN12-008</td>
-                        <td class="price price-venta">Bs 390</td>
-                        <td class="price price-compra col-secreta">Bs 240</td>
-                        <td class="col-secreta">Proveedor H</td>
-                    </tr>
-                    <!-- FIN EJEMPLOS -->
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="secret-hint">
-                <i class="fa-solid fa-shield-keyhole"></i>
-                <span>
-                    Columnas <b>COMPRA</b> y <b>PROVEEDOR</b> solo aparecen cuando desbloqueas con tu PIN.
-                </span>
-            </div>
-        </section>
-    </main>
-
-    <!-- BARRA INFERIOR SIEMPRE VISIBLE -->
-    <nav class="bottom-nav">
-        <div class="bottom-nav-inner">
-            <button class="nav-item active">
-                <i class="fa-solid fa-tablet-screen-button"></i>
-                <span>Pantallas</span>
-            </button>
-            <button class="nav-item">
-                <i class="fa-solid fa-layer-group"></i>
-                <span>Stock</span>
-            </button>
-            <button class="nav-item" id="openUnlockBottom">
-                <i class="fa-solid fa-lock-keyhole"></i>
-                <span>Costos</span>
-            </button>
-            <button class="nav-item">
-                <i class="fa-solid fa-gear"></i>
-                <span>Ajustes</span>
-            </button>
+            <button class="btn-clean" id="clearInput">Limpiar</button>
         </div>
-    </nav>
+    </div>
 
-    <!-- MODAL CLAVE -->
-    <div class="modal-backdrop" id="unlockModal">
-        <div class="modal">
-            <div class="modal-header">
-                <div class="modal-title">
-                    <i class="fa-solid fa-lock-keyhole"></i>
-                    Desbloquear costos
-                </div>
-                <button class="icon-btn" id="closeModal" style="width:26px;height:26px;font-size:12px;">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
+    <!-- TABLA -->
+    <div class="table-card">
+        <div class="table-header">
+            <span>LISTADO DE PANTALLAS</span>
+            <div class="lock-badge" id="lockState">
+                <i class="fa fa-lock"></i> Oculto
             </div>
-            <div class="modal-sub">
-                Ingresa tu PIN para ver las columnas de <b>compra</b> y <b>proveedor</b>. 
-                Este PIN funciona desde cualquier dispositivo.
-            </div>
-            <form id="unlockForm">
-                <input type="password" maxlength="6" inputmode="numeric" class="pin-input" id="pinInput"
-                       placeholder="••••" autocomplete="off">
-
-                <div class="error-text" id="errorText"></div>
-
-                <div class="modal-actions">
-                    <button type="button" class="btn-small btn-ghost" id="cancelUnlock">Cancelar</button>
-                    <button type="submit" class="btn-small btn-accent">
-                        <i class="fa-solid fa-unlock-keyhole"></i>
-                        Desbloquear
-                    </button>
-                </div>
-            </form>
         </div>
+
+        <table id="tabla">
+            <thead>
+            <tr>
+                <th>Modelo</th>
+                <th>Serie</th>
+                <th>Venta</th>
+                <th class="secret">Compra</th>
+                <th class="secret">Proveedor</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr>
+                <td>Redmi Note 8</td>
+                <td>RN8-001</td>
+                <td class="price venta">Bs 280</td>
+                <td class="price compra secret">Bs 160</td>
+                <td class="secret">Prov A</td>
+            </tr>
+            <tr>
+                <td>Redmi Note 8 Pro</td>
+                <td>RN8P-002</td>
+                <td class="price venta">Bs 320</td>
+                <td class="price compra secret">Bs 190</td>
+                <td class="secret">Prov B</td>
+            </tr>
+            <tr>
+                <td>Redmi 9C</td>
+                <td>R9C-003</td>
+                <td class="price venta">Bs 260</td>
+                <td class="price compra secret">Bs 150</td>
+                <td class="secret">Prov C</td>
+            </tr>
+
+            <tr>
+                <td>Poco X3 Pro</td>
+                <td>PX3P-004</td>
+                <td class="price venta">Bs 380</td>
+                <td class="price compra secret">Bs 230</td>
+                <td class="secret">Prov D</td>
+            </tr>
+
+            <tr>
+                <td>Mi 11 Lite</td>
+                <td>M11L-005</td>
+                <td class="price venta">Bs 420</td>
+                <td class="price compra secret">Bs 260</td>
+                <td class="secret">Prov E</td>
+            </tr>
+
+            <tr>
+                <td>Redmi 10</td>
+                <td>R10</td>
+                <td class="price venta">Bs 300</td>
+                <td class="price compra secret">Bs 185</td>
+                <td class="secret">Prov F</td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <button class="footer-btn active"><i class="fa fa-table"></i>Pantallas</button>
+        <button class="footer-btn"><i class="fa fa-box"></i>Stock</button>
+        <button class="footer-btn" id="openPin2"><i class="fa fa-lock"></i>Costos</button>
+        <button class="footer-btn"><i class="fa fa-gear"></i>Ajustes</button>
     </div>
 
 </div>
 
+<!-- MODAL -->
+<div class="modal-bg" id="modalPin">
+    <div class="modal">
+        <div class="modal-title">Desbloquear costos</div>
+        <p>Ingresa tu PIN para ver las columnas de compra y proveedor.</p>
+
+        <input type="password" id="pinInput" class="pin" maxlength="6" placeholder="••••••">
+        <div id="pinError" class="error"></div>
+
+        <div class="modal-actions">
+            <button class="btn btn-cancel" id="cancelPin">Cancelar</button>
+            <button class="btn btn-ok" id="unlockBtn">Desbloquear</button>
+        </div>
+    </div>
+</div>
+
 <script>
-    // 🔐 CAMBIA AQUÍ TU CLAVE MAESTRA
-    const MASTER_PIN = "1234";
+    const PIN = "1234"; // TU PIN
 
-    const unlockModal = document.getElementById("unlockModal");
-    const openUnlock = document.getElementById("openUnlock");
-    const openUnlockBottom = document.getElementById("openUnlockBottom");
-    const closeModal = document.getElementById("closeModal");
-    const cancelUnlock = document.getElementById("cancelUnlock");
-    const unlockForm = document.getElementById("unlockForm");
+    const modal = document.getElementById("modalPin");
+    const open1 = document.getElementById("openPin");
+    const open2 = document.getElementById("openPin2");
+    const cancel = document.getElementById("cancelPin");
+    const unlockBtn = document.getElementById("unlockBtn");
     const pinInput = document.getElementById("pinInput");
-    const errorText = document.getElementById("errorText");
-    const lockStatus = document.getElementById("lockStatus");
+    const pinError = document.getElementById("pinError");
+    const lockState = document.getElementById("lockState");
 
-    function showModal() {
-        unlockModal.classList.add("show");
+
+    function openModal() {
+        modal.classList.add("show");
+        pinError.textContent = "";
         pinInput.value = "";
-        errorText.textContent = "";
-        setTimeout(() => pinInput.focus(), 80);
+        setTimeout(() => pinInput.focus(), 150);
+    }
+    function closeModal() {
+        modal.classList.remove("show");
     }
 
-    function hideModal() {
-        unlockModal.classList.remove("show");
-    }
+    open1.onclick = openModal;
+    open2.onclick = openModal;
+    cancel.onclick = closeModal;
 
-    openUnlock.addEventListener("click", showModal);
-    openUnlockBottom.addEventListener("click", showModal);
-    closeModal.addEventListener("click", hideModal);
-    cancelUnlock.addEventListener("click", hideModal);
-
-    unlockModal.addEventListener("click", (e) => {
-        if (e.target === unlockModal) hideModal();
-    });
-
-    unlockForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const pin = pinInput.value.trim();
-
-        if (pin === MASTER_PIN) {
-            document.body.classList.add("secret-visible");
-            lockStatus.innerHTML = '<i class="fa-solid fa-unlock-keyhole"></i> Costos visibles';
-            errorText.textContent = "";
-            hideModal();
+    unlockBtn.onclick = () => {
+        if (pinInput.value === PIN) {
+            document.body.classList.add("show-secret");
+            lockState.innerHTML = "<i class='fa fa-unlock'></i> Visible";
+            closeModal();
         } else {
-            errorText.textContent = "PIN incorrecto. Intenta de nuevo.";
+            pinError.textContent = "PIN incorrecto";
         }
-    });
+    };
 
-    // 🔎 BUSCADOR
+    // Buscador
     const searchInput = document.getElementById("searchInput");
-    const clearSearch = document.getElementById("clearSearch");
-    const table = document.getElementById("pantallasTable");
-    const rows = Array.from(table.querySelectorAll("tbody tr"));
+    const clearInput = document.getElementById("clearInput");
+    const rows = document.querySelectorAll("tbody tr");
 
-    function filtrarTabla() {
+    searchInput.addEventListener("input", () => {
         const term = searchInput.value.toLowerCase();
-
-        rows.forEach(row => {
-            const text = row.innerText.toLowerCase();
-            row.style.display = text.includes(term) ? "" : "none";
+        rows.forEach(r => {
+            r.style.display = r.innerText.toLowerCase().includes(term) ? "" : "none";
         });
-    }
-
-    searchInput.addEventListener("input", filtrarTabla);
-
-    clearSearch.addEventListener("click", () => {
-        searchInput.value = "";
-        filtrarTabla();
-        searchInput.blur();
     });
+
+    clearInput.onclick = () => {
+        searchInput.value = "";
+        rows.forEach(r => r.style.display = "");
+    };
 </script>
 
 </body>
