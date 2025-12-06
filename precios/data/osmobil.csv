@@ -1,49 +1,41 @@
 marca,modelo,tipo,proveedor,precio_compra,precio_venta
 Honor,X6 B,LCD,OSMobil,140,290
-
 Infinix,50i,LCD,OSMobil,150,300
 Infinix,Hot 20S,LCD,OSMobil,160,320
 Infinix,Note 12,OLED,OSMobil,450,650
 Infinix,Note 30 Normal,LCD,OSMobil,200,380
 Infinix,Note 30 Normal,OLED,OSMobil,400,630
 Infinix,Smart 7,LCD,OSMobil,130,280
-
 Realme,12 5G,OLED,OSMobil,500,700
-
-Redmi,REDMI Note 12 Pro,OLED,OSMobil,450,620
-
+Redmi,Note 12 Pro,OLED,OSMobil,450,620
 Samsung,Galaxy A23,LCD,OSMobil,135,270
-
 Tecno,Pova 5,LCD,OSMobil,150,300
 Tecno,Spark 10C,LCD,OSMobil,130,280
 Tecno,Spark 6,LCD,OSMobil,140,290
-
-XIAOMI ,MI 13T PRO,OLED,OSMobil,850,1150
-XIAOMI,MI PAD 6 ,OLED,OSMobil,750,1050
-
-Xiaomi, mi 14t Pro,OLED,OSMobil,850,1150
-Xiaomi,Mi A3,oled,OSMobil,280,430
-Xiaomi,mi 10T Pro,LCD,OSMobil,180,350
+Xiaomi,Mi 13T Pro,OLED,OSMobil,850,1150
+Xiaomi,Mi Pad 6,OLED,OSMobil,750,1050
+Xiaomi,Mi 14T Pro,OLED,OSMobil,850,1150
+Xiaomi,Mi A3,OLED,OSMobil,280,430
+Xiaomi,Mi 10T Pro,LCD,OSMobil,180,350
 Xiaomi,Note 11 Pro,LCD,OSMobil,180,330
-Xiaomi,Note 11 Pro PLUS 5g,oled,OSMobil,450,650
-Xiaomi,NOTE 13 Pro,OLED,OSMobil,500,700
-Xiaomi,NOTE 13 ,OLED,OSMobil,470,690
-Xiaomi,NOTE 14 Pro,OLED,OSMobil,850,1100
-
-xiaomi,mi 12t Pro,OLED,OSMobil,750,1050
-xiaomi,note 8 Pro,LCD,OSMobil,150,310
-xiaomi,poco M4 Pro,OLED,OSMobil,750,1050
-xiaomi,poco M4 Pro,OLED,BITE,360,600
-xiaomi,poco M4 Pro,incel,OSMobil,150,350
-xiaomi,poco F5 Pro,OLED,OSMobil,900,1300
-xiaomi,poco X6 Pro,OLED,OSMobil,900,1300
-xiaomi,poco X5 Pro,OLED,OSMobil,350,520
-xiaomi,redmi 9t,LCD,OSMobil,150,310
-xiaomi,redmi 9,OLED,BITE,290,380
-xiaomi,redmi Note 12S,LCD,OSMobil,165,270
-xiaomi,redmi Note 8,LCD,OSMobil,140,290
-xiaomi,redmi Note 9,LCD,OSMobil,140,290
-xiaomi,redmi Note 9 Pro,LCD,OSMobil,150,310
-xiaomi,Redmi note 13 Normal,OLED,OSMobil,460,650
-xiaomi,Note 11 Pro,OLED,OSMobil,470,670
-xiaomi,Note 14 5G,LCD,OSMobil,200,400
+Xiaomi,Note 11 Pro Plus 5G,OLED,OSMobil,450,650
+Xiaomi,Note 13 Pro,OLED,OSMobil,500,700
+Xiaomi,Note 13,OLED,OSMobil,470,690
+Xiaomi,Note 14 Pro,OLED,OSMobil,850,1100
+Xiaomi,Mi 12T Pro,OLED,OSMobil,750,1050
+Xiaomi,Note 8 Pro,LCD,OSMobil,150,310
+Xiaomi,Poco M4 Pro,OLED,OSMobil,750,1050
+Xiaomi,Poco M4 Pro,OLED,BITE,360,600
+Xiaomi,Poco M4 Pro,Incell,OSMobil,150,350
+Xiaomi,Poco F5 Pro,OLED,OSMobil,900,1300
+Xiaomi,Poco X6 Pro,OLED,OSMobil,900,1300
+Xiaomi,Poco X5 Pro,OLED,OSMobil,350,520
+Xiaomi,Redmi 9T,LCD,OSMobil,150,310
+Xiaomi,Redmi 9,OLED,BITE,290,380
+Xiaomi,Redmi Note 12S,LCD,OSMobil,165,270
+Xiaomi,Redmi Note 8,LCD,OSMobil,140,290
+Xiaomi,Redmi Note 9,LCD,OSMobil,140,290
+Xiaomi,Redmi Note 9 Pro,LCD,OSMobil,150,310
+Xiaomi,Redmi Note 13,OLED,OSMobil,460,650
+Xiaomi,Note 11 Pro,OLED,OSMobil,470,670
+Xiaomi,Note 14 5G,LCD,OSMobil,200,400
