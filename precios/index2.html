@@ -76,7 +76,7 @@
             max-width: 430px;
             width: 100%;
             margin: 0 auto;
-            height: 100vh;              /* altura tipo app */
+            height: 100vh;
             display: flex;
             flex-direction: column;
             background: var(--bg-primary);
@@ -272,7 +272,7 @@
         .main-content {
             flex: 1;
             padding: 12px 12px 8px;
-            overflow-y: auto; /* scroll principal */
+            overflow-y: auto;
         }
 
         .table-container {
@@ -283,7 +283,7 @@
             box-shadow: var(--card-shadow);
             background: var(--bg-secondary);
             -webkit-overflow-scrolling: touch;
-            margin-bottom: 60px; /* espacio para que no tape la barra inferior */
+            margin-bottom: 60px;
         }
 
         table {
@@ -749,6 +749,59 @@
             font-size: 13px;
         }
 
+        /* Ficha técnica modal */
+        #specsHeader {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        #specsImage {
+            width: 72px;
+            height: 72px;
+            border-radius: 12px;
+            object-fit: contain;
+            background: var(--bg-primary);
+            padding: 6px;
+            border: 1px solid var(--border);
+        }
+
+        #specsTitle {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        #specsSubtitle {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        #specsList {
+            list-style: none;
+            padding-left: 0;
+            margin-top: 8px;
+        }
+
+        #specsList li {
+            font-size: 0.85rem;
+            padding: 4px 0;
+            border-bottom: 1px dashed var(--border);
+        }
+
+        #specsList li:last-child {
+            border-bottom: none;
+        }
+
+        #specsLoading {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
         @media (max-width: 480px) {
             .app-container {
                 border-radius: 0;
@@ -806,7 +859,7 @@
                 <button class="admin-btn" id="refreshBtn" title="Actualizar Datos">
                     <i class="fas fa-sync-alt"></i>
                 </button>
-                <button class="theme-toggle" id="themeToggle" title="Cambiar tema">
+                <button class="admin-btn theme-toggle" id="themeToggle" title="Cambiar tema">
                     <i class="fas fa-sun"></i>
                 </button>
             </div>
@@ -966,6 +1019,27 @@
     </div>
 </div>
 
+<!-- Modal ficha técnica (API specs) -->
+<div class="modal" id="specsModal">
+    <div class="modal-content">
+        <h2><i class="fas fa-info-circle"></i> Ficha técnica</h2>
+        <div id="specsLoading">Buscando información del modelo...</div>
+        <div id="specsContent" style="display:none;">
+            <div id="specsHeader">
+                <img id="specsImage" alt="Foto del modelo">
+                <div>
+                    <div id="specsTitle">Modelo</div>
+                    <div id="specsSubtitle">Marca</div>
+                </div>
+            </div>
+            <ul id="specsList"></ul>
+        </div>
+        <div class="modal-buttons">
+            <button class="modal-btn secondary" id="closeSpecsBtn">Cerrar</button>
+        </div>
+    </div>
+</div>
+
 <script>
     const CONFIG = [
         { nombre: "J&A", archivo: "data/ja.csv" },
@@ -980,15 +1054,18 @@
     const VENTA_PASSWORD = "123456";
     const PROVIDERS_PASSWORD = "123456";
 
+    // API de especificaciones de móviles
+    const PHONE_SPECS_API_BASE = "https://api-mobilespecs.azharimm.dev";
+
     let allData = [];
     let filteredData = [];
     let sortColumn = "marca";
     let sortDirection = "asc";
     let searchTerm = "";
-    let showProviders = false;      // ver todas las importadoras o solo mejor precio
+    let showProviders = false;
     let editMode = false;
     let ventaEditMode = false;
-    let providersAccess = false;    // clave de importadoras
+    let providersAccess = false;
     let currentWhatsappRow = null;
     let comparingItems = new Set();
     let currentTab = "main";
@@ -1112,6 +1189,11 @@
         });
         document.getElementById("providersPassword").addEventListener("keypress", e => {
             if (e.key === "Enter") handleProvidersAccess();
+        });
+
+        // Cerrar ficha técnica
+        document.getElementById("closeSpecsBtn").addEventListener("click", () => {
+            document.getElementById("specsModal").style.display = "none";
         });
     }
 
@@ -1293,7 +1375,7 @@
             showProvidersModal();
             return;
         }
-        showProviders = !showProviders; // agrupar o mostrar todas las importadoras
+        showProviders = !showProviders;
         applyFilters();
         updateProvidersUI();
     }
@@ -1303,11 +1385,9 @@
         if (!btn) return;
 
         if (!providersAccess) {
-            // Sin clave todavía: interruptor apagado en rojo
             btn.classList.remove("on");
             btn.title = "Modo técnico bloqueado (requiere clave)";
         } else {
-            // Con clave: el interruptor se prende/apaga según showProviders
             btn.classList.toggle("on", showProviders);
             btn.title = showProviders
                 ? "Modo técnico activo: mostrando importadoras y precios de compra"
@@ -1865,13 +1945,13 @@
                 priceSpan.title = "Haz clic para copiar el precio al portapapeles";
                 priceSpan.addEventListener("click", () => copyPriceToClipboard(row));
 
-                const shareIcon = document.createElement("i");
-                shareIcon.className = "fas fa-share-alt share-icon";
-                shareIcon.title = "Compartir por WhatsApp";
-                shareIcon.addEventListener("click", () => showWhatsappModal(row));
+                const infoIcon = document.createElement("i");
+                infoIcon.className = "fas fa-info-circle share-icon";
+                infoIcon.title = "Ver ficha técnica (API)";
+                infoIcon.addEventListener("click", () => showSpecsModal(row));
 
                 priceContainer.appendChild(priceSpan);
-                priceContainer.appendChild(shareIcon);
+                priceContainer.appendChild(infoIcon);
                 tdVenta.appendChild(priceContainer);
             }
 
@@ -2049,7 +2129,7 @@
         const password = document.getElementById("providersPassword").value;
         if (password === PROVIDERS_PASSWORD) {
             providersAccess = true;
-            showProviders = true; // al habilitar, mostrar todas las importadoras
+            showProviders = true;
             hideProvidersModal();
             updateProvidersUI();
             updateTableColumns();
@@ -2087,6 +2167,104 @@
             if (editBtn) editBtn.innerHTML = '<i class="fas fa-edit"></i>';
         }
         renderTable();
+    }
+
+    // ======= Ficha técnica por API =======
+    async function showSpecsModal(row) {
+        const modal = document.getElementById("specsModal");
+        const loadingEl = document.getElementById("specsLoading");
+        const contentEl = document.getElementById("specsContent");
+        const imgEl = document.getElementById("specsImage");
+        const titleEl = document.getElementById("specsTitle");
+        const subtitleEl = document.getElementById("specsSubtitle");
+        const listEl = document.getElementById("specsList");
+
+        modal.style.display = "flex";
+        loadingEl.style.display = "block";
+        contentEl.style.display = "none";
+        listEl.innerHTML = "";
+        imgEl.style.display = "none";
+
+        const query = `${row.marca} ${row.modelo}`;
+        loadingEl.textContent = `Buscando ${query}...`;
+
+        try {
+            // 1) Buscar modelo
+            const resSearch = await fetch(`${PHONE_SPECS_API_BASE}/search?query=${encodeURIComponent(query)}`);
+            if (!resSearch.ok) throw new Error("Error buscando modelo");
+            const dataSearch = await resSearch.json();
+            const phones = (dataSearch && dataSearch.data && dataSearch.data.phones) || [];
+
+            if (!phones.length) {
+                loadingEl.textContent = "No se encontraron datos para este modelo.";
+                return;
+            }
+
+            const phone = phones[0];
+
+            titleEl.textContent = phone.phone_name || `${row.marca} ${row.modelo}`;
+            subtitleEl.textContent = phone.brand || row.marca;
+            if (phone.image) {
+                imgEl.src = phone.image;
+                imgEl.style.display = "block";
+            }
+
+            let specsHtml = "";
+
+            // 2) Intentar obtener detalles si hay slug
+            if (phone.slug) {
+                try {
+                    const resDetail = await fetch(`${PHONE_SPECS_API_BASE}/${phone.slug}`);
+                    if (resDetail.ok) {
+                        const detail = await resDetail.json();
+                        const sections = (detail && detail.data && detail.data.specifications) || [];
+
+                        const flat = [];
+                        sections.forEach(sec => {
+                            (sec.specs || []).forEach(sp => {
+                                flat.push({
+                                    section: sec.title || "",
+                                    key: sp.key || "",
+                                    val: sp.val || ""
+                                });
+                            });
+                        });
+
+                        function findSpec(part) {
+                            const lower = part.toLowerCase();
+                            const item = flat.find(s => s.key.toLowerCase().includes(lower) || s.section.toLowerCase().includes(lower));
+                            return item && item.val ? item.val : null;
+                        }
+
+                        const modelCode = findSpec("Model") || findSpec("Model Name") || "No disponible";
+                        const displaySize = findSpec("Size") || "No disponible";
+                        const displayType = findSpec("Type") || findSpec("Display") || "No disponible";
+                        const battery = findSpec("Battery") || "No disponible";
+
+                        specsHtml = `
+                            <li><strong>Código / Modelo:</strong> ${modelCode}</li>
+                            <li><strong>Pantalla:</strong> ${displaySize} · ${displayType}</li>
+                            <li><strong>Batería:</strong> ${battery}</li>
+                        `;
+                    } else {
+                        specsHtml = `<li>No se pudieron cargar las especificaciones detalladas.</li>`;
+                    }
+                } catch (err) {
+                    console.error(err);
+                    specsHtml = `<li>Error al obtener las especificaciones detalladas.</li>`;
+                }
+            } else {
+                specsHtml = `<li>No se encontraron especificaciones detalladas.</li>`;
+            }
+
+            listEl.innerHTML = specsHtml;
+            loadingEl.style.display = "none";
+            contentEl.style.display = "block";
+
+        } catch (err) {
+            console.error(err);
+            loadingEl.textContent = "Error al consultar la API de especificaciones.";
+        }
     }
 
     function verifyDataIntegrity() {
