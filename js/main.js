@@ -18,7 +18,6 @@ function getTranslation(key) {
   if (translations["es"] && translations["es"][key]) {
     return translations["es"][key];
   }
-  // fallback clave literal
   return key;
 }
 
@@ -68,29 +67,32 @@ window.addEventListener('DOMContentLoaded', () => {
   const rateEl    = document.getElementById('rate');
   const fechaEl   = document.getElementById('calc-datetime');
 
-  // ====== CONFIGURACIÓN SIN API ======
+  // ================================
+  //   CONFIGURACIÓN SIN API (10% de descuento)
+  // ================================
+
   // Tasa base de euro (Bs por 1 EUR)
-  const BASE_EUR_BS = 10.7;   // ← lo que pediste
-  // Descuento/margen (10%)
-  const FRONTEND_DISCOUNT = 0.10;
-  const MULT = 1 - FRONTEND_DISCOUNT; // 0.90
-  // Tasa neta que se usa para calcular y mostrar (como hacía tu app: tasa con descuento)
-  const EURO_BS_LUPO = BASE_EUR_BS * MULT; // 14.8 * 0.90 = 13.32
+  const BASE_EUR_BS = 10.7;
 
-  // Si quieres que 14.8 ya sea la tasa "neto" mostrada y usada, comenta la línea de arriba
-  // y usa esta en su lugar:
-  // const EURO_BS_LUPO = 14.8;
+  // Descuento/margen → 10%
+  const FRONTEND_DISCOUNT = 0.10;       // 10%
+  const MULT = 1 - FRONTEND_DISCOUNT;   // 0.90
 
-  // Tasas fijas para la competencia (igual que tu archivo)
-  const rates = { ria: 9.8, wu:9.60, mg: 9 };
+  // Tasa neta final mostrada al usuario
+  // 10.7 * 0.90 = 9.63 Bs/€
+  const EURO_BS_LUPO = BASE_EUR_BS * MULT;
+
+  // Tasas fijas competencia
+  const rates = { ria: 9.8, wu: 9.60, mg: 9 };
+
 
   function actualizarCalculadora() {
-    // Mostrar la tasa neta (antes mostrabas la tasa tras aplicar descuento)
+    // Mostrar la tasa neta al usuario
     if (rateEl) rateEl.textContent = EURO_BS_LUPO.toFixed(2);
 
     const v = parseFloat((inputAmount?.value || '0').replace(',', '.')) || 0;
 
-    const l = v * EURO_BS_LUPO; // Lupo (neto)
+    const l = v * EURO_BS_LUPO; // Lupo
     const r = v * rates.ria;
     const w = v * rates.wu;
     const m = v * rates.mg;
@@ -103,7 +105,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const maxComp = Math.max(r, w, m);
     const savings = l - maxComp;
 
-    // Mensaje de ahorro aleatorio (cifra resaltada)
+    // Mensaje de ahorro aleatorio con {{save}}
     if (typeof savePhraseKeys !== 'undefined') {
       const saveKey = randomKey(savePhraseKeys);
       const msg = getTranslation(saveKey).replace(
@@ -131,7 +133,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   if (inputAmount) inputAmount.addEventListener('input', actualizarCalculadora);
 
-  // Primera carga de calculadora y rate
+  // Primera carga
   actualizarCalculadora();
 
   // Fecha y hora de la cotización
