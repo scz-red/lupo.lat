@@ -70,9 +70,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // ====== CONFIGURACIÓN SIN API ======
   // Tasa base de euro (Bs por 1 EUR)
-  const BASE_EUR_BS = 11;   // ← lo que pediste
+  const BASE_EUR_BS = 10.7;   // ← lo que pediste
   // Descuento/margen (10%)
-  const FRONTEND_DISCOUNT = 0.10;
+  const FRONTEND_DISCOUNT = 0.9;
   const MULT = 1 - FRONTEND_DISCOUNT; // 0.90
   // Tasa neta que se usa para calcular y mostrar (como hacía tu app: tasa con descuento)
   const EURO_BS_LUPO = BASE_EUR_BS * MULT; // 14.8 * 0.90 = 13.32
@@ -159,6 +159,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
 
 
 
