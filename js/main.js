@@ -83,7 +83,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const EURO_BS_LUPO = BASE_EUR_BS * MULT;
 
   // Tasas fijas competencia
-  const rates = { ria: 9.8, wu: 9.60, mg: 9 };
+  const rates = { ria: 9.3, wu: 9, mg: 9.1 };
 
 
   function actualizarCalculadora() {
@@ -161,6 +161,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
 
 
 
