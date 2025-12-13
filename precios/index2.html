@@ -1,2291 +1,1646 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#121212">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="description" content="Dr. Xiaomi - Gestión de precios de pantallas">
-    <title>Dr. Xiaomi</title>
-
-    <!-- PWA -->
-    <link rel="manifest" href="manifest.json">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <style>
-        :root {
-            --bg-primary: #121212;
-            --bg-secondary: #1a1a1a;
-            --bg-tertiary: #2d2d2d;
-            --text-primary: #ffffff;
-            --text-secondary: #b0b0b0;
-            --accent: #ff7b00;
-            --accent-hover: #ff9a3d;
-            --accent-light: #ffa94d;
-            --accent-dark: #e66a00;
-            --border: #333333;
-            --success: #4caf50;
-            --error: #f44336;
-            --warning: #ff9800;
-            --info: #2196f3;
-            --edit: #ffeb3b;
-            --whatsapp: #25D366;
-            --favorite: #ff4081;
-            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .light-mode {
-            --bg-primary: #f8f9fa;
-            --bg-secondary: #ffffff;
-            --bg-tertiary: #f0f0f0;
-            --text-primary: #2d3748;
-            --text-secondary: #718096;
-            --border: #e2e8f0;
-            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        html {
-            height: 100%;
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: radial-gradient(circle at top, #1f2933 0, #020617 45%, #000 100%);
-            color: var(--text-primary);
-            line-height: 1.6;
-            min-height: 100vh;
-            overflow-x: hidden;
-            transition: var(--transition);
-            display: flex;
-            justify-content: center;
-            padding: 12px;
-        }
-
-        .app-container {
-            max-width: 430px;
-            width: 100%;
-            margin: 0 auto;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            background: var(--bg-primary);
-            position: relative;
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(148, 163, 184, 0.2);
-        }
-
-        .app-header {
-            background: rgba(15, 23, 42, 0.9);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            padding: 14px 16px 10px;
-            border-bottom: 1px solid rgba(148, 163, 184, 0.25);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .header-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 4px;
-        }
-
-        .app-title {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        h1 {
-            color: var(--accent);
-            margin: 0;
-            font-size: 1.4rem;
-            font-weight: 700;
-        }
-
-        .app-icon {
-            width: 42px;
-            height: 42px;
-            border-radius: 10px;
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.3rem;
-            color: white;
-            box-shadow: 0 4px 12px rgba(255, 123, 0, 0.3);
-        }
-
-        .subtitle {
-            color: var(--text-secondary);
-            font-size: 0.75rem;
-            margin-top: 2px;
-            text-align: left;
-            font-weight: 500;
-            opacity: 0.9;
-        }
-
-        .subtitle span {
-            color: var(--accent-light);
-        }
-
-        .admin-access {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-
-        .admin-btn {
-            background: var(--bg-tertiary);
-            color: var(--text-secondary);
-            border: 1px solid var(--border);
-            padding: 8px 10px;
-            font-size: 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .admin-btn:hover {
-            background-color: var(--border);
-            color: var(--text-primary);
-        }
-
-        /* Interruptor modo técnico */
-        .admin-toggle {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: transparent;
-            border: none;
-            padding: 4px 6px;
-            border-radius: 999px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .admin-toggle:hover {
-            background: rgba(148, 163, 184, 0.1);
-        }
-
-        .toggle-label {
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 0.02em;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-        }
-
-        .toggle-pill {
-            width: 34px;
-            height: 18px;
-            border-radius: 999px;
-            background: var(--bg-tertiary);
-            border: 1px solid #dc2626; /* borde rojo apagado */
-            position: relative;
-            transition: var(--transition);
-        }
-
-        .toggle-circle {
-            position: absolute;
-            width: 14px;
-            height: 14px;
-            border-radius: 999px;
-            background: #dc2626; /* círculo rojo apagado */
-            top: 1px;
-            left: 2px;
-            transition: var(--transition);
-        }
-
-        /* Estado ON (modo técnico activo) */
-        .admin-toggle.on .toggle-pill {
-            background: rgba(34, 197, 94, 0.15); /* verde suave */
-            border-color: #22c55e;
-        }
-
-        .admin-toggle.on .toggle-circle {
-            transform: translateX(14px);
-            background: #22c55e; /* círculo verde */
-        }
-
-        .admin-toggle.on .toggle-label {
-            color: #22c55e;
-        }
-
-        .search-section {
-            padding: 12px 16px 10px;
-            background: var(--bg-secondary);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .search-controls {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .search-box {
-            width: 100%;
-            position: relative;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 12px 16px;
-            background-color: var(--bg-primary);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            color: var(--text-primary);
-            font-size: 16px;
-            transition: var(--transition);
-            box-shadow: var(--card-shadow);
-        }
-
-        input[type="text"]:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 2px rgba(255, 123, 0, 0.1);
-        }
-
-        .search-icon {
-            position: absolute;
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-secondary);
-        }
-
-        .main-content {
-            flex: 1;
-            padding: 12px 12px 8px;
-            overflow-y: auto;
-        }
-
-        .table-container {
-            overflow-x: auto;
-            border-radius: 16px;
-            border: 1px solid var(--border);
-            position: relative;
-            box-shadow: var(--card-shadow);
-            background: var(--bg-secondary);
-            -webkit-overflow-scrolling: touch;
-            margin-bottom: 60px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        thead {
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-
-        th {
-            background-color: var(--bg-tertiary);
-            padding: 10px 6px;
-            text-align: left;
-            font-weight: 600;
-            border-bottom: 1px solid var(--border);
-            cursor: pointer;
-            user-select: none;
-            position: relative;
-            transition: var(--transition);
-            font-size: 12px;
-            white-space: nowrap;
-            color: var(--text-primary);
-        }
-
-        th:hover {
-            background-color: var(--border);
-        }
-
-        th.sort-asc::after {
-            content: " ▲";
-            font-size: 10px;
-            color: var(--accent);
-        }
-
-        th.sort-desc::after {
-            content: " ▼";
-            font-size: 10px;
-            color: var(--accent);
-        }
-
-        td {
-            padding: 8px 6px;
-            border-bottom: 1px solid var(--border);
-            background-color: var(--bg-secondary);
-            transition: var(--transition);
-            font-size: 12px;
-        }
-
-        tbody tr:hover td {
-            background-color: var(--bg-tertiary);
-        }
-
-        mark {
-            background-color: var(--accent);
-            color: white;
-            padding: 1px 3px;
-            border-radius: 4px;
-        }
-
-        input.editable {
-            width: 100%;
-            padding: 6px;
-            background-color: transparent;
-            border: 1px solid transparent;
-            color: var(--text-primary);
-            border-radius: 6px;
-            transition: var(--transition);
-            font-size: 11px;
-        }
-
-        input.editable:focus {
-            outline: none;
-            border-color: var(--accent);
-            background-color: var(--bg-primary);
-            box-shadow: 0 0 0 1px rgba(255, 123, 0, 0.2);
-        }
-
-        input.editable-compra {
-            border: 1px solid var(--edit);
-            background-color: rgba(255, 235, 59, 0.05);
-        }
-
-        .price-compra {
-            color: var(--accent);
-            font-weight: 600;
-        }
-
-        .price-venta {
-            color: var(--success);
-            font-weight: 600;
-            cursor: pointer;
-            padding: 4px 8px;
-            border-radius: 999px;
-            transition: all 0.3s ease;
-        }
-
-        .price-venta:hover {
-            background-color: var(--accent);
-            color: white;
-        }
-
-        .tipo-oled {
-            color: var(--accent);
-            font-weight: 600;
-        }
-
-        .tipo-lcd {
-            color: var(--text-secondary);
-            font-weight: 600;
-        }
-
-        .status {
-            position: fixed;
-            bottom: 80px;
-            left: 50%;
-            transform: translateX(-50%);
-            max-width: 360px;
-            width: calc(100% - 48px);
-            z-index: 999;
-            padding: 8px 14px;
-            border-radius: 999px;
-            text-align: center;
-            font-weight: 500;
-            font-size: 0.75rem;
-            background: rgba(15, 23, 42, 0.96);
-            border: 1px solid rgba(148, 163, 184, 0.5);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-            display: none;
-        }
-
-        .status.success {
-            color: #bbf7d0;
-        }
-
-        .status.error {
-            color: #fecaca;
-        }
-
-        .status.info {
-            color: #bfdbfe;
-        }
-
-        .status.warning {
-            color: #fed7aa;
-        }
-
-        .empty {
-            text-align: center;
-            padding: 40px 15px;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .empty .icon {
-            font-size: 2rem;
-            margin-bottom: 12px;
-            opacity: 0.5;
-        }
-
-        .results-count {
-            text-align: left;
-            color: var(--text-secondary);
-            margin-bottom: 6px;
-            font-size: 0.75rem;
-            padding: 4px 2px;
-            display: none;
-        }
-
-        .hidden-price {
-            color: var(--text-secondary);
-            font-style: italic;
-            background-color: var(--bg-tertiary);
-            padding: 4px 8px;
-            border-radius: 999px;
-            font-size: 11px;
-        }
-
-        .price-container {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            justify-content: flex-start;
-        }
-
-        .share-icon {
-            color: var(--accent);
-            font-size: 14px;
-            cursor: pointer;
-            padding: 4px;
-            border-radius: 999px;
-            transition: var(--transition);
-            opacity: 0.7;
-        }
-
-        .share-icon:hover {
-            opacity: 1;
-            background-color: rgba(255, 123, 0, 0.1);
-        }
-
-        /* Ocultar columnas proveedor/compra cuando no hay acceso */
-        .hide-columns .col-proveedor,
-        .hide-columns .col-compra {
-            display: none;
-        }
-
-        .edit-notice {
-            text-align: center;
-            padding: 8px 10px;
-            background: var(--bg-tertiary);
-            border: 1px solid var(--edit);
-            border-radius: 10px;
-            margin-bottom: 10px;
-            color: var(--edit);
-            font-size: 11px;
-            box-shadow: var(--card-shadow);
-        }
-
-        .voice-search-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-secondary);
-            cursor: pointer;
-            padding: 5px;
-            border-radius: 50%;
-            transition: var(--transition);
-            position: absolute;
-            right: 46px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .voice-search-btn:hover {
-            background-color: var(--border);
-            color: var(--text-primary);
-        }
-
-        .voice-search-btn.listening {
-            background-color: var(--accent);
-            color: white;
-            animation: pulse 1s infinite;
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: translateY(-50%) scale(1);
-            }
-            50% {
-                transform: translateY(-50%) scale(1.05);
-            }
-            100% {
-                transform: translateY(-50%) scale(1);
-            }
-        }
-
-        .recent-searches {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 0 0 8px 8px;
-            max-height: 200px;
-            overflow-y: auto;
-            z-index: 100;
-        }
-
-        .recent-searches.active {
-            display: block;
-        }
-
-        .search-item {
-            padding: 8px 12px;
-            cursor: pointer;
-            transition: var(--transition);
-            border-bottom: 1px solid var(--border);
-            font-size: 0.8rem;
-        }
-
-        .search-item:hover {
-            background-color: var(--bg-tertiary);
-            color: var(--accent);
-        }
-
-        .bottom-nav {
-            position: sticky;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(15, 23, 42, 0.98);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border-top: 1px solid rgba(148, 163, 184, 0.3);
-            display: flex;
-            padding: 6px 14px;
-            z-index: 100;
-        }
-
-        .nav-item {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 4px;
-            color: var(--text-secondary);
-            transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
-            border-radius: 12px;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .nav-item.active::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            height: 3px;
-            width: 60%;
-            border-radius: 999px;
-            background: var(--accent);
-        }
-
-        .nav-item.active {
-            color: var(--accent);
-            transform: translateY(-1px);
-            background: rgba(15, 23, 42, 0.6);
-        }
-
-        .nav-item:hover {
-            background: rgba(15, 23, 42, 0.6);
-            color: var(--text-primary);
-        }
-
-        .nav-icon {
-            font-size: 1rem;
-            margin-bottom: 2px;
-        }
-
-        .nav-label {
-            font-size: 0.65rem;
-            font-weight: 500;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(5px);
-            padding: 16px;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        .modal-content {
-            background-color: var(--bg-secondary);
-            padding: 20px;
-            border-radius: 16px;
-            width: 100%;
-            max-width: 400px;
-            border: 1px solid var(--border);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-            animation: slideUp 0.3s ease;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        @keyframes slideUp {
-            from {
-                transform: translateY(20px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .modal h2 {
-            margin-bottom: 16px;
-            color: var(--accent);
-            text-align: center;
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-
-        .modal-input {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 14px;
-            background-color: var(--bg-primary);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            color: var(--text-primary);
-            font-size: 15px;
-            transition: var(--transition);
-        }
-
-        .modal-input:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 2px rgba(255, 123, 0, 0.1);
-        }
-
-        .modal-buttons {
-            display: flex;
-            gap: 10px;
-            justify-content: flex-end;
-        }
-
-        .modal-btn {
-            padding: 10px 18px;
-            border: none;
-            border-radius: 999px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: var(--transition);
-            font-size: 13px;
-        }
-
-        .modal-btn.primary {
-            background: var(--accent);
-            color: white;
-        }
-
-        .modal-btn.primary:hover {
-            background: var(--accent-dark);
-        }
-
-        .modal-btn.secondary {
-            background-color: var(--bg-tertiary);
-            color: var(--text-primary);
-            border: 1px solid var(--border);
-        }
-
-        .modal-btn.secondary:hover {
-            background-color: var(--border);
-        }
-
-        .modal-text {
-            margin-bottom: 12px;
-            color: var(--text-secondary);
-            text-align: center;
-            font-size: 13px;
-        }
-
-        /* Ficha técnica modal */
-        #specsHeader {
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
-            margin-bottom: 12px;
-        }
-
-        #specsImage {
-            width: 72px;
-            height: 72px;
-            border-radius: 12px;
-            object-fit: contain;
-            background: var(--bg-primary);
-            padding: 6px;
-            border: 1px solid var(--border);
-        }
-
-        #specsTitle {
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        #specsSubtitle {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            margin-top: 2px;
-        }
-
-        #specsList {
-            list-style: none;
-            padding-left: 0;
-            margin-top: 8px;
-        }
-
-        #specsList li {
-            font-size: 0.85rem;
-            padding: 4px 0;
-            border-bottom: 1px dashed var(--border);
-        }
-
-        #specsList li:last-child {
-            border-bottom: none;
-        }
-
-        #specsLoading {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            text-align: center;
-            margin-bottom: 8px;
-        }
-
-        @media (max-width: 480px) {
-            .app-container {
-                border-radius: 0;
-                max-width: 100%;
-                box-shadow: none;
-            }
-
-            .voice-search-btn {
-                right: 42px;
-            }
-        }
-
-        @media (min-width: 768px) {
-            .app-container {
-                max-width: 430px;
-            }
-        }
-
-        @media (hover: none) and (pointer: coarse) {
-            .admin-btn,
-            .nav-item {
-                min-height: 40px;
-                min-width: 40px;
-            }
-
-            input {
-                font-size: 16px;
-            }
-
-            .table-container {
-                -webkit-overflow-scrolling: touch;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#121212" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="description" content="Dr. Xiaomi - Gestión de precios de pantallas" />
+  <title>Dr. Xiaomi</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+  <style>
+    :root {
+      --bg-primary: #121212;
+      --bg-secondary: #1a1a1a;
+      --bg-tertiary: #2d2d2d;
+      --text-primary: #ffffff;
+      --text-secondary: #b0b0b0;
+      --accent: #ff7b00;
+      --accent-hover: #ff9a3d;
+      --accent-light: #ffa94d;
+      --accent-dark: #e66a00;
+      --border: #333333;
+      --success: #4caf50;
+      --error: #f44336;
+      --warning: #ff9800;
+      --info: #2196f3;
+      --edit: #ffeb3b;
+      --whatsapp: #25D366;
+      --favorite: #ff4081;
+      --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .light-mode {
+      --bg-primary: #f8f9fa;
+      --bg-secondary: #ffffff;
+      --bg-tertiary: #f0f0f0;
+      --text-primary: #2d3748;
+      --text-secondary: #718096;
+      --border: #e2e8f0;
+      --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html { height: 100%; scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: radial-gradient(circle at top, #1f2933 0, #020617 45%, #000 100%);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+      transition: var(--transition);
+      display: flex;
+      justify-content: center;
+      padding: 12px;
+    }
+    .app-container {
+      max-width: 430px;
+      width: 100%;
+      margin: 0 auto;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg-primary);
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(148, 163, 184, 0.2);
+    }
+    .app-header {
+      background: rgba(15, 23, 42, 0.9);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 14px 16px 10px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-content { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+    .app-title { display: flex; align-items: center; gap: 12px; }
+    h1 { color: var(--accent); margin: 0; font-size: 1.4rem; font-weight: 700; }
+    .app-icon {
+      width: 42px; height: 42px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; color: white;
+      box-shadow: 0 4px 12px rgba(255, 123, 0, 0.3);
+    }
+    .subtitle { color: var(--text-secondary); font-size: 0.75rem; margin-top: 2px; text-align: left; font-weight: 500; opacity: 0.9; }
+    .subtitle span { color: var(--accent-light); }
+    .admin-access { display: flex; gap: 8px; align-items: center; }
+    .admin-btn {
+      background: var(--bg-tertiary);
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      font-size: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .receipt-btn { border: 1px solid var(--accent); display: inline-flex; align-items: center; justify-content: center; }
+    .receipt-btn i { color: var(--accent); font-size: 15px; }
+    .receipt-btn:hover { background: rgba(255, 123, 0, 0.15); }
+    .receipt-btn:hover i { color: var(--accent-light); }
+    .admin-btn:hover { background-color: var(--border); color: var(--text-primary); }
+
+    .admin-toggle {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: transparent; border: none; padding: 4px 6px;
+      border-radius: 999px; cursor: pointer; transition: var(--transition);
+    }
+    .admin-toggle:hover { background: rgba(148, 163, 184, 0.1); }
+    .toggle-label { font-size: 11px; font-weight: 600; letter-spacing: 0.02em; color: var(--text-secondary); text-transform: uppercase; }
+    .toggle-pill {
+      width: 34px; height: 18px; border-radius: 999px;
+      background: var(--bg-tertiary);
+      border: 1px solid #dc2626;
+      position: relative; transition: var(--transition);
+    }
+    .toggle-circle {
+      position: absolute; width: 14px; height: 14px; border-radius: 999px;
+      background: #dc2626; top: 1px; left: 2px; transition: var(--transition);
+    }
+    .admin-toggle.on .toggle-pill { background: rgba(34, 197, 94, 0.15); border-color: #22c55e; }
+    .admin-toggle.on .toggle-circle { transform: translateX(14px); background: #22c55e; }
+    .admin-toggle.on .toggle-label { color: #22c55e; }
+
+    .theme-toggle {
+      background: transparent;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      color: var(--text-secondary);
+      padding: 8px 10px;
+      font-size: 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .theme-toggle:hover { background: rgba(148, 163, 184, 0.1); color: var(--text-primary); }
+
+    .search-section { padding: 12px 16px 10px; background: var(--bg-secondary); border-bottom: 1px solid var(--border); }
+    .search-controls { display: flex; flex-direction: column; gap: 12px; }
+    .search-box { width: 100%; position: relative; }
+    input[type="text"] {
+      width: 100%;
+      padding: 12px 16px;
+      background-color: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 16px;
+      transition: var(--transition);
+      box-shadow: var(--card-shadow);
+    }
+    input[type="text"]:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px rgba(255, 123, 0, 0.1); }
+    .search-icon { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); }
+
+    .main-content { flex: 1; padding: 12px 12px 8px; overflow-y: auto; }
+    .table-container {
+      overflow-x: auto;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      position: relative;
+      box-shadow: var(--card-shadow);
+      background: var(--bg-secondary);
+      -webkit-overflow-scrolling: touch;
+      margin-bottom: 60px;
+    }
+    table { width: 100%; border-collapse: collapse; }
+    thead { position: sticky; top: 0; z-index: 10; }
+    th {
+      background-color: var(--bg-tertiary);
+      padding: 10px 6px;
+      text-align: left;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+      transition: var(--transition);
+      font-size: 12px;
+      white-space: nowrap;
+      color: var(--text-primary);
+    }
+    th:hover { background-color: var(--border); }
+    th.sort-asc::after { content: " ▲"; font-size: 10px; color: var(--accent); }
+    th.sort-desc::after { content: " ▼"; font-size: 10px; color: var(--accent); }
+
+    td {
+      padding: 8px 6px;
+      border-bottom: 1px solid var(--border);
+      background-color: var(--bg-secondary);
+      transition: var(--transition);
+      font-size: 12px;
+    }
+    tbody tr:hover td { background-color: var(--bg-tertiary); }
+
+    mark { background-color: var(--accent); color: white; padding: 1px 3px; border-radius: 4px; }
+
+    input.editable {
+      width: 100%;
+      padding: 6px;
+      background-color: transparent;
+      border: 1px solid transparent;
+      color: var(--text-primary);
+      border-radius: 6px;
+      transition: var(--transition);
+      font-size: 11px;
+    }
+    input.editable:focus {
+      outline: none;
+      border-color: var(--accent);
+      background-color: var(--bg-primary);
+      box-shadow: 0 0 0 1px rgba(255, 123, 0, 0.2);
+    }
+    input.editable-compra { border: 1px solid var(--edit); background-color: rgba(255, 235, 59, 0.05); }
+
+    .price-compra { color: var(--accent); font-weight: 600; }
+    .price-venta {
+      color: var(--success);
+      font-weight: 600;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 999px;
+      transition: all 0.3s ease;
+    }
+    .price-venta:hover { background-color: var(--accent); color: white; }
+    .tipo-oled { color: var(--accent); font-weight: 600; }
+    .tipo-lcd { color: var(--text-secondary); font-weight: 600; }
+
+    .status {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 360px;
+      width: calc(100% - 48px);
+      z-index: 999;
+      padding: 8px 14px;
+      border-radius: 999px;
+      text-align: center;
+      font-weight: 500;
+      font-size: 0.75rem;
+      background: rgba(15, 23, 42, 0.96);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      display: none;
+    }
+    .status.success { color: #bbf7d0; }
+    .status.error { color: #fecaca; }
+    .status.info { color: #bfdbfe; }
+    .status.warning { color: #fed7aa; }
+
+    .empty { text-align: center; padding: 40px 15px; color: var(--text-secondary); font-size: 0.9rem; }
+    .empty .icon { font-size: 2rem; margin-bottom: 12px; opacity: 0.5; }
+
+    .results-count { text-align: left; color: var(--text-secondary); margin-bottom: 6px; font-size: 0.75rem; padding: 4px 2px; display: none; }
+
+    .price-container { display: flex; align-items: center; gap: 6px; justify-content: flex-start; }
+    .share-icon {
+      color: var(--accent);
+      font-size: 14px;
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 999px;
+      transition: var(--transition);
+      opacity: 0.7;
+    }
+    .share-icon:hover { opacity: 1; background-color: rgba(255, 123, 0, 0.1); }
+
+    .hide-columns .col-proveedor, .hide-columns .col-compra { display: none; }
+
+    .edit-notice {
+      text-align: center;
+      padding: 8px 10px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--edit);
+      border-radius: 10px;
+      margin-bottom: 10px;
+      color: var(--edit);
+      font-size: 11px;
+      box-shadow: var(--card-shadow);
+    }
+
+    .voice-search-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      padding: 5px;
+      border-radius: 50%;
+      transition: var(--transition);
+      position: absolute;
+      right: 46px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .voice-search-btn:hover { background-color: var(--border); color: var(--text-primary); }
+    .voice-search-btn.listening { background-color: var(--accent); color: white; animation: pulse 1s infinite; }
+    @keyframes pulse { 0% { transform: translateY(-50%) scale(1); } 50% { transform: translateY(-50%) scale(1.05); } 100% { transform: translateY(-50%) scale(1); } }
+
+    .recent-searches {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 0 0 8px 8px;
+      max-height: 200px;
+      overflow-y: auto;
+      z-index: 100;
+    }
+    .recent-searches.active { display: block; }
+    .search-item {
+      padding: 8px 12px;
+      cursor: pointer;
+      transition: var(--transition);
+      border-bottom: 1px solid var(--border);
+      font-size: 0.8rem;
+    }
+    .search-item:hover { background-color: var(--bg-tertiary); color: var(--accent); }
+
+    .bottom-nav {
+      position: sticky;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(15, 23, 42, 0.98);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-top: 1px solid rgba(148, 163, 184, 0.3);
+      display: flex;
+      padding: 6px 14px;
+      z-index: 100;
+    }
+    .nav-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+      color: var(--text-secondary);
+      transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+      border-radius: 12px;
+      cursor: pointer;
+      position: relative;
+      text-decoration: none;
+    }
+    .nav-item.active::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      height: 3px;
+      width: 60%;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+    .nav-item.active { color: var(--accent); transform: translateY(-1px); background: rgba(15, 23, 42, 0.6); }
+    .nav-item:hover { background: rgba(15, 23, 42, 0.6); color: var(--text-primary); }
+    .nav-icon { font-size: 1rem; margin-bottom: 2px; }
+    .nav-label { font-size: 0.65rem; font-weight: 500; }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(5px);
+      padding: 16px;
+      animation: fadeIn 0.3s ease;
+    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .modal-content {
+      background-color: var(--bg-secondary);
+      padding: 20px;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 400px;
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      animation: slideUp 0.3s ease;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .modal h2 { margin-bottom: 16px; color: var(--accent); text-align: center; font-size: 1.1rem; font-weight: 600; }
+    .modal-input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 14px;
+      background-color: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 15px;
+      transition: var(--transition);
+    }
+    .modal-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px rgba(255, 123, 0, 0.1); }
+    .modal-buttons { display: flex; gap: 10px; justify-content: flex-end; }
+    .modal-btn {
+      padding: 10px 18px;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: var(--transition);
+      font-size: 13px;
+    }
+    .modal-btn.primary { background: var(--accent); color: white; }
+    .modal-btn.primary:hover { background: var(--accent-dark); }
+    .modal-btn.secondary { background-color: var(--bg-tertiary); color: var(--text-primary); border: 1px solid var(--border); }
+    .modal-btn.secondary:hover { background-color: var(--border); }
+    .modal-text { margin-bottom: 12px; color: var(--text-secondary); text-align: center; font-size: 13px; }
+
+    @media (max-width: 480px) {
+      .app-container { border-radius: 0; max-width: 100%; box-shadow: none; }
+      .voice-search-btn { right: 42px; }
+    }
+  </style>
 </head>
+
 <body>
 <div class="app-container">
-    <header class="app-header">
-        <div class="header-content">
-            <div class="app-title">
-                <div class="app-icon">
-                    <i class="fas fa-mobile-alt"></i>
-                </div>
-                <h1>DR. XIAOMI</h1>
-            </div>
-            <div class="admin-access">
-                <!-- Interruptor modo técnico -->
-                <button class="admin-toggle" id="providersBtn" title="Modo técnico (ver datos bloqueados)">
-                    <span class="toggle-label">Técnico</span>
-                    <span class="toggle-pill">
-                        <span class="toggle-circle"></span>
-                    </span>
-                </button>
+  <header class="app-header">
+    <div class="header-content">
+      <div class="app-title">
+        <div class="app-icon"><i class="fas fa-mobile-alt"></i></div>
+        <h1>DR. XIAOMI</h1>
+      </div>
 
-                <button class="admin-btn" id="refreshBtn" title="Actualizar Datos">
-                    <i class="fas fa-sync-alt"></i>
-                </button>
-                <button class="admin-btn theme-toggle" id="themeToggle" title="Cambiar tema">
-                    <i class="fas fa-sun"></i>
-                </button>
-            </div>
-        </div>
-        <div class="subtitle">
-            Sistema de gestión de precios · <span id="lastUpdate">—</span>
-        </div>
-    </header>
+      <div class="admin-access">
+        <button class="admin-toggle" id="providersBtn" title="Modo técnico (ver datos bloqueados)">
+          <span class="toggle-label">Técnico</span>
+          <span class="toggle-pill"><span class="toggle-circle"></span></span>
+        </button>
 
-    <section class="search-section">
-        <div id="editNotice" class="edit-notice" style="display: none;">
-            <i class="fas fa-edit"></i>
-            <strong>Modo Edición Activado</strong> - Puedes editar precios directamente en la tabla
-        </div>
-        <div class="search-controls">
-            <div class="search-box">
-                <input type="text" id="searchInput" placeholder="Buscar marca, modelo, tipo o proveedor...">
-                <div class="search-icon">
-                    <i class="fas fa-search"></i>
-                </div>
-                <button class="voice-search-btn" id="voiceSearchBtn" title="Búsqueda por voz">
-                    <i class="fas fa-microphone"></i>
-                </button>
-                <div class="recent-searches" id="recentSearches"></div>
-            </div>
-        </div>
-    </section>
+        <a href="http://xiaomi.scz.red/1/" class="admin-btn receipt-btn" id="refreshBtn" title="Recibo">
+          <i class="fas fa-receipt"></i>
+        </a>
 
-    <main class="main-content">
-        <div id="statusMessage" class="status"></div>
-        <div id="resultsCount" class="results-count"></div>
+        <button class="theme-toggle" id="themeToggle" title="Cambiar tema">
+          <i class="fas fa-sun"></i>
+        </button>
+      </div>
+    </div>
 
-        <div class="table-container">
-            <table id="resultsTable">
-                <thead>
-                <tr>
-                    <th data-column="marca" class="col-marca">Marca</th>
-                    <th data-column="modelo" class="col-modelo">Modelo</th>
-                    <th data-column="tipo" class="col-tipo">Tipo</th>
-                    <th data-column="proveedor" class="col-proveedor">Prov.</th>
-                    <th data-column="precio_compra" class="col-compra">Compra</th>
-                    <th data-column="precio_venta" class="col-venta">Venta</th>
-                </tr>
-                </thead>
-                <tbody id="resultsBody"></tbody>
-            </table>
-        </div>
+    <div class="subtitle">
+      Sistema de gestión de precios · <span id="lastUpdate">—</span>
+    </div>
+  </header>
 
-        <div style="margin-top: 8px; text-align: right;">
-            <!-- espacio por si luego quieres algo, sin nuevos botones -->
-        </div>
-    </main>
+  <section class="search-section">
+    <div id="editNotice" class="edit-notice" style="display:none;">
+      <i class="fas fa-edit"></i>
+      <strong>Modo Edición Activado</strong> - Puedes editar precios directamente en la tabla
+    </div>
 
-    <!-- barra inferior: Inicio / TIKTOK / Recibo -->
-    <nav class="bottom-nav">
-        <div class="nav-item active" data-tab="main">
-            <div class="nav-icon">
-                <i class="fas fa-home"></i>
-            </div>
-            <div class="nav-label">Inicio</div>
-        </div>
-        <div class="nav-item" data-tab="favorites">
-            <div class="nav-icon">
-                <i class="fas fa-star"></i>
-            </div>
-            <div class="nav-label">TIKTOK</div>
-        </div>
-        <div class="nav-item" data-tab="compare">
-            <div class="nav-icon">
-                <i class="fas fa-balance-scale"></i>
-            </div>
-            <div class="nav-label">Recibo</div>
-        </div>
-    </nav>
+    <div class="search-controls">
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Buscar marca, modelo, tipo o proveedor...">
+        <div class="search-icon"><i class="fas fa-search"></i></div>
+
+        <button class="voice-search-btn" id="voiceSearchBtn" title="Búsqueda por voz">
+          <i class="fas fa-microphone"></i>
+        </button>
+
+        <div class="recent-searches" id="recentSearches"></div>
+      </div>
+    </div>
+  </section>
+
+  <main class="main-content">
+    <div id="statusMessage" class="status"></div>
+    <div id="resultsCount" class="results-count"></div>
+
+    <div class="table-container">
+      <table id="resultsTable">
+        <thead>
+          <tr>
+            <th data-column="marca" class="col-marca">Marca</th>
+            <th data-column="modelo" class="col-modelo">Modelo</th>
+            <th data-column="tipo" class="col-tipo">Tipo</th>
+            <th data-column="proveedor" class="col-proveedor">Prov.</th>
+            <th data-column="precio_compra" class="col-compra">Compra</th>
+            <th data-column="precio_venta" class="col-venta">Venta</th>
+          </tr>
+        </thead>
+        <tbody id="resultsBody"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <nav class="bottom-nav">
+    <div class="nav-item active" data-tab="main">
+      <div class="nav-icon"><i class="fas fa-home"></i></div>
+      <div class="nav-label">Inicio</div>
+    </div>
+
+    <div class="nav-item" data-tab="favorites">
+      <div class="nav-icon"><i class="fas fa-star"></i></div>
+      <div class="nav-label">TIKTOK</div>
+    </div>
+
+    <a href="http://xiaomi.scz.red/1/" class="nav-item" data-tab="compare">
+      <div class="nav-icon"><i class="fas fa-balance-scale"></i></div>
+      <div class="nav-label">Recibo</div>
+    </a>
+  </nav>
 </div>
 
 <!-- Modales -->
 <div class="modal" id="adminModal">
-    <div class="modal-content">
-        <h2><i class="fas fa-lock"></i> Acceso Administrativo</h2>
-        <input type="password" id="adminPassword" class="modal-input" placeholder="Ingrese la clave de acceso" autocomplete="off">
-        <div class="modal-buttons">
-            <button class="modal-btn secondary" id="cancelAdminBtn">Cancelar</button>
-            <button class="modal-btn primary" id="confirmAdminBtn">Acceder</button>
-        </div>
+  <div class="modal-content">
+    <h2><i class="fas fa-lock"></i> Acceso Administrativo</h2>
+    <input type="password" id="adminPassword" class="modal-input" placeholder="Ingrese la clave de acceso" autocomplete="off">
+    <div class="modal-buttons">
+      <button class="modal-btn secondary" id="cancelAdminBtn">Cancelar</button>
+      <button class="modal-btn primary" id="confirmAdminBtn">Acceder</button>
     </div>
+  </div>
 </div>
 
 <div class="modal" id="editModal">
-    <div class="modal-content">
-        <h2><i class="fas fa-edit"></i> Modo Edición</h2>
-        <p class="modal-text">
-            Ingrese la clave para editar precios de compra y toda la lista
-        </p>
-        <input type="password" id="editPassword" class="modal-input" placeholder="Clave de edición" autocomplete="off">
-        <div class="modal-buttons">
-            <button class="modal-btn secondary" id="cancelEditBtn">Cancelar</button>
-            <button class="modal-btn primary" id="confirmEditBtn">Activar Edición</button>
-        </div>
+  <div class="modal-content">
+    <h2><i class="fas fa-edit"></i> Modo Edición</h2>
+    <p class="modal-text">Ingrese la clave para editar precios de compra y toda la lista</p>
+    <input type="password" id="editPassword" class="modal-input" placeholder="Clave de edición" autocomplete="off">
+    <div class="modal-buttons">
+      <button class="modal-btn secondary" id="cancelEditBtn">Cancelar</button>
+      <button class="modal-btn primary" id="confirmEditBtn">Activar Edición</button>
     </div>
+  </div>
 </div>
 
 <div class="modal" id="providersModal">
-    <div class="modal-content">
-        <h2><i class="fas fa-eye"></i> Ver Importadoras</h2>
-        <p class="modal-text">
-            Ingrese la clave para ver las importadoras y precios de compra
-        </p>
-        <input type="password" id="providersPassword" class="modal-input" placeholder="Clave para ver importadoras" autocomplete="off">
-        <div class="modal-buttons">
-            <button class="modal-btn secondary" id="cancelProvidersBtn">Cancelar</button>
-            <button class="modal-btn primary" id="confirmProvidersBtn">Ver Importadoras</button>
-        </div>
+  <div class="modal-content">
+    <h2><i class="fas fa-eye"></i> Ver Importadoras</h2>
+    <p class="modal-text">Ingrese la clave para ver las importadoras y precios de compra</p>
+    <input type="password" id="providersPassword" class="modal-input" placeholder="Clave para ver importadoras" autocomplete="off">
+    <div class="modal-buttons">
+      <button class="modal-btn secondary" id="cancelProvidersBtn">Cancelar</button>
+      <button class="modal-btn primary" id="confirmProvidersBtn">Ver Importadoras</button>
     </div>
+  </div>
 </div>
 
 <div class="modal" id="ventaModal">
-    <div class="modal-content">
-        <h2><i class="fas fa-edit"></i> Editar Precio de Venta</h2>
-        <p class="modal-text">
-            Ingrese la clave para editar el precio de venta
-        </p>
-        <input type="password" id="ventaPassword" class="modal-input" placeholder="Clave para editar venta" autocomplete="off">
-        <div class="modal-buttons">
-            <button class="modal-btn secondary" id="cancelVentaBtn">Cancelar</button>
-            <button class="modal-btn primary" id="confirmVentaBtn">Editar Precio</button>
-        </div>
+  <div class="modal-content">
+    <h2><i class="fas fa-edit"></i> Editar Precio de Venta</h2>
+    <p class="modal-text">Ingrese la clave para editar el precio de venta</p>
+    <input type="password" id="ventaPassword" class="modal-input" placeholder="Clave para editar venta" autocomplete="off">
+    <div class="modal-buttons">
+      <button class="modal-btn secondary" id="cancelVentaBtn">Cancelar</button>
+      <button class="modal-btn primary" id="confirmVentaBtn">Editar Precio</button>
     </div>
+  </div>
 </div>
 
 <div class="modal" id="whatsappModal">
-    <div class="modal-content">
-        <h2><i class="fab fa-whatsapp"></i> Compartir por WhatsApp</h2>
-        <div id="whatsappMessage" style="margin-bottom: 12px; color: var(--text-primary); text-align: center; font-size: 14px; padding: 12px; background: var(--bg-primary); border-radius: 10px; border: 1px solid var(--border);"></div>
-        <p class="modal-text">
-            El mensaje se abrirá en WhatsApp. ¿Desea continuar?
-        </p>
-        <div class="modal-buttons">
-            <button class="modal-btn secondary" id="cancelWhatsappBtn">Cancelar</button>
-            <button class="modal-btn primary" id="confirmWhatsappBtn" style="background-color: var(--whatsapp);">
-                <i class="fab fa-whatsapp"></i> Abrir WhatsApp
-            </button>
-        </div>
+  <div class="modal-content">
+    <h2><i class="fab fa-whatsapp"></i> Compartir por WhatsApp</h2>
+    <div id="whatsappMessage" style="margin-bottom:12px;color:var(--text-primary);text-align:center;font-size:14px;padding:12px;background:var(--bg-primary);border-radius:10px;border:1px solid var(--border);"></div>
+    <p class="modal-text">El mensaje se abrirá en WhatsApp. ¿Desea continuar?</p>
+    <div class="modal-buttons">
+      <button class="modal-btn secondary" id="cancelWhatsappBtn">Cancelar</button>
+      <button class="modal-btn primary" id="confirmWhatsappBtn" style="background-color:var(--whatsapp);">
+        <i class="fab fa-whatsapp"></i> Abrir WhatsApp
+      </button>
     </div>
+  </div>
 </div>
 
 <div class="modal" id="compareModal">
-    <div class="modal-content">
-        <h2><i class="fas fa-balance-scale"></i> Comparar Productos</h2>
-        <div id="compareResults" style="max-height: 400px; overflow-y: auto;"></div>
-        <div class="modal-buttons">
-            <button class="modal-btn secondary" id="closeCompareBtn">Cerrar</button>
-            <button class="modal-btn primary" id="clearCompareBtn">
-                <i class="fas fa-trash"></i> Limpiar
-            </button>
-        </div>
+  <div class="modal-content">
+    <h2><i class="fas fa-balance-scale"></i> Comparar Productos</h2>
+    <div id="compareResults" style="max-height:400px;overflow-y:auto;"></div>
+    <div class="modal-buttons">
+      <button class="modal-btn secondary" id="closeCompareBtn">Cerrar</button>
+      <button class="modal-btn primary" id="clearCompareBtn">
+        <i class="fas fa-trash"></i> Limpiar
+      </button>
     </div>
-</div>
-
-<!-- Modal ficha técnica (API specs) -->
-<div class="modal" id="specsModal">
-    <div class="modal-content">
-        <h2><i class="fas fa-info-circle"></i> Ficha técnica</h2>
-        <div id="specsLoading">Buscando información del modelo...</div>
-        <div id="specsContent" style="display:none;">
-            <div id="specsHeader">
-                <img id="specsImage" alt="Foto del modelo">
-                <div>
-                    <div id="specsTitle">Modelo</div>
-                    <div id="specsSubtitle">Marca</div>
-                </div>
-            </div>
-            <ul id="specsList"></ul>
-        </div>
-        <div class="modal-buttons">
-            <button class="modal-btn secondary" id="closeSpecsBtn">Cerrar</button>
-        </div>
-    </div>
+  </div>
 </div>
 
 <script>
-    const CONFIG = [
-        { nombre: "J&A", archivo: "data/ja.csv" },
-        { nombre: "CentralCell", archivo: "data/centralcel.csv" },
-        { nombre: "Osmobil", archivo: "data/osmobil.csv" },
-        { nombre: "CFH LP", archivo: "data/CFH.csv" },
-        { nombre: "BITE", archivo: "data/boe.csv" }
-    ];
+  // =========================
+  // CONFIG (RUTA CORRECTA)
+  // =========================
+  const CONFIG = [
+    { nombre: "J&A",         archivo: "https://xiaomi.scz.red/precio/data/ja.csv" },
+    { nombre: "CentralCell", archivo: "https://xiaomi.scz.red/precio/data/centralcel.csv" },
+    { nombre: "Osmobil",     archivo: "https://xiaomi.scz.red/precio/data/osmobil.csv" },
+    { nombre: "CFH LP",      archivo: "https://xiaomi.scz.red/precio/data/CFH.csv" },
+    { nombre: "BITE",        archivo: "https://xiaomi.scz.red/precio/data/boe.csv" }
+  ];
 
-    const ADMIN_PASSWORD = "123456";
-    const EDIT_PASSWORD = "123456";
-    const VENTA_PASSWORD = "123456";
-    const PROVIDERS_PASSWORD = "123456";
+  const ADMIN_PASSWORD = "123456";
+  const EDIT_PASSWORD = "123456";
+  const VENTA_PASSWORD = "123456";
+  const PROVIDERS_PASSWORD = "123456";
 
-    // API de especificaciones de móviles
-    const PHONE_SPECS_API_BASE = "https://api-mobilespecs.azharimm.dev";
+  let allData = [];
+  let filteredData = [];
+  let sortColumn = "marca";
+  let sortDirection = "asc";
+  let searchTerm = "";
+  let showProviders = false;
+  let editMode = false;
+  let ventaEditMode = false;
+  let providersAccess = false;
+  let currentWhatsappRow = null;
+  let comparingItems = new Set();
+  let currentTab = "main";
+  let voiceRecognition = null;
+  let isLightMode = false;
 
-    let allData = [];
-    let filteredData = [];
-    let sortColumn = "marca";
-    let sortDirection = "asc";
-    let searchTerm = "";
-    let showProviders = false;
-    let editMode = false;
-    let ventaEditMode = false;
-    let providersAccess = false;
-    let currentWhatsappRow = null;
-    let comparingItems = new Set();
-    let currentTab = "main";
-    let voiceRecognition = null;
-    let isLightMode = false;
+  document.addEventListener("DOMContentLoaded", () => initializeApp());
 
-    document.addEventListener("DOMContentLoaded", function () {
-        initializeApp();
+  function initializeApp() {
+    loadAllData();
+    setupEventListeners();
+    updateProvidersUI();
+    updateTableColumns();
+    checkOnlineStatus();
+    updateLastUpdateLabel();
+    registerServiceWorker();
+
+    const savedTheme = localStorage.getItem("themePreference");
+    if (savedTheme === "light") toggleTheme();
+  }
+
+  // =========================
+  // Helpers (MEJORAS)
+  // =========================
+  function cleanText(s) {
+    return (s ?? "")
+      .toString()
+      .trim()
+      .replace(/\s+/g, " "); // espacios dobles -> uno
+  }
+
+  function updateLastUpdateLabel() {
+    const el = document.getElementById("lastUpdate");
+    if (!el) return;
+    const hoy = new Date();
+    el.textContent = hoy.toLocaleDateString("es-BO", { day: "2-digit", month: "2-digit", year: "2-digit" });
+  }
+
+  function registerServiceWorker() {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("./sw.js").catch(err => console.log("Service Worker error:", err));
+    }
+  }
+
+  function setupEventListeners() {
+    const searchInput = document.getElementById("searchInput");
+    searchInput.addEventListener("input", debounce(handleSearch, 250));
+
+    const providersBtn = document.getElementById("providersBtn");
+    if (providersBtn) providersBtn.addEventListener("click", handleProvidersButtonClick);
+
+    document.getElementById("voiceSearchBtn").addEventListener("click", startVoiceSearch);
+    document.getElementById("refreshBtn").addEventListener("click", (e) => { e.preventDefault(); loadAllData(); });
+    document.getElementById("themeToggle").addEventListener("click", toggleTheme);
+
+    setupModalEvents();
+
+    document.querySelectorAll(".nav-item").forEach(item => item.addEventListener("click", handleNavigation));
+
+    document.addEventListener("keydown", handleKeyboardShortcuts);
+    window.addEventListener("online", handleOnlineStatus);
+    window.addEventListener("offline", handleOnlineStatus);
+
+    searchInput.addEventListener("focus", showRecentSearches);
+    document.addEventListener("click", hideRecentSearches);
+
+    document.querySelectorAll('th[data-column]').forEach(th => {
+      th.addEventListener("click", () => sortTable(th.getAttribute("data-column")));
+    });
+  }
+
+  function setupModalEvents() {
+    const adminBtn = document.getElementById("adminBtn");
+    if (adminBtn) adminBtn.addEventListener("click", showAdminModal);
+
+    document.getElementById("cancelAdminBtn").addEventListener("click", hideAdminModal);
+    document.getElementById("confirmAdminBtn").addEventListener("click", handleAdminAccess);
+
+    const editModeBtn = document.getElementById("editModeBtn");
+    if (editModeBtn) editModeBtn.addEventListener("click", showEditModal);
+
+    document.getElementById("cancelEditBtn").addEventListener("click", hideEditModal);
+    document.getElementById("confirmEditBtn").addEventListener("click", handleEditAccess);
+
+    document.getElementById("cancelProvidersBtn").addEventListener("click", hideProvidersModal);
+    document.getElementById("confirmProvidersBtn").addEventListener("click", handleProvidersAccess);
+
+    document.getElementById("cancelVentaBtn").addEventListener("click", hideVentaModal);
+    document.getElementById("confirmVentaBtn").addEventListener("click", handleVentaAccess);
+
+    document.getElementById("cancelWhatsappBtn").addEventListener("click", hideWhatsappModal);
+    document.getElementById("confirmWhatsappBtn").addEventListener("click", handleWhatsappShare);
+
+    document.getElementById("closeCompareBtn").addEventListener("click", hideCompareModal);
+    document.getElementById("clearCompareBtn").addEventListener("click", clearCompare);
+
+    document.getElementById("adminPassword").addEventListener("keypress", e => { if (e.key === "Enter") handleAdminAccess(); });
+    document.getElementById("editPassword").addEventListener("keypress", e => { if (e.key === "Enter") handleEditAccess(); });
+    document.getElementById("ventaPassword").addEventListener("keypress", e => { if (e.key === "Enter") handleVentaAccess(); });
+    document.getElementById("providersPassword").addEventListener("keypress", e => { if (e.key === "Enter") handleProvidersAccess(); });
+  }
+
+  function toggleTheme() {
+    isLightMode = !isLightMode;
+    const toggleIcon = document.querySelector("#themeToggle i");
+    if (isLightMode) {
+      document.body.classList.add("light-mode");
+      if (toggleIcon) toggleIcon.className = "fas fa-moon";
+      localStorage.setItem("themePreference", "light");
+    } else {
+      document.body.classList.remove("light-mode");
+      if (toggleIcon) toggleIcon.className = "fas fa-sun";
+      localStorage.setItem("themePreference", "dark");
+    }
+  }
+
+  // =========================
+  // CARGA CSV (MEJORADA)
+  // =========================
+  async function loadAllData() {
+    showStatus("🔄 Cargando datos desde archivos CSV...", "info");
+
+    allData = [];
+    let report = [];
+    let loadedCount = 0;
+
+    try {
+      const results = await Promise.all(
+        CONFIG.map(async (provider) => {
+          const data = await loadCSVData(provider.archivo, provider.nombre);
+          report.push(`${provider.nombre}: ${data.length}`);
+          if (data.length > 0) loadedCount++;
+          return data;
+        })
+      );
+
+      results.forEach(arr => allData.push(...arr));
+
+      // Datos personalizados (si los tienes)
+      const storedData = localStorage.getItem("customPriceData");
+      if (storedData) {
+        try {
+          const customData = JSON.parse(storedData);
+          allData.push(...customData);
+        } catch (e) {
+          console.error("Error cargando datos personalizados:", e);
+        }
+      }
+
+      loadEditsFromStorage();
+      verifyDataIntegrity();
+      applyFilters();
+      updateRecentSearches();
+
+      showStatus(`✅ ${allData.length} precios cargados (${loadedCount}/${CONFIG.length}) — ${report.join(" | ")}`, "success");
+      console.log("📌 Reporte carga:", report.join(" | "));
+    } catch (error) {
+      console.error("Error cargando datos:", error);
+      showStatus("❌ Error cargando datos. Verifique la conexión.", "error");
+    }
+  }
+
+  async function loadCSVData(filePath, providerName) {
+    try {
+      const response = await fetch(filePath, { cache: "no-store" }); // ✅ evita cache raro
+      if (!response.ok) throw new Error(`Error ${response.status}`);
+      const csvText = await response.text();
+      const data = parseCSVCorregido(csvText, providerName);
+
+      localStorage.setItem(`backup_${providerName}`, JSON.stringify(data));
+      return data;
+    } catch (error) {
+      console.error(`❌ Error cargando ${providerName}:`, filePath, error);
+      const backupData = localStorage.getItem(`backup_${providerName}`);
+      if (backupData) {
+        showStatus(`⚠️ ${providerName} falló, usando backup local`, "warning");
+        return JSON.parse(backupData);
+      }
+      return [];
+    }
+  }
+
+  function parseCSVCorregido(csvText, providerName) {
+    const lines = csvText.split("\n").filter(line => line.trim() !== "");
+    const data = [];
+    if (lines.length === 0) return [];
+
+    for (let i = 1; i < lines.length; i++) {
+      const line = lines[i];
+      if (!line.trim()) continue;
+
+      const columns = parseCSVLine(line);
+
+      if (columns.length >= 6) {
+        const marca = cleanText(columns[0] || "Desconocido");
+        const modelo = cleanText(columns[1] || "Desconocido");
+        const tipo = cleanText((columns[2] || "LCD").toUpperCase());
+        const proveedor = cleanText(columns[3] || providerName);
+
+        const precio_compra = parsePrice(columns[4]);
+        const precio_venta = parsePrice(columns[5]);
+
+        const row = {
+          lista: providerName,
+          marca,
+          modelo,
+          tipo,
+          proveedor,
+          precio_compra,
+          precio_venta
+        };
+
+        if (row.marca !== "Desconocido" && row.modelo !== "Desconocido") data.push(row);
+
+      } else if (columns.length === 5) {
+        const marca = cleanText(columns[0] || "Desconocido");
+        const modelo = cleanText(columns[1] || "Desconocido");
+        const tipo = cleanText((columns[2] || "LCD").toUpperCase());
+
+        const precio_compra = parsePrice(columns[3]);
+        const precio_venta = parsePrice(columns[4]);
+
+        data.push({
+          lista: providerName,
+          marca, modelo, tipo,
+          proveedor: providerName,
+          precio_compra, precio_venta
+        });
+      }
+    }
+    return data;
+  }
+
+  function parseCSVLine(line) {
+    const result = [];
+    let current = "";
+    let inQuotes = false;
+
+    for (let i = 0; i < line.length; i++) {
+      const char = line[i];
+      if (char === '"') {
+        inQuotes = !inQuotes;
+      } else if (char === "," && !inQuotes) {
+        result.push(current.trim());
+        current = "";
+      } else {
+        current += char;
+      }
+    }
+    result.push(current.trim());
+    return result.map(field => field.replace(/^"|"$/g, ""));
+  }
+
+  function parsePrice(priceStr) {
+    if (!priceStr || priceStr.trim() === "") return 0;
+
+    let str = priceStr.toString().trim();
+    str = str.replace(/[^\d.,-]/g, "");
+
+    const isNegative = str.startsWith("-");
+    if (isNegative) str = str.substring(1);
+
+    const lastComma = str.lastIndexOf(",");
+    const lastDot = str.lastIndexOf(".");
+
+    let cleaned;
+    if (lastComma > lastDot) {
+      cleaned = str.replace(/\./g, "").replace(",", ".");
+    } else {
+      cleaned = str.replace(/,/g, "");
+    }
+
+    const num = parseFloat(cleaned);
+    if (isNaN(num)) return 0;
+
+    const rounded = Math.round(num);
+    return isNegative ? -rounded : rounded;
+  }
+
+  // =========================
+  // PROVEEDORES (interruptor)
+  // =========================
+  function handleProvidersButtonClick() {
+    if (!providersAccess) {
+      showProvidersModal();
+      return;
+    }
+    showProviders = !showProviders;
+    applyFilters();
+    updateProvidersUI();
+  }
+
+  function updateProvidersUI() {
+    const btn = document.getElementById("providersBtn");
+    if (!btn) return;
+
+    if (!providersAccess) {
+      btn.classList.remove("on");
+      btn.title = "Modo técnico bloqueado (requiere clave)";
+    } else {
+      btn.classList.toggle("on", showProviders);
+      btn.title = showProviders
+        ? "Modo técnico activo: mostrando importadoras y precios de compra"
+        : "Modo técnico desactivado: solo mejor precio";
+    }
+  }
+
+  function updateTableColumns() {
+    const tableContainer = document.querySelector(".table-container");
+    if (!tableContainer) return;
+
+    if (!providersAccess) tableContainer.classList.add("hide-columns");
+    else tableContainer.classList.remove("hide-columns");
+  }
+
+  // =========================
+  // Favoritos / Comparación
+  // =========================
+  function toggleFavorite(row) {
+    const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+    const itemId = generateRowId(row);
+    if (favorites.includes(itemId)) {
+      favorites.splice(favorites.indexOf(itemId), 1);
+      showStatus("❤️ Eliminado de favoritos", "info");
+    } else {
+      favorites.push(itemId);
+      showStatus("⭐ Agregado a favoritos", "success");
+    }
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+  }
+
+  function toggleCompare(row) {
+    const itemId = generateRowId(row);
+    if (comparingItems.has(itemId)) {
+      comparingItems.delete(itemId);
+      showStatus("📊 Eliminado de comparación", "info");
+    } else {
+      if (comparingItems.size >= 4) {
+        showStatus("❌ Máximo 4 productos para comparar", "error");
+        return;
+      }
+      comparingItems.add(itemId);
+      showStatus("📊 Agregado a comparación", "success");
+    }
+  }
+
+  function showCompareModal() {
+    const compareResults = document.getElementById("compareResults");
+    compareResults.innerHTML = "";
+
+    if (comparingItems.size === 0) {
+      compareResults.innerHTML = '<p style="text-align:center;color:var(--text-secondary);">No hay productos para comparar</p>';
+    } else {
+      const itemsToCompare = allData.filter(row => comparingItems.has(generateRowId(row)));
+      let compareHTML = '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;">';
+
+      itemsToCompare.forEach(item => {
+        compareHTML += `
+          <div style="background:var(--bg-primary);padding:12px;border-radius:10px;border:1px solid var(--border);">
+            <h4 style="color:var(--accent);margin-bottom:6px;font-size:0.9rem;">
+              ${item.marca} ${item.modelo}
+            </h4>
+            <p style="font-size:0.8rem;"><strong>Tipo:</strong> ${item.tipo}</p>
+            <p style="font-size:0.8rem;"><strong>Proveedor:</strong> ${item.proveedor}</p>
+            <p style="font-size:0.8rem;"><strong>Compra:</strong> Bs. ${formatCurrency(item.precio_compra)}</p>
+            <p style="font-size:0.8rem;"><strong>Venta:</strong> Bs. ${formatCurrency(item.precio_venta)}</p>
+          </div>
+        `;
+      });
+
+      compareHTML += "</div>";
+      compareResults.innerHTML = compareHTML;
+    }
+
+    document.getElementById("compareModal").style.display = "flex";
+  }
+
+  function clearCompare() {
+    comparingItems.clear();
+    hideCompareModal();
+    showStatus("🗑️ Comparación limpiada", "success");
+  }
+
+  // =========================
+  // Voz
+  // =========================
+  function startVoiceSearch() {
+    if (!("webkitSpeechRecognition" in window)) {
+      showStatus("❌ Tu navegador no soporta búsqueda por voz", "error");
+      return;
+    }
+    const voiceBtn = document.getElementById("voiceSearchBtn");
+    voiceRecognition = new webkitSpeechRecognition();
+    voiceRecognition.continuous = false;
+    voiceRecognition.interimResults = false;
+    voiceRecognition.lang = "es-ES";
+
+    voiceBtn.classList.add("listening");
+
+    voiceRecognition.onstart = () => showStatus("🎤 Escuchando... Habla ahora", "info");
+
+    voiceRecognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      const input = document.getElementById("searchInput");
+      input.value = transcript;
+      handleSearch({ target: { value: transcript } });
+      saveSearch(transcript);
+    };
+
+    voiceRecognition.onerror = () => {
+      showStatus("❌ Error en reconocimiento de voz", "error");
+      voiceBtn.classList.remove("listening");
+    };
+
+    voiceRecognition.onend = () => voiceBtn.classList.remove("listening");
+    voiceRecognition.start();
+  }
+
+  // =========================
+  // Buscador / Historial
+  // =========================
+  function saveSearch(term) {
+    if (!term.trim()) return;
+    const searches = JSON.parse(localStorage.getItem("recentSearches") || "[]");
+    const existingIndex = searches.indexOf(term);
+    if (existingIndex !== -1) searches.splice(existingIndex, 1);
+    searches.unshift(term);
+    localStorage.setItem("recentSearches", JSON.stringify(searches.slice(0, 5)));
+    updateRecentSearches();
+  }
+
+  function updateRecentSearches() {
+    const searches = JSON.parse(localStorage.getItem("recentSearches") || "[]");
+    const container = document.getElementById("recentSearches");
+    container.innerHTML = "";
+
+    searches.forEach(search => {
+      const item = document.createElement("div");
+      item.className = "search-item";
+      item.textContent = search;
+      item.addEventListener("click", () => {
+        document.getElementById("searchInput").value = search;
+        handleSearch({ target: { value: search } });
+        hideRecentSearches();
+      });
+      container.appendChild(item);
+    });
+  }
+
+  function showRecentSearches() {
+    const container = document.getElementById("recentSearches");
+    const searches = JSON.parse(localStorage.getItem("recentSearches") || "[]");
+    if (searches.length > 0) container.classList.add("active");
+  }
+
+  function hideRecentSearches(event) {
+    const container = document.getElementById("recentSearches");
+    const searchInput = document.getElementById("searchInput");
+    if (!event) { container.classList.remove("active"); return; }
+    if (event.target !== searchInput && !container.contains(event.target)) container.classList.remove("active");
+  }
+
+  // =========================
+  // Export
+  // =========================
+  function exportToCSV() {
+    const headers = ["Marca", "Modelo", "Tipo", "Proveedor", "Precio Compra", "Precio Venta"];
+    const csvContent = [
+      headers.join(","),
+      ...filteredData.map(row => [
+        `"${row.marca}"`,
+        `"${row.modelo}"`,
+        `"${row.tipo}"`,
+        `"${row.proveedor}"`,
+        row.precio_compra,
+        row.precio_venta
+      ].join(","))
+    ].join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `precios_pantallas_${new Date().toISOString().split("T")[0]}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    showStatus("📤 Datos exportados correctamente", "success");
+  }
+
+  // =========================
+  // Online / Offline
+  // =========================
+  function checkOnlineStatus() {
+    if (!navigator.onLine) showStatus("⚠️ Estás trabajando en modo offline", "warning");
+  }
+  function handleOnlineStatus() {
+    if (navigator.onLine) showStatus("✅ Conexión restaurada", "success");
+    else showStatus("⚠️ Modo offline activado", "warning");
+  }
+
+  // =========================
+  // Navegación
+  // =========================
+  function handleNavigation(event) {
+    const tab = event.currentTarget.getAttribute("data-tab");
+    document.querySelectorAll(".nav-item").forEach(item => item.classList.remove("active"));
+    event.currentTarget.classList.add("active");
+    currentTab = tab;
+
+    switch (tab) {
+      case "favorites": showFavorites(); break;
+      case "compare": showCompareModal(); break;
+      default: applyFilters(); break;
+    }
+  }
+
+  function showFavorites() {
+    const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+    filteredData = allData.filter(row => favorites.includes(generateRowId(row)));
+    renderTable();
+  }
+
+  function handleKeyboardShortcuts(event) {
+    if (event.ctrlKey || event.metaKey) {
+      switch (event.key) {
+        case "k": event.preventDefault(); document.getElementById("searchInput").focus(); break;
+        case "s": event.preventDefault(); exportToCSV(); break;
+        case "r": event.preventDefault(); loadAllData(); break;
+        case "t": event.preventDefault(); toggleTheme(); break;
+      }
+    }
+    if (event.key === "Escape") { closeAllModals(); hideRecentSearches(); }
+  }
+
+  function closeAllModals() {
+    document.querySelectorAll(".modal").forEach(modal => modal.style.display = "none");
+  }
+
+  function debounce(func, wait) {
+    let timeout;
+    return function (...args) {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func(...args), wait);
+    };
+  }
+
+  function normalizeText(text) {
+    return text
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9]/g, "");
+  }
+
+  function formatCurrency(value) {
+    if (value === null || value === undefined || isNaN(value)) return "0";
+    return Math.round(parseFloat(value)).toString();
+  }
+
+  function generateRowId(row) {
+    return `${row.lista}|${row.marca}|${row.modelo}|${row.tipo}|${row.proveedor}|${row.precio_compra}`;
+  }
+
+  function showStatus(message, type) {
+    const statusEl = document.getElementById("statusMessage");
+    statusEl.textContent = message;
+    statusEl.className = `status ${type}`;
+    statusEl.style.display = "block";
+    setTimeout(() => { statusEl.style.display = "none"; }, type === "error" ? 4200 : 2600);
+  }
+
+  // =========================
+  // Copiar / WhatsApp
+  // =========================
+  function copyPriceToClipboard(row) {
+    const message = generateWhatsappMessage(row);
+
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(message)
+        .then(() => { showStatus("✅ Mensaje copiado al portapapeles", "success"); highlightCopiedPrice(row); })
+        .catch(() => fallbackCopyToClipboard(message, row));
+    } else {
+      fallbackCopyToClipboard(message, row);
+    }
+  }
+
+  function fallbackCopyToClipboard(text, row) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed";
+    textArea.style.left = "-999999px";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+      document.execCommand("copy");
+      showStatus("✅ Mensaje copiado al portapapeles", "success");
+      highlightCopiedPrice(row);
+    } catch {
+      showStatus("❌ Error al copiar mensaje", "error");
+    }
+    document.body.removeChild(textArea);
+  }
+
+  function highlightCopiedPrice(row) {
+    const priceElements = document.querySelectorAll(".price-venta");
+    priceElements.forEach(element => {
+      if (element.textContent.includes(`Bs. ${formatCurrency(row.precio_venta)}`)) {
+        const originalBg = element.style.backgroundColor;
+        const originalColor = element.style.color;
+        element.style.backgroundColor = "var(--accent)";
+        element.style.color = "white";
+        setTimeout(() => {
+          element.style.backgroundColor = originalBg;
+          element.style.color = originalColor;
+        }, 800);
+      }
+    });
+  }
+
+  // =========================
+  // Filtros / Orden / Render
+  // =========================
+  function handleSearch(e) {
+    searchTerm = e.target.value;
+    saveSearch(searchTerm);
+    applyFilters();
+  }
+
+  function applyFilters() {
+    let filtered = [...allData];
+
+    if (searchTerm) {
+      const normalizedSearch = normalizeText(searchTerm);
+      filtered = filtered.filter(row =>
+        Object.values(row).some(value =>
+          value !== null && normalizeText(value.toString()).includes(normalizedSearch)
+        )
+      );
+    }
+
+    // ✅ "mejor precio" vs "todas importadoras"
+    if (!showProviders) filtered = getBestPrices(filtered);
+
+    if (sortColumn) sortData(filtered, sortColumn, sortDirection);
+
+    filteredData = filtered;
+    renderTable();
+    updateResultsCount();
+  }
+
+  function sortTable(column) {
+    if (sortColumn === column) sortDirection = (sortDirection === "asc" ? "desc" : "asc");
+    else { sortColumn = column; sortDirection = "asc"; }
+
+    document.querySelectorAll("th").forEach(th => th.classList.remove("sort-asc", "sort-desc"));
+    const currentTh = document.querySelector(`th[data-column="${column}"]`);
+    if (currentTh) currentTh.classList.add(`sort-${sortDirection}`);
+
+    sortData(filteredData, sortColumn, sortDirection);
+    renderTable();
+  }
+
+  function sortData(data, column, direction) {
+    data.sort((a, b) => {
+      let valueA = a[column];
+      let valueB = b[column];
+
+      if (valueA === null || valueA === undefined) valueA = "";
+      if (valueB === null || valueB === undefined) valueB = "";
+
+      if (column === "precio_compra" || column === "precio_venta") {
+        valueA = valueA || 0;
+        valueB = valueB || 0;
+        return direction === "asc" ? valueA - valueB : valueB - valueA;
+      }
+
+      valueA = valueA.toString().toLowerCase();
+      valueB = valueB.toString().toLowerCase();
+
+      if (valueA < valueB) return direction === "asc" ? -1 : 1;
+      if (valueA > valueB) return direction === "asc" ? 1 : -1;
+      return 0;
+    });
+  }
+
+  function getBestPrices(data) {
+    const grouped = {};
+    data.forEach(row => {
+      const key = `${row.marca}|${row.modelo}|${row.tipo}`;
+      if (!grouped[key] || row.precio_compra < grouped[key].precio_compra) grouped[key] = { ...row };
+    });
+    return Object.values(grouped);
+  }
+
+  function escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  }
+
+  function highlightMatches(text) {
+    if (!searchTerm || !text) return text || "";
+    const escaped = escapeRegExp(searchTerm);
+    const regex = new RegExp(escaped, "gi");
+    return text.toString().replace(regex, match => `<mark>${match}</mark>`);
+  }
+
+  function renderTable() {
+    const tbody = document.getElementById("resultsBody");
+    tbody.innerHTML = "";
+
+    if (!filteredData || filteredData.length === 0) {
+      const tr = document.createElement("tr");
+      const td = document.createElement("td");
+      td.colSpan = 6;
+      td.className = "empty";
+      td.innerHTML = `<div class="icon">🔍</div>${searchTerm ? "No se encontraron resultados" : "No hay datos para mostrar"}`;
+      tr.appendChild(td);
+      tbody.appendChild(tr);
+      updateResultsCount();
+      return;
+    }
+
+    filteredData.forEach(row => {
+      const tr = document.createElement("tr");
+
+      const tdMarca = document.createElement("td");
+      tdMarca.className = "col-marca";
+      tdMarca.innerHTML = highlightMatches(row.marca);
+      tr.appendChild(tdMarca);
+
+      const tdModelo = document.createElement("td");
+      tdModelo.className = "col-modelo";
+      tdModelo.innerHTML = highlightMatches(row.modelo);
+      tr.appendChild(tdModelo);
+
+      const tdTipo = document.createElement("td");
+      tdTipo.className = `col-tipo ${row.tipo === "OLED" ? "tipo-oled" : "tipo-lcd"}`;
+      tdTipo.innerHTML = highlightMatches(row.tipo);
+      tr.appendChild(tdTipo);
+
+      const tdProveedor = document.createElement("td");
+      tdProveedor.className = "col-proveedor";
+      tdProveedor.innerHTML = providersAccess ? highlightMatches(row.proveedor) : "";
+      tr.appendChild(tdProveedor);
+
+      const tdCompra = document.createElement("td");
+      tdCompra.className = "col-compra";
+      if (providersAccess) {
+        if (editMode) {
+          const input = document.createElement("input");
+          input.type = "text";
+          input.className = "editable editable-compra";
+          input.dataset.id = generateRowId(row);
+          input.dataset.field = "precio_compra";
+          input.value = formatCurrency(row.precio_compra);
+          input.placeholder = "0";
+          input.addEventListener("change", handleEdit);
+          tdCompra.appendChild(input);
+        } else {
+          const spanCompra = document.createElement("span");
+          spanCompra.className = "price-compra";
+          spanCompra.textContent = `Bs. ${formatCurrency(row.precio_compra)}`;
+          tdCompra.appendChild(spanCompra);
+        }
+      }
+      tr.appendChild(tdCompra);
+
+      const tdVenta = document.createElement("td");
+      tdVenta.className = "col-venta";
+
+      if (ventaEditMode) {
+        const inputVenta = document.createElement("input");
+        inputVenta.type = "text";
+        inputVenta.className = "editable";
+        inputVenta.dataset.id = generateRowId(row);
+        inputVenta.dataset.field = "precio_venta";
+        inputVenta.value = formatCurrency(row.precio_venta);
+        inputVenta.placeholder = "0";
+        inputVenta.addEventListener("change", handleEdit);
+        tdVenta.appendChild(inputVenta);
+      } else {
+        const priceContainer = document.createElement("div");
+        priceContainer.className = "price-container";
+
+        const priceSpan = document.createElement("span");
+        priceSpan.className = "price-venta";
+        priceSpan.textContent = `Bs. ${formatCurrency(row.precio_venta)}`;
+        priceSpan.title = "Haz clic para copiar el precio al portapapeles";
+        priceSpan.addEventListener("click", () => copyPriceToClipboard(row));
+
+        const shareIcon = document.createElement("i");
+        shareIcon.className = "fas fa-share-alt share-icon";
+        shareIcon.title = "Compartir por WhatsApp";
+        shareIcon.addEventListener("click", () => showWhatsappModal(row));
+
+        priceContainer.appendChild(priceSpan);
+        priceContainer.appendChild(shareIcon);
+        tdVenta.appendChild(priceContainer);
+      }
+
+      tr.appendChild(tdVenta);
+      tbody.appendChild(tr);
     });
 
-    function initializeApp() {
-        loadAllData();
-        setupEventListeners();
-        updateProvidersUI();
-        updateTableColumns();
-        checkOnlineStatus();
-        updateLastUpdateLabel();
-        registerServiceWorker();
-
-        const savedTheme = localStorage.getItem("themePreference");
-        if (savedTheme === "light") {
-            toggleTheme();
-        }
-    }
-
-    function updateLastUpdateLabel() {
-        const el = document.getElementById("lastUpdate");
-        if (!el) return;
-        const hoy = new Date();
-        el.textContent = hoy.toLocaleDateString("es-BO", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "2-digit"
-        });
-    }
-
-    function registerServiceWorker() {
-        if ("serviceWorker" in navigator) {
-            navigator.serviceWorker.register("./sw.js").catch(err => {
-                console.log("Service Worker error:", err);
-            });
-        }
-    }
-
-    function setupEventListeners() {
-        const searchInput = document.getElementById("searchInput");
-        searchInput.addEventListener("input", debounce(handleSearch, 300));
-
-        const providersBtn = document.getElementById("providersBtn");
-        if (providersBtn) {
-            providersBtn.addEventListener("click", handleProvidersButtonClick);
-        }
-
-        document.getElementById("voiceSearchBtn").addEventListener("click", startVoiceSearch);
-        document.getElementById("refreshBtn").addEventListener("click", loadAllData);
-        document.getElementById("themeToggle").addEventListener("click", toggleTheme);
-
-        setupModalEvents();
-
-        document.querySelectorAll(".nav-item").forEach(item => {
-            item.addEventListener("click", handleNavigation);
-        });
-
-        const exportBtn = document.getElementById("exportBtn");
-        if (exportBtn) {
-            exportBtn.addEventListener("click", exportToCSV);
-        }
-
-        document.addEventListener("keydown", handleKeyboardShortcuts);
-        window.addEventListener("online", handleOnlineStatus);
-        window.addEventListener("offline", handleOnlineStatus);
-
-        searchInput.addEventListener("focus", showRecentSearches);
-        document.addEventListener("click", hideRecentSearches);
-
-        document.querySelectorAll('th[data-column]').forEach(th => {
-            th.addEventListener("click", () => {
-                const column = th.getAttribute("data-column");
-                sortTable(column);
-            });
-        });
-    }
-
-    function setupModalEvents() {
-        const adminBtn = document.getElementById("adminBtn");
-        if (adminBtn) {
-            adminBtn.addEventListener("click", showAdminModal);
-        }
-
-        document.getElementById("cancelAdminBtn").addEventListener("click", hideAdminModal);
-        document.getElementById("confirmAdminBtn").addEventListener("click", handleAdminAccess);
-
-        const editModeBtn = document.getElementById("editModeBtn");
-        if (editModeBtn) {
-            editModeBtn.addEventListener("click", showEditModal);
-        }
-
-        document.getElementById("cancelEditBtn").addEventListener("click", hideEditModal);
-        document.getElementById("confirmEditBtn").addEventListener("click", handleEditAccess);
-
-        document.getElementById("cancelProvidersBtn").addEventListener("click", hideProvidersModal);
-        document.getElementById("confirmProvidersBtn").addEventListener("click", handleProvidersAccess);
-
-        document.getElementById("cancelVentaBtn").addEventListener("click", hideVentaModal);
-        document.getElementById("confirmVentaBtn").addEventListener("click", handleVentaAccess);
-
-        document.getElementById("cancelWhatsappBtn").addEventListener("click", hideWhatsappModal);
-        document.getElementById("confirmWhatsappBtn").addEventListener("click", handleWhatsappShare);
-
-        document.getElementById("closeCompareBtn").addEventListener("click", hideCompareModal);
-        document.getElementById("clearCompareBtn").addEventListener("click", clearCompare);
-
-        document.getElementById("adminPassword").addEventListener("keypress", e => {
-            if (e.key === "Enter") handleAdminAccess();
-        });
-        document.getElementById("editPassword").addEventListener("keypress", e => {
-            if (e.key === "Enter") handleEditAccess();
-        });
-        document.getElementById("ventaPassword").addEventListener("keypress", e => {
-            if (e.key === "Enter") handleVentaAccess();
-        });
-        document.getElementById("providersPassword").addEventListener("keypress", e => {
-            if (e.key === "Enter") handleProvidersAccess();
-        });
-
-        // Cerrar ficha técnica
-        document.getElementById("closeSpecsBtn").addEventListener("click", () => {
-            document.getElementById("specsModal").style.display = "none";
-        });
-    }
-
-    function toggleTheme() {
-        isLightMode = !isLightMode;
-        const toggleIcon = document.querySelector("#themeToggle i");
-        if (isLightMode) {
-            document.body.classList.add("light-mode");
-            if (toggleIcon) toggleIcon.className = "fas fa-moon";
-            localStorage.setItem("themePreference", "light");
-        } else {
-            document.body.classList.remove("light-mode");
-            if (toggleIcon) toggleIcon.className = "fas fa-sun";
-            localStorage.setItem("themePreference", "dark");
-        }
-    }
-
-    async function loadAllData() {
-        showStatus("🔄 Cargando datos desde archivos CSV...", "info");
-        try {
-            allData = [];
-            let loadedCount = 0;
-            let totalRecords = 0;
-
-            for (const provider of CONFIG) {
-                try {
-                    const data = await loadCSVData(provider.archivo, provider.nombre);
-                    allData = [...allData, ...data];
-                    loadedCount++;
-                    totalRecords += data.length;
-                } catch (error) {
-                    console.error(`Error cargando datos de ${provider.nombre}:`, error);
-                }
-            }
-
-            const storedData = localStorage.getItem("customPriceData");
-            if (storedData) {
-                try {
-                    const customData = JSON.parse(storedData);
-                    allData = [...allData, ...customData];
-                } catch (e) {
-                    console.error("Error cargando datos personalizados:", e);
-                }
-            }
-
-            loadEditsFromStorage();
-            verifyDataIntegrity();
-            applyFilters();
-            updateRecentSearches();
-
-            showStatus(`✅ ${totalRecords} precios cargados de ${loadedCount} proveedores`, "success");
-        } catch (error) {
-            console.error("Error cargando datos:", error);
-            showStatus("❌ Error cargando datos. Verifique la conexión.", "error");
-        }
-    }
-
-    async function loadCSVData(filePath, providerName) {
-        try {
-            const response = await fetch(filePath);
-            if (!response.ok) throw new Error(`Error ${response.status}`);
-            const csvText = await response.text();
-            const data = parseCSVCorregido(csvText, providerName);
-            localStorage.setItem(`backup_${providerName}`, JSON.stringify(data));
-            return data;
-        } catch (error) {
-            console.error(`Error cargando ${filePath}:`, error);
-            const backupData = localStorage.getItem(`backup_${providerName}`);
-            if (backupData) {
-                return JSON.parse(backupData);
-            }
-            return [];
-        }
-    }
-
-    function parseCSVCorregido(csvText, providerName) {
-        const lines = csvText.split("\n").filter(line => line.trim() !== "");
-        const data = [];
-        if (lines.length === 0) return [];
-
-        for (let i = 1; i < lines.length; i++) {
-            const line = lines[i];
-            if (!line.trim()) continue;
-
-            const columns = parseCSVLine(line);
-
-            if (columns.length >= 6) {
-                const marca = columns[0] || "Desconocido";
-                const modelo = columns[1] || "Desconocido";
-                const tipo = (columns[2] || "LCD").toUpperCase();
-                const proveedor = columns[3] || providerName;
-                const precio_compra = parsePrice(columns[4]);
-                const precio_venta = parsePrice(columns[5]);
-
-                const row = {
-                    lista: providerName,
-                    marca: marca.trim(),
-                    modelo: modelo.trim(),
-                    tipo: tipo.trim(),
-                    proveedor: proveedor.trim(),
-                    precio_compra,
-                    precio_venta
-                };
-
-                if (row.marca !== "Desconocido" && row.modelo !== "Desconocido") {
-                    data.push(row);
-                }
-            } else if (columns.length === 5) {
-                const marca = columns[0] || "Desconocido";
-                const modelo = columns[1] || "Desconocido";
-                const tipo = (columns[2] || "LCD").toUpperCase();
-                const precio_compra = parsePrice(columns[3]);
-                const precio_venta = parsePrice(columns[4]);
-
-                const row = {
-                    lista: providerName,
-                    marca: marca.trim(),
-                    modelo: modelo.trim(),
-                    tipo: tipo.trim(),
-                    proveedor: providerName,
-                    precio_compra,
-                    precio_venta
-                };
-                data.push(row);
-            }
-        }
-        return data;
-    }
-
-    function parseCSVLine(line) {
-        const result = [];
-        let current = "";
-        let inQuotes = false;
-
-        for (let i = 0; i < line.length; i++) {
-            const char = line[i];
-            if (char === '"') {
-                inQuotes = !inQuotes;
-            } else if (char === "," && !inQuotes) {
-                result.push(current.trim());
-                current = "";
-            } else {
-                current += char;
-            }
-        }
-        result.push(current.trim());
-        return result.map(field => field.replace(/^"|"$/g, ""));
-    }
-
-    function parsePrice(priceStr) {
-        if (!priceStr || priceStr.trim() === "") return 0;
-
-        let str = priceStr.toString().trim();
-        str = str.replace(/[^\d.,-]/g, "");
-
-        const isNegative = str.startsWith("-");
-        if (isNegative) str = str.substring(1);
-
-        const lastComma = str.lastIndexOf(",");
-        const lastDot = str.lastIndexOf(".");
-
-        let cleaned;
-        if (lastComma > lastDot) {
-            cleaned = str.replace(/\./g, "").replace(",", ".");
-        } else {
-            cleaned = str.replace(/,/g, "");
-        }
-
-        const num = parseFloat(cleaned);
-        if (isNaN(num)) return 0;
-
-        const rounded = Math.round(num);
-        return isNegative ? -rounded : rounded;
-    }
-
-    // ===== PROVEEDORES (interruptor modo técnico) =====
-    function handleProvidersButtonClick() {
-        if (!providersAccess) {
-            showProvidersModal();
-            return;
-        }
-        showProviders = !showProviders;
-        applyFilters();
-        updateProvidersUI();
-    }
-
-    function updateProvidersUI() {
-        const btn = document.getElementById("providersBtn");
-        if (!btn) return;
-
-        if (!providersAccess) {
-            btn.classList.remove("on");
-            btn.title = "Modo técnico bloqueado (requiere clave)";
-        } else {
-            btn.classList.toggle("on", showProviders);
-            btn.title = showProviders
-                ? "Modo técnico activo: mostrando importadoras y precios de compra"
-                : "Modo técnico desactivado: solo mejor precio";
-        }
-    }
-
-    function updateTableColumns() {
-        const tableContainer = document.querySelector(".table-container");
-        if (!tableContainer) return;
-
-        if (!providersAccess) {
-            tableContainer.classList.add("hide-columns");
-        } else {
-            tableContainer.classList.remove("hide-columns");
-        }
-    }
-
-    function toggleFavorite(row) {
-        const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
-        const itemId = generateRowId(row);
-
-        if (favorites.includes(itemId)) {
-            favorites.splice(favorites.indexOf(itemId), 1);
-            showStatus("❤️ Eliminado de favoritos", "info");
-        } else {
-            favorites.push(itemId);
-            showStatus("⭐ Agregado a favoritos", "success");
-        }
-        localStorage.setItem("favorites", JSON.stringify(favorites));
-    }
-
-    function isFavorite(row) {
-        const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
-        return favorites.includes(generateRowId(row));
-    }
-
-    function toggleCompare(row) {
-        const itemId = generateRowId(row);
-        if (comparingItems.has(itemId)) {
-            comparingItems.delete(itemId);
-            showStatus("📊 Eliminado de comparación", "info");
-        } else {
-            if (comparingItems.size >= 4) {
-                showStatus("❌ Máximo 4 productos para comparar", "error");
-                return;
-            }
-            comparingItems.add(itemId);
-            showStatus("📊 Agregado a comparación", "success");
-        }
-    }
-
-    function showCompareModal() {
-        const compareResults = document.getElementById("compareResults");
-        compareResults.innerHTML = "";
-
-        if (comparingItems.size === 0) {
-            compareResults.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">No hay productos para comparar</p>';
-        } else {
-            const itemsToCompare = allData.filter(row => comparingItems.has(generateRowId(row)));
-            let compareHTML = '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">';
-
-            itemsToCompare.forEach(item => {
-                compareHTML += `
-                    <div style="background: var(--bg-primary); padding: 12px; border-radius: 10px; border: 1px solid var(--border);">
-                        <h4 style="color: var(--accent); margin-bottom: 6px; font-size: 0.9rem;">
-                            ${item.marca} ${item.modelo}
-                        </h4>
-                        <p style="font-size: 0.8rem;"><strong>Tipo:</strong> ${item.tipo}</p>
-                        <p style="font-size: 0.8rem;"><strong>Proveedor:</strong> ${item.proveedor}</p>
-                        <p style="font-size: 0.8rem;"><strong>Compra:</strong> Bs. ${formatCurrency(item.precio_compra)}</p>
-                        <p style="font-size: 0.8rem;"><strong>Venta:</strong> Bs. ${formatCurrency(item.precio_venta)}</p>
-                    </div>
-                `;
-            });
-
-            compareHTML += "</div>";
-            compareResults.innerHTML = compareHTML;
-        }
-
-        document.getElementById("compareModal").style.display = "flex";
-    }
-
-    function clearCompare() {
-        comparingItems.clear();
-        hideCompareModal();
-        showStatus("🗑️ Comparación limpiada", "success");
-    }
-
-    function startVoiceSearch() {
-        if (!("webkitSpeechRecognition" in window)) {
-            showStatus("❌ Tu navegador no soporta búsqueda por voz", "error");
-            return;
-        }
-
-        const voiceBtn = document.getElementById("voiceSearchBtn");
-        voiceRecognition = new webkitSpeechRecognition();
-        voiceRecognition.continuous = false;
-        voiceRecognition.interimResults = false;
-        voiceRecognition.lang = "es-ES";
-
-        voiceBtn.classList.add("listening");
-
-        voiceRecognition.onstart = function () {
-            showStatus("🎤 Escuchando... Habla ahora", "info");
-        };
-
-        voiceRecognition.onresult = function (event) {
-            const transcript = event.results[0][0].transcript;
-            const input = document.getElementById("searchInput");
-            input.value = transcript;
-            handleSearch({ target: { value: transcript } });
-            saveSearch(transcript);
-        };
-
-        voiceRecognition.onerror = function () {
-            showStatus("❌ Error en reconocimiento de voz", "error");
-            voiceBtn.classList.remove("listening");
-        };
-
-        voiceRecognition.onend = function () {
-            voiceBtn.classList.remove("listening");
-        };
-
-        voiceRecognition.start();
-    }
-
-    function saveSearch(term) {
-        if (!term.trim()) return;
-        const searches = JSON.parse(localStorage.getItem("recentSearches") || "[]");
-        const existingIndex = searches.indexOf(term);
-        if (existingIndex !== -1) searches.splice(existingIndex, 1);
-        searches.unshift(term);
-        localStorage.setItem("recentSearches", JSON.stringify(searches.slice(0, 5)));
-        updateRecentSearches();
-    }
-
-    function updateRecentSearches() {
-        const searches = JSON.parse(localStorage.getItem("recentSearches") || "[]");
-        const container = document.getElementById("recentSearches");
-        container.innerHTML = "";
-
-        searches.forEach(search => {
-            const item = document.createElement("div");
-            item.className = "search-item";
-            item.textContent = search;
-            item.addEventListener("click", () => {
-                document.getElementById("searchInput").value = search;
-                handleSearch({ target: { value: search } });
-                hideRecentSearches();
-            });
-            container.appendChild(item);
-        });
-    }
-
-    function showRecentSearches() {
-        const container = document.getElementById("recentSearches");
-        const searches = JSON.parse(localStorage.getItem("recentSearches") || "[]");
-        if (searches.length > 0) {
-            container.classList.add("active");
-        }
-    }
-
-    function hideRecentSearches(event) {
-        const container = document.getElementById("recentSearches");
-        const searchInput = document.getElementById("searchInput");
-
-        if (!event) {
-            container.classList.remove("active");
-            return;
-        }
-
-        if (event.target !== searchInput && !container.contains(event.target)) {
-            container.classList.remove("active");
-        }
-    }
-
-    function exportToCSV() {
-        const headers = ["Marca", "Modelo", "Tipo", "Proveedor", "Precio Compra", "Precio Venta"];
-        const csvContent = [
-            headers.join(","),
-            ...filteredData.map(row =>
-                [
-                    `"${row.marca}"`,
-                    `"${row.modelo}"`,
-                    `"${row.tipo}"`,
-                    `"${row.proveedor}"`,
-                    row.precio_compra,
-                    row.precio_venta
-                ].join(",")
-            )
-        ].join("\n");
-
-        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = `precios_pantallas_${new Date().toISOString().split("T")[0]}.csv`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-
-        showStatus("📤 Datos exportados correctamente", "success");
-    }
-
-    function checkOnlineStatus() {
-        if (!navigator.onLine) {
-            showStatus("⚠️ Estás trabajando en modo offline", "warning");
-        }
-    }
-
-    function handleOnlineStatus() {
-        if (navigator.onLine) {
-            showStatus("✅ Conexión restaurada", "success");
-        } else {
-            showStatus("⚠️ Modo offline activado", "warning");
-        }
-    }
-
-    function handleNavigation(event) {
-        const tab = event.currentTarget.getAttribute("data-tab");
-        document.querySelectorAll(".nav-item").forEach(item => item.classList.remove("active"));
-        event.currentTarget.classList.add("active");
-        currentTab = tab;
-
-        switch (tab) {
-            case "favorites":
-                showFavorites();
-                break;
-            case "compare":
-                showCompareModal();
-                break;
-            default:
-                applyFilters();
-                break;
-        }
-    }
-
-    function showFavorites() {
-        const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
-        filteredData = allData.filter(row => favorites.includes(generateRowId(row)));
-        renderTable();
-    }
-
-    function handleKeyboardShortcuts(event) {
-        if (event.ctrlKey || event.metaKey) {
-            switch (event.key) {
-                case "k":
-                    event.preventDefault();
-                    document.getElementById("searchInput").focus();
-                    break;
-                case "e":
-                    event.preventDefault();
-                    showEditModal();
-                    break;
-                case "s":
-                    event.preventDefault();
-                    exportToCSV();
-                    break;
-                case "r":
-                    event.preventDefault();
-                    loadAllData();
-                    break;
-                case "t":
-                    event.preventDefault();
-                    toggleTheme();
-                    break;
-                case "v":
-                    event.preventDefault();
-                    showVentaModal();
-                    break;
-            }
-        }
-
-        if (event.key === "Escape") {
-            closeAllModals();
-            hideRecentSearches();
-        }
-    }
-
-    function closeAllModals() {
-        document.querySelectorAll(".modal").forEach(modal => {
-            modal.style.display = "none";
-        });
-    }
-
-    function debounce(func, wait) {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
-            };
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-        };
-    }
-
-    function normalizeText(text) {
-        return text
-            .toLowerCase()
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "")
-            .replace(/[^a-z0-9]/g, "");
-    }
-
-    function formatCurrency(value) {
-        if (value === null || value === undefined || isNaN(value)) return "0";
-        return Math.round(parseFloat(value)).toString();
-    }
-
-    function generateRowId(row) {
-        return `${row.lista}|${row.marca}|${row.modelo}|${row.tipo}|${row.proveedor}|${row.precio_compra}`;
-    }
-
-    function showStatus(message, type) {
-        const statusEl = document.getElementById("statusMessage");
-        statusEl.textContent = message;
-        statusEl.className = `status ${type}`;
-        statusEl.style.display = "block";
-        setTimeout(() => {
-            statusEl.style.display = "none";
-        }, type === "error" ? 4000 : 2500);
-    }
-
-    function copyPriceToClipboard(row) {
-        const message = generateWhatsappMessage(row);
-
-        if (navigator.clipboard && window.isSecureContext) {
-            navigator.clipboard.writeText(message)
-                .then(() => {
-                    showStatus("✅ Mensaje copiado al portapapeles", "success");
-                    highlightCopiedPrice(row);
-                })
-                .catch(() => {
-                    fallbackCopyToClipboard(message, row);
-                });
-        } else {
-            fallbackCopyToClipboard(message, row);
-        }
-    }
-
-    function fallbackCopyToClipboard(text, row) {
-        const textArea = document.createElement("textarea");
-        textArea.value = text;
-        textArea.style.position = "fixed";
-        textArea.style.left = "-999999px";
-        document.body.appendChild(textArea);
-        textArea.focus();
-        textArea.select();
-
-        try {
-            document.execCommand("copy");
-            showStatus("✅ Mensaje copiado al portapapeles", "success");
-            highlightCopiedPrice(row);
-        } catch {
-            showStatus("❌ Error al copiar mensaje", "error");
-        }
-
-        document.body.removeChild(textArea);
-    }
-
-    function highlightCopiedPrice(row) {
-        const priceElements = document.querySelectorAll(".price-venta");
-        priceElements.forEach(element => {
-            if (element.textContent.includes(`Bs. ${formatCurrency(row.precio_venta)}`)) {
-                const originalBg = element.style.backgroundColor;
-                const originalColor = element.style.color;
-                element.style.backgroundColor = "var(--accent)";
-                element.style.color = "white";
-                setTimeout(() => {
-                    element.style.backgroundColor = originalBg;
-                    element.style.color = originalColor;
-                }, 800);
-            }
-        });
-    }
-
-    function handleSearch(e) {
-        searchTerm = e.target.value;
-        saveSearch(searchTerm);
-        applyFilters();
-    }
-
-    function applyFilters() {
-        let filtered = [...allData];
-
-        if (searchTerm) {
-            const normalizedSearch = normalizeText(searchTerm);
-            filtered = filtered.filter(row =>
-                Object.values(row).some(value =>
-                    value !== null && normalizeText(value.toString()).includes(normalizedSearch)
-                )
-            );
-        }
-
-        if (!showProviders) {
-            filtered = getBestPrices(filtered);
-        }
-
-        if (sortColumn) {
-            sortData(filtered, sortColumn, sortDirection);
-        }
-
-        filteredData = filtered;
-        renderTable();
-        updateResultsCount();
-    }
-
-    function sortTable(column) {
-        if (sortColumn === column) {
-            sortDirection = sortDirection === "asc" ? "desc" : "asc";
-        } else {
-            sortColumn = column;
-            sortDirection = "asc";
-        }
-
-        document.querySelectorAll("th").forEach(th => th.classList.remove("sort-asc", "sort-desc"));
-        const currentTh = document.querySelector(`th[data-column="${column}"]`);
-        if (currentTh) currentTh.classList.add(`sort-${sortDirection}`);
-
-        sortData(filteredData, sortColumn, sortDirection);
-        renderTable();
-    }
-
-    function sortData(data, column, direction) {
-        data.sort((a, b) => {
-            let valueA = a[column];
-            let valueB = b[column];
-
-            if (valueA === null || valueA === undefined) valueA = "";
-            if (valueB === null || valueB === undefined) valueB = "";
-
-            if (column === "precio_compra" || column === "precio_venta") {
-                valueA = valueA || 0;
-                valueB = valueB || 0;
-                return direction === "asc" ? valueA - valueB : valueB - valueA;
-            }
-
-            valueA = valueA.toString().toLowerCase();
-            valueB = valueB.toString().toLowerCase();
-
-            if (valueA < valueB) return direction === "asc" ? -1 : 1;
-            if (valueA > valueB) return direction === "asc" ? 1 : -1;
-            return 0;
-        });
-    }
-
-    function getBestPrices(data) {
-        const grouped = {};
-        data.forEach(row => {
-            const key = `${row.marca}|${row.modelo}|${row.tipo}`;
-            if (!grouped[key] || row.precio_compra < grouped[key].precio_compra) {
-                grouped[key] = { ...row };
-            }
-        });
-        return Object.values(grouped);
-    }
-
-    function escapeRegExp(string) {
-        return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    }
-
-    function highlightMatches(text) {
-        if (!searchTerm || !text) return text || "";
-        const escaped = escapeRegExp(searchTerm);
-        const regex = new RegExp(escaped, "gi");
-        return text.toString().replace(regex, match => `<mark>${match}</mark>`);
-    }
-
-    function renderTable() {
-        const tbody = document.getElementById("resultsBody");
-        tbody.innerHTML = "";
-
-        if (!filteredData || filteredData.length === 0) {
-            const tr = document.createElement("tr");
-            const td = document.createElement("td");
-            td.colSpan = 6;
-            td.className = "empty";
-            td.innerHTML = `
-                <div class="icon">🔍</div>
-                ${searchTerm ? "No se encontraron resultados" : "No hay datos para mostrar"}
-            `;
-            tr.appendChild(td);
-            tbody.appendChild(tr);
-            updateResultsCount();
-            return;
-        }
-
-        filteredData.forEach(row => {
-            const tr = document.createElement("tr");
-
-            const tdMarca = document.createElement("td");
-            tdMarca.className = "col-marca";
-            tdMarca.innerHTML = highlightMatches(row.marca);
-            tr.appendChild(tdMarca);
-
-            const tdModelo = document.createElement("td");
-            tdModelo.className = "col-modelo";
-            tdModelo.innerHTML = highlightMatches(row.modelo);
-            tr.appendChild(tdModelo);
-
-            const tdTipo = document.createElement("td");
-            tdTipo.className = `col-tipo ${row.tipo === "OLED" ? "tipo-oled" : "tipo-lcd"}`;
-            tdTipo.innerHTML = highlightMatches(row.tipo);
-            tr.appendChild(tdTipo);
-
-            const tdProveedor = document.createElement("td");
-            tdProveedor.className = "col-proveedor";
-            tdProveedor.innerHTML = providersAccess ? highlightMatches(row.proveedor) : "";
-            tr.appendChild(tdProveedor);
-
-            const tdCompra = document.createElement("td");
-            tdCompra.className = "col-compra";
-            if (providersAccess) {
-                if (editMode) {
-                    const input = document.createElement("input");
-                    input.type = "text";
-                    input.className = "editable editable-compra";
-                    input.dataset.id = generateRowId(row);
-                    input.dataset.field = "precio_compra";
-                    input.value = formatCurrency(row.precio_compra);
-                    input.placeholder = "0";
-                    input.addEventListener("change", handleEdit);
-                    tdCompra.appendChild(input);
-                } else {
-                    const spanCompra = document.createElement("span");
-                    spanCompra.className = "price-compra";
-                    spanCompra.textContent = `Bs. ${formatCurrency(row.precio_compra)}`;
-                    tdCompra.appendChild(spanCompra);
-                }
-            }
-            tr.appendChild(tdCompra);
-
-            const tdVenta = document.createElement("td");
-            tdVenta.className = "col-venta";
-
-            if (ventaEditMode) {
-                const inputVenta = document.createElement("input");
-                inputVenta.type = "text";
-                inputVenta.className = "editable";
-                inputVenta.dataset.id = generateRowId(row);
-                inputVenta.dataset.field = "precio_venta";
-                inputVenta.value = formatCurrency(row.precio_venta);
-                inputVenta.placeholder = "0";
-                inputVenta.addEventListener("change", handleEdit);
-                tdVenta.appendChild(inputVenta);
-            } else {
-                const priceContainer = document.createElement("div");
-                priceContainer.className = "price-container";
-
-                const priceSpan = document.createElement("span");
-                priceSpan.className = "price-venta";
-                priceSpan.textContent = `Bs. ${formatCurrency(row.precio_venta)}`;
-                priceSpan.title = "Haz clic para copiar el precio al portapapeles";
-                priceSpan.addEventListener("click", () => copyPriceToClipboard(row));
-
-                const infoIcon = document.createElement("i");
-                infoIcon.className = "fas fa-info-circle share-icon";
-                infoIcon.title = "Ver ficha técnica (API)";
-                infoIcon.addEventListener("click", () => showSpecsModal(row));
-
-                priceContainer.appendChild(priceSpan);
-                priceContainer.appendChild(infoIcon);
-                tdVenta.appendChild(priceContainer);
-            }
-
-            tr.appendChild(tdVenta);
-            tbody.appendChild(tr);
-        });
-
-        updateResultsCount();
-    }
-
-    function updateResultsCount() {
-        const countEl = document.getElementById("resultsCount");
-        if (filteredData.length > 0) {
-            countEl.textContent = `${filteredData.length} resultado${filteredData.length !== 1 ? "s" : ""}`;
-            countEl.style.display = "block";
-        } else {
-            countEl.style.display = "none";
-        }
-    }
-
-    function handleEdit(e) {
-        const input = e.target;
-        const rowId = input.getAttribute("data-id");
-        const field = input.getAttribute("data-field");
-        let value = input.value;
-
-        if (field === "precio_compra" || field === "precio_venta") {
-            value = Math.round(parseFloat(value) || 0);
-            input.value = value;
-        }
-
-        saveEditToStorage(rowId, field, value);
-        updateDataInMemory(rowId, field, value);
-    }
-
-    function saveEditToStorage(rowId, field, value) {
-        const edits = JSON.parse(localStorage.getItem("priceListEdits") || "{}");
-        if (!edits[rowId]) edits[rowId] = {};
-        edits[rowId][field] = value;
-        localStorage.setItem("priceListEdits", JSON.stringify(edits));
-        showStatus("✅ Precio actualizado correctamente", "success");
-    }
-
-    function loadEditsFromStorage() {
-        const edits = JSON.parse(localStorage.getItem("priceListEdits") || "{}");
-        allData.forEach(row => {
-            const rowId = generateRowId(row);
-            if (edits[rowId]) {
-                if (edits[rowId].precio_venta !== undefined) {
-                    row.precio_venta = edits[rowId].precio_venta;
-                }
-                if (edits[rowId].precio_compra !== undefined) {
-                    row.precio_compra = edits[rowId].precio_compra;
-                }
-            }
-        });
-    }
-
-    function updateDataInMemory(rowId, field, value) {
-        const [lista, marca, modelo, tipo, proveedor, precio_compra] = rowId.split("|");
-        allData.forEach(row => {
-            if (
-                row.lista === lista &&
-                row.marca === marca &&
-                row.modelo === modelo &&
-                row.tipo === tipo &&
-                row.proveedor === proveedor &&
-                row.precio_compra == precio_compra
-            ) {
-                if (field === "precio_compra" || field === "precio_venta") {
-                    row[field] = Math.round(parseFloat(value) || 0);
-                }
-            }
-        });
-        applyFilters();
-    }
-
-    function showAdminModal() {
-        document.getElementById("adminModal").style.display = "flex";
-        document.getElementById("adminPassword").focus();
-    }
-
-    function hideAdminModal() {
-        document.getElementById("adminModal").style.display = "none";
-        document.getElementById("adminPassword").value = "";
-    }
-
-    function showEditModal() {
-        document.getElementById("editModal").style.display = "flex";
-        document.getElementById("editPassword").focus();
-    }
-
-    function hideEditModal() {
-        document.getElementById("editModal").style.display = "none";
-        document.getElementById("editPassword").value = "";
-    }
-
-    function showProvidersModal() {
-        document.getElementById("providersModal").style.display = "flex";
-        document.getElementById("providersPassword").focus();
-    }
-
-    function hideProvidersModal() {
-        document.getElementById("providersModal").style.display = "none";
-        document.getElementById("providersPassword").value = "";
-    }
-
-    function showVentaModal() {
-        document.getElementById("ventaModal").style.display = "flex";
-        document.getElementById("ventaPassword").focus();
-    }
-
-    function hideVentaModal() {
-        document.getElementById("ventaModal").style.display = "none";
-        document.getElementById("ventaPassword").value = "";
-    }
-
-    function showWhatsappModal(row) {
-        currentWhatsappRow = row;
-        const message = generateWhatsappMessage(row);
-        document.getElementById("whatsappMessage").textContent = message;
-        document.getElementById("whatsappModal").style.display = "flex";
-    }
-
-    function hideWhatsappModal() {
-        document.getElementById("whatsappModal").style.display = "none";
-        currentWhatsappRow = null;
-    }
-
-    function hideCompareModal() {
-        document.getElementById("compareModal").style.display = "none";
-    }
-
-    function generateWhatsappMessage(row) {
-        return `📱 *PRECIO DE PANTALLA* ${row.marca} ${row.modelo}\nPrecio: ${formatCurrency(row.precio_venta)} Bs.`;
-    }
-
-    function handleWhatsappShare() {
-        if (!currentWhatsappRow) return;
-        const message = generateWhatsappMessage(currentWhatsappRow);
-        const encodedMessage = encodeURIComponent(message);
-        const whatsappUrl = `https://wa.me/?text=${encodedMessage}`;
-        window.open(whatsappUrl, "_blank");
-        hideWhatsappModal();
-        showStatus("✅ Mensaje preparado para WhatsApp", "success");
-    }
-
-    function handleAdminAccess() {
-        const password = document.getElementById("adminPassword").value;
-        if (password === ADMIN_PASSWORD) {
-            showStatus("✅ Acceso administrativo concedido", "success");
-            hideAdminModal();
-        } else {
-            showStatus("❌ Clave incorrecta. Intente nuevamente.", "error");
-            document.getElementById("adminPassword").value = "";
-            document.getElementById("adminPassword").focus();
-        }
-    }
-
-    function handleEditAccess() {
-        const password = document.getElementById("editPassword").value;
-        if (password === EDIT_PASSWORD) {
-            editMode = true;
-            hideEditModal();
-            updateEditModeUI();
-            showStatus("✅ Modo edición activado", "success");
-        } else {
-            showStatus("❌ Clave incorrecta. Intente nuevamente.", "error");
-            document.getElementById("editPassword").value = "";
-            document.getElementById("editPassword").focus();
-        }
-    }
-
-    function handleProvidersAccess() {
-        const password = document.getElementById("providersPassword").value;
-        if (password === PROVIDERS_PASSWORD) {
-            providersAccess = true;
-            showProviders = true;
-            hideProvidersModal();
-            updateProvidersUI();
-            updateTableColumns();
-            applyFilters();
-            showStatus("✅ Acceso a importadoras activado", "success");
-        } else {
-            showStatus("❌ Clave incorrecta. Intente nuevamente.", "error");
-            document.getElementById("providersPassword").value = "";
-            document.getElementById("providersPassword").focus();
-        }
-    }
-
-    function handleVentaAccess() {
-        const password = document.getElementById("ventaPassword").value;
-        if (password === VENTA_PASSWORD) {
-            ventaEditMode = true;
-            hideVentaModal();
-            showStatus("✅ Puede editar el precio de venta", "success");
-            renderTable();
-        } else {
-            showStatus("❌ Clave incorrecta. Intente nuevamente.", "error");
-            document.getElementById("ventaPassword").value = "";
-            document.getElementById("ventaPassword").focus();
-        }
-    }
-
-    function updateEditModeUI() {
-        const editNotice = document.getElementById("editNotice");
-        const editBtn = document.getElementById("editModeBtn");
-        if (editMode) {
-            editNotice.style.display = "block";
-            if (editBtn) editBtn.innerHTML = '<i class="fas fa-toggle-on"></i>';
-        } else {
-            editNotice.style.display = "none";
-            if (editBtn) editBtn.innerHTML = '<i class="fas fa-edit"></i>';
-        }
-        renderTable();
-    }
-
-    // ======= Ficha técnica por API =======
-    async function showSpecsModal(row) {
-        const modal = document.getElementById("specsModal");
-        const loadingEl = document.getElementById("specsLoading");
-        const contentEl = document.getElementById("specsContent");
-        const imgEl = document.getElementById("specsImage");
-        const titleEl = document.getElementById("specsTitle");
-        const subtitleEl = document.getElementById("specsSubtitle");
-        const listEl = document.getElementById("specsList");
-
-        modal.style.display = "flex";
-        loadingEl.style.display = "block";
-        contentEl.style.display = "none";
-        listEl.innerHTML = "";
-        imgEl.style.display = "none";
-
-        const query = `${row.marca} ${row.modelo}`;
-        loadingEl.textContent = `Buscando ${query}...`;
-
-        try {
-            // 1) Buscar modelo
-            const resSearch = await fetch(`${PHONE_SPECS_API_BASE}/search?query=${encodeURIComponent(query)}`);
-            if (!resSearch.ok) throw new Error("Error buscando modelo");
-            const dataSearch = await resSearch.json();
-            const phones = (dataSearch && dataSearch.data && dataSearch.data.phones) || [];
-
-            if (!phones.length) {
-                loadingEl.textContent = "No se encontraron datos para este modelo.";
-                return;
-            }
-
-            const phone = phones[0];
-
-            titleEl.textContent = phone.phone_name || `${row.marca} ${row.modelo}`;
-            subtitleEl.textContent = phone.brand || row.marca;
-            if (phone.image) {
-                imgEl.src = phone.image;
-                imgEl.style.display = "block";
-            }
-
-            let specsHtml = "";
-
-            // 2) Intentar obtener detalles si hay slug
-            if (phone.slug) {
-                try {
-                    const resDetail = await fetch(`${PHONE_SPECS_API_BASE}/${phone.slug}`);
-                    if (resDetail.ok) {
-                        const detail = await resDetail.json();
-                        const sections = (detail && detail.data && detail.data.specifications) || [];
-
-                        const flat = [];
-                        sections.forEach(sec => {
-                            (sec.specs || []).forEach(sp => {
-                                flat.push({
-                                    section: sec.title || "",
-                                    key: sp.key || "",
-                                    val: sp.val || ""
-                                });
-                            });
-                        });
-
-                        function findSpec(part) {
-                            const lower = part.toLowerCase();
-                            const item = flat.find(s => s.key.toLowerCase().includes(lower) || s.section.toLowerCase().includes(lower));
-                            return item && item.val ? item.val : null;
-                        }
-
-                        const modelCode = findSpec("Model") || findSpec("Model Name") || "No disponible";
-                        const displaySize = findSpec("Size") || "No disponible";
-                        const displayType = findSpec("Type") || findSpec("Display") || "No disponible";
-                        const battery = findSpec("Battery") || "No disponible";
-
-                        specsHtml = `
-                            <li><strong>Código / Modelo:</strong> ${modelCode}</li>
-                            <li><strong>Pantalla:</strong> ${displaySize} · ${displayType}</li>
-                            <li><strong>Batería:</strong> ${battery}</li>
-                        `;
-                    } else {
-                        specsHtml = `<li>No se pudieron cargar las especificaciones detalladas.</li>`;
-                    }
-                } catch (err) {
-                    console.error(err);
-                    specsHtml = `<li>Error al obtener las especificaciones detalladas.</li>`;
-                }
-            } else {
-                specsHtml = `<li>No se encontraron especificaciones detalladas.</li>`;
-            }
-
-            listEl.innerHTML = specsHtml;
-            loadingEl.style.display = "none";
-            contentEl.style.display = "block";
-
-        } catch (err) {
-            console.error(err);
-            loadingEl.textContent = "Error al consultar la API de especificaciones.";
-        }
-    }
-
-    function verifyDataIntegrity() {
-        const issues = [];
-
-        const ventaMenor = allData.filter(item => item.precio_venta < item.precio_compra);
-        if (ventaMenor.length > 0) issues.push(`${ventaMenor.length} con venta < compra`);
-
-        const precioCero = allData.filter(item => item.precio_venta === 0 || item.precio_compra === 0);
-        if (precioCero.length > 0) issues.push(`${precioCero.length} con precios cero`);
-
-        const desconocidos = allData.filter(item =>
-            item.marca.includes("Desconocido") || item.modelo.includes("Desconocido")
-        );
-        if (desconocidos.length > 0) issues.push(`${desconocidos.length} con datos incompletos`);
-
-        if (issues.length) {
-            console.log("Problemas de datos:", issues.join(" | "));
-        }
-        return issues;
-    }
+    updateResultsCount();
+  }
+
+  // ✅ Contador mejorado (muestra modo)
+  function updateResultsCount() {
+    const countEl = document.getElementById("resultsCount");
+    if (!filteredData || filteredData.length === 0) { countEl.style.display = "none"; return; }
+    const mode = showProviders ? " (todas las importadoras)" : " (mejor precio)";
+    countEl.textContent = `${filteredData.length} resultado${filteredData.length !== 1 ? "s" : ""}${mode}`;
+    countEl.style.display = "block";
+  }
+
+  // =========================
+  // Edición (localStorage)
+  // =========================
+  function handleEdit(e) {
+    const input = e.target;
+    const rowId = input.getAttribute("data-id");
+    const field = input.getAttribute("data-field");
+    let value = input.value;
+
+    if (field === "precio_compra" || field === "precio_venta") {
+      value = Math.round(parseFloat(value) || 0);
+      input.value = value;
+    }
+
+    saveEditToStorage(rowId, field, value);
+    updateDataInMemory(rowId, field, value);
+  }
+
+  function saveEditToStorage(rowId, field, value) {
+    const edits = JSON.parse(localStorage.getItem("priceListEdits") || "{}");
+    if (!edits[rowId]) edits[rowId] = {};
+    edits[rowId][field] = value;
+    localStorage.setItem("priceListEdits", JSON.stringify(edits));
+    showStatus("✅ Precio actualizado correctamente", "success");
+  }
+
+  function loadEditsFromStorage() {
+    const edits = JSON.parse(localStorage.getItem("priceListEdits") || "{}");
+    allData.forEach(row => {
+      const rowId = generateRowId(row);
+      if (edits[rowId]) {
+        if (edits[rowId].precio_venta !== undefined) row.precio_venta = edits[rowId].precio_venta;
+        if (edits[rowId].precio_compra !== undefined) row.precio_compra = edits[rowId].precio_compra;
+      }
+    });
+  }
+
+  function updateDataInMemory(rowId, field, value) {
+    const [lista, marca, modelo, tipo, proveedor, precio_compra] = rowId.split("|");
+    allData.forEach(row => {
+      if (
+        row.lista === lista &&
+        row.marca === marca &&
+        row.modelo === modelo &&
+        row.tipo === tipo &&
+        row.proveedor === proveedor &&
+        row.precio_compra == precio_compra
+      ) {
+        if (field === "precio_compra" || field === "precio_venta") row[field] = Math.round(parseFloat(value) || 0);
+      }
+    });
+    applyFilters();
+  }
+
+  // =========================
+  // Modales
+  // =========================
+  function showAdminModal() {
+    document.getElementById("adminModal").style.display = "flex";
+    document.getElementById("adminPassword").focus();
+  }
+  function hideAdminModal() {
+    document.getElementById("adminModal").style.display = "none";
+    document.getElementById("adminPassword").value = "";
+  }
+
+  function showEditModal() {
+    document.getElementById("editModal").style.display = "flex";
+    document.getElementById("editPassword").focus();
+  }
+  function hideEditModal() {
+    document.getElementById("editModal").style.display = "none";
+    document.getElementById("editPassword").value = "";
+  }
+
+  function showProvidersModal() {
+    document.getElementById("providersModal").style.display = "flex";
+    document.getElementById("providersPassword").focus();
+  }
+  function hideProvidersModal() {
+    document.getElementById("providersModal").style.display = "none";
+    document.getElementById("providersPassword").value = "";
+  }
+
+  function showVentaModal() {
+    document.getElementById("ventaModal").style.display = "flex";
+    document.getElementById("ventaPassword").focus();
+  }
+  function hideVentaModal() {
+    document.getElementById("ventaModal").style.display = "none";
+    document.getElementById("ventaPassword").value = "";
+  }
+
+  function showWhatsappModal(row) {
+    currentWhatsappRow = row;
+    document.getElementById("whatsappMessage").textContent = generateWhatsappMessage(row);
+    document.getElementById("whatsappModal").style.display = "flex";
+  }
+  function hideWhatsappModal() {
+    document.getElementById("whatsappModal").style.display = "none";
+    currentWhatsappRow = null;
+  }
+  function hideCompareModal() {
+    document.getElementById("compareModal").style.display = "none";
+  }
+
+  function generateWhatsappMessage(row) {
+    return `📱 *PRECIO DE PANTALLA* ${row.marca} ${row.modelo}\nPrecio: ${formatCurrency(row.precio_venta)} Bs.`;
+  }
+  function handleWhatsappShare() {
+    if (!currentWhatsappRow) return;
+    const message = generateWhatsappMessage(currentWhatsappRow);
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, "_blank");
+    hideWhatsappModal();
+    showStatus("✅ Mensaje preparado para WhatsApp", "success");
+  }
+
+  // =========================
+  // Accesos
+  // =========================
+  function handleAdminAccess() {
+    const password = document.getElementById("adminPassword").value;
+    if (password === ADMIN_PASSWORD) {
+      showStatus("✅ Acceso administrativo concedido", "success");
+      hideAdminModal();
+    } else {
+      showStatus("❌ Clave incorrecta. Intente nuevamente.", "error");
+      document.getElementById("adminPassword").value = "";
+      document.getElementById("adminPassword").focus();
+    }
+  }
+
+  function handleEditAccess() {
+    const password = document.getElementById("editPassword").value;
+    if (password === EDIT_PASSWORD) {
+      editMode = true;
+      hideEditModal();
+      updateEditModeUI();
+      showStatus("✅ Modo edición activado", "success");
+    } else {
+      showStatus("❌ Clave incorrecta. Intente nuevamente.", "error");
+      document.getElementById("editPassword").value = "";
+      document.getElementById("editPassword").focus();
+    }
+  }
+
+  function handleProvidersAccess() {
+    const password = document.getElementById("providersPassword").value;
+    if (password === PROVIDERS_PASSWORD) {
+      providersAccess = true;
+      showProviders = true;
+      hideProvidersModal();
+      updateProvidersUI();
+      updateTableColumns();
+      applyFilters();
+      showStatus("✅ Acceso a importadoras activado", "success");
+    } else {
+      showStatus("❌ Clave incorrecta. Intente nuevamente.", "error");
+      document.getElementById("providersPassword").value = "";
+      document.getElementById("providersPassword").focus();
+    }
+  }
+
+  function handleVentaAccess() {
+    const password = document.getElementById("ventaPassword").value;
+    if (password === VENTA_PASSWORD) {
+      ventaEditMode = true;
+      hideVentaModal();
+      showStatus("✅ Puede editar el precio de venta", "success");
+      renderTable();
+    } else {
+      showStatus("❌ Clave incorrecta. Intente nuevamente.", "error");
+      document.getElementById("ventaPassword").value = "";
+      document.getElementById("ventaPassword").focus();
+    }
+  }
+
+  function updateEditModeUI() {
+    const editNotice = document.getElementById("editNotice");
+    if (editMode) editNotice.style.display = "block";
+    else editNotice.style.display = "none";
+    renderTable();
+  }
+
+  // =========================
+  // Integridad
+  // =========================
+  function verifyDataIntegrity() {
+    const issues = [];
+    const ventaMenor = allData.filter(item => item.precio_venta < item.precio_compra);
+    if (ventaMenor.length > 0) issues.push(`${ventaMenor.length} con venta < compra`);
+
+    const precioCero = allData.filter(item => item.precio_venta === 0 || item.precio_compra === 0);
+    if (precioCero.length > 0) issues.push(`${precioCero.length} con precios cero`);
+
+    const desconocidos = allData.filter(item => item.marca.includes("Desconocido") || item.modelo.includes("Desconocido"));
+    if (desconocidos.length > 0) issues.push(`${desconocidos.length} con datos incompletos`);
+
+    if (issues.length) console.log("Problemas de datos:", issues.join(" | "));
+    return issues;
+  }
 </script>
 </body>
 </html>
