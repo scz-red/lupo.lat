@@ -72,10 +72,10 @@ window.addEventListener('DOMContentLoaded', () => {
   // ================================
 
   // Tasa base de euro (Bs por 1 EUR)
-  const BASE_EUR_BS = 10.95;
+  const BASE_EUR_BS = 11.10;
 
   // Descuento/margen → 10%
-  const FRONTEND_DISCOUNT = 0.10;       // 10%
+  const FRONTEND_DISCOUNT = 0.09;       // 10%
   const MULT = 1 - FRONTEND_DISCOUNT;   // 0.90
 
   // Tasa neta final mostrada al usuario
@@ -161,6 +161,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
 
 
 
