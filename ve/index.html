@@ -7,158 +7,115 @@
 
   <title>LUPO | Envía dinero de Bolivia a Venezuela sin comisiones</title>
   <meta name="description" content="Envía dinero de Bolivia a Venezuela sin comisiones. Cotiza en segundos y recibe en minutos con LUPO." />
-  <meta name="keywords" content="envío dinero, remesas, Bolivia, Venezuela, tipo de cambio, sin comisiones, LUPO" />
-  <link rel="canonical" href="https://ve.lupo.lat/bo/" />
+  <meta name="keywords" content="envío dinero, remesas, Bolivia, Venezuela, sin comisiones, LUPO" />
 
-  <!-- Social preview -->
+  <!-- Social -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="LUPO | Envía dinero de Bolivia a Venezuela" />
-  <meta property="og:description" content="Envía sin comisiones. Cotiza al instante y recibe en minutos con la mejor tasa." />
-  <meta property="og:url" content="https://ve.lupo.lat/bo/" />
+  <meta property="og:description" content="Envía dinero a Venezuela rápido, seguro y sin comisiones." />
   <meta property="og:image" content="https://lupo.lat/img/og-lupo.png" />
   <meta name="twitter:card" content="summary_large_image" />
 
   <!-- PWA -->
   <meta name="theme-color" content="#00247D" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="LUPO" />
-  <meta name="color-scheme" content="light" />
-  <meta name="referrer" content="strict-origin-when-cross-origin" />
-
-  <link rel="manifest" href="/icons/manifest.json" />
-  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
-
-  <!-- Icons -->
-  <link rel="icon" href="https://lupo.lat/img/favicon.ico" type="image/x-icon" />
-  <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png" />
-  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png" />
-  <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png" />
-  <link rel="icon" type="image/png" sizes="512x512" href="/icons/icon-512.png" />
-
-  <!-- Perf: fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <meta name="mobile-web-app-capable" content="yes" />
 
   <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
-  <!-- ✅ CSS externo Venezuela -->
+  <!-- CSS Venezuela -->
   <link rel="stylesheet" href="styles_ve.css">
 </head>
 
 <body>
-  <!-- Firma VE (tricolor) -->
-  <div class="co-stripe" aria-hidden="true"></div>
 
+  <!-- Tricolor Venezuela -->
+  <div class="co-stripe"></div>
+
+  <!-- HEADER -->
   <header>
     <div class="nav-container">
-      <div class="logo" aria-label="LUPO Inicio">
-        <img src="https://lupo.lat/img/lupo01.png" alt="LUPO Envía" />
+      <div class="logo">
+        <img src="https://lupo.lat/img/lupo01.png" alt="LUPO" />
       </div>
 
-      <!-- Selector simple (identidad + navegación) -->
-      <nav class="country-pills" aria-label="Ruta">
-        <!-- En esta página: BO -> VE, por eso VE activo (destino) -->
-        <a class="pill active" href="https://ve.lupo.lat/ves/" aria-current="page" aria-label="Destino Venezuela">
+      <nav class="country-pills">
+        <span class="pill active">
           <img src="https://flagcdn.com/w40/ve.png" alt="Venezuela" />
           <span>Venezuela</span>
-        </a>
-        <a class="pill" href="https://ve.lupo.lat/" aria-label="Origen Bolivia">
+        </span>
+        <span class="pill">
           <img src="https://flagcdn.com/w40/bo.png" alt="Bolivia" />
           <span>Bolivia</span>
-        </a>
+        </span>
       </nav>
 
-      <button class="login-btn" type="button" aria-label="Iniciar sesión">
-        <i class="fa-solid fa-user"></i> Iniciar Sesión
+      <button class="login-btn">
+        <i class="fa-solid fa-user"></i> Iniciar sesión
       </button>
     </div>
   </header>
 
+  <!-- HERO -->
   <section class="hero">
     <div class="hero-inner">
       <div class="kicker">
-        <span class="kdot" aria-hidden="true"></span>
-        <small>Ruta:</small>
+        <span class="kdot"></span>
         <strong>Bolivia → Venezuela</strong>
-        <span aria-hidden="true">•</span>
+        <span>•</span>
         <strong>0% comisiones</strong>
       </div>
 
       <h1>Envía <span>Bolivianos</span> a <span>Bolívares</span> 🇻🇪</h1>
-      <p>La forma más rápida y segura de enviar dinero de Bolivia a Venezuela con las mejores tasas del mercado.</p>
+      <p>La forma más rápida y segura de enviar dinero de Bolivia a Venezuela.</p>
     </div>
   </section>
 
+  <!-- CALCULADORA -->
   <main class="container">
-    <div class="calculator-card" id="calculator-card" aria-label="Calculadora">
+    <div class="calculator-card visible" id="calculator-card">
       <div class="calc-title">
         <i class="fa-solid fa-calculator"></i> Calculadora de envío
       </div>
 
       <div class="submeta">
-        <span class="chip"><span class="dot" aria-hidden="true"></span> Activo</span>
-        <span id="cotiz-datetime" aria-label="Fecha y hora de cotización"></span>
+        <span class="chip"><span class="dot"></span> Activo</span>
+        <span id="cotiz-datetime"></span>
       </div>
 
       <div class="form-group">
-        <label for="amount">Tú envías (BOB)</label>
+        <label>Tú envías (BOB)</label>
         <div class="currency-input-container">
-          <div class="currency-flag" style="background-image:url('https://flagcdn.com/w40/bo.png')" aria-hidden="true"></div>
-          <input type="number" id="amount" class="form-control" placeholder="Ej. 500" min="1" inputmode="numeric" />
+          <div class="currency-flag" style="background-image:url('https://flagcdn.com/w40/bo.png')"></div>
+          <input type="number" id="amount" class="form-control" placeholder="Ej. 500">
         </div>
       </div>
 
       <div class="form-group">
-        <label for="received-amount">Recibe (VES)</label>
+        <label>Recibe (VES)</label>
         <div class="currency-input-container">
-          <div class="currency-flag" style="background-image:url('https://flagcdn.com/w40/ve.png')" aria-hidden="true"></div>
-          <input type="text" id="received-amount" class="form-control" placeholder="0" readonly aria-readonly="true" />
+          <div class="currency-flag" style="background-image:url('https://flagcdn.com/w40/ve.png')"></div>
+          <input type="text" id="received-amount" class="form-control" readonly>
         </div>
       </div>
 
-      <button class="btn-primary" id="calculate-btn" type="button">
+      <button class="btn-primary" id="calculate-btn">
         <i class="fa-solid fa-paper-plane"></i> Enviar dinero por WhatsApp
       </button>
 
-      <!-- ✅ NO exchange-pill -->
-
-      <div class="result-card" id="result-card" aria-live="polite">
-        <div class="result-header">
-          <span>Detalles del envío</span>
-          <i class="fa-solid fa-circle-check" style="color: var(--yellow);" aria-hidden="true"></i>
-        </div>
-
+      <div class="result-card" id="result-card">
         <div class="result-amount">
           Bs <span id="result-amount">0</span> <small>VES</small>
         </div>
-
-        <div class="result-details">
-          <p><i class="fa-solid fa-percent" style="color: var(--blue);" aria-hidden="true"></i> <strong>Sin comisiones</strong> – 0% de tarifa</p>
-          <p id="delivery-time"><i class="fa-regular fa-clock" style="color: var(--red);" aria-hidden="true"></i> Tiempo estimado: 10–20 minutos</p>
-        </div>
       </div>
     </div>
-
-    <!-- El resto de secciones puede quedarse igual, solo cambia “Colombia” por “Venezuela” si quieres -->
   </main>
 
-  <!-- Botón de instalación PWA -->
-  <button id="install-btn" type="button">📲 Instalar App</button>
-
-  <!-- Modal iOS -->
-  <div id="ios-modal" role="dialog" aria-label="Instalar en iPhone">
-    <h3>¿Cómo instalar esta App?</h3>
-    <ul>
-      <li>1. Toca <strong>Compartir</strong> (cuadro con flecha ↑)</li>
-      <li>2. Elige <strong>“Agregar a pantalla de inicio”</strong></li>
-      <li>3. Presiona <strong>Agregar</strong> y listo 🎉</li>
-    </ul>
-    <button type="button" id="ios-close">Entendido</button>
-  </div>
-
+  <!-- JS Venezuela -->
   <script src="app_ve.js"></script>
 </body>
 </html>
