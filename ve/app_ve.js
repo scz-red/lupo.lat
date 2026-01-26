@@ -1,38 +1,47 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // ====== CONFIG editable (solo cambias aquí) ======
   const CONFIG = {
-    EXCHANGE_RATE: 9999,      // 👈 pon aquí tu tasa: 1 BOB = X VES
-    DISCOUNT: 0.10,           // 10% descuento (si aplica)
-    MIN_AMOUNT: 10,
-    MAX_AMOUNT: 50000,
+    EXCHANGE_RATE: 9999,          // 1 BOB = 384 COP
+    DISCOUNT: 0.10,              // ✅ 10% descuento
+    MIN_AMOUNT: 10,              // mínimo BOB
+    MAX_AMOUNT: 50000,           // máximo BOB
     WHATSAPP_NUMBER: '591775333489'
   };
 
+  // ====== Elements ======
   const amountInput = document.getElementById('amount');
   const receivedInput = document.getElementById('received-amount');
   const resultCard = document.getElementById('result-card');
   const calculateBtn = document.getElementById('calculate-btn');
   const cotizDatetime = document.getElementById('cotiz-datetime');
 
+  // Date/time
   const now = new Date();
   cotizDatetime.textContent = now.toLocaleString('es-BO', {
     day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit'
   });
 
+  // Reveal animation
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
   }, { threshold: 0.12 });
 
-  [
+  const observeIds = [
     'calculator-card','feature1','feature2','feature3','feature4',
     'testimonial1','testimonial2','testimonial3'
-  ].forEach(id => {
+  ];
+  observeIds.forEach(id => {
     const el = document.getElementById(id);
     if (el) observer.observe(el);
   });
 
+  // Helpers
   const formatVES = (n) => Number(n).toLocaleString('es-VE', { maximumFractionDigits: 0 });
   const clamp = (n, min, max) => Math.min(Math.max(n, min), max);
 
+  // ✅ Cálculo único con descuento (para UI y WhatsApp)
   const computeVES = (bob) =>
     Math.round(bob * CONFIG.EXCHANGE_RATE * (1 - (Number(CONFIG.DISCOUNT) || 0)));
 
@@ -54,8 +63,10 @@ document.addEventListener('DOMContentLoaded', () => {
     resultCard.classList.add('show');
   }
 
+  // Auto calculate
   amountInput.addEventListener('input', calculateTransfer);
 
+  // WhatsApp
   calculateBtn.addEventListener('click', () => {
     const amount = parseFloat(amountInput.value);
 
@@ -87,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const message =
         `Hola LUPO 👋\n` +
         `Quiero enviar *${amount} BOB* a Venezuela.\n` +
-        `Recibe aprox: *${formatVES(receivedAmount)} VES*.\n` +
+        `Recibe aprox: *Bs ${formatVES(receivedAmount)} VES*.\n` +
         `¿Me ayudan con el envío?`;
 
       const url = `https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
@@ -106,9 +117,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 650);
   });
 
+  // Calculate on load if prefilled
   if (amountInput.value) calculateTransfer();
 
-  // PWA
+  // ====== PWA installation ======
   let deferredPrompt;
   const installBtn = document.getElementById('install-btn');
 
@@ -130,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
     installBtn.style.display = 'none';
   });
 
-  // iOS modal
+  // ====== iOS installation ======
   const iosModal = document.getElementById('ios-modal');
   const iosClose = document.getElementById('ios-close');
 
@@ -138,6 +150,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
   const isInStandaloneMode = ('standalone' in window.navigator) && window.navigator.standalone;
 
-  if (isIOS && isSafari && !isInStandaloneMode) iosModal.style.display = 'block';
-  iosClose.addEventListener('click', () => { iosModal.style.display = 'none'; });
+  if (isIOS && isSafari && !isInStandaloneMode) {
+    iosModal.style.display = 'block';
+  }
+
+  iosClose.addEventListener('click', () => {
+    iosModal.style.display = 'none';
+  });
 });
