@@ -50,222 +50,233 @@
   <link rel="stylesheet" href="carousel.css">
   
   <style>
-    /* ===== AJUSTES PARA CALCULADORA VISIBLE SIN SCROLL ===== */
+    /* ===== AJUSTES PARA TARJETA COMO EN LA IMAGEN ===== */
     
-    /* Reducir hero al mínimo */
+    /* Hero ultra compacto */
     .hero {
       padding: 15px 0 5px !important;
-      min-height: auto !important;
     }
     
     .hero h1 {
-      font-size: clamp(1.4rem, 3vw, 1.8rem) !important;
-      margin-bottom: 4px !important;
-      line-height: 1.2 !important;
+      font-size: clamp(1.3rem, 3vw, 1.6rem) !important;
+      margin-bottom: 0 !important;
     }
     
     .hero p {
-      display: none; /* Ocultamos texto secundario para ahorrar espacio */
+      display: none;
     }
     
     .kicker {
-      margin-bottom: 8px !important;
+      margin-bottom: 5px !important;
       padding: 4px 12px !important;
-      font-size: 0.75rem !important;
-    }
-    
-    .kdot {
-      width: 6px !important;
-      height: 6px !important;
-      box-shadow: 0 0 0 2px rgba(255, 209, 102, 0.3) !important;
-    }
-    
-    /* Calculadora más arriba */
-    .calculator-card {
-      margin: -10px auto 15px !important;
-      padding: 20px !important;
-    }
-    
-    /* Ajustar contenedor principal */
-    .container {
-      padding-top: 0 !important;
-    }
-    
-    /* Compactar elementos internos de la calculadora */
-    .submeta {
-      margin: 5px 0 15px !important;
-    }
-    
-    .form-group {
-      margin-bottom: 12px !important;
-    }
-    
-    label {
-      margin-bottom: 4px !important;
-      font-size: 0.85rem !important;
-    }
-    
-    .form-control {
-      padding: 12px 12px 12px 50px !important;
-    }
-    
-    .btn-primary {
-      padding: 14px !important;
-      margin-top: 5px !important;
-    }
-    
-    .result-card {
-      margin-top: 12px !important;
-      padding: 12px !important;
-    }
-    
-    .result-amount {
-      font-size: 2rem !important;
-      margin: 4px 0 !important;
-    }
-    
-    /* Ajustar carrusel */
-    .bank-carousel-section {
-      margin-top: 5px !important;
-      margin-bottom: 15px !important;
-    }
-    
-    .bank-carousel-title {
-      font-size: 0.8rem !important;
-      margin-bottom: 8px !important;
-    }
-    
-    .bank-carousel-title::before,
-    .bank-carousel-title::after {
-      width: 20px !important;
-    }
-    
-    .bank-carousel {
-      padding: 10px 0 !important;
-    }
-    
-    .bank-logo {
-      width: 40px !important;
-      height: 40px !important;
-    }
-    
-    .bank-logo img {
-      max-width: 25px !important;
-      max-height: 25px !important;
-    }
-    
-    .bank-name {
-      font-size: 0.6rem !important;
-    }
-    
-    /* Features compactas */
-    .features-section {
-      margin: 15px 0 10px !important;
-    }
-    
-    .section-title {
-      margin-bottom: 15px !important;
-    }
-    
-    .section-title h2 {
-      font-size: 1.3rem !important;
-    }
-    
-    .feature-card {
-      padding: 15px 10px !important;
-    }
-    
-    .feature-icon {
-      width: 40px !important;
-      height: 40px !important;
-      font-size: 1.2rem !important;
-      margin-bottom: 8px !important;
-    }
-    
-    .feature-card h3 {
-      font-size: 0.9rem !important;
-    }
-    
-    /* Testimonios compactos */
-    .testimonials {
-      padding: 20px 0 !important;
-    }
-    
-    .testimonial-card {
-      padding: 15px !important;
-    }
-    
-    .testimonial-text {
-      font-size: 0.85rem !important;
-      margin-bottom: 10px !important;
-    }
-    
-    .testimonial-author img {
-      width: 36px !important;
-      height: 36px !important;
-    }
-    
-    .author-info h4 {
-      font-size: 0.85rem !important;
-    }
-    
-    .author-info p {
       font-size: 0.7rem !important;
     }
     
-    /* Footer compacto */
-    footer {
-      padding: 20px 0 10px !important;
+    /* Calculadora principal */
+    .calculator-card {
+      margin: -5px auto 15px !important;
+      padding: 20px !important;
+      max-width: 450px !important;
     }
     
-    .footer-container {
-      gap: 20px !important;
-    }
-    
-    .footer-column h3 {
-      font-size: 0.9rem !important;
+    /* Título "Calculadora de envío" */
+    .calc-title {
+      font-size: 1.2rem !important;
       margin-bottom: 10px !important;
+      justify-content: flex-start !important;
+      color: var(--ink) !important;
     }
     
-    .footer-links a {
+    .calc-title i {
+      color: var(--red) !important;
+    }
+    
+    /* Submeta - Activo y fecha */
+    .submeta {
+      margin: 5px 0 15px !important;
+      background: #f8f9fa !important;
+      padding: 8px 12px !important;
+      border-radius: 30px !important;
+      border: 1px solid #e9ecef !important;
+    }
+    
+    .chip {
+      background: transparent !important;
+      border: none !important;
+      padding: 0 !important;
+      color: var(--green) !important;
+      font-weight: 600 !important;
+    }
+    
+    .chip .dot {
+      background: var(--green) !important;
+      box-shadow: 0 0 0 2px rgba(6, 214, 160, 0.2) !important;
+      width: 8px !important;
+      height: 8px !important;
+    }
+    
+    #cotiz-datetime {
+      color: var(--muted) !important;
       font-size: 0.8rem !important;
     }
     
-    /* Para móviles muy pequeños */
-    @media (max-width: 380px) {
-      .hero h1 {
-        font-size: 1.2rem !important;
-      }
-      
-      .kicker {
-        font-size: 0.7rem !important;
-      }
-      
+    /* Grupos de formulario */
+    .form-group {
+      margin-bottom: 15px !important;
+    }
+    
+    label {
+      font-size: 0.9rem !important;
+      font-weight: 600 !important;
+      color: var(--ink) !important;
+      margin-bottom: 5px !important;
+    }
+    
+    .currency-input-container {
+      border: 2px solid #e9ecef !important;
+      border-radius: 16px !important;
+      transition: all 0.2s ease !important;
+    }
+    
+    .currency-input-container:focus-within {
+      border-color: var(--red) !important;
+    }
+    
+    .currency-flag {
+      left: 15px !important;
+      width: 24px !important;
+      height: 24px !important;
+      border: 2px solid white !important;
+    }
+    
+    .form-control {
+      border: none !important;
+      padding: 14px 14px 14px 50px !important;
+      background: transparent !important;
+      font-weight: 600 !important;
+      font-size: 1rem !important;
+    }
+    
+    .form-control:focus {
+      box-shadow: none !important;
+    }
+    
+    /* Botón WhatsApp */
+    .btn-primary {
+      background: #25D366 !important; /* Verde WhatsApp */
+      background: linear-gradient(135deg, #25D366, #128C7E) !important;
+      box-shadow: 0 8px 16px rgba(37, 211, 102, 0.2) !important;
+      padding: 16px !important;
+      border-radius: 30px !important;
+      font-size: 1rem !important;
+      font-weight: 600 !important;
+      margin: 10px 0 15px !important;
+    }
+    
+    .btn-primary i {
+      font-size: 1.2rem !important;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px) !important;
+      box-shadow: 0 12px 24px rgba(37, 211, 102, 0.3) !important;
+    }
+    
+    /* Result Card - EXACTAMENTE COMO EN LA IMAGEN */
+    .result-card {
+      background: #f8f9fa !important;
+      border-radius: 20px !important;
+      padding: 20px !important;
+      border: 1px solid #e9ecef !important;
+      border-left: 4px solid var(--green) !important;
+      margin-top: 5px !important;
+    }
+    
+    .result-header {
+      color: var(--ink) !important;
+      font-size: 0.9rem !important;
+      font-weight: 600 !important;
+      margin-bottom: 5px !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.5px !important;
+    }
+    
+    .result-header i {
+      color: var(--green) !important;
+      margin-right: 5px !important;
+    }
+    
+    .result-amount {
+      font-size: 2.5rem !important;
+      font-weight: 700 !important;
+      background: none !important;
+      -webkit-background-clip: unset !important;
+      background-clip: unset !important;
+      color: var(--ink) !important;
+      margin: 0 0 5px !important;
+      text-align: left !important;
+      display: flex !important;
+      align-items: baseline !important;
+      gap: 5px !important;
+    }
+    
+    .result-amount span {
+      font-size: 2.5rem !important;
+      font-weight: 700 !important;
+      color: var(--ink) !important;
+      background: none !important;
+    }
+    
+    .result-amount small {
+      font-size: 1rem !important;
+      color: var(--muted) !important;
+      font-weight: 500 !important;
+      margin-left: 5px !important;
+    }
+    
+    .result-details {
+      text-align: left !important;
+      color: var(--muted) !important;
+      font-size: 0.9rem !important;
+      display: block !important;
+    }
+    
+    .result-details p {
+      justify-content: flex-start !important;
+      margin: 8px 0 !important;
+      color: var(--muted) !important;
+    }
+    
+    .result-details i {
+      width: 20px !important;
+      text-align: center !important;
+    }
+    
+    .result-details i.fa-percent {
+      color: var(--green) !important;
+    }
+    
+    .result-details i.fa-clock {
+      color: var(--red) !important;
+    }
+    
+    .result-details strong {
+      color: var(--ink) !important;
+      font-weight: 600 !important;
+    }
+    
+    /* Ajustes para móvil */
+    @media (max-width: 480px) {
       .calculator-card {
         padding: 15px !important;
       }
       
-      .features-grid {
-        gap: 8px !important;
+      .result-amount {
+        font-size: 2rem !important;
       }
       
-      .feature-card {
-        padding: 10px 5px !important;
-      }
-    }
-    
-    /* Para que la calculadora sea lo primero que se ve */
-    @media (max-height: 700px) {
-      .hero {
-        padding: 10px 0 0 !important;
-      }
-      
-      .kicker {
-        margin-bottom: 4px !important;
-      }
-      
-      .calculator-card {
-        margin-top: -5px !important;
+      .result-amount span {
+        font-size: 2rem !important;
       }
     }
   </style>
@@ -281,9 +292,8 @@
         <img src="https://lupo.lat/img/lupo01.png" alt="LUPO Envía" />
       </div>
 
-      <!-- Selector simple (identidad + navegación) -->
+      <!-- Selector simple -->
       <nav class="country-pills" aria-label="Ruta">
-        <!-- En esta página: IT -> BO, por eso Bolivia activo (destino) -->
         <a class="pill active" href="https://bo.lupo.lat/bob/" aria-current="page" aria-label="Destino Bolivia">
           <img src="https://flagcdn.com/w40/bo.png" alt="Bolivia" />
           <span>Bolivia</span>
@@ -295,73 +305,83 @@
       </nav>
 
       <button class="login-btn" type="button" aria-label="Iniciar sesión">
-        <i class="fa-solid fa-user"></i>
-        <span class="login-text">Entrar</span>
+        <i class="fa-solid fa-user"></i> Iniciar Sesión
       </button>
     </div>
   </header>
 
-  <!-- Hero ultra compacto - solo lo esencial -->
+  <!-- Hero ultra compacto -->
   <section class="hero">
     <div class="hero-inner">
       <div class="kicker">
         <span class="kdot" aria-hidden="true"></span>
-        <span>Italia → Bolivia</span>
+        <span>Envía de Italia a Bolivia</span>
         <span aria-hidden="true">•</span>
         <span>0% comisión</span>
       </div>
 
-      <h1>Envía <span>Euros</span> a <span>Bolivianos</span> 🇧🇴</h1>
-      <!-- Hero p eliminado para ahorrar espacio -->
+      <h1>Dinero de <span>Italia</span> a <span>Bolivia</span> 🇧🇴</h1>
     </div>
   </section>
 
   <main class="container">
-    <!-- CALCULADORA - AHORA VISIBLE SIN SCROLL -->
+    <!-- CALCULADORA - EXACTAMENTE COMO EN LA IMAGEN -->
     <div class="calculator-card" id="calculator-card" aria-label="Calculadora">
+      <div class="calc-title">
+        <i class="fa-solid fa-calculator"></i> Calculadora de envío
+      </div>
+
       <div class="submeta">
-        <span class="chip"><span class="dot" aria-hidden="true"></span> 1 EUR = 7.80 BOB</span>
-        <span id="cotiz-datetime" aria-label="Fecha y hora"></span>
+        <span class="chip"><span class="dot" aria-hidden="true"></span> Activo</span>
+        <span id="cotiz-datetime" aria-label="Fecha y hora de cotización"></span>
       </div>
 
       <div class="form-group">
         <label for="amount">Tú envías (EUR)</label>
         <div class="currency-input-container">
           <div class="currency-flag" style="background-image:url('https://flagcdn.com/w40/it.png')" aria-hidden="true"></div>
-          <input type="number" id="amount" class="form-control" placeholder="500" min="1" value="500" inputmode="numeric" />
+          <input type="number" id="amount" class="form-control" value="100" min="1" inputmode="numeric" />
         </div>
       </div>
 
       <div class="form-group">
-        <label for="received-amount">Reciben (BOB)</label>
+        <label for="received-amount">Recibe (BOB)</label>
         <div class="currency-input-container">
           <div class="currency-flag" style="background-image:url('https://flagcdn.com/w40/bo.png')" aria-hidden="true"></div>
-          <input type="text" id="received-amount" class="form-control" value="3900" readonly aria-readonly="true" />
+          <input type="text" id="received-amount" class="form-control" value="780.00" readonly aria-readonly="true" />
         </div>
       </div>
 
       <button class="btn-primary" id="calculate-btn" type="button">
-        <i class="fa-brands fa-whatsapp"></i> Cotizar por WhatsApp
+        <i class="fa-brands fa-whatsapp"></i> Enviar dinero por WhatsApp
       </button>
 
+      <!-- RESULT CARD - IDÉNTICA A LA IMAGEN -->
       <div class="result-card show" id="result-card" aria-live="polite">
         <div class="result-header">
-          <span><i class="fa-regular fa-circle-check"></i> Recibirás</span>
+          <i class="fa-regular fa-circle-check"></i> Detalles del envío
         </div>
 
         <div class="result-amount">
-          Bs <span id="result-amount">3,900</span>
+          Bs <span id="result-amount">780</span> <small>BOB</small>
         </div>
 
         <div class="result-details">
-          <p><i class="fa-solid fa-bolt" style="color: var(--yellow);"></i> Sin comisiones • 10-20 min</p>
+          <p>
+            <i class="fa-solid fa-percent"></i> 
+            <strong>Sin comisiones</strong> – 0% de tarifa
+          </p>
+          <p>
+            <i class="fa-regular fa-clock"></i> 
+            Tiempo estimado: 10–20 minutos
+          </p>
         </div>
       </div>
     </div>
 
     <!-- Carrusel de Bancos -->
     <section class="bank-carousel-section">
-      <h3 class="bank-carousel-title">📍 Bancos en Bolivia</h3>
+      <h3 class="bank-carousel-title">📍 Bancos donde puedes recibir</h3>
       
       <div class="bank-carousel">
         <div class="carousel-track-container">
@@ -474,11 +494,6 @@
         </article>
       </div>
     </section>
-
-    <!-- Testimonios (opcional, puedes ocultarlos si quieres aún menos scroll) -->
-    <section class="testimonials" aria-label="Testimonios" style="display: none;">
-      <!-- Ocultos temporalmente para máximo foco en calculadora -->
-    </section>
   </main>
 
   <footer>
@@ -501,6 +516,20 @@
       <p>© 2026 LUPO</p>
     </div>
   </footer>
+
+  <!-- Botón de instalación PWA -->
+  <button id="install-btn" type="button">📲 Instalar App</button>
+
+  <!-- Modal iOS -->
+  <div id="ios-modal" role="dialog" aria-label="Instalar en iPhone">
+    <h3>¿Cómo instalar esta App?</h3>
+    <ul>
+      <li>1. Toca <strong>Compartir</strong> (cuadro con flecha ↑)</li>
+      <li>2. Elige <strong>“Agregar a pantalla de inicio”</strong></li>
+      <li>3. Presiona <strong>Agregar</strong> y listo 🎉</li>
+    </ul>
+    <button type="button" id="ios-close">Entendido</button>
+  </div>
 
   <!-- Scripts -->
   <script src="app.js"></script>
