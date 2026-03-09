@@ -19,7 +19,7 @@
   <meta name="twitter:card" content="summary_large_image" />
 
   <!-- PWA -->
-  <meta name="theme-color" content="#D52B1E" />
+  <meta name="theme-color" content="#E63946" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="LUPO" />
@@ -44,8 +44,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
-  <!-- ✅ CSS externo -->
+  <!-- CSS Principal -->
   <link rel="stylesheet" href="styles.css">
+  <!-- CSS del Carrusel -->
+  <link rel="stylesheet" href="carousel.css">
 </head>
 
 <body>
@@ -139,6 +141,103 @@
         </div>
       </div>
     </div>
+
+    <!-- ===== NUEVO: CARRUSEL DE BANCOS BOLIVIANOS ===== -->
+    <section class="bank-carousel-section">
+      <h3 class="bank-carousel-title">Bancos donde puedes recibir</h3>
+      
+      <div class="bank-carousel">
+        <div class="carousel-track-container">
+          <div class="carousel-track">
+            <!-- Banco 1 - Banco Unión -->
+            <div class="bank-item">
+              <div class="bank-logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/3/38/Banco_Uni%C3%B3n_Logo.svg" alt="Banco Unión" onerror="this.src='https://via.placeholder.com/40x40/FFD166/1e293b?text=UNION'">
+              </div>
+              <span class="bank-name">Banco Unión</span>
+            </div>
+            
+            <!-- Banco 2 - BCP Bolivia -->
+            <div class="bank-item">
+              <div class="bank-logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/BCP_%28Bolivia%29_logo.svg" alt="BCP Bolivia" onerror="this.src='https://via.placeholder.com/40x40/E63946/ffffff?text=BCP'">
+              </div>
+              <span class="bank-name">BCP</span>
+            </div>
+            
+            <!-- Banco 3 - Banco Mercantil Santa Cruz -->
+            <div class="bank-item">
+              <div class="bank-logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Banco_Mercantil_Santa_Cruz_logo.svg" alt="Banco Mercantil" onerror="this.src='https://via.placeholder.com/40x40/06D6A0/1e293b?text=BMSC'">
+              </div>
+              <span class="bank-name">Mercantil</span>
+            </div>
+            
+            <!-- Banco 4 - Banco BISA -->
+            <div class="bank-item">
+              <div class="bank-logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/9f/Banco_BISA_logo.svg" alt="Banco BISA" onerror="this.src='https://via.placeholder.com/40x40/FFD166/1e293b?text=BISA'">
+              </div>
+              <span class="bank-name">BISA</span>
+            </div>
+            
+            <!-- Banco 5 - Banco Nacional de Bolivia -->
+            <div class="bank-item">
+              <div class="bank-logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/BNB_Logo.svg" alt="BNB" onerror="this.src='https://via.placeholder.com/40x40/E63946/ffffff?text=BNB'">
+              </div>
+              <span class="bank-name">BNB</span>
+            </div>
+            
+            <!-- Banco 6 - Banco Económico -->
+            <div class="bank-item">
+              <div class="bank-logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5b/Banco_Economico_Logo.svg" alt="Banco Económico" onerror="this.src='https://via.placeholder.com/40x40/06D6A0/1e293b?text=ECO'">
+              </div>
+              <span class="bank-name">Económico</span>
+            </div>
+            
+            <!-- Banco 7 - Banco FIE -->
+            <div class="bank-item">
+              <div class="bank-logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/d/d4/Banco_FIE_logo.svg" alt="Banco FIE" onerror="this.src='https://via.placeholder.com/40x40/FFD166/1e293b?text=FIE'">
+              </div>
+              <span class="bank-name">FIE</span>
+            </div>
+            
+            <!-- Banco 8 - Banco Prodem -->
+            <div class="bank-item">
+              <div class="bank-logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/0d/Prodem_Logo.svg" alt="Banco Prodem" onerror="this.src='https://via.placeholder.com/40x40/E63946/ffffff?text=PD'">
+              </div>
+              <span class="bank-name">Prodem</span>
+            </div>
+            
+            <!-- Banco 9 - Banco Fortaleza -->
+            <div class="bank-item">
+              <div class="bank-logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/65/Banco_Fortaleza_logo.svg" alt="Banco Fortaleza" onerror="this.src='https://via.placeholder.com/40x40/06D6A0/1e293b?text=BF'">
+              </div>
+              <span class="bank-name">Fortaleza</span>
+            </div>
+            
+            <!-- Banco 10 - Banco Ganadero -->
+            <div class="bank-item">
+              <div class="bank-logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Banco_Ganadero_logo.svg" alt="Banco Ganadero" onerror="this.src='https://via.placeholder.com/40x40/FFD166/1e293b?text=BG'">
+              </div>
+              <span class="bank-name">Ganadero</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Texto pequeño de confianza -->
+      <p class="bank-carousel-footer" style="font-size: 0.8rem; color: var(--muted); margin-top: 12px; text-align: center;">
+        <i class="fa-regular fa-building" style="color: var(--green);"></i>
+        +50 bancos y cooperativas disponibles en Bolivia
+      </p>
+    </section>
 
     <section class="features-section" aria-label="Beneficios">
       <div class="section-title">
@@ -300,6 +399,8 @@
     <button type="button" id="ios-close">Entendido</button>
   </div>
 
+  <!-- Scripts -->
   <script src="app.js"></script>
+  <script src="carousel.js"></script>
 </body>
 </html>
