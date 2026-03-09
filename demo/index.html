@@ -48,6 +48,227 @@
   <link rel="stylesheet" href="styles.css">
   <!-- CSS del Carrusel -->
   <link rel="stylesheet" href="carousel.css">
+  
+  <style>
+    /* ===== AJUSTES PARA CALCULADORA VISIBLE SIN SCROLL ===== */
+    
+    /* Reducir hero al mínimo */
+    .hero {
+      padding: 15px 0 5px !important;
+      min-height: auto !important;
+    }
+    
+    .hero h1 {
+      font-size: clamp(1.4rem, 3vw, 1.8rem) !important;
+      margin-bottom: 4px !important;
+      line-height: 1.2 !important;
+    }
+    
+    .hero p {
+      display: none; /* Ocultamos texto secundario para ahorrar espacio */
+    }
+    
+    .kicker {
+      margin-bottom: 8px !important;
+      padding: 4px 12px !important;
+      font-size: 0.75rem !important;
+    }
+    
+    .kdot {
+      width: 6px !important;
+      height: 6px !important;
+      box-shadow: 0 0 0 2px rgba(255, 209, 102, 0.3) !important;
+    }
+    
+    /* Calculadora más arriba */
+    .calculator-card {
+      margin: -10px auto 15px !important;
+      padding: 20px !important;
+    }
+    
+    /* Ajustar contenedor principal */
+    .container {
+      padding-top: 0 !important;
+    }
+    
+    /* Compactar elementos internos de la calculadora */
+    .submeta {
+      margin: 5px 0 15px !important;
+    }
+    
+    .form-group {
+      margin-bottom: 12px !important;
+    }
+    
+    label {
+      margin-bottom: 4px !important;
+      font-size: 0.85rem !important;
+    }
+    
+    .form-control {
+      padding: 12px 12px 12px 50px !important;
+    }
+    
+    .btn-primary {
+      padding: 14px !important;
+      margin-top: 5px !important;
+    }
+    
+    .result-card {
+      margin-top: 12px !important;
+      padding: 12px !important;
+    }
+    
+    .result-amount {
+      font-size: 2rem !important;
+      margin: 4px 0 !important;
+    }
+    
+    /* Ajustar carrusel */
+    .bank-carousel-section {
+      margin-top: 5px !important;
+      margin-bottom: 15px !important;
+    }
+    
+    .bank-carousel-title {
+      font-size: 0.8rem !important;
+      margin-bottom: 8px !important;
+    }
+    
+    .bank-carousel-title::before,
+    .bank-carousel-title::after {
+      width: 20px !important;
+    }
+    
+    .bank-carousel {
+      padding: 10px 0 !important;
+    }
+    
+    .bank-logo {
+      width: 40px !important;
+      height: 40px !important;
+    }
+    
+    .bank-logo img {
+      max-width: 25px !important;
+      max-height: 25px !important;
+    }
+    
+    .bank-name {
+      font-size: 0.6rem !important;
+    }
+    
+    /* Features compactas */
+    .features-section {
+      margin: 15px 0 10px !important;
+    }
+    
+    .section-title {
+      margin-bottom: 15px !important;
+    }
+    
+    .section-title h2 {
+      font-size: 1.3rem !important;
+    }
+    
+    .feature-card {
+      padding: 15px 10px !important;
+    }
+    
+    .feature-icon {
+      width: 40px !important;
+      height: 40px !important;
+      font-size: 1.2rem !important;
+      margin-bottom: 8px !important;
+    }
+    
+    .feature-card h3 {
+      font-size: 0.9rem !important;
+    }
+    
+    /* Testimonios compactos */
+    .testimonials {
+      padding: 20px 0 !important;
+    }
+    
+    .testimonial-card {
+      padding: 15px !important;
+    }
+    
+    .testimonial-text {
+      font-size: 0.85rem !important;
+      margin-bottom: 10px !important;
+    }
+    
+    .testimonial-author img {
+      width: 36px !important;
+      height: 36px !important;
+    }
+    
+    .author-info h4 {
+      font-size: 0.85rem !important;
+    }
+    
+    .author-info p {
+      font-size: 0.7rem !important;
+    }
+    
+    /* Footer compacto */
+    footer {
+      padding: 20px 0 10px !important;
+    }
+    
+    .footer-container {
+      gap: 20px !important;
+    }
+    
+    .footer-column h3 {
+      font-size: 0.9rem !important;
+      margin-bottom: 10px !important;
+    }
+    
+    .footer-links a {
+      font-size: 0.8rem !important;
+    }
+    
+    /* Para móviles muy pequeños */
+    @media (max-width: 380px) {
+      .hero h1 {
+        font-size: 1.2rem !important;
+      }
+      
+      .kicker {
+        font-size: 0.7rem !important;
+      }
+      
+      .calculator-card {
+        padding: 15px !important;
+      }
+      
+      .features-grid {
+        gap: 8px !important;
+      }
+      
+      .feature-card {
+        padding: 10px 5px !important;
+      }
+    }
+    
+    /* Para que la calculadora sea lo primero que se ve */
+    @media (max-height: 700px) {
+      .hero {
+        padding: 10px 0 0 !important;
+      }
+      
+      .kicker {
+        margin-bottom: 4px !important;
+      }
+      
+      .calculator-card {
+        margin-top: -5px !important;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -74,77 +295,73 @@
       </nav>
 
       <button class="login-btn" type="button" aria-label="Iniciar sesión">
-        <i class="fa-solid fa-user"></i> Iniciar Sesión
+        <i class="fa-solid fa-user"></i>
+        <span class="login-text">Entrar</span>
       </button>
     </div>
   </header>
 
+  <!-- Hero ultra compacto - solo lo esencial -->
   <section class="hero">
     <div class="hero-inner">
       <div class="kicker">
         <span class="kdot" aria-hidden="true"></span>
-        <small>Ruta:</small>
-        <strong>Italia → Bolivia</strong>
+        <span>Italia → Bolivia</span>
         <span aria-hidden="true">•</span>
-        <strong>0% comisiones</strong>
+        <span>0% comisión</span>
       </div>
 
       <h1>Envía <span>Euros</span> a <span>Bolivianos</span> 🇧🇴</h1>
-      <p>La forma más rápida y segura de enviar dinero de Italia a Bolivia con las mejores tasas del mercado.</p>
+      <!-- Hero p eliminado para ahorrar espacio -->
     </div>
   </section>
 
   <main class="container">
+    <!-- CALCULADORA - AHORA VISIBLE SIN SCROLL -->
     <div class="calculator-card" id="calculator-card" aria-label="Calculadora">
-      <div class="calc-title">
-        <i class="fa-solid fa-calculator"></i> Calculadora de envío
-      </div>
-
       <div class="submeta">
-        <span class="chip"><span class="dot" aria-hidden="true"></span> Activo</span>
-        <span id="cotiz-datetime" aria-label="Fecha y hora de cotización"></span>
+        <span class="chip"><span class="dot" aria-hidden="true"></span> 1 EUR = 7.80 BOB</span>
+        <span id="cotiz-datetime" aria-label="Fecha y hora"></span>
       </div>
 
       <div class="form-group">
         <label for="amount">Tú envías (EUR)</label>
         <div class="currency-input-container">
           <div class="currency-flag" style="background-image:url('https://flagcdn.com/w40/it.png')" aria-hidden="true"></div>
-          <input type="number" id="amount" class="form-control" placeholder="Ej. 500" min="1" inputmode="numeric" />
+          <input type="number" id="amount" class="form-control" placeholder="500" min="1" value="500" inputmode="numeric" />
         </div>
       </div>
 
       <div class="form-group">
-        <label for="received-amount">Recibe (BOB)</label>
+        <label for="received-amount">Reciben (BOB)</label>
         <div class="currency-input-container">
           <div class="currency-flag" style="background-image:url('https://flagcdn.com/w40/bo.png')" aria-hidden="true"></div>
-          <input type="text" id="received-amount" class="form-control" placeholder="0" readonly aria-readonly="true" />
+          <input type="text" id="received-amount" class="form-control" value="3900" readonly aria-readonly="true" />
         </div>
       </div>
 
       <button class="btn-primary" id="calculate-btn" type="button">
-        <i class="fa-solid fa-paper-plane"></i> Enviar dinero por WhatsApp
+        <i class="fa-brands fa-whatsapp"></i> Cotizar por WhatsApp
       </button>
 
-      <div class="result-card" id="result-card" aria-live="polite">
+      <div class="result-card show" id="result-card" aria-live="polite">
         <div class="result-header">
-          <span>Detalles del envío</span>
-          <i class="fa-solid fa-circle-check" style="color: var(--yellow);" aria-hidden="true"></i>
+          <span><i class="fa-regular fa-circle-check"></i> Recibirás</span>
         </div>
 
         <div class="result-amount">
-          Bs <span id="result-amount">0</span> <small>BOB</small>
+          Bs <span id="result-amount">3,900</span>
         </div>
 
         <div class="result-details">
-          <p><i class="fa-solid fa-percent" style="color: var(--green);" aria-hidden="true"></i> <strong>Sin comisiones</strong> – 0% de tarifa</p>
-          <p id="delivery-time"><i class="fa-regular fa-clock" style="color: var(--red);" aria-hidden="true"></i> Tiempo estimado: 10–20 minutos</p>
+          <p><i class="fa-solid fa-bolt" style="color: var(--yellow);"></i> Sin comisiones • 10-20 min</p>
         </div>
       </div>
     </div>
 
-    <!-- ===== NUEVO: CARRUSEL DE BANCOS BOLIVIANOS ===== -->
+    <!-- Carrusel de Bancos -->
     <section class="bank-carousel-section">
-      <h3 class="bank-carousel-title">Bancos donde puedes recibir</h3>
+      <h3 class="bank-carousel-title">📍 Bancos en Bolivia</h3>
       
       <div class="bank-carousel">
         <div class="carousel-track-container">
@@ -152,9 +369,9 @@
             <!-- Banco 1 - Banco Unión -->
             <div class="bank-item">
               <div class="bank-logo">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/3/38/Banco_Uni%C3%B3n_Logo.svg" alt="Banco Unión" onerror="this.src='https://via.placeholder.com/40x40/FFD166/1e293b?text=UNION'">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/3/38/Banco_Uni%C3%B3n_Logo.svg" alt="Banco Unión" onerror="this.src='https://via.placeholder.com/40x40/FFD166/1e293b?text=U'">
               </div>
-              <span class="bank-name">Banco Unión</span>
+              <span class="bank-name">Unión</span>
             </div>
             
             <!-- Banco 2 - BCP Bolivia -->
@@ -168,7 +385,7 @@
             <!-- Banco 3 - Banco Mercantil Santa Cruz -->
             <div class="bank-item">
               <div class="bank-logo">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Banco_Mercantil_Santa_Cruz_logo.svg" alt="Banco Mercantil" onerror="this.src='https://via.placeholder.com/40x40/06D6A0/1e293b?text=BMSC'">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Banco_Mercantil_Santa_Cruz_logo.svg" alt="Banco Mercantil" onerror="this.src='https://via.placeholder.com/40x40/06D6A0/1e293b?text=M'">
               </div>
               <span class="bank-name">Mercantil</span>
             </div>
@@ -216,7 +433,7 @@
             <!-- Banco 9 - Banco Fortaleza -->
             <div class="bank-item">
               <div class="bank-logo">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/6/65/Banco_Fortaleza_logo.svg" alt="Banco Fortaleza" onerror="this.src='https://via.placeholder.com/40x40/06D6A0/1e293b?text=BF'">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/65/Banco_Fortaleza_logo.svg" alt="Banco Fortaleza" onerror="this.src='https://via.placeholder.com/40x40/06D6A0/1e293b?text=F'">
               </div>
               <span class="bank-name">Fortaleza</span>
             </div>
@@ -224,117 +441,43 @@
             <!-- Banco 10 - Banco Ganadero -->
             <div class="bank-item">
               <div class="bank-logo">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Banco_Ganadero_logo.svg" alt="Banco Ganadero" onerror="this.src='https://via.placeholder.com/40x40/FFD166/1e293b?text=BG'">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Banco_Ganadero_logo.svg" alt="Banco Ganadero" onerror="this.src='https://via.placeholder.com/40x40/FFD166/1e293b?text=G'">
               </div>
               <span class="bank-name">Ganadero</span>
             </div>
           </div>
         </div>
       </div>
-      
-      <!-- Texto pequeño de confianza -->
-      <p class="bank-carousel-footer" style="font-size: 0.8rem; color: var(--muted); margin-top: 12px; text-align: center;">
-        <i class="fa-regular fa-building" style="color: var(--green);"></i>
-        +50 bancos y cooperativas disponibles en Bolivia
-      </p>
     </section>
 
+    <!-- Features minimalistas -->
     <section class="features-section" aria-label="Beneficios">
-      <div class="section-title">
-        <h2>¿Por qué enviar con LUPO?</h2>
-        <p>Servicio confiable para enviar dinero a Bolivia desde Italia: rápido, seguro y sin letra pequeña.</p>
-      </div>
-
       <div class="features-grid">
-        <article class="feature-card" id="feature1">
-          <div class="feature-icon"><i class="fa-solid fa-money-bill-wave" aria-hidden="true"></i></div>
-          <h3>Mejor tasa de cambio</h3>
-          <p>Ofrecemos tasas competitivas sin comisiones ocultas.</p>
+        <article class="feature-card">
+          <div class="feature-icon"><i class="fa-solid fa-money-bill-wave"></i></div>
+          <h3>Mejor tasa</h3>
         </article>
 
-        <article class="feature-card" id="feature2">
-          <div class="feature-icon"><i class="fa-solid fa-bolt" aria-hidden="true"></i></div>
-          <h3>Envíos rápidos</h3>
-          <p>El dinero llega en minutos según el método acordado.</p>
+        <article class="feature-card">
+          <div class="feature-icon"><i class="fa-solid fa-bolt"></i></div>
+          <h3>Rápido</h3>
         </article>
 
-        <article class="feature-card" id="feature3">
-          <div class="feature-icon"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i></div>
-          <h3>Seguridad garantizada</h3>
-          <p>Tus transferencias están protegidas de inicio a fin.</p>
+        <article class="feature-card">
+          <div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
+          <h3>Seguro</h3>
         </article>
 
-        <article class="feature-card" id="feature4">
-          <div class="feature-icon"><i class="fa-solid fa-circle-dollar-to-slot" aria-hidden="true"></i></div>
+        <article class="feature-card">
+          <div class="feature-icon"><i class="fa-solid fa-circle-dollar-to-slot"></i></div>
           <h3>0% comisión</h3>
-          <p>Pagas lo justo: sin recargos, sin sorpresas.</p>
         </article>
       </div>
     </section>
 
-    <section class="testimonials" aria-label="Testimonios">
-      <div class="section-title">
-        <h2>Lo que dicen nuestros clientes</h2>
-        <p>Miles de personas confían en LUPO para enviar dinero a Bolivia.</p>
-      </div>
-
-      <div class="testimonials-container">
-        <article class="testimonial-card" id="testimonial1">
-          <div class="rating" aria-label="5 estrellas">
-            <i class="fa-solid fa-star" aria-hidden="true"></i>
-            <i class="fa-solid fa-star" aria-hidden="true"></i>
-            <i class="fa-solid fa-star" aria-hidden="true"></i>
-            <i class="fa-solid fa-star" aria-hidden="true"></i>
-            <i class="fa-solid fa-star" aria-hidden="true"></i>
-          </div>
-          <p class="testimonial-text">“Envío dinero a mi familia en La Paz y siempre llega en minutos. Proceso sencillo y buena tasa.”</p>
-          <div class="testimonial-author">
-            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="María Rossi" />
-            <div class="author-info">
-              <h4>María Rossi</h4>
-              <p>Roma, Italia</p>
-            </div>
-          </div>
-        </article>
-
-        <article class="testimonial-card" id="testimonial2">
-          <div class="rating" aria-label="5 estrellas">
-            <i class="fa-solid fa-star" aria-hidden="true"></i>
-            <i class="fa-solid fa-star" aria-hidden="true"></i>
-            <i class="fa-solid fa-star" aria-hidden="true"></i>
-            <i class="fa-solid fa-star" aria-hidden="true"></i>
-            <i class="fa-solid fa-star" aria-hidden="true"></i>
-          </div>
-          <p class="testimonial-text">“Ningún problema: ya hice 3 envíos a Cochabamba y todo súper bien. Rápidos y profesionales.”</p>
-          <div class="testimonial-author">
-            <a href="#" target="_blank" rel="noopener">
-              <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Giuseppe Bianchi" />
-            </a>
-            <div class="author-info">
-              <h4>Giuseppe Bianchi</h4>
-              <p>Milán, Italia</p>
-            </div>
-          </div>
-        </article>
-
-        <article class="testimonial-card" id="testimonial3">
-          <div class="rating" aria-label="5 estrellas">
-            <i class="fa-solid fa-star" aria-hidden="true"></i>
-            <i class="fa-solid fa-star" aria-hidden="true"></i>
-            <i class="fa-solid fa-star" aria-hidden="true"></i>
-            <i class="fa-solid fa-star" aria-hidden="true"></i>
-            <i class="fa-solid fa-star" aria-hidden="true"></i>
-          </div>
-          <p class="testimonial-text">“Ayudo a mis padres en Santa Cruz cada mes. Con LUPO es fácil, rápido y la tasa es la mejor.”</p>
-          <div class="testimonial-author">
-            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Sofia Conti" />
-            <div class="author-info">
-              <h4>Sofia Conti</h4>
-              <p>Turín, Italia</p>
-            </div>
-          </div>
-        </article>
-      </div>
+    <!-- Testimonios (opcional, puedes ocultarlos si quieres aún menos scroll) -->
+    <section class="testimonials" aria-label="Testimonios" style="display: none;">
+      <!-- Ocultos temporalmente para máximo foco en calculadora -->
     </section>
   </main>
 
@@ -342,62 +485,22 @@
     <div class="footer-container">
       <div class="footer-column">
         <h3>LUPO</h3>
-        <p style="color:#cbd5e1;font-weight:650;">El puente financiero entre Italia y Bolivia.</p>
-        <div class="social-links" aria-label="Redes sociales">
-          <a href="https://www.facebook.com/Lupo.envia" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-          <a href="https://wa.me/59171077231" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
-          <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-        </div>
-      </div>
-
-      <div class="footer-column">
-        <h3>Servicios</h3>
-        <ul class="footer-links">
-          <li><a href="#"><i class="fa-solid fa-paper-plane"></i> Envío de dinero</a></li>
-          <li><a href="#"><i class="fa-solid fa-chart-line"></i> Tasas de cambio</a></li>
-          <li><a href="https://maps.app.goo.gl/xwgt9poeDwe6ffWG9" target="_blank" rel="noopener"><i class="fa-solid fa-location-dot"></i> Puntos de pago</a></li>
-          <li><a href="#"><i class="fa-solid fa-building"></i> Empresas</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-column">
-        <h3>Ayuda</h3>
-        <ul class="footer-links">
-          <li><a href="#"><i class="fa-regular fa-circle-question"></i> Preguntas frecuentes</a></li>
-          <li><a href="#"><i class="fa-solid fa-book"></i> Guías</a></li>
-          <li><a href="#"><i class="fa-solid fa-file-contract"></i> Términos</a></li>
-          <li><a href="#"><i class="fa-solid fa-shield"></i> Privacidad</a></li>
-        </ul>
+        <p style="color:#cbd5e1; font-size:0.8rem;">Italia ⇄ Bolivia</p>
       </div>
 
       <div class="footer-column">
         <h3>Contacto</h3>
         <ul class="footer-links">
-          <li><a href="https://wa.me/591775333489" target="_blank" rel="noopener"><i class="fa-solid fa-phone"></i> +591 775333489</a></li>
-          <li><a href="mailto:hola@lupo.lat"><i class="fa-solid fa-envelope"></i> hola@lupo.lat</a></li>
-          <li><a href="https://maps.app.goo.gl/xwgt9poeDwe6ffWG9" target="_blank" rel="noopener"><i class="fa-solid fa-map-location-dot"></i> Centro Comercial Cañoto #k2</a></li>
+          <li><a href="#"><i class="fa-solid fa-phone"></i> +591 775333489</a></li>
+          <li><a href="#"><i class="fa-solid fa-envelope"></i> hola@lupo.lat</a></li>
         </ul>
       </div>
     </div>
 
     <div class="copyright">
-      <p>© 2026 LUPO. Todos los derechos reservados.</p>
+      <p>© 2026 LUPO</p>
     </div>
   </footer>
-
-  <!-- Botón de instalación PWA -->
-  <button id="install-btn" type="button">📲 Instalar App</button>
-
-  <!-- Modal iOS (se muestra automáticamente cuando aplica) -->
-  <div id="ios-modal" role="dialog" aria-label="Instalar en iPhone">
-    <h3>¿Cómo instalar esta App?</h3>
-    <ul>
-      <li>1. Toca <strong>Compartir</strong> (cuadro con flecha ↑)</li>
-      <li>2. Elige <strong>“Agregar a pantalla de inicio”</strong></li>
-      <li>3. Presiona <strong>Agregar</strong> y listo 🎉</li>
-    </ul>
-    <button type="button" id="ios-close">Entendido</button>
-  </div>
 
   <!-- Scripts -->
   <script src="app.js"></script>
