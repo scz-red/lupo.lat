@@ -1,7 +1,11 @@
 :root {
-  --red: #D52B1E;      /* Rojo oficial de la bandera boliviana */
-  --yellow: #F9D849;   /* Amarillo oficial */
-  --green: #267B3C;    /* Verde oficial */
+  --red: #D52B1E;        /* Rojo bandera - más suave */
+  --yellow: #F9D849;     /* Amarillo bandera */
+  --green: #267B3C;      /* Verde bandera */
+  
+  --red-light: rgba(213, 43, 30, 0.8);  /* Rojo para hover/light */
+  --yellow-light: rgba(249, 216, 73, 0.8);
+  --green-light: rgba(38, 123, 60, 0.8);
   
   --ink: #1f2937;
   --muted: #6b7280;
@@ -20,9 +24,10 @@
 html,body { height:100%; }
 body {
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-  background: radial-gradient(1200px 700px at 80% 10%, rgba(214, 43, 30, 0.08), transparent 55%),
-              radial-gradient(900px 500px at 10% 30%, rgba(249, 216, 73, 0.10), transparent 55%),
-              radial-gradient(600px 400px at 50% 80%, rgba(38, 123, 60, 0.06), transparent 60%),
+  /* Fondos más sutiles con los tres colores */
+  background: radial-gradient(1200px 700px at 80% 10%, rgba(213, 43, 30, 0.04), transparent 55%),
+              radial-gradient(900px 500px at 10% 30%, rgba(249, 216, 73, 0.06), transparent 55%),
+              radial-gradient(600px 400px at 50% 80%, rgba(38, 123, 60, 0.03), transparent 60%),
               var(--bg);
   color: var(--ink);
   line-height: 1.6;
@@ -32,7 +37,7 @@ body {
 h1,h2,h3,h4 { font-family: Poppins, Inter, sans-serif; }
 a { color: inherit; text-decoration: none; }
 
-/* Franja tricolor boliviana */
+/* Franja tricolor boliviana - IGUAL que la original pero con colores Bolivia */
 .bo-stripe {
   height: 12px;
   border-radius: 999px;
@@ -50,7 +55,7 @@ a { color: inherit; text-decoration: none; }
   filter: blur(10px);
 }
 
-/* Header */
+/* Header - sin cambios */
 header {
   position: sticky;
   top:0;
@@ -107,12 +112,14 @@ header {
   border: 1px solid rgba(0,0,0,.08);
 }
 .pill:hover { transform: translateY(-1px); background: rgba(255,255,255,.8); }
+/* Active con rojo suave - IGUAL que el original pero con rojo */
 .pill.active {
-  background: rgba(214, 43, 30, 0.10);
-  border: 1px solid rgba(214, 43, 30, 0.20);
-  box-shadow: 0 8px 18px rgba(214, 43, 30, 0.10);
+  background: rgba(213, 43, 30, 0.06);
+  border: 1px solid rgba(213, 43, 30, 0.15);
+  box-shadow: 0 8px 18px rgba(213, 43, 30, 0.06);
 }
 
+/* Botón login con rojo - más suave */
 .login-btn {
   border: 0;
   cursor: pointer;
@@ -120,8 +127,8 @@ header {
   border-radius: 12px;
   font-weight: 800;
   color: white;
-  background: linear-gradient(135deg, var(--red), #b22222);
-  box-shadow: 0 10px 24px rgba(214, 43, 30, 0.22);
+  background: linear-gradient(135deg, var(--red), #b8453a);
+  box-shadow: 0 10px 24px rgba(213, 43, 30, 0.15);
   display: flex;
   align-items: center;
   gap: 10px;
@@ -130,16 +137,16 @@ header {
 }
 .login-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 14px 28px rgba(214, 43, 30, 0.28);
+  box-shadow: 0 14px 28px rgba(213, 43, 30, 0.2);
 }
 
-/* Hero */
+/* Hero - degradado más suave con los tres colores */
 .hero {
   position: relative;
   overflow: hidden;
   color: #fff;
   padding: 52px 0 28px;
-  background: linear-gradient(135deg, #D52B1E, #A61C12, #6B3F2B);
+  background: linear-gradient(135deg, #8B2A1F, #A8432C, #5D4A2E);
 }
 .hero::before {
   content: "";
@@ -205,7 +212,7 @@ header {
   padding: 0 18px;
 }
 
-/* Calculator card */
+/* Calculator card - MISMA ESTRUCTURA, solo colores */
 .calculator-card {
   margin: -46px auto 26px;
   max-width: 520px;
@@ -224,6 +231,7 @@ header {
   transform: translateY(0);
   opacity: 1;
 }
+/* Borde con gradiente de los 3 colores */
 .calculator-card::before {
   content: "";
   position: absolute; inset:-1px;
@@ -236,6 +244,7 @@ header {
   pointer-events: none;
 }
 
+/* Título de la calculadora - ahora en rojo suave */
 .calc-title {
   display: flex;
   align-items: center;
@@ -245,6 +254,7 @@ header {
   color: var(--red);
   font-size: 1.35rem;
   font-weight: 800;
+  opacity: 0.9;
 }
 
 .submeta {
@@ -257,14 +267,15 @@ header {
   font-size: .92rem;
   font-weight: 600;
 }
+/* Chip con rojo suave */
 .chip {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   padding: 6px 10px;
   border-radius: 999px;
-  background: rgba(214, 43, 30, 0.08);
-  border: 1px solid rgba(214, 43, 30, 0.18);
+  background: rgba(213, 43, 30, 0.05);
+  border: 1px solid rgba(213, 43, 30, 0.12);
   color: var(--red);
   font-weight: 800;
   white-space: nowrap;
@@ -313,12 +324,14 @@ label {
   transition: box-shadow .2s ease, border-color .2s ease, background .2s ease;
   font-weight: 700;
 }
+/* Focus con rojo suave */
 .form-control:focus {
-  border-color: rgba(214, 43, 30, 0.35);
-  box-shadow: 0 0 0 4px rgba(214, 43, 30, 0.10);
+  border-color: rgba(213, 43, 30, 0.3);
+  box-shadow: 0 0 0 4px rgba(213, 43, 30, 0.08);
   background: rgba(255,255,255,.85);
 }
 
+/* Botón primario - rojo más suave */
 .btn-primary {
   width: 100%;
   border: 0;
@@ -328,8 +341,8 @@ label {
   font-weight: 900;
   font-size: 1rem;
   color: #fff;
-  background: linear-gradient(135deg, var(--red), #b22222);
-  box-shadow: 0 14px 28px rgba(214, 43, 30, 0.22);
+  background: linear-gradient(135deg, var(--red), #b8453a);
+  box-shadow: 0 14px 28px rgba(213, 43, 30, 0.15);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -347,7 +360,7 @@ label {
 }
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 18px 34px rgba(214, 43, 30, 0.28);
+  box-shadow: 0 18px 34px rgba(213, 43, 30, 0.2);
   filter: saturate(1.05);
 }
 .btn-primary.success { background: linear-gradient(135deg, #16a34a, #22c55e); }
@@ -360,7 +373,7 @@ label {
   100% { transform: translateY(-2px) scale(1); }
 }
 
-/* Result */
+/* Result card - borde izquierdo verde (símbolo Bolivia) */
 .result-card {
   margin-top: 16px;
   padding: 16px;
@@ -412,7 +425,7 @@ label {
   gap: 8px;
 }
 
-/* Sections */
+/* Features section - iconos con colores Bolivia */
 .features-section {
   margin: 34px 0 10px;
 }
@@ -449,6 +462,7 @@ label {
 .feature-card.visible { transform: translateY(0); opacity: 1; }
 .feature-card:hover { box-shadow: 0 18px 34px rgba(0,0,0,.10); transform: translateY(-2px); }
 
+/* Iconos de features con los tres colores */
 .feature-icon {
   width: 54px; height: 54px;
   border-radius: 16px;
@@ -456,14 +470,21 @@ label {
   align-items: center;
   justify-content: center;
   color: #fff;
-  background: linear-gradient(135deg, var(--red), #b22222);
-  box-shadow: 0 14px 26px rgba(214, 43, 30, 0.18);
+  background: linear-gradient(135deg, var(--red), #b8453a);
+  box-shadow: 0 14px 26px rgba(213, 43, 30, 0.12);
   margin: 0 auto 12px;
   font-size: 1.3rem;
 }
-.feature-card:nth-child(2) .feature-icon { background: linear-gradient(135deg, var(--yellow), #e6b800); color: #111827; }
-.feature-card:nth-child(3) .feature-icon { background: linear-gradient(135deg, var(--green), #1e5e2f); }
-.feature-card:nth-child(4) .feature-icon { background: linear-gradient(135deg, var(--red), #a61c12); }
+.feature-card:nth-child(2) .feature-icon { 
+  background: linear-gradient(135deg, var(--yellow), #e6b800); 
+  color: #111827;
+}
+.feature-card:nth-child(3) .feature-icon { 
+  background: linear-gradient(135deg, var(--green), #1e5e2f); 
+}
+.feature-card:nth-child(4) .feature-icon { 
+  background: linear-gradient(135deg, var(--red), #a61c12); 
+}
 
 .feature-card h3 {
   text-align: center;
@@ -477,7 +498,7 @@ label {
 .testimonials {
   margin: 28px 0 0;
   padding: 34px 0 22px;
-  background: linear-gradient(135deg, rgba(214, 43, 30, 0.06), rgba(38, 123, 60, 0.04));
+  background: linear-gradient(135deg, rgba(213, 43, 30, 0.03), rgba(38, 123, 60, 0.02));
   border-top: 1px solid rgba(0,0,0,.06);
   border-bottom: 1px solid rgba(0,0,0,.06);
 }
@@ -504,7 +525,11 @@ label {
 .testimonial-card.visible { transform: translateY(0); opacity: 1; }
 .testimonial-card:hover { transform: translateY(-2px); box-shadow: 0 18px 34px rgba(0,0,0,.12); }
 
-.rating { color: var(--yellow); font-size: 1.05rem; margin-bottom: 10px; }
+.rating { 
+  color: var(--yellow); 
+  font-size: 1.05rem; 
+  margin-bottom: 10px; 
+}
 .testimonial-text {
   color: #111827;
   font-weight: 650;
@@ -608,7 +633,7 @@ footer::before {
   border-radius: 999px;
   font-weight: 900;
   color: #fff;
-  background: linear-gradient(135deg, var(--red), #b22222);
+  background: linear-gradient(135deg, var(--red), #b8453a);
   box-shadow: 0 18px 38px rgba(0,0,0,.28);
   display: none;
   z-index: 9999;
@@ -644,7 +669,7 @@ footer::before {
   border-radius: 12px;
   font-weight: 900;
   color: #fff;
-  background: linear-gradient(135deg, var(--red), #b22222);
+  background: linear-gradient(135deg, var(--red), #b8453a);
 }
 
 @keyframes slideUp {
