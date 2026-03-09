@@ -1,0 +1,213 @@
+/* ===== CARRUSEL DE BANCOS BOLIVIANOS ===== */
+
+.bank-carousel-section {
+  max-width: 500px;
+  margin: 0 auto 40px;
+  padding: 0 16px;
+  text-align: center;
+}
+
+.bank-carousel-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 16px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  position: relative;
+  display: inline-block;
+}
+
+.bank-carousel-title::before,
+.bank-carousel-title::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 30px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--muted), transparent);
+}
+
+.bank-carousel-title::before {
+  left: -40px;
+}
+
+.bank-carousel-title::after {
+  right: -40px;
+}
+
+/* Contenedor principal del carrusel */
+.bank-carousel {
+  background: white;
+  border-radius: 20px;
+  padding: 20px 0;
+  box-shadow: var(--shadow-md);
+  border: 1px solid rgba(0,0,0,0.02);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efectos de desvanecimiento en los bordes */
+.bank-carousel::before,
+.bank-carousel::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 60px;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.bank-carousel::before {
+  left: 0;
+  background: linear-gradient(90deg, white, transparent);
+}
+
+.bank-carousel::after {
+  right: 0;
+  background: linear-gradient(90deg, transparent, white);
+}
+
+/* Track del carrusel */
+.carousel-track-container {
+  overflow: hidden;
+  margin: 0 20px;
+}
+
+.carousel-track {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  animation: scrollBanks 20s linear infinite;
+  width: fit-content;
+}
+
+/* Pausar al hacer hover */
+.bank-carousel:hover .carousel-track {
+  animation-play-state: paused;
+}
+
+/* Items del carrusel */
+.bank-item {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 100px;
+  padding: 8px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border-radius: 12px;
+}
+
+.bank-item:hover {
+  transform: translateY(-4px);
+  background: linear-gradient(145deg, var(--red-soft), var(--yellow-soft), var(--green-soft));
+}
+
+.bank-logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid #f0f0f0;
+  transition: all 0.3s ease;
+  padding: 8px;
+}
+
+.bank-item:hover .bank-logo {
+  transform: scale(1.1);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--yellow);
+}
+
+.bank-logo img {
+  max-width: 40px;
+  max-height: 40px;
+  object-fit: contain;
+  filter: grayscale(100%);
+  opacity: 0.7;
+  transition: all 0.3s ease;
+}
+
+.bank-item:hover .bank-logo img {
+  filter: grayscale(0%);
+  opacity: 1;
+}
+
+.bank-name {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--muted);
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.bank-item:hover .bank-name {
+  color: var(--red);
+  font-weight: 700;
+}
+
+/* Animación infinita */
+@keyframes scrollBanks {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-100% - 20px));
+  }
+}
+
+/* Versión móvil */
+@media (max-width: 768px) {
+  .bank-carousel-title::before,
+  .bank-carousel-title::after {
+    width: 20px;
+  }
+  
+  .bank-carousel-title::before {
+    left: -30px;
+  }
+  
+  .bank-carousel-title::after {
+    right: -30px;
+  }
+  
+  .bank-logo {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .bank-logo img {
+    max-width: 30px;
+    max-height: 30px;
+  }
+  
+  .bank-name {
+    font-size: 0.6rem;
+  }
+  
+  .carousel-track {
+    gap: 30px;
+  }
+}
+
+/* Opcional: Versión con gradiente tricolor en hover */
+.bank-carousel--tricolor .bank-item:hover .bank-logo {
+  border-color: transparent;
+  background: linear-gradient(145deg, var(--red), var(--yellow), var(--green));
+  padding: 2px;
+}
+
+.bank-carousel--tricolor .bank-item:hover .bank-logo img {
+  background: white;
+  border-radius: 12px;
+  padding: 4px;
+}
