@@ -44,12 +44,20 @@ document.addEventListener('DOMContentLoaded', function () {
     return { amount, bobValue };
   }
 
-  function setupWhatsApp(amount, bobValue) {
-    whatsappBtn.onclick = function () {
-      const message = `Hola LUPO! Quisiera enviar €${amount} a Bolivia. Con tu tasa recibo ${formatNumber(bobValue)} Bs.`;
-      const url = `https://wa.me/${TELEFONO_WHATSAPP}?text=${encodeURIComponent(message)}`;
-      window.open(url, '_blank');
-    };
+  function sendWhatsApp() {
+    const { amount, bobValue } = calculate();
+
+    const euroText = amount === 1 ? 'euro' : 'euros';
+
+    const message =
+`Hola LUPO 👋
+Quiero enviar *${amount} ${euroText}* a Bolivia.
+Reciben aprox: *${formatNumber(bobValue)} Bs*.
+
+¿Me podrían indicar cómo proceder para realizar el envío?`;
+
+    const url = `https://wa.me/${TELEFONO_WHATSAPP}?text=${encodeURIComponent(message)}`;
+    window.open(url, '_blank');
   }
 
   function updateDateTime() {
@@ -66,24 +74,23 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   amountInput.addEventListener('input', function () {
-    const { amount, bobValue } = calculate();
-    setupWhatsApp(amount, bobValue);
+    calculate();
   });
 
   amountInput.addEventListener('blur', function () {
     if (!amountInput.value || parseFloat(amountInput.value) === 0) {
       amountInput.value = '100';
-      const { amount, bobValue } = calculate();
-      setupWhatsApp(amount, bobValue);
+      calculate();
     }
   });
+
+  whatsappBtn.addEventListener('click', sendWhatsApp);
 
   if (!amountInput.value) {
     amountInput.value = '100';
   }
 
-  const { amount, bobValue } = calculate();
-  setupWhatsApp(amount, bobValue);
+  calculate();
   updateDateTime();
   setInterval(updateDateTime, 60000);
 });
