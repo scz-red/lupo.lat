@@ -1,13 +1,12 @@
 // calculator-logic.js
 // ============================================
-// LÓGICA DE LA CALCULADORA - SIMPLE Y LIMPIA
+// LÓGICA DE LA CALCULADORA
 // ============================================
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🧮 Inicializando calculadora LUPO...');
     
     // ===== CONFIGURACIÓN =====
-    // Usar valores de config.js o valores por defecto
     const config = window.CALCULATOR_CONFIG || {
         baseRate: 10.61,
         discount: 0.09
@@ -15,7 +14,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Calcular tasa final de LUPO (con descuento aplicado)
     const LUPO_RATE = config.baseRate * (1 - config.discount);
-    console.log(`📊 Tasa LUPO: ${LUPO_RATE.toFixed(2)} Bs/€ (${config.discount * 100}% descuento)`);
     
     // ===== ELEMENTOS DEL DOM =====
     const amountInput = document.getElementById('amount');
@@ -24,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const datetimeSpan = document.getElementById('cotiz-datetime');
     const whatsappBtn = document.getElementById('calculate-btn');
     
-    // Verificar que todos los elementos existen
+    // Verificar que los elementos existen
     if (!amountInput || !receivedInput || !resultSpan || !whatsappBtn) {
         console.error('❌ Error: No se encontraron los elementos de la calculadora');
         return;
@@ -40,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // ===== FUNCIÓN PRINCIPAL DE CÁLCULO =====
     function calculate() {
-        // Obtener valor del input (convertir coma a punto si es necesario)
+        // Obtener valor del input
         let rawValue = amountInput.value.replace(',', '.');
         const amount = parseFloat(rawValue) || 0;
         
@@ -50,24 +48,17 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Actualizar campos
         receivedInput.value = formattedValue;
-        resultSpan.textContent = bobValue.toFixed(2); // Sin formato para el span
+        resultSpan.textContent = bobValue.toFixed(2);
         
-        return { amount, bobValue, formattedValue };
+        return { amount, bobValue };
     }
     
     // ===== CONFIGURAR BOTÓN WHATSAPP =====
     function setupWhatsApp(amount, bobValue) {
         whatsappBtn.onclick = function() {
-            // Mensaje personalizado
             const message = `Hola LUPO! Quisiera enviar €${amount} a Bolivia. Con tu tasa recibo ${formatNumber(bobValue)} Bs.`;
-            
-            // Número de WhatsApp (cámbialo al tuyo)
-            const phoneNumber = '59171077231'; // Formato internacional sin +
-            
-            // Crear URL de WhatsApp
+            const phoneNumber = '59171077231';
             const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-            
-            // Abrir en nueva pestaña
             window.open(url, '_blank');
         };
     }
@@ -77,8 +68,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!datetimeSpan) return;
         
         const now = new Date();
-        
-        // Formato: DD/MM/YYYY, HH:MM
         const day = String(now.getDate()).padStart(2, '0');
         const month = String(now.getMonth() + 1).padStart(2, '0');
         const year = now.getFullYear();
@@ -89,15 +78,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // ===== EVENT LISTENERS =====
-    // Calcular al escribir
     amountInput.addEventListener('input', function() {
         const { amount, bobValue } = calculate();
         setupWhatsApp(amount, bobValue);
     });
     
-    // Calcular al perder el foco
     amountInput.addEventListener('blur', function() {
-        // Si está vacío o es 0, poner valor por defecto
         if (!amountInput.value || parseFloat(amountInput.value) === 0) {
             amountInput.value = '100';
             calculate();
@@ -105,13 +91,15 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // ===== INICIALIZACIÓN =====
-    // Calcular valor inicial
+    // Asegurar que el input tenga un valor
+    if (!amountInput.value) {
+        amountInput.value = '100';
+    }
+    
     const { amount, bobValue } = calculate();
     setupWhatsApp(amount, bobValue);
-    
-    // Actualizar fecha/hora
     updateDateTime();
-    setInterval(updateDateTime, 60000); // Actualizar cada minuto
+    setInterval(updateDateTime, 60000);
     
-    console.log('✅ Calculadora lista y funcionando');
+    console.log('✅ Calculadora funcionando correctamente');
 });
