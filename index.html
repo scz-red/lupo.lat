@@ -17,6 +17,7 @@
   <meta name="author" content="Lupo.lat" />
   <meta name="theme-color" content="#E63946" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="LUPO" />
   <link rel="canonical" href="https://lupo.lat/" />
@@ -61,8 +62,8 @@
   />
 
   <!-- CSS -->
-  <link rel="stylesheet" href="css/styles.css" />
-  <link rel="stylesheet" href="css/carousel.css" />
+  <link rel="stylesheet" href="/css/styles.css" />
+  <link rel="stylesheet" href="/css/carousel.css" />
 
   <style>
     .hero {
@@ -170,7 +171,11 @@
   <header>
     <div class="nav-container">
       <a class="logo" href="/" aria-label="Ir al inicio">
-        <img src="https://lupo.lat/img/lupo01.png" alt="Logo de LUPO" />
+        <img
+          src="https://lupo.lat/img/lupo01.png"
+          alt="Logo de LUPO"
+          loading="eager"
+        />
       </a>
 
       <nav class="country-pills" aria-label="Países">
@@ -202,7 +207,7 @@
 
       <h1>Envía <span>euros</span> y recibe <span>bolivianos</span> 🇧🇴</h1>
       <p>
-        Cotiza tu envío en segundos y envia rapido, seguro desde te Telefono,  sin complicaciones.
+        Cotiza tu envío en segundos y envía rápido y seguro desde tu teléfono, sin complicaciones.
       </p>
     </div>
   </section>
@@ -263,7 +268,7 @@
 
       <button class="btn-primary" id="calculate-btn" type="button">
         <i class="fa-brands fa-whatsapp"></i>
-        ENVIAR DINERO YA!
+        ENVIAR DINERO YA
       </button>
 
       <button class="btn-install" id="install-btn" type="button" hidden>
@@ -288,77 +293,77 @@
     </section>
 
     <section class="bank-carousel-section section-spacing" aria-label="Bancos disponibles">
-      <h3 class="bank-carousel-title">Bancos donde Enviamos</h3>
+      <h3 class="bank-carousel-title">Bancos donde enviamos</h3>
 
       <div class="bank-carousel">
         <div class="carousel-track-container">
           <div class="carousel-track">
             <div class="bank-item">
               <div class="bank-logo">
-                <img src="imagenes/union.png" alt="Banco Unión" loading="lazy" />
+                <img src="/imagenes/union.png" alt="Banco Unión" loading="lazy" />
               </div>
               <span class="bank-name">Unión</span>
             </div>
 
             <div class="bank-item">
               <div class="bank-logo">
-                <img src="imagenes/bcp.png" alt="BCP Bolivia" loading="lazy" />
+                <img src="/imagenes/bcp.png" alt="BCP Bolivia" loading="lazy" />
               </div>
               <span class="bank-name">BCP</span>
             </div>
 
             <div class="bank-item">
               <div class="bank-logo">
-                <img src="imagenes/mercantil.png" alt="Banco Mercantil" loading="lazy" />
+                <img src="/imagenes/mercantil.png" alt="Banco Mercantil" loading="lazy" />
               </div>
               <span class="bank-name">Mercantil</span>
             </div>
 
             <div class="bank-item">
               <div class="bank-logo">
-                <img src="imagenes/bisa.jpg" alt="Banco BISA" loading="lazy" />
+                <img src="/imagenes/bisa.jpg" alt="Banco BISA" loading="lazy" />
               </div>
               <span class="bank-name">BISA</span>
             </div>
 
             <div class="bank-item">
               <div class="bank-logo">
-                <img src="imagenes/bnb.jpg" alt="Banco BNB" loading="lazy" />
+                <img src="/imagenes/bnb.jpg" alt="Banco BNB" loading="lazy" />
               </div>
               <span class="bank-name">BNB</span>
             </div>
 
             <div class="bank-item">
               <div class="bank-logo">
-                <img src="imagenes/economico.png" alt="Banco Económico" loading="lazy" />
+                <img src="/imagenes/economico.png" alt="Banco Económico" loading="lazy" />
               </div>
               <span class="bank-name">Económico</span>
             </div>
 
             <div class="bank-item">
               <div class="bank-logo">
-                <img src="imagenes/yape.png" alt="Banco FIE" loading="lazy" />
+                <img src="/imagenes/yape.png" alt="Yape" loading="lazy" />
               </div>
-              <span class="bank-name">YAPE</span>
+              <span class="bank-name">Yape</span>
             </div>
 
             <div class="bank-item">
               <div class="bank-logo">
-                <img src="imagenes/prodem.jpeg" alt="Banco Prodem" loading="lazy" />
+                <img src="/imagenes/prodem.jpeg" alt="Banco Prodem" loading="lazy" />
               </div>
               <span class="bank-name">Prodem</span>
             </div>
 
             <div class="bank-item">
               <div class="bank-logo">
-                <img src="imagenes/tigo.png" alt="Banco Fortaleza" loading="lazy" />
+                <img src="/imagenes/tigo.png" alt="Banco Fortaleza" loading="lazy" />
               </div>
               <span class="bank-name">Fortaleza</span>
             </div>
 
             <div class="bank-item">
               <div class="bank-logo">
-                <img src="imagenes/ganadero.png" alt="Banco Ganadero" loading="lazy" />
+                <img src="/imagenes/ganadero.png" alt="Banco Ganadero" loading="lazy" />
               </div>
               <span class="bank-name">Ganadero</span>
             </div>
@@ -498,23 +503,24 @@
     </div>
   </footer>
 
-  <!-- JS -->
-  <script src="js/calculadora.js"></script>
-  <script src="js/carousel.js"></script>
+  <script src="/js/calculadora.js"></script>
+  <script src="/js/carousel.js"></script>
 
   <script>
     let deferredPrompt = null;
     const installBtn = document.getElementById('install-btn');
 
     window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
       deferredPrompt = e;
-      if (installBtn) installBtn.hidden = false;
+      if (installBtn) {
+        installBtn.hidden = false;
+      }
     });
 
     if (installBtn) {
       installBtn.addEventListener('click', async () => {
         if (!deferredPrompt) return;
+        deferredPrompt.preventDefault();
         deferredPrompt.prompt();
         await deferredPrompt.userChoice;
         deferredPrompt = null;
@@ -537,4 +543,3 @@
   </script>
 </body>
 </html>
-  no me deja buscar por whatsap y no me sale instalar app y ademas no me sale notificacion de instalar app directamente
