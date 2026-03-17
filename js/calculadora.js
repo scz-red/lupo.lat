@@ -6,7 +6,7 @@
 // ===== CONFIGURACIÓN - EDITA SOLO ESTO =====
 const TIPO_CAMBIO_BASE = 10.61;   // 1 EUR = 10.61 BOB
 const DESCUENTO = 0.09;           // 9% de descuento
-const TELEFONO_WHATSAPP = '59171077231';
+const TELEFONO_WHATSAPP = '59175589308';
 // ============================================
 
 // Tasa final
