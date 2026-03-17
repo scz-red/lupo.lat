@@ -41,8 +41,127 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
   <!-- CSS -->
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="carousel.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/carousel.css">
+  
+  <style>
+    /* ===== VARIABLES BOLIVIA ===== */
+    :root {
+      --red: #E63946;
+      --yellow: #FFD166;
+      --green: #06D6A0;
+      --red-soft: rgba(230, 57, 70, 0.08);
+      --yellow-soft: rgba(255, 209, 102, 0.12);
+      --green-soft: rgba(6, 214, 160, 0.08);
+      --ink: #1e293b;
+      --muted: #64748b;
+      --bg: #f8fafc;
+    }
+
+    /* Ajustes para calculadora visible sin scroll */
+    .hero {
+      padding: 15px 0 5px !important;
+    }
+    
+    .hero h1 {
+      font-size: clamp(1.3rem, 3vw, 1.6rem) !important;
+      margin-bottom: 0 !important;
+    }
+    
+    .hero p {
+      display: none;
+    }
+    
+    .kicker {
+      margin-bottom: 5px !important;
+      padding: 4px 12px !important;
+      font-size: 0.7rem !important;
+    }
+    
+    .calculator-card {
+      margin: -5px auto 15px !important;
+      padding: 20px !important;
+      max-width: 450px !important;
+    }
+    
+    .calc-title {
+      font-size: 1.2rem !important;
+      margin-bottom: 10px !important;
+      justify-content: flex-start !important;
+      color: var(--ink) !important;
+    }
+    
+    .calc-title i {
+      color: var(--red) !important;
+    }
+    
+    .submeta {
+      margin: 5px 0 15px !important;
+      background: #f8f9fa !important;
+      padding: 8px 12px !important;
+      border-radius: 30px !important;
+      border: 1px solid #e9ecef !important;
+    }
+    
+    .chip {
+      background: transparent !important;
+      border: none !important;
+      padding: 0 !important;
+      color: var(--green) !important;
+      font-weight: 600 !important;
+    }
+    
+    .chip .dot {
+      background: var(--green) !important;
+      box-shadow: 0 0 0 2px rgba(6, 214, 160, 0.2) !important;
+    }
+    
+    .form-group {
+      margin-bottom: 15px !important;
+    }
+    
+    .currency-input-container {
+      border: 2px solid #e9ecef !important;
+      border-radius: 16px !important;
+    }
+    
+    .currency-input-container:focus-within {
+      border-color: var(--red) !important;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, #25D366, #128C7E) !important;
+      box-shadow: 0 8px 16px rgba(37, 211, 102, 0.2) !important;
+      padding: 16px !important;
+      border-radius: 30px !important;
+      margin: 10px 0 15px !important;
+    }
+    
+    .result-card {
+      background: #f8f9fa !important;
+      border-radius: 20px !important;
+      padding: 20px !important;
+      border: 1px solid #e9ecef !important;
+      border-left: 4px solid var(--green) !important;
+    }
+    
+    .result-amount {
+      font-size: 2.5rem !important;
+      font-weight: 700 !important;
+      color: var(--ink) !important;
+      text-align: left !important;
+      display: flex !important;
+      gap: 5px !important;
+    }
+    
+    .result-details {
+      text-align: left !important;
+    }
+    
+    .result-details p {
+      justify-content: flex-start !important;
+    }
+  </style>
 </head>
 
 <body>
@@ -134,7 +253,7 @@
       </div>
     </div>
 
-    <!-- CARRUSEL DE BANCOS (A COLOR) -->
+    <!-- CARRUSEL DE BANCOS - CON IMÁGENES DESDE CARPETA imagenes/ -->
     <section class="bank-carousel-section">
       <h3 class="bank-carousel-title">Bancos donde puedes recibir</h3>
       
@@ -144,7 +263,7 @@
             <!-- Banco Unión -->
             <div class="bank-item">
               <div class="bank-logo">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/3/38/Banco_Uni%C3%B3n_Logo.svg" alt="Banco Unión" onerror="this.src='https://via.placeholder.com/45x45/FFD166/1e293b?text=U'">
+                <img src="imagenes/union.png" alt="Banco Unión" onerror="this.src='https://via.placeholder.com/45x45/FFD166/1e293b?text=U'">
               </div>
               <span class="bank-name">Unión</span>
             </div>
@@ -152,7 +271,7 @@
             <!-- BCP Bolivia -->
             <div class="bank-item">
               <div class="bank-logo">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/BCP_%28Bolivia%29_logo.svg" alt="BCP Bolivia" onerror="this.src='https://via.placeholder.com/45x45/E63946/ffffff?text=BCP'">
+                <img src="imagenes/bcp.png" alt="BCP Bolivia" onerror="this.src='https://via.placeholder.com/45x45/E63946/ffffff?text=BCP'">
               </div>
               <span class="bank-name">BCP</span>
             </div>
@@ -160,7 +279,7 @@
             <!-- Banco Mercantil -->
             <div class="bank-item">
               <div class="bank-logo">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Banco_Mercantil_Santa_Cruz_logo.svg" alt="Banco Mercantil" onerror="this.src='https://via.placeholder.com/45x45/06D6A0/1e293b?text=M'">
+                <img src="imagenes/mercantil.png" alt="Banco Mercantil" onerror="this.src='https://via.placeholder.com/45x45/06D6A0/1e293b?text=M'">
               </div>
               <span class="bank-name">Mercantil</span>
             </div>
@@ -168,7 +287,7 @@
             <!-- Banco BISA -->
             <div class="bank-item">
               <div class="bank-logo">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/9/9f/Banco_BISA_logo.svg" alt="Banco BISA" onerror="this.src='https://via.placeholder.com/45x45/FFD166/1e293b?text=BISA'">
+                <img src="imagenes/bisa.jpg" alt="Banco BISA" onerror="this.src='https://via.placeholder.com/45x45/FFD166/1e293b?text=BISA'">
               </div>
               <span class="bank-name">BISA</span>
             </div>
@@ -176,7 +295,7 @@
             <!-- BNB -->
             <div class="bank-item">
               <div class="bank-logo">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/BNB_Logo.svg" alt="BNB" onerror="this.src='https://via.placeholder.com/45x45/E63946/ffffff?text=BNB'">
+                <img src="imagenes/bnb.jpg" alt="BNB" onerror="this.src='https://via.placeholder.com/45x45/E63946/ffffff?text=BNB'">
               </div>
               <span class="bank-name">BNB</span>
             </div>
@@ -184,15 +303,15 @@
             <!-- Banco Económico -->
             <div class="bank-item">
               <div class="bank-logo">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5b/Banco_Economico_Logo.svg" alt="Banco Económico" onerror="this.src='https://via.placeholder.com/45x45/06D6A0/1e293b?text=ECO'">
+                <img src="imagenes/economico.png" alt="Banco Económico" onerror="this.src='https://via.placeholder.com/45x45/06D6A0/1e293b?text=ECO'">
               </div>
               <span class="bank-name">Económico</span>
             </div>
             
-            <!-- Banco FIE -->
+            <!-- Banco FIE (usando yape.png como placeholder) -->
             <div class="bank-item">
               <div class="bank-logo">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/d/d4/Banco_FIE_logo.svg" alt="Banco FIE" onerror="this.src='https://via.placeholder.com/45x45/FFD166/1e293b?text=FIE'">
+                <img src="imagenes/yape.png" alt="Banco FIE" onerror="this.src='https://via.placeholder.com/45x45/FFD166/1e293b?text=FIE'">
               </div>
               <span class="bank-name">FIE</span>
             </div>
@@ -200,23 +319,23 @@
             <!-- Banco Prodem -->
             <div class="bank-item">
               <div class="bank-logo">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/0/0d/Prodem_Logo.svg" alt="Banco Prodem" onerror="this.src='https://via.placeholder.com/45x45/E63946/ffffff?text=PD'">
+                <img src="imagenes/prodem.jpeg" alt="Banco Prodem" onerror="this.src='https://via.placeholder.com/45x45/E63946/ffffff?text=PD'">
               </div>
               <span class="bank-name">Prodem</span>
             </div>
             
-            <!-- Banco Fortaleza -->
+            <!-- Tigo Money -->
             <div class="bank-item">
               <div class="bank-logo">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/6/65/Banco_Fortaleza_logo.svg" alt="Banco Fortaleza" onerror="this.src='https://via.placeholder.com/45x45/06D6A0/1e293b?text=F'">
+                <img src="imagenes/tigo.png" alt="Tigo Money" onerror="this.src='https://via.placeholder.com/45x45/06D6A0/1e293b?text=TIGO'">
               </div>
-              <span class="bank-name">Fortaleza</span>
+              <span class="bank-name">Tigo Money</span>
             </div>
             
             <!-- Banco Ganadero -->
             <div class="bank-item">
               <div class="bank-logo">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Banco_Ganadero_logo.svg" alt="Banco Ganadero" onerror="this.src='https://via.placeholder.com/45x45/FFD166/1e293b?text=G'">
+                <img src="imagenes/ganadero.png" alt="Banco Ganadero" onerror="this.src='https://via.placeholder.com/45x45/FFD166/1e293b?text=G'">
               </div>
               <span class="bank-name">Ganadero</span>
             </div>
@@ -368,10 +487,10 @@
     <button type="button" id="ios-close">Entendido</button>
   </div>
 
-  <!-- SCRIPTS - ORDEN CORRECTO -->
-  <script src="calculator-config.js"></script>
-  <script src="calculator-logic.js"></script>
-  <script src="carousel.js"></script>
-  <script src="install-pwa.js"></script>
+  <!-- SCRIPTS -->
+  <script src="js/calculator-config.js"></script>
+  <script src="js/calculator-logic.js"></script>
+  <script src="js/carousel.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
