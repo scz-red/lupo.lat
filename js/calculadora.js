@@ -4,7 +4,7 @@
 // ============================================
 
 // ===== CONFIGURACIÓN - EDITA SOLO ESTO =====
-const TIPO_CAMBIO_BASE = 11;   // 1 EUR = 10.61 BOB
+const TIPO_CAMBIO_BASE = 10.95;   // 1 EUR = 10.61 BOB
 const DESCUENTO = 0.09;           // 9% de descuento
 const TELEFONO_WHATSAPP = '59175589308';
 // ============================================
